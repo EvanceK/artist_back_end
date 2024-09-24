@@ -1,16 +1,26 @@
 package dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import bean.Artis;
 import dao.ArtisDao;
+import dao.DbConnection;
+import ulitilies.IdGenerator;
 
 public class ArtisDaoImpl  implements ArtisDao{
-
+	Connection conn = DbConnection.getDb();
 	@Override
 	public void create(Artis art) {
-		// TODO Auto-generated method stub
-		
+		String SQL = "INSERT INTO `artistproject`.`artis` (`artis_id`,`artis_name`) VALUES ("+ IdGenerator.artisId() +",?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(SQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 
 	@Override
