@@ -3,7 +3,13 @@ package ulitilies;
 import java.util.List;
 
 import bean.Artis;
+import bean.Carts;
+import bean.Customers;
+import bean.Inventories;
+import bean.Orders;
+import bean.Paintings;
 import dao.impl.ArtisDaoImpl;
+import dao.impl.InventoriesDaoImpl;
 
 public class IdGenerator {
 	static Integer numCodelenght = 4;
@@ -54,7 +60,7 @@ public class IdGenerator {
 		List<Inventories> inventoriesList = idi.selectAll();
 		if (inventoriesList.size() > 0) {
 			Inventories lastesInventories = inventoriesList.get(inventoriesList.size() - 1);
-			String lastestId = lastesInventories.getInventoriesId();
+			String lastestId = lastesInventories.getInventoryNumber();
 			return IDGenerator(prefix, lastestId);
 		} else {
 			return IDGenerator(prefix, "0000");
