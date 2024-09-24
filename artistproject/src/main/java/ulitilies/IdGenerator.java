@@ -38,8 +38,8 @@ public class IdGenerator {
 		CustomersDaoImpl cdi = new CustomersDaoImpl();
 		List<Customers> customersList = cdi.selectAll();
 		if(customersList.size()>0) {
-			Customers lastesCarts = customersList.get(customersList.size() -1);
-			String lastestId = lastesCarts.getCartsId();
+			Customers lastesCustomers = customersList.get(customersList.size() -1);
+			String lastestId = lastesCustomers.getCustomersId();
 			return  IDGenerator(prefix, lastestId);
 		}else {
 			return "CU0001";
