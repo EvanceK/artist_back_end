@@ -17,16 +17,19 @@ public class ArtisDaoImpl  implements ArtisDao{
 	Connection conn = DbConnection.getDb();
 	
 	public static void main(String[] args) {
+		ArtisDaoImpl adi = new ArtisDaoImpl();
+		adi.create("New artis2");
 		
 	}
 	
 	@Override
 	public void create(String artName) {
-		String SQL = "INSERT INTO `artistproject`.`artis` (`artis_id`,`artis_name`) VALUES ("+ IdGenerator.artisId() +",?)";
+		String SQL = "INSERT INTO `artistproject`.`artis` (`artis_id`,`artis_name`) VALUES (?,?)";
 		try {
 			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(SQL);
-			ps.setString(1, artName);
+			ps.setString(1, IdGenerator.artisId());
+			ps.setString(2, artName);
 			ps.executeUpdate();
 			conn.commit();
 			conn.setAutoCommit(true);
