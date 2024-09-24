@@ -17,14 +17,14 @@ public class Paintings {
 	private String genre;
 	private String media;
 	private String dimensions;
-	private String delicated;
+	private Integer delicated;
 
 	public Paintings() {
 	}
 
 	public Paintings(String paintingId, String paintingName, String artisId, String largUrl, String smallUrl,
 			Double price, LocalDateTime date, String style, LocalDateTime uploadDate, String period, String genre,
-			String media, String dimensions, String delicated) {
+			String media, String dimensions, Integer delicated) {
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
 		this.artisId = artisId;
@@ -145,11 +145,20 @@ public class Paintings {
 		this.dimensions = dimensions;
 	}
 
-	public String getDelicated() {
+	public Integer getDelicated() {
 		return delicated;
 	}
 
-	public void setDelicated(String delicated) {
+	public void setDelicated(Integer delicated) {
 		this.delicated = delicated;
 	}
+
+	@Override
+	public String toString() {
+		return "Paintings [paintingId=" + paintingId + ", paintingName=" + paintingName + ", artisId=" + artisId
+				+ ", largUrl=" + largUrl + ", smallUrl=" + smallUrl + ", price=" + price + ", date=" + date + ", style="
+				+ style + ", uploadDate=" + uploadDate + ", period=" + period + ", genre=" + genre + ", media=" + media
+				+ ", dimensions=" + dimensions + ", delicated=" + delicated + "]";
+	}
+	
 }

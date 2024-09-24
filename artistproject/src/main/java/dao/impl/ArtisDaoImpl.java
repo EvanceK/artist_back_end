@@ -10,8 +10,8 @@ import java.util.List;
 
 import bean.Artis;
 import dao.ArtisDao;
-import dao.DbConnection;
-import ulitilies.IdGenerator;
+import utils.DbConnection;
+import utils.IdGenerator;
 
 public class ArtisDaoImpl  implements ArtisDao{
 	Connection conn = DbConnection.getDb();
