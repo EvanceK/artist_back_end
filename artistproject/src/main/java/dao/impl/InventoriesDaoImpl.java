@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.Inventories;
-import dao.DbConnection;
 import dao.InventoriesDao;
-import ulitilies.IdGenerator;
+import utils.DbConnection;
+import utils.IdGenerator;
 
 public class InventoriesDaoImpl implements InventoriesDao {
 	Connection conn = DbConnection.getDb();

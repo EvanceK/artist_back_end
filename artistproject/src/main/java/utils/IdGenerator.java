@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.util.List;
 
 import bean.Artis;
+import bean.Inventories;
 import bean.Paintings;
 import dao.impl.ArtisDaoImpl;
+import dao.impl.InventoriesDaoImpl;
 import dao.impl.PaintingsDaoImpl;
 
 public class IdGenerator {
@@ -51,18 +53,19 @@ public class IdGenerator {
 
 //	}
 
-//	static public String inventoriesId() {
-//		String prefix = "IN";
-//		InventoriesDaoImpl idi = new InventoriesDaoImpl();
-//		List<Inventories> inventoriesList = idi.selectAll();
-//		if (inventoriesList.size() > 0) {
-//			Inventories lastesInventories = inventoriesList.get(inventoriesList.size() - 1);
-//			String lastestId = lastesInventories.getInventoriesId();
-//			return IDGenerator(prefix, lastestId);
-//		} else {
-//			return IDGenerator(prefix, "0000");
-//		}
-//	}
+	static public String inventoriesId() {
+		String prefix = "IN";
+		InventoriesDaoImpl idi = new InventoriesDaoImpl();
+		List<Inventories> inventoriesList = idi.selectAll();
+		if (inventoriesList.size() > 0) {
+			Inventories lastesInventories = inventoriesList.get(inventoriesList.size() - 1);
+			String lastestId = lastesInventories.getInventoryNumber();
+			return IDGenerator(prefix, lastestId);
+		} else {
+			return IDGenerator(prefix, "0000");
+		}
+	}
+
 
 //	static public String orderId() {
 //		String prefix = "OR";
