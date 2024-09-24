@@ -7,7 +7,7 @@ import bean.Artis;
 public interface ArtisDao {
 
 	// Create
-	void create(Artis art);
+	void create(String artName);
 
 	// Read
 	List<Artis> selectAll();
