@@ -46,7 +46,7 @@ public class IdGenerator {
 		List<Customers> customersList = cdi.selectAll();
 		if (customersList.size() > 0) {
 			Customers lastesCustomers = customersList.get(customersList.size() - 1);
-			String lastestId = lastesCustomers.getCustomersId();
+			String lastestId = lastesCustomers.getCustomerId();
 			return IDGenerator(prefix, lastestId);
 		} else {
 			return IDGenerator(prefix, "0000");
