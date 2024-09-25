@@ -18,7 +18,7 @@ public class ArtisDaoImpl  implements ArtisDao{
 	
 	public static void main(String[] args) {
 		ArtisDaoImpl adi = new ArtisDaoImpl();
-		adi.create("New artis3");
+		adi.create("Giovanni Antonio Boltraffio");
 		adi.selectAll().forEach((a)->System.out.println(a.getArtisName()));
 		
 	}
