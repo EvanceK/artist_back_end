@@ -93,10 +93,11 @@ public class PaintingsDaoImpl implements PaintingsDao {
        
        List<Paintings> paintingsList = new ArrayList<>();
        PreparedStatement ps = null;
-       String sql = "Select * From paintings";
+       String sql = "Select * From paintings where painting_id=?";
 
        try {
            ps = conn.prepareStatement(sql);
+           ps.setString(1,paintingId);
            ResultSet rs = ps.executeQuery();
        while(rs.next()){
     	   Paintings paintings = new Paintings();
@@ -108,7 +109,10 @@ public class PaintingsDaoImpl implements PaintingsDao {
     	   paintings.setPrice(rs.getDouble("price"));
     	   paintings.setDate(rs.getString("date"));
     	   paintings.setStyle(rs.getString("style"));
-    	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
+    	   if (rs.getTimestamp("upload_date") != null )
+    	   {
+        	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
+    	   }
     	   paintings.setPeriod(rs.getString("period"));
     	   paintings.setGenre(rs.getString("genre"));
     	   paintings.setMedia(rs.getString("media"));
