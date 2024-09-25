@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.util.List;
 
 import bean.Artis;
+import bean.Customers;
 import bean.Inventories;
 import bean.Paintings;
 import dao.impl.ArtisDaoImpl;
+import dao.impl.CustomersDaoImpl;
 import dao.impl.InventoriesDaoImpl;
 import dao.impl.PaintingsDaoImpl;
 
@@ -39,19 +41,19 @@ public class IdGenerator {
 //		}
 //	}
 
-//	static public String customersId() {
-//		String prefix = "CU";
-//		CustomersDaoImpl cdi = new CustomersDaoImpl();
-//		List<Customers> customersList = cdi.selectAll();
-//		if (customersList.size() > 0) {
-//			Customers lastesCustomers = customersList.get(customersList.size() - 1);
-//			String lastestId = lastesCustomers.getCustomersId();
-//			return IDGenerator(prefix, lastestId);
-//		} else {
-//			return IDGenerator(prefix, "0000");
-//		}
+	static public String customersId() {
+		String prefix = "CU";
+		CustomersDaoImpl cdi = new CustomersDaoImpl();
+		List<Customers> customersList = cdi.selectAll();
+		if (customersList.size() > 0) {
+			Customers lastesCustomers = customersList.get(customersList.size() - 1);
+			String lastestId = lastesCustomers.getCustomerId();
+			return IDGenerator(prefix, lastestId);
+		} else {
+			return IDGenerator(prefix, "0000");
+		}
 
-//	}
+	}
 
 	static public String inventoriesId() {
 		String prefix = "IN";

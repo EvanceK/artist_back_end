@@ -5,19 +5,19 @@ public class Customers {
 	private String lastName;
 	private String firstName;
 	private String email;
-	private String accout;
+	private String account;
 	private String password;
 
 	public Customers() {
 	}
 
-	public Customers(String customerId, String lastName, String firstName, String email, String accout,
+	public Customers(String customerId, String lastName, String firstName, String email, String account,
 			String password) {
 		this.customerId = customerId;
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.email = email;
-		this.accout = accout;
+		this.account = account;
 		this.password = password;
 	}
 
@@ -53,12 +53,12 @@ public class Customers {
 		this.email = email;
 	}
 
-	public String getAccout() {
-		return accout;
+	public String getAccount() {
+		return account;
 	}
 
-	public void setAccout(String accout) {
-		this.accout = accout;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	public String getPassword() {
