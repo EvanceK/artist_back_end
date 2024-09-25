@@ -7,7 +7,7 @@ import bean.InventoryDetails;
 public interface InventoryDetailsDao {
 
 	//Create
-	void create(String paintingId);
+	void create(String inventoryNumber, String paintingId);
 	//Read
 	List<InventoryDetails> selectAll();
 	//Update
