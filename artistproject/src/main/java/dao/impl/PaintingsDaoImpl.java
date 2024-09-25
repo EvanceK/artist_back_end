@@ -44,6 +44,8 @@ public class PaintingsDaoImpl implements PaintingsDao {
             ps.setInt(14,painting.getDelicated());
             // 執行
             ps.executeUpdate();
+            System.out.println("新增成功");
+
             } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
@@ -69,7 +71,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
       	   paintings.setLargUrl(rs.getString("larg_url"));
       	   paintings.setSmallUrl(rs.getString("small_url"));
       	   paintings.setPrice(rs.getDouble("price"));
-      	   paintings.setDate(rs.getTimestamp("date").toLocalDateTime());
+      	   paintings.setDate(rs.getString("date"));
       	   paintings.setStyle(rs.getString("style"));
       	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
       	   paintings.setPeriod(rs.getString("period"));
@@ -104,7 +106,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
     	   paintings.setLargUrl(rs.getString("larg_url"));
     	   paintings.setSmallUrl(rs.getString("small_url"));
     	   paintings.setPrice(rs.getDouble("price"));
-    	   paintings.setDate(rs.getTimestamp("date").toLocalDateTime());
+    	   paintings.setDate(rs.getString("date"));
     	   paintings.setStyle(rs.getString("style"));
     	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
     	   paintings.setPeriod(rs.getString("period"));
@@ -124,7 +126,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
     @Override
     public void update(Paintings painting) {
         PreparedStatement ps = null;
-        String sql = "update paintings set (painting_name, artis_id,larg_url, small_url, price,`date`, style,upload_date,`period`,genre, media,dimensions,delicated) values(?,?,?,?,?,?,?,?,?,?,?,?,?) where painting_id =?";
+        String sql = "update paintings set painting_name =?, artis_id =?,larg_url =?, small_url =?, price =?,`date` =?, style =?,upload_date =?,`period` =?,genre =?, media =?,dimensions =?,delicated =? where painting_id =?";
         try {
             ps = conn.prepareStatement(sql);
             // 填充佔位符 ?
@@ -133,7 +135,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
             ps.setString(3,painting.getLargUrl());
             ps.setString(4,painting.getSmallUrl());
             ps.setDouble(5,painting.getPrice());
-            ps.setTimestamp(6, Timestamp.valueOf(painting.getDate()));
+            ps.setString(6,painting.getDate());
             ps.setString(7,painting.getStyle());
             ps.setTimestamp(8, Timestamp.valueOf(painting.getUploadDate()));
             ps.setString(9,painting.getPeriod());
@@ -142,6 +144,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
             ps.setString(12,painting.getDimensions());
             ps.setInt(13,painting.getDelicated());
             ps.setString(14,painting.getPaintingId());
+            System.out.println("修改成功");
 
             // 執行
             ps.executeUpdate();
@@ -163,6 +166,8 @@ public class PaintingsDaoImpl implements PaintingsDao {
             ps.setString(1,paintingId);
             // 執行
             ps.executeUpdate();
+            System.out.println("刪除成功");
+
             } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
@@ -170,5 +175,39 @@ public class PaintingsDaoImpl implements PaintingsDao {
             DbConnection.closeResource(null, ps);
         }
     }
+
+	@Override
+	public List<Paintings> selectAllOrderByPaintingsIdDESC() {
+		 List<Paintings> paintingsList = new ArrayList<>();
+         PreparedStatement ps = null;
+         String sql = "Select * From paintings Order By painting_id desc";
+
+         try {
+             ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery();
+         while(rs.next()){
+      	   Paintings paintings = new Paintings();
+      	   paintings.setPaintingId(rs.getString("painting_id"));
+      	   paintings.setPaintingName(rs.getString("painting_name"));
+      	   paintings.setArtisId(rs.getString("artis_id"));
+      	   paintings.setLargUrl(rs.getString("larg_url"));
+      	   paintings.setSmallUrl(rs.getString("small_url"));
+      	   paintings.setPrice(rs.getDouble("price"));
+      	   paintings.setDate(rs.getString("date"));
+      	   paintings.setStyle(rs.getString("style"));
+      	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
+      	   paintings.setPeriod(rs.getString("period"));
+      	   paintings.setGenre(rs.getString("genre"));
+      	   paintings.setMedia(rs.getString("media"));
+      	   paintings.setDimensions(rs.getString("dimensions"));
+      	   paintings.setDelicated(rs.getInt("delicated"));
+
+             paintingsList.add(paintings);
+         }
+         } catch (SQLException e) {
+             throw new RuntimeException(e);
+         }
+  		return paintingsList;
+	}
 
 }
