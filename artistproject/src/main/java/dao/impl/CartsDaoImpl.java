@@ -9,8 +9,8 @@ import java.util.List;
 
 import bean.Carts;
 import dao.CartsDAO;
-import dao.DbConnection;
-import ulitilies.IdGenerator;
+import utils.DbConnection;
+import utils.IdGenerator;
 
 public class CartsDaoImpl implements CartsDAO{
 
@@ -21,10 +21,11 @@ public class CartsDaoImpl implements CartsDAO{
 	Connection conn = DbConnection.getDb();
 	@Override
 	public void create(Carts c) {
-		String SQL = "INSERT INTO artistproject.carts(carts_id,customer_id,painting_id) VALUES ("+ IdGenerator.cartsId() +",?,?";
+		String SQL = "INSERT INTO artistproject.carts(carts_id,customer_id,painting_id) VALUES (?,?,?)";
 		try {
 			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(SQL);
+			ps.setString(1,IdGenerator.cartsId());
 			ps.setString(1,c.getCustomerId());
 			ps.setString(2,c.getPaintingId());
 			ps.executeUpdate();

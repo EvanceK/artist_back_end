@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.util.List;
 
 import bean.Artis;
+import bean.Carts;
 import bean.Customers;
 import bean.Inventories;
 import bean.Paintings;
 import dao.impl.ArtisDaoImpl;
+import dao.impl.CartsDaoImpl;
 import dao.impl.CustomersDaoImpl;
 import dao.impl.InventoriesDaoImpl;
 import dao.impl.PaintingsDaoImpl;
@@ -28,18 +30,18 @@ public class IdGenerator {
 		}
 	}
 
-//	static public String cartsId() {
-//		String prefix = "CA";
-//		CartsDaoImpl ctdi = new CartsDaoImpl();
-//		List<Carts> cartList = ctdi.selectAll();
-//		if (cartList.size() > 0) {
-//			Carts lastesCarts = cartList.get(cartList.size() - 1);
-//			String lastestId = lastesCarts.getCartsId();
-//			return IDGenerator(prefix, lastestId);
-//		} else {
-//			return IDGenerator(prefix, "0000");
-//		}
-//	}
+	static public String cartsId() {
+		String prefix = "CA";
+		CartsDaoImpl ctdi = new CartsDaoImpl();
+		List<Carts> cartList = ctdi.selectAll();
+		if (cartList.size() > 0) {
+			Carts lastesCarts = cartList.get(cartList.size() - 1);
+			String lastestId = lastesCarts.getCartId();
+			return IDGenerator(prefix, lastestId);
+		} else {
+			return IDGenerator(prefix, "0000");
+		}
+	}
 
 	static public String customersId() {
 		String prefix = "CU";
