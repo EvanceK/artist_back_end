@@ -10,7 +10,7 @@ public class Paintings {
 	private String largUrl;
 	private String smallUrl;
 	private Double price;
-	private LocalDateTime date;
+	private String date;
 	private String style;
 	private LocalDateTime uploadDate;
 	private String period;
@@ -23,7 +23,7 @@ public class Paintings {
 	}
 
 	public Paintings(String paintingId, String paintingName, String artisId, String largUrl, String smallUrl,
-			Double price, LocalDateTime date, String style, LocalDateTime uploadDate, String period, String genre,
+			Double price, String date, String style, LocalDateTime uploadDate, String period, String genre,
 			String media, String dimensions, Integer delicated) {
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
@@ -89,11 +89,11 @@ public class Paintings {
 		this.price = price;
 	}
 
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

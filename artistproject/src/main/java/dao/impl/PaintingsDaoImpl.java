@@ -71,7 +71,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
       	   paintings.setLargUrl(rs.getString("larg_url"));
       	   paintings.setSmallUrl(rs.getString("small_url"));
       	   paintings.setPrice(rs.getDouble("price"));
-      	   paintings.setDate(rs.getTimestamp("date").toLocalDateTime());
+      	   paintings.setDate(rs.getString("date"));
       	   paintings.setStyle(rs.getString("style"));
       	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
       	   paintings.setPeriod(rs.getString("period"));
@@ -106,7 +106,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
     	   paintings.setLargUrl(rs.getString("larg_url"));
     	   paintings.setSmallUrl(rs.getString("small_url"));
     	   paintings.setPrice(rs.getDouble("price"));
-    	   paintings.setDate(rs.getTimestamp("date").toLocalDateTime());
+    	   paintings.setDate(rs.getString("date"));
     	   paintings.setStyle(rs.getString("style"));
     	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
     	   paintings.setPeriod(rs.getString("period"));
@@ -135,7 +135,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
             ps.setString(3,painting.getLargUrl());
             ps.setString(4,painting.getSmallUrl());
             ps.setDouble(5,painting.getPrice());
-            ps.setTimestamp(6, Timestamp.valueOf(painting.getDate()));
+            ps.setString(6,painting.getDate());
             ps.setString(7,painting.getStyle());
             ps.setTimestamp(8, Timestamp.valueOf(painting.getUploadDate()));
             ps.setString(9,painting.getPeriod());
@@ -193,7 +193,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
       	   paintings.setLargUrl(rs.getString("larg_url"));
       	   paintings.setSmallUrl(rs.getString("small_url"));
       	   paintings.setPrice(rs.getDouble("price"));
-      	   paintings.setDate(rs.getTimestamp("date").toLocalDateTime());
+      	   paintings.setDate(rs.getString("date"));
       	   paintings.setStyle(rs.getString("style"));
       	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
       	   paintings.setPeriod(rs.getString("period"));

@@ -18,9 +18,7 @@ public class PaintingsDaoImplTest {
 //	        paintings.setLargUrl("largUrl");
 //	        paintings.setSmallUrl("smallUrl");
 //	        paintings.setPrice(22.0);
-//	        // 在需要顯示年份時，提取年份
-//	        //int year = paintings.getDate().getYear(); // 只獲取年份 輸出：1999
-//	        paintings.setDate(LocalDateTime.of(1999, 1, 1, 0, 0));
+//	        paintings.setDate("1990");
 //	        paintings.setStyle("aaa");
 //	        paintings.setUploadDate(LocalDateTime.now());
 //	        paintings.setPeriod("aaa");
