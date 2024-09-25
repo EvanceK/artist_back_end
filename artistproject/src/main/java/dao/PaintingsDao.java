@@ -11,6 +11,8 @@ public interface PaintingsDao {
     // Read
     List<Paintings> selectAll();
     
+    List<Paintings> selectAllOrderByPaintingsIdDESC();
+
     List<Paintings> selectPaintingsByPaintingsId(String paintingId);
 
     // Update
