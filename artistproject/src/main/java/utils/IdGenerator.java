@@ -7,11 +7,13 @@ import bean.Artis;
 import bean.Carts;
 import bean.Customers;
 import bean.Inventories;
+import bean.Orders;
 import bean.Paintings;
 import dao.impl.ArtisDaoImpl;
 import dao.impl.CartsDaoImpl;
 import dao.impl.CustomersDaoImpl;
 import dao.impl.InventoriesDaoImpl;
+import dao.impl.OrdersDaoImpl;
 import dao.impl.PaintingsDaoImpl;
 
 public class IdGenerator {
@@ -71,18 +73,18 @@ public class IdGenerator {
 	}
 
 
-//	static public String orderId() {
-//		String prefix = "OR";
-//		OrdersDaoImpl odi = new OrdersDaoImpl();
-//		List<Orders> ordersList = odi.selectAll();
-//		if (ordersList.size() > 0) {
-//			Orders lastesOrders = ordersList.get(ordersList.size() - 1);
-//			String lastestId = lastesOrders.getOrdersId();
-//			return IDGenerator(prefix, lastestId);
-//		} else {
-//			return IDGenerator(prefix, "0000");
-//		}
-//	}
+	static public String orderId() {
+		String prefix = "OR";
+		OrdersDaoImpl odi = new OrdersDaoImpl();
+		List<Orders> ordersList = odi.selectAll();
+		if (ordersList.size() > 0) {
+			Orders lastesOrders = ordersList.get(ordersList.size() - 1);
+			String lastestId = lastesOrders.getOrderNumber();
+			return IDGenerator(prefix, lastestId);
+		} else {
+			return IDGenerator(prefix, "0000");
+		}
+	}
 	
 	static public String paintingId(Connection conn) {
 		String prefix = "PT";

@@ -11,7 +11,7 @@ public interface InventoryDetailsDao {
 	//Read
 	List<InventoryDetails> selectAll();
 	//Update
-	void update(InventoryDetails inv);
+	void update(InventoryDetails preInv, InventoryDetails newInv);
 	//Delete
 	void delete(String inventoryNumber, String paintingId);
 }
