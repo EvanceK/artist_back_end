@@ -32,8 +32,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
             ps.setString(4,painting.getLargUrl());
             ps.setString(5,painting.getSmallUrl());
             ps.setDouble(6,painting.getPrice());
-            //將 LocalDateTime 類型，轉換為 Timestamp
-            ps.setTimestamp(7, Timestamp.valueOf(painting.getDate()));
+            ps.setString(7,painting.getDate());
             ps.setString(8,painting.getStyle());
             //將 LocalDateTime 類型，轉換為 Timestamp
             ps.setTimestamp(9, Timestamp.valueOf(painting.getUploadDate()));
@@ -73,7 +72,6 @@ public class PaintingsDaoImpl implements PaintingsDao {
       	   paintings.setPrice(rs.getDouble("price"));
       	   paintings.setDate(rs.getString("date"));
       	   paintings.setStyle(rs.getString("style"));
-      	//暫時先放在Dao層
     	   if (rs.getTimestamp("upload_date") != null )
     	   {
         	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
@@ -113,7 +111,6 @@ public class PaintingsDaoImpl implements PaintingsDao {
     	   paintings.setPrice(rs.getDouble("price"));
     	   paintings.setDate(rs.getString("date"));
     	   paintings.setStyle(rs.getString("style"));
-    	   //暫時先放在Dao層
     	   if (rs.getTimestamp("upload_date") != null )
     	   {
         	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
@@ -204,7 +201,6 @@ public class PaintingsDaoImpl implements PaintingsDao {
       	   paintings.setPrice(rs.getDouble("price"));
       	   paintings.setDate(rs.getString("date"));
       	   paintings.setStyle(rs.getString("style"));
-      	//暫時先放在Dao層
     	   if (rs.getTimestamp("upload_date") != null )
     	   {
         	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());

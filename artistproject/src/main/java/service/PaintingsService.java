@@ -4,10 +4,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import bean.Paintings;
+import dao.impl.PaintingsDaoImpl;
 
 public interface PaintingsService {
-	
-    // Create
+
+	// Create
     void create(Paintings painting);
 
     // Read
@@ -16,7 +17,7 @@ public interface PaintingsService {
     List<Paintings> findByPaintingsId(String paintingId);
     List<Paintings> findByPaintingsName(String paintingName);
     List<Paintings> findByArtisId(String artisId);
-    List<Paintings> findByArtisName(String artisName); 	//inner join
+    List<Paintings> findByArtisName(String artisName); 	//inner join or two times sql select
     List<Paintings> findByDate(String date);
     List<Paintings> findByStlye(String stlye);
     List<Paintings> findByUploadDate(LocalDateTime date);
@@ -34,9 +35,10 @@ public interface PaintingsService {
 
     
     // Update
-    void updatePrice(Paintings painting);
-    void updateUploadDate(Paintings painting);
-    void updateDelicated(Paintings painting);//need to apply Transaction
+    void updatePrice(String paintingId, Double price);
+    void updateUploadDate(String paintingId, LocalDateTime uploadDate);
+    void setPaintingAvailable(String paintingId);//need to apply Transaction
+    void setPaintingSold(String paintingId);//need to apply Transaction
 
  
     // Delete
