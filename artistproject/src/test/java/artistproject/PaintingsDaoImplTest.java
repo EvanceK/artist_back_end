@@ -34,23 +34,23 @@ public class PaintingsDaoImplTest {
         
 //=================================================================
 
-        	//測試select
-//        List<Paintings> selectAll = paintingsDao.selectAll();
-//        for(Paintings p:selectAll)
-//        {
-//        	System.out.println(p);
-//        }
-//        
-//        System.out.println();
-//        
+//        	測試select
+        List<Paintings> selectAll = paintingsDao.selectAll();
+        for(Paintings p:selectAll)
+        {
+        	System.out.println(p);
+        }
+        
+        System.out.println();
+        
         List<Paintings> selectAlldesc = paintingsDao.selectAllOrderByPaintingsIdDESC();
         for(Paintings p:selectAlldesc)
         {
         	System.out.println(p);
         }
 //        只有一個 取index(0)
-//        Paintings paintings = paintingsDao.selectPaintingsByPaintingsId("PT0010").get(0);
-//        System.out.println(paintings);
+        Paintings paintings = paintingsDao.selectPaintingsByPaintingsId("PT0010").get(0);
+        System.out.println(paintings);
         
 //=================================================================
 
