@@ -12,6 +12,7 @@ import java.util.List;
 import bean.Orders;
 import dao.OrdersDao;
 import utils.DbConnection;
+import utils.IdGenerator;
 
 public class OrdersDaoImpl implements OrdersDao{
 
@@ -39,8 +40,8 @@ public class OrdersDaoImpl implements OrdersDao{
 			System.out.println(o.toString());
 		}
 		LocalDateTime orderDate = LocalDateTime.of(2024, 9, 25, 0, 0);  // 使用 LocalDateTime 構建日期時間
-		Orders ord = new Orders("O002", orderDate, "c002");
-		odi.create(ord);
+		//Orders ord = new Orders("O002", orderDate, "c002");
+		odi.create("c002");
 		List<Orders> orderList2 = odi.selectAll();
 		for(Orders o : orderList2)
 		{
@@ -62,18 +63,26 @@ public class OrdersDaoImpl implements OrdersDao{
 		
 	Connection conn = DbConnection.getDb();
 	@Override
-	public void create(Orders ord) {
+	public void create(String customerId) {
 		// TODO Auto-generated method stub
-		String SQL = "insert into orders (order_number, order_date, customer_id) values(?, ?, ?)";
+		String SQL = "insert into orders (order_number,customer_id) values(?, ?, )";
 		try {
+			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(SQL);
-			ps.setString(1, ord.getOrderNumber());
-			ps.setTimestamp(2, Timestamp.valueOf(ord.getOrderDate()));
-			ps.setString(3, ord.getCustomerId());
+			ps.setString(1, IdGenerator.orderId());
+			ps.setString(2, customerId);
 			ps.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 	}
@@ -90,11 +99,15 @@ public class OrdersDaoImpl implements OrdersDao{
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{
+				LocalDateTime orderDate = null;
 				Orders ord = new Orders();
 				ord.setOrderNumber(rs.getString("order_number"));
-				Timestamp tt = rs.getTimestamp("order_date");
-				LocalDateTime orderDate = tt.toLocalDateTime(); // 將 Timestamp 轉換為 LocalDateTime
-			    ord.setOrderDate(orderDate); // 傳入 LocalDateTime
+				Timestamp timestamp = rs.getTimestamp("order_date");
+				if(timestamp != null)
+				{
+				 orderDate = timestamp.toLocalDateTime(); // 將 Timestamp 轉換為 LocalDateTime
+				}
+				ord.setOrderDate(orderDate); // 傳入 LocalDateTime
 			    ord.setCustomerId(rs.getString("customer_id"));
 			    orderList.add(ord);
 			}
@@ -108,6 +121,7 @@ public class OrdersDaoImpl implements OrdersDao{
 	@Override
 	public void update(Orders ord) {
 		// TODO Auto-generated method stub
+		/*
 		String SQL = "UPDATE orders SET order_date = ?, customer_id = ? WHERE order_number = ?";
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
@@ -119,7 +133,7 @@ public class OrdersDaoImpl implements OrdersDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
 
@@ -132,8 +146,17 @@ public class OrdersDaoImpl implements OrdersDao{
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setString(1, orderNumber);
 			ps.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 		
@@ -141,7 +164,7 @@ public class OrdersDaoImpl implements OrdersDao{
 
 
 
-	
+	/*
 	@Override
 	public List<Orders> selectByOrderNumber(String orderNumber) {
 		// TODO Auto-generated method stub
@@ -153,11 +176,15 @@ public class OrdersDaoImpl implements OrdersDao{
 					ResultSet rs = ps.executeQuery();
 					while(rs.next())
 					{
+						LocalDateTime orderDate = null;
 						Orders ord = new Orders();
 						ord.setOrderNumber(rs.getString("order_number"));
-						Timestamp tt = rs.getTimestamp("order_date");
-						LocalDateTime orderDate = tt.toLocalDateTime(); // 將 Timestamp 轉換為 LocalDateTime
-					    ord.setOrderDate(orderDate); // 傳入 LocalDateTime
+						Timestamp timestamp = rs.getTimestamp("order_date");
+						if(timestamp != null)
+						{
+						 orderDate = timestamp.toLocalDateTime(); // 將 Timestamp 轉換為 LocalDateTime
+						}
+						ord.setOrderDate(orderDate); // 傳入 LocalDateTime
 					    ord.setCustomerId(rs.getString("customer_id"));
 					    orderList.add(ord);
 					}
@@ -173,7 +200,31 @@ public class OrdersDaoImpl implements OrdersDao{
 	@Override
 	public List<Orders> selectByOrderDate(LocalDateTime orderDate) {
 		// TODO Auto-generated method stub
-		return null;
+		String SQL = "select * from orders where order_date = ?";
+		List<Orders> orderList = new ArrayList();
+		try {
+			PreparedStatement ps = conn.prepareStatement(SQL);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+				LocalDateTime orderDate = null;
+				Orders ord = new Orders();
+				ord.setOrderNumber(rs.getString("order_number"));
+				Timestamp timestamp = rs.getTimestamp("order_date");
+				if(timestamp != null)
+				{
+				 orderDate = timestamp.toLocalDateTime(); // 將 Timestamp 轉換為 LocalDateTime
+				}
+				ord.setOrderDate(orderDate); // 傳入 LocalDateTime
+			    ord.setCustomerId(rs.getString("customer_id"));
+			    orderList.add(ord);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return orderList;
 	}
 
 
@@ -183,5 +234,5 @@ public class OrdersDaoImpl implements OrdersDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+*/
 }//不可以不見
