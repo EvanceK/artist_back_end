@@ -88,6 +88,7 @@ public class InventoryDetailsDaoImpl implements InventoryDetailsDao {
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setString(1, inventoryNumber);
 			ps.setString(2, paintingId);
+			ps.executeUpdate();
 			conn.commit();
 			conn.setAutoCommit(true);
 		} catch (SQLException e) {
