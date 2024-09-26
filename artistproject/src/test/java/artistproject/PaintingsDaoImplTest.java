@@ -43,14 +43,14 @@ public class PaintingsDaoImplTest {
 //        
 //        System.out.println();
 //        
-//        List<Paintings> selectAlldesc = paintingsDao.selectAllOrderByPaintingsIdDESC();
-//        for(Paintings p:selectAlldesc)
-//        {
-//        	System.out.println(p);
-//        }
+        List<Paintings> selectAlldesc = paintingsDao.selectAllOrderByPaintingsIdDESC();
+        for(Paintings p:selectAlldesc)
+        {
+        	System.out.println(p);
+        }
 //        只有一個 取index(0)
-        Paintings paintings = paintingsDao.selectPaintingsByPaintingsId("PT0010").get(0);
-        System.out.println(paintings);
+//        Paintings paintings = paintingsDao.selectPaintingsByPaintingsId("PT0010").get(0);
+//        System.out.println(paintings);
         
 //=================================================================
 

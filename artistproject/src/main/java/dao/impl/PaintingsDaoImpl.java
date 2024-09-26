@@ -73,7 +73,11 @@ public class PaintingsDaoImpl implements PaintingsDao {
       	   paintings.setPrice(rs.getDouble("price"));
       	   paintings.setDate(rs.getString("date"));
       	   paintings.setStyle(rs.getString("style"));
-      	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
+      	//暫時先放在Dao層
+    	   if (rs.getTimestamp("upload_date") != null )
+    	   {
+        	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
+    	   }
       	   paintings.setPeriod(rs.getString("period"));
       	   paintings.setGenre(rs.getString("genre"));
       	   paintings.setMedia(rs.getString("media"));
@@ -109,6 +113,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
     	   paintings.setPrice(rs.getDouble("price"));
     	   paintings.setDate(rs.getString("date"));
     	   paintings.setStyle(rs.getString("style"));
+    	   //暫時先放在Dao層
     	   if (rs.getTimestamp("upload_date") != null )
     	   {
         	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
@@ -199,7 +204,11 @@ public class PaintingsDaoImpl implements PaintingsDao {
       	   paintings.setPrice(rs.getDouble("price"));
       	   paintings.setDate(rs.getString("date"));
       	   paintings.setStyle(rs.getString("style"));
-      	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
+      	//暫時先放在Dao層
+    	   if (rs.getTimestamp("upload_date") != null )
+    	   {
+        	   paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
+    	   }
       	   paintings.setPeriod(rs.getString("period"));
       	   paintings.setGenre(rs.getString("genre"));
       	   paintings.setMedia(rs.getString("media"));
