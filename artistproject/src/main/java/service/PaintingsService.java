@@ -26,12 +26,19 @@ public interface PaintingsService {
     List<Paintings> UploadMedia(String media);
     List<Paintings> findByDimensions(String dimensions);
     
+    List<Paintings> findByPage(Integer paintingsPerPage, Integer currentPage);
+    Integer findPaintingsTotalCount();
+
+    
 
     //sort by 
     List<Paintings> sortByArtisName(String artisName);	//inner join
-    List<Paintings> sortByPaintingsName(String paintingName);
-    List<Paintings> sortByDate(String paintingName);
     List<Paintings> sortByUploadDate(LocalDateTime date);
+    List<Paintings> sortByStlye(String stlye);
+    List<Paintings> sortByPaintingName(String paintingName);
+    List<Paintings> sortByPrice(Double price);
+    List<Paintings> sortByDate(String date);
+    List<Paintings> sortBypopular(Integer popular);
 
     
     // Update

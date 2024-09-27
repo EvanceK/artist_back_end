@@ -91,10 +91,6 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return null;
 	}
 
-	@Override
-	public List<Paintings> sortByPaintingsName(String paintingName) {
-		return null;
-	}
 
 	@Override
 	public List<Paintings> sortByDate(String paintingName) {
@@ -162,6 +158,39 @@ public class PaintingsServiceImpl implements PaintingsService {
 		}
 
 	}
+
+	@Override
+	public List<Paintings> sortByStlye(String stlye) {
+		return null;
+	}
+
+	@Override
+	public List<Paintings> sortByPaintingName(String paintingName) {
+		return null;
+	}
+
+	@Override
+	public List<Paintings> sortByPrice(Double price) {
+		return null;
+	}
+
+	@Override
+	public List<Paintings> sortBypopular(Integer popular) {
+		return null;
+	}
+
+	@Override
+	public List<Paintings> findByPage(Integer paintingsPerPage, Integer currentPage) {
+		List<Paintings> selectPaintingsLimit = pdi.selectPaintingsLimit(paintingsPerPage, currentPage);
+		return selectPaintingsLimit;
+	}
+
+	@Override
+	public Integer findPaintingsTotalCount() {
+		Integer paintingsTotalCount = pdi.getPaintingsTotalCount();
+		return paintingsTotalCount;
+	}
+	
 
 
 
