@@ -31,7 +31,7 @@ public interface PaintingsService {
     List<Paintings> sortByArtisName(String artisName);	//inner join
     List<Paintings> sortByPaintingsName(String paintingName);
     List<Paintings> sortByDate(String paintingName);
-    List<Paintings> sortByDate(LocalDateTime date);
+    List<Paintings> sortByUploadDate(LocalDateTime date);
 
     
     // Update

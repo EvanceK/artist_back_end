@@ -23,6 +23,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Override
 	public List<Paintings> findAll() {
 		return pdi.selectAll();
+		
 	}
 
 	@Override
@@ -99,12 +100,10 @@ public class PaintingsServiceImpl implements PaintingsService {
 	public List<Paintings> sortByDate(String paintingName) {
 		return null;
 	}
-
 	@Override
-	public List<Paintings> sortByDate(LocalDateTime date) {
+	public List<Paintings> sortByUploadDate(LocalDateTime date) {
 		return null;
 	}
-
 	@Override
 	public void updatePrice(String paintingId, Double price) {
 		List<Paintings> paintings = pdi.selectPaintingsByPaintingsId(paintingId);
@@ -163,5 +162,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		}
 
 	}
+
+
 
 }
