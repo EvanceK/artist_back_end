@@ -112,12 +112,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>5.1.9.RELEASE</version>
+			<version>6.1.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>5.1.9.RELEASE</version>
+			<version>6.1.12</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -175,27 +175,27 @@
 		</resources>
 		<pluginManagement>
 			<plugins>
-				            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                </configuration>
-            </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.10.1</version>
+					<configuration>
+						<source>${jdk.version}</source>
+						<target>${jdk.version}</target>
+					</configuration>
+				</plugin>
 
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.45.v20220203</version>
-                <configuration>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
-                    <webApp>
-                        <contextPath>/spring</contextPath>
-                    </webApp>
-                </configuration>
-            	</plugin>
+				<plugin>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>9.4.45.v20220203</version>
+					<configuration>
+						<scanIntervalSeconds>10</scanIntervalSeconds>
+						<webApp>
+							<contextPath>/spring</contextPath>
+						</webApp>
+					</configuration>
+				</plugin>
 			</plugins>
 
 		</pluginManagement>
