@@ -24,4 +24,6 @@ public interface OrdersDao {
 
 		// Delete
 		void delete(String orderNumber);
+
+		void create(String customerId);
 }

@@ -2,23 +2,27 @@ package service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
 
 import bean.Paintings;
 import dao.impl.PaintingsDaoImpl;
 import service.PaintingsService;
 
-public class PaintingsServiceImpl implements PaintingsService{
+@Component
+public class PaintingsServiceImpl implements PaintingsService {
 	PaintingsDaoImpl pdi = new PaintingsDaoImpl();
 
 	@Override
 	public void create(Paintings painting) {
 		pdi.create(painting);
-		
+
 	}
 
 	@Override
 	public List<Paintings> findAll() {
-		return null;
+		return pdi.selectAll();
 	}
 
 	@Override
@@ -105,10 +109,10 @@ public class PaintingsServiceImpl implements PaintingsService{
 	public void updatePrice(String paintingId, Double price) {
 		List<Paintings> paintings = pdi.selectPaintingsByPaintingsId(paintingId);
 		Paintings painting = paintings.get(0);
-		if(painting != null) {
+		if (painting != null) {
 			painting.setPrice(price);
-			pdi.update(painting);			
-		}else {
+			pdi.update(painting);
+		} else {
 			System.out.println("找不到此id的畫作");
 		}
 	}
@@ -117,11 +121,11 @@ public class PaintingsServiceImpl implements PaintingsService{
 	public void updateUploadDate(String paintingId, LocalDateTime uploadDate) {
 		List<Paintings> paintings = pdi.selectPaintingsByPaintingsId(paintingId);
 		Paintings painting = paintings.get(0);
-		
-		if(painting != null) {
+
+		if (painting != null) {
 			painting.setUploadDate(uploadDate);
 			pdi.update(painting);
-		}else {
+		} else {
 			System.out.println("找不到此id的畫作");
 		}
 	}
@@ -130,36 +134,34 @@ public class PaintingsServiceImpl implements PaintingsService{
 	public void setPaintingAvailable(String paintingId) {
 		List<Paintings> paintings = pdi.selectPaintingsByPaintingsId(paintingId);
 		Paintings painting = paintings.get(0);
-		if(painting != null) {
-			painting.setDelicated(1); //改成有庫存
+		if (painting != null) {
+			painting.setDelicated(1); // 改成有庫存
 			pdi.update(painting);
-		}else {
+		} else {
 			System.out.println("找不到此id的畫作");
 		}
 	}
-	
+
 	@Override
 	public void setPaintingSold(String paintingId) {
 		List<Paintings> paintings = pdi.selectPaintingsByPaintingsId(paintingId);
 		Paintings painting = paintings.get(0);
-		if(painting != null) {
-			painting.setDelicated(0); //改成賣出
+		if (painting != null) {
+			painting.setDelicated(0); // 改成賣出
 			pdi.update(painting);
-		}else {
+		} else {
 			System.out.println("找不到此id的畫作");
 		}
 	}
 
 	@Override
 	public void delete(String paintingId) {
-		if(pdi.selectPaintingsByPaintingsId(paintingId)!=null) {
+		if (pdi.selectPaintingsByPaintingsId(paintingId) != null) {
 			pdi.delete(paintingId);
-		}else {
+		} else {
 			System.out.println("找不到此id的畫作");
 		}
 
 	}
-
-
 
 }

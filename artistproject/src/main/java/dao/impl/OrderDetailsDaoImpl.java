@@ -117,4 +117,16 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao{
 		}
 	}
 
+	@Override
+	public void create(OrderDetails odl) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(OrderDetails odl) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }//nono

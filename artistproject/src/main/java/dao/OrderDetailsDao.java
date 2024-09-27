@@ -19,4 +19,8 @@ public interface OrderDetailsDao {
 			// Delete
 			void delete(String orderNumber);
 
+			void update(OrderDetails preodl, OrderDetails newodl);
+
+			void create(String orderNumber, String paintingId, Double price);
+
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON_aaaa</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    // 寫一個JavaScript物件
+    var user = {
+        name:"aaaaaaaa",
+        age:4,
+        sex:"man"
+    }
+    console.log(user);
+
+    // 將js物件轉換成json物件
+    var json = JSON.stringify(user);
+    console.log(json);
+
+    console.log("------------------");
+
+    //  將JSON字符串轉換成JavaScript物件
+    var obj = JSON.parse(json);
+    console.log(obj);
+
+</script>
+
+</body>
+</html>
