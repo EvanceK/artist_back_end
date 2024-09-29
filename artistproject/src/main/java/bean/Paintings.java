@@ -1,5 +1,6 @@
 package bean;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Paintings {
@@ -18,6 +19,10 @@ public class Paintings {
 	private String media;
 	private String dimensions;
 	private Integer delicated;
+	
+	//for inner join
+	private String ArtisName;
+	
 
 	public Paintings() {
 	}
@@ -160,5 +165,15 @@ public class Paintings {
 				+ style + ", uploadDate=" + uploadDate + ", period=" + period + ", genre=" + genre + ", media=" + media
 				+ ", dimensions=" + dimensions + ", delicated=" + delicated + "]";
 	}
+
+	public String getArtisName() {
+		return ArtisName;
+	}
+
+	public void setArtisName(String artisName) {
+		ArtisName = artisName;
+	}
+
+
 	
 }

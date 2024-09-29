@@ -87,6 +87,42 @@ public class PaintingsDaoImpl implements PaintingsDao {
 		return paintingsList;
 	}
 
+	public List<Paintings> selectAllforArtisName() {
+		List<Paintings> paintingsList = new ArrayList<>();
+		PreparedStatement ps = null;
+		String sql = "Select painting_id,painting_name,artis_id,artis_name,larg_url,small_url,price,`date`,style,upload_date,`period`,genre,media,dimensions,delicated From paintings inner join artis USING (artis_id) order by painting_id";
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Paintings paintings = new Paintings();
+				paintings.setPaintingId(rs.getString("painting_id"));
+				paintings.setPaintingName(rs.getString("painting_name"));
+				paintings.setArtisId(rs.getString("artis_id"));
+				paintings.setArtisName(rs.getString("artis_name"));
+				paintings.setLargUrl(rs.getString("larg_url"));
+				paintings.setSmallUrl(rs.getString("small_url"));
+				paintings.setPrice(rs.getDouble("price"));
+				paintings.setDate(rs.getString("date"));
+				paintings.setStyle(rs.getString("style"));
+				if (rs.getTimestamp("upload_date") != null) {
+					paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
+				}
+				paintings.setPeriod(rs.getString("period"));
+				paintings.setGenre(rs.getString("genre"));
+				paintings.setMedia(rs.getString("media"));
+				paintings.setDimensions(rs.getString("dimensions"));
+				paintings.setDelicated(rs.getInt("delicated"));
+
+				paintingsList.add(paintings);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return paintingsList;
+	}
+	
 	@Override
 	public List<Paintings> selectPaintingsByPaintingsId(String paintingId) {
 
@@ -213,6 +249,45 @@ public class PaintingsDaoImpl implements PaintingsDao {
 		}
 		return paintingsList;
 	}
+	
+	@Override
+	public List<Paintings> selectAllOrderByPaintingsName(String paintingName) {
+
+			List<Paintings> paintingsList = new ArrayList<>();
+			PreparedStatement ps = null;
+			String sql = "Select * From paintings where painting_name=?";
+
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, paintingName);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					Paintings paintings = new Paintings();
+					paintings.setPaintingId(rs.getString("painting_id"));
+					paintings.setPaintingName(rs.getString("painting_name"));
+					paintings.setArtisId(rs.getString("artis_id"));
+					paintings.setLargUrl(rs.getString("larg_url"));
+					paintings.setSmallUrl(rs.getString("small_url"));
+					paintings.setPrice(rs.getDouble("price"));
+					paintings.setDate(rs.getString("date"));
+					paintings.setStyle(rs.getString("style"));
+					if (rs.getTimestamp("upload_date") != null) {
+						paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
+					}
+					paintings.setPeriod(rs.getString("period"));
+					paintings.setGenre(rs.getString("genre"));
+					paintings.setMedia(rs.getString("media"));
+					paintings.setDimensions(rs.getString("dimensions"));
+					paintings.setDelicated(rs.getInt("delicated"));
+
+					paintingsList.add(paintings);
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+			return paintingsList;
+	}
+
 
 	@Override
 	public List<Paintings> selectPaintingsLimit(Integer PaintingsPerPage, Integer pageNumber) {
@@ -256,7 +331,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
 	
     public Integer getPaintingsTotalCount() {
     	PreparedStatement ps = null;
-		String sql = "Select count* From paintings";
+		String sql = "Select count(*) From paintings";
 		
 		try {
 			ps = conn.prepareStatement(sql);

@@ -2,6 +2,7 @@ package service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -25,6 +26,12 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return pdi.selectAll();
 		
 	}
+	
+	public List<Paintings> findAllforArtisName(){
+		return pdi.selectAllforArtisName();
+
+    }
+
 
 	@Override
 	public List<Paintings> findAllDesc() {
@@ -38,7 +45,8 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	@Override
 	public List<Paintings> findByPaintingsName(String paintingName) {
-		return null;
+		List<Paintings> paintings = pdi.selectAllOrderByPaintingsName(paintingName);
+		return paintings;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package dao;
 
 import bean.Paintings;
 import java.util.List;
+import java.util.Map;
 
 
 public interface PaintingsDao {
@@ -10,11 +11,14 @@ public interface PaintingsDao {
 
     // Read
     List<Paintings> selectAll();
-    
+    List<Paintings> selectAllforArtisName();
+	
     List<Paintings> selectAllOrderByPaintingsIdDESC();
-
     List<Paintings> selectPaintingsByPaintingsId(String paintingId);
-    
+	List<Paintings> selectAllOrderByPaintingsName(String paintingName);
+
+	
+	
     //實現分頁
     List<Paintings> selectPaintingsLimit(Integer PaintingsPerPage, Integer pageNumber);
     

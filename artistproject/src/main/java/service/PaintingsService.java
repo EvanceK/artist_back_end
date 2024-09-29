@@ -2,6 +2,7 @@ package service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import bean.Paintings;
 import dao.impl.PaintingsDaoImpl;
@@ -13,6 +14,8 @@ public interface PaintingsService {
 
     // Read
     List<Paintings> findAll();
+    List<Paintings> findAllforArtisName();
+
     List<Paintings> findAllDesc();
     List<Paintings> findByPaintingsId(String paintingId);
     List<Paintings> findByPaintingsName(String paintingName);
@@ -25,7 +28,7 @@ public interface PaintingsService {
     List<Paintings> findByGenre(String genre);
     List<Paintings> UploadMedia(String media);
     List<Paintings> findByDimensions(String dimensions);
-    
+
     List<Paintings> findByPage(Integer paintingsPerPage, Integer currentPage);
     Integer findPaintingsTotalCount();
 
@@ -39,6 +42,7 @@ public interface PaintingsService {
     List<Paintings> sortByPrice(Double price);
     List<Paintings> sortByDate(String date);
     List<Paintings> sortBypopular(Integer popular);
+
 
     
     // Update
