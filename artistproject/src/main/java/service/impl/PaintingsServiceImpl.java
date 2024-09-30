@@ -7,13 +7,14 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import bean.Paintings;
 import dao.impl.PaintingsDaoImpl;
 import dto.PaintingDTO;
 import service.PaintingsService;
 
-@Component
+@Service
 public class PaintingsServiceImpl implements PaintingsService {
 	
 	@Autowired
