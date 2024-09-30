@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import bean.Paintings;
@@ -14,7 +15,11 @@ import service.PaintingsService;
 
 @Component
 public class PaintingsServiceImpl implements PaintingsService {
-	PaintingsDaoImpl pdi = new PaintingsDaoImpl();
+	
+	@Autowired
+	PaintingsDaoImpl pdi;//用spring管理
+	
+//	PaintingsDaoImpl pdi = new PaintingsDaoImpl();手動
 
 	@Override
 	public void create(Paintings painting) {

@@ -1,6 +1,7 @@
 package dao.impl;
 
 import bean.Paintings;
+
 import dao.PaintingsDao;
 import dto.PaintingDTO;
 import utils.DbConnection;
@@ -14,7 +15,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository  // 加上這個註解表示這個類是 DAO 層
 public class PaintingsDaoImpl implements PaintingsDao {
 	Connection conn = DbConnection.getDb();
 
