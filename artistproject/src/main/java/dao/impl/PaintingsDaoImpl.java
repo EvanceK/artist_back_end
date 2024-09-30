@@ -254,21 +254,22 @@ public class PaintingsDaoImpl implements PaintingsDao {
 	}
 	
 	@Override
-	public List<Paintings> selectAllOrderByPaintingsName(String paintingName) {
+	public List<PaintingDTO> selectAllOrderByPaintingsName(String paintingName) {
 
-			List<Paintings> paintingsList = new ArrayList<>();
+			List<PaintingDTO> paintingsList = new ArrayList<>();
 			PreparedStatement ps = null;
-			String sql = "Select * From paintings where painting_name=?";
+			String sql = "Select painting_id,painting_name,artis_id,artis_name,larg_url,small_url,price,`date`,style,upload_date,`period`,genre,media,dimensions,delicated From paintings inner join artis USING (artis_id) where painting_name=? order by painting_id";
 
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, paintingName);
 				ResultSet rs = ps.executeQuery();
 				while (rs.next()) {
-					Paintings paintings = new Paintings();
+					PaintingDTO paintings = new PaintingDTO();
 					paintings.setPaintingId(rs.getString("painting_id"));
 					paintings.setPaintingName(rs.getString("painting_name"));
 					paintings.setArtisId(rs.getString("artis_id"));
+					paintings.setArtisName(rs.getString("artis_name"));
 					paintings.setLargUrl(rs.getString("larg_url"));
 					paintings.setSmallUrl(rs.getString("small_url"));
 					paintings.setPrice(rs.getDouble("price"));
@@ -293,11 +294,11 @@ public class PaintingsDaoImpl implements PaintingsDao {
 
 
 	@Override
-	public List<Paintings> selectPaintingsLimit(Integer PaintingsPerPage, Integer pageNumber) {
-		List<Paintings> paintingsList = new ArrayList<>();
+	public List<PaintingDTO> selectPaintingsLimit(Integer PaintingsPerPage, Integer pageNumber) {
+		List<PaintingDTO> paintingsList = new ArrayList<>();
 
 		int offset = (pageNumber - 1) * PaintingsPerPage;
-		String sql = "Select * From paintings ORDER by painting_id LIMIT ? OFFSET ?";
+		String sql = "Select painting_id,painting_name,artis_id,artis_name,larg_url,small_url,price,`date`,style,upload_date,`period`,genre,media,dimensions,delicated From paintings inner join artis USING (artis_id) ORDER by painting_id LIMIT ? OFFSET ?";
 		PreparedStatement ps = null;
 		try {
 			ps = conn.prepareStatement(sql);
@@ -305,10 +306,11 @@ public class PaintingsDaoImpl implements PaintingsDao {
 			ps.setInt(2, offset);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Paintings paintings = new Paintings();
+				 PaintingDTO paintings = new PaintingDTO();
 				paintings.setPaintingId(rs.getString("painting_id"));
 				paintings.setPaintingName(rs.getString("painting_name"));
 				paintings.setArtisId(rs.getString("artis_id"));
+				paintings.setArtisName(rs.getString("artis_name"));
 				paintings.setLargUrl(rs.getString("larg_url"));
 				paintings.setSmallUrl(rs.getString("small_url"));
 				paintings.setPrice(rs.getDouble("price"));
@@ -332,7 +334,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
 
 	}
 	
-    public Integer getPaintingsTotalCount() {
+    public Long getPaintingsTotalCount() {
     	PreparedStatement ps = null;
 		String sql = "Select count(*) From paintings";
 		
@@ -340,7 +342,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
 			ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				return (Integer)rs.getObject(1);
+				return rs.getLong(1);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -14,7 +14,6 @@
 	<context:component-scan base-package="controller" />
 	<!-- 自動掃描service下所有的類交给IOC管理(Inversion of Control) -->
 	<context:component-scan base-package="service" />
-	
 	<!-- 自動掃描 dao 下所有的類交给 IOC 管理 (Inversion of Control) -->
 	<context:component-scan base-package="dao" />
 	

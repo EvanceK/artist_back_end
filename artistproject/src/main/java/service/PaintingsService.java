@@ -19,7 +19,7 @@ public interface PaintingsService {
 
     List<Paintings> findAllDesc();
     List<Paintings> findByPaintingsId(String paintingId);
-    List<Paintings> findByPaintingsName(String paintingName);
+    List<PaintingDTO> findByPaintingsName(String paintingName);
     List<Paintings> findByArtisId(String artisId);
     List<Paintings> findByArtisName(String artisName); 	//inner join or two times sql select
     List<Paintings> findByDate(String date);
@@ -30,8 +30,8 @@ public interface PaintingsService {
     List<Paintings> UploadMedia(String media);
     List<Paintings> findByDimensions(String dimensions);
 
-    List<Paintings> findByPage(Integer paintingsPerPage, Integer currentPage);
-    Integer findPaintingsTotalCount();
+    List<PaintingDTO> findByPage(Integer paintingsPerPage, Integer currentPage);
+    Long findPaintingsTotalCount();
 
     
 

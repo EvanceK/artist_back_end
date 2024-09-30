@@ -17,15 +17,15 @@ public interface PaintingsDao {
 	
     List<Paintings> selectAllOrderByPaintingsIdDESC();
     List<Paintings> selectPaintingsByPaintingsId(String paintingId);
-	List<Paintings> selectAllOrderByPaintingsName(String paintingName);
+	List<PaintingDTO> selectAllOrderByPaintingsName(String paintingName);
 
 	
 	
     //實現分頁
-    List<Paintings> selectPaintingsLimit(Integer PaintingsPerPage, Integer pageNumber);
+    List<PaintingDTO> selectPaintingsLimit(Integer PaintingsPerPage, Integer pageNumber);
     
     //查詢總數
-    Integer getPaintingsTotalCount();
+    Long getPaintingsTotalCount();
 
     // Update
     void update(Paintings painting);
