@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import bean.Paintings;
 import dao.impl.PaintingsDaoImpl;
+import dto.PaintingDTO;
 import service.PaintingsService;
 
 @Component
@@ -27,7 +28,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		
 	}
 	
-	public List<Paintings> findAllforArtisName(){
+	public List<PaintingDTO> findAllforArtisName(){
 		return pdi.selectAllforArtisName();
 
     }

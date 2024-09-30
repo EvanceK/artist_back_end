@@ -2,6 +2,7 @@ package dao.impl;
 
 import bean.Paintings;
 import dao.PaintingsDao;
+import dto.PaintingDTO;
 import utils.DbConnection;
 import utils.IdGenerator;
 
@@ -87,19 +88,18 @@ public class PaintingsDaoImpl implements PaintingsDao {
 		return paintingsList;
 	}
 
-	public List<Paintings> selectAllforArtisName() {
-		List<Paintings> paintingsList = new ArrayList<>();
-		PreparedStatement ps = null;
+	public List<PaintingDTO> selectAllforArtisName() {
+	    List<PaintingDTO> paintingsList = new ArrayList<>();
+	    PreparedStatement ps = null;
 		String sql = "Select painting_id,painting_name,artis_id,artis_name,larg_url,small_url,price,`date`,style,upload_date,`period`,genre,media,dimensions,delicated From paintings inner join artis USING (artis_id) order by painting_id";
 
 		try {
 			ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Paintings paintings = new Paintings();
+				PaintingDTO paintings = new PaintingDTO();
 				paintings.setPaintingId(rs.getString("painting_id"));
 				paintings.setPaintingName(rs.getString("painting_name"));
-				paintings.setArtisId(rs.getString("artis_id"));
 				paintings.setArtisName(rs.getString("artis_name"));
 				paintings.setLargUrl(rs.getString("larg_url"));
 				paintings.setSmallUrl(rs.getString("small_url"));

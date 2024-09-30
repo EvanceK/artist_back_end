@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bean.Paintings;
+import dto.PaintingDTO;
 import service.impl.PaintingsServiceImpl;
 
 //@RestController 是 @Controller 和 @ResponseBody 的結合體
@@ -29,7 +30,7 @@ public class PaintingsController {
 	@RequestMapping("/findall") // /PTController/findall
 	public String findall() throws JsonProcessingException {
 		ObjectMapper jsonMapper = new ObjectMapper();
-		List<Paintings> alllist = psi.findAllforArtisName();	//inner joing artis_id
+		List<PaintingDTO> alllist = psi.findAllforArtisName();	//inner joing artis_id
         // 轉成json格式
 		return jsonMapper.writeValueAsString(alllist); // 直接返回序列化結果
 	}

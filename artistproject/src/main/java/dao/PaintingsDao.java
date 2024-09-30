@@ -1,6 +1,8 @@
 package dao;
 
 import bean.Paintings;
+import dto.PaintingDTO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +13,7 @@ public interface PaintingsDao {
 
     // Read
     List<Paintings> selectAll();
-    List<Paintings> selectAllforArtisName();
+    List<PaintingDTO> selectAllforArtisName();
 	
     List<Paintings> selectAllOrderByPaintingsIdDESC();
     List<Paintings> selectPaintingsByPaintingsId(String paintingId);

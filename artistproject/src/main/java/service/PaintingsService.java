@@ -6,6 +6,7 @@ import java.util.Map;
 
 import bean.Paintings;
 import dao.impl.PaintingsDaoImpl;
+import dto.PaintingDTO;
 
 public interface PaintingsService {
 
@@ -14,7 +15,7 @@ public interface PaintingsService {
 
     // Read
     List<Paintings> findAll();
-    List<Paintings> findAllforArtisName();
+    List<PaintingDTO> findAllforArtisName();
 
     List<Paintings> findAllDesc();
     List<Paintings> findByPaintingsId(String paintingId);
