@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,14 +34,14 @@ public class PaintingsController {
         // 轉成json格式
 		return jsonMapper.writeValueAsString(alllist); // 直接返回序列化結果
 	}
-	
-	@RequestMapping(value = "/findptname", method = RequestMethod.GET)
-	public String findPaintingsName(@RequestParam("paintingsName") String paintingsName) throws JsonProcessingException {
-	    ObjectMapper jsonMapper = new ObjectMapper();
-	    List<PaintingDTO> paintings = psi.findByPaintingsName(paintingsName); // 根據傳入的 paintingsName 查詢
-	    // 轉成 JSON 格式返回
-	    return jsonMapper.writeValueAsString(paintings);
+	@RequestMapping("/findptname") // /PTController/findptname
+	public String findPaintingsName() throws JsonProcessingException {
+		ObjectMapper jsonMapper = new ObjectMapper();
+		List<Paintings> paintingsName = psi.findByPaintingsName("Portrait of a Youth Holding an Arrow");
+        // 轉成json格式
+		return jsonMapper.writeValueAsString(paintingsName); // 直接返回序列化結果
 	}
+	
 	
 	
 	@RequestMapping(value = "/findByPage", method = RequestMethod.GET)
@@ -51,7 +50,7 @@ public class PaintingsController {
             @RequestParam(value = "pageSize", defaultValue = "6") int pageSize) {
 
         // 1. 查詢總數
-		Long totalCount = psi.findPaintingsTotalCount();
+		int totalCount = psi.findPaintingsTotalCount();
         System.out.println(totalCount);
 
         // 2. 計算總頁數
@@ -59,7 +58,7 @@ public class PaintingsController {
         System.out.println(totalPage);
 
         // 3. 根據當前頁和每頁大小查詢分頁數據
-        List<PaintingDTO> paintingsList = psi.findByPage(pageSize,currentPage);
+        List<Paintings> paintingsList = psi.findByPage(currentPage, pageSize);
 
         // 4. 將數據封裝到 Map 中返回
         Map<String, Object> result = new HashMap<>();

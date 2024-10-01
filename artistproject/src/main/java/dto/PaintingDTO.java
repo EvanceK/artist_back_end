@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 public class PaintingDTO {
 	private String paintingId;
 	private String paintingName;
-	private String artisId;
 	private String artisName;
 	private String largUrl;
 	private String smallUrl;
@@ -55,12 +54,6 @@ public class PaintingDTO {
 		this.paintingName = paintingName;
 	}
 
-	public String getArtisId() {
-		return artisId;
-	}
-	public void setArtisId(String artisId) {
-		this.artisId = artisId;
-	}
 	public String getArtisName() {
 		return artisName;
 	}

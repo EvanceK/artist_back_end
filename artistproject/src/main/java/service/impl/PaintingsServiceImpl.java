@@ -17,8 +17,8 @@ import service.PaintingsService;
 @Service
 public class PaintingsServiceImpl implements PaintingsService {
 	
-	@Autowired //透過spring管理 @Autowired 的方式，去加入想要使用的 dao
-	PaintingsDaoImpl pdi;
+	@Autowired
+	PaintingsDaoImpl pdi;//用spring管理
 	
 //	PaintingsDaoImpl pdi = new PaintingsDaoImpl();手動
 
@@ -51,8 +51,8 @@ public class PaintingsServiceImpl implements PaintingsService {
 	}
 
 	@Override
-	public List<PaintingDTO> findByPaintingsName(String paintingName) {
-		List<PaintingDTO> paintings = pdi.selectAllOrderByPaintingsName(paintingName);
+	public List<Paintings> findByPaintingsName(String paintingName) {
+		List<Paintings> paintings = pdi.selectAllOrderByPaintingsName(paintingName);
 		return paintings;
 	}
 
@@ -195,14 +195,14 @@ public class PaintingsServiceImpl implements PaintingsService {
 	}
 
 	@Override
-	public List<PaintingDTO> findByPage(Integer paintingsPerPage, Integer currentPage) {
-		List<PaintingDTO> selectPaintingsLimit = pdi.selectPaintingsLimit(paintingsPerPage, currentPage);
+	public List<Paintings> findByPage(Integer paintingsPerPage, Integer currentPage) {
+		List<Paintings> selectPaintingsLimit = pdi.selectPaintingsLimit(paintingsPerPage, currentPage);
 		return selectPaintingsLimit;
 	}
 
 	@Override
-	public Long findPaintingsTotalCount() {
-		Long paintingsTotalCount = pdi.getPaintingsTotalCount();
+	public Integer findPaintingsTotalCount() {
+		Integer paintingsTotalCount = pdi.getPaintingsTotalCount();
 		return paintingsTotalCount;
 	}
 	
