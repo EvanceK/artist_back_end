@@ -18,7 +18,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 //@RestController 是 @Controller 和 @ResponseBody 的結合體
-@CrossOrigin
 @RestController
 @RequestMapping("/PTController")
 public class PaintingsController {
