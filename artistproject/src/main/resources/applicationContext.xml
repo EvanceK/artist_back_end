@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/mvc
-       https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       
 
 	<!-- 自動掃描controller下所有的類交给IOC管理(Inversion of Control) -->
-	<context:component-scan base-package="controller" />
+	<context:component-scan
+		base-package="controller" />
 	<!-- 自動掃描service下所有的類交给IOC管理(Inversion of Control) -->
 	<context:component-scan base-package="service" />
 	<!-- 自動掃描 dao 下所有的類交给 IOC 管理 (Inversion of Control) -->
 	<context:component-scan base-package="dao" />
+	<context:component-scan base-package="config" />
 	
-    <!-- 靜態資源過濾 -->
-    <mvc:default-servlet-handler />
-    <mvc:annotation-driven />
-    
+
+	<!-- 靜態資源過濾 -->
+	<mvc:default-servlet-handler />
+	<mvc:annotation-driven />
+
 	<!-- 視圖解析器 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"

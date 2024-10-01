@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,12 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import bean.Paintings;
 import dto.PaintingDTO;
 import service.impl.PaintingsServiceImpl;
 
 //@RestController 是 @Controller 和 @ResponseBody 的結合體
-@CrossOrigin
 @RestController
 @RequestMapping("/PTController")
 public class PaintingsController {
@@ -44,11 +40,10 @@ public class PaintingsController {
 	    return jsonMapper.writeValueAsString(paintings);
 	}
 	
-	
 	@RequestMapping(value = "/findByPage", method = RequestMethod.GET)
     public Map<String, Object> findByPage(
             @RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
-            @RequestParam(value = "pageSize", defaultValue = "6") int pageSize) {
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
         // 1. 查詢總數
 		Long totalCount = psi.findPaintingsTotalCount();
