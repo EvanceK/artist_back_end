@@ -20,7 +20,7 @@
 	
     <!-- 靜態資源過濾 -->
     <mvc:default-servlet-handler />
-    <mvc:annotation-driven />
+<!--     <mvc:annotation-driven /> -->
     
 	<!-- 視圖解析器 -->
 	<bean
