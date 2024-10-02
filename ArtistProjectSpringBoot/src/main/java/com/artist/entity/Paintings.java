@@ -59,13 +59,19 @@ public class Paintings {
 	
 	@Column(name = "delicated")
 	private Integer delicated;
+	
+	@Column(name = "status")
+	private String status;
 
 	public Paintings() {
 	}
 
+
+
 	public Paintings(String paintingId, String paintingName, String artisId, String largUrl, String smallUrl,
 			Double price, String date, String style, LocalDateTime uploadDate, String period, String genre,
-			String media, String dimensions, Integer delicated) {
+			String media, String dimensions, Integer delicated, String status) {
+		super();
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
 		this.artisId = artisId;
@@ -80,7 +86,10 @@ public class Paintings {
 		this.media = media;
 		this.dimensions = dimensions;
 		this.delicated = delicated;
+		this.status = status;
 	}
+
+
 
 	public String getPaintingId() {
 		return paintingId;
@@ -194,12 +203,28 @@ public class Paintings {
 		this.delicated = delicated;
 	}
 
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Paintings [paintingId=" + paintingId + ", paintingName=" + paintingName + ", artisId=" + artisId
 				+ ", largUrl=" + largUrl + ", smallUrl=" + smallUrl + ", price=" + price + ", date=" + date + ", style="
 				+ style + ", uploadDate=" + uploadDate + ", period=" + period + ", genre=" + genre + ", media=" + media
-				+ ", dimensions=" + dimensions + ", delicated=" + delicated + "]";
+				+ ", dimensions=" + dimensions + ", delicated=" + delicated + ", status=" + status + "]";
 	}
+
+
 
 }

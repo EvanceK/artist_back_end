@@ -17,11 +17,13 @@ public class PaintingDTO {
 	private String media;
 	private String dimensions;
 	private Integer delicated;
+	private LocalDateTime removeDate;
+
 	
-	
+
 	public PaintingDTO(String paintingId, String paintingName, String artisName, String largUrl, String smallUrl,
 			Double price, String date, String style, LocalDateTime uploadDate, String period, String genre,
-			String media, String dimensions, Integer delicated) {
+			String media, String dimensions, Integer delicated, LocalDateTime removeDate) {
 		super();
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
@@ -37,6 +39,7 @@ public class PaintingDTO {
 		this.media = media;
 		this.dimensions = dimensions;
 		this.delicated = delicated;
+		this.removeDate = removeDate;
 	}
 	public PaintingDTO() {
 		super();
@@ -126,5 +129,11 @@ public class PaintingDTO {
 	public void setDelicated(Integer delicated) {
 		this.delicated = delicated;
 	}
-	
+	public LocalDateTime getRemoveDate() {
+		return removeDate;
+	}
+	public void setRemoveDate(LocalDateTime removeDate) {
+		this.removeDate = removeDate;
+	}
+
 }

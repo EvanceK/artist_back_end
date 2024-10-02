@@ -49,4 +49,11 @@ public interface PaintingsService {
  
     // Delete
     void delete(String paintingId);
+    
+    
+    //上架下架機制
+    void uploadItems();
+
+    void removeItems();
+    
 }

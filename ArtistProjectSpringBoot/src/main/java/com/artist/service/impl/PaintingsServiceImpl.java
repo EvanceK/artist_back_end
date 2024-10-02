@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.artist.dao.impl.PaintingsDaoImpl;
 import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
-import com.artist.repository.PaintingsDao;
+import com.artist.repository.PaintingsRepository;
 import com.artist.service.PaintingsService;
 
 @Service
@@ -19,7 +19,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	PaintingsDaoImpl pdi;
 
 	@Autowired // 這裡是用 com.artist.repository.PaintingsDao; //不是自己寫的 PaintingsDao
-	private PaintingsDao pdijpa;
+	private PaintingsRepository ptr;
 
 	// =========================================================================================================
 
@@ -116,7 +116,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	// 用spring data jpa 實現
 	@Override
 	public void create(Paintings painting) {
-		pdijpa.save(painting);
+		ptr.save(painting);
 	}
 
 	@Override
@@ -207,6 +207,32 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Override
 	public List<Paintings> findByPaintingsId(String paintingId) {
 		return null;
+	}
+
+	
+	
+	//商品上架的邏輯
+	public void uploadItems() {
+		//create new paintings
+		
+		// re-upload
+	
+	}
+	
+	//商品下架的邏輯 //每次前端有request時執行一次?
+	@Override
+	public void removeItems() {
+		//loading出目前已上架的商品
+		List<PaintingDTO> allPainting = pdi.selectAllforArtisName();
+		//計算出下架的時間
+		for(PaintingDTO pd:allPainting) {
+			LocalDateTime removeDate = pd.getUploadDate().plusDays(1L); //1天以上for測試
+			pd.setRemoveDate(removeDate);
+		//時間到時自動下架
+		 if (LocalDateTime.now().isAfter(removeDate)) {
+			 	this.setPaintingSold(pd.getPaintingId());
+	        }
+		}
 	}
 
 }

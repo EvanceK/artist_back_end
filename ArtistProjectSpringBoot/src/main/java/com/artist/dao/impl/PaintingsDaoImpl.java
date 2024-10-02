@@ -58,7 +58,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
 	public List<Paintings> selectAll() {
 		List<Paintings> paintingsList = new ArrayList<>();
 		PreparedStatement ps = null;
-		String sql = "Select * From paintings";
+		String sql = "Select * From paintings where delicated = 1";//只給前端 delicated = 1
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -93,7 +93,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
 	public List<PaintingDTO> selectAllforArtisName() {
 	    List<PaintingDTO> paintingsList = new ArrayList<>();
 	    PreparedStatement ps = null;
-		String sql = "Select painting_id,painting_name,artis_id,artis_name,larg_url,small_url,price,`date`,style,upload_date,`period`,genre,media,dimensions,delicated From paintings inner join artis USING (artis_id) order by painting_id";
+		String sql = "Select painting_id,painting_name,artis_id,artis_name,larg_url,small_url,price,`date`,style,upload_date,`period`,genre,media,dimensions,delicated From paintings inner join artis USING (artis_id) Having delicated = 1 order by painting_id";
 
 		try {
 			ps = conn.prepareStatement(sql);

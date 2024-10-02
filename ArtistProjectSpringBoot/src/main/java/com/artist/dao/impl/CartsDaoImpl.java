@@ -25,7 +25,7 @@ public class CartsDaoImpl implements CartsDAO{
 		try {
 			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(SQL);
-			ps.setString(1,IdGenerator.cartsId());
+//			ps.setString(1,IdGenerator.cartsId());
 			ps.setString(1,c.getCustomerId());
 			ps.setString(2,c.getPaintingId());
 			ps.executeUpdate();
@@ -52,7 +52,6 @@ public class CartsDaoImpl implements CartsDAO{
 			while(rs.next())
 			{
 				Carts c=new Carts();
-				c.setCartId(rs.getString("cart_id"));
 				c.setCustomerId(rs.getString("customer_id"));
 				c.setPaintingId(rs.getString("painting_id"));
 				data.add(c);

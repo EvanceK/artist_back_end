@@ -8,16 +8,20 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "carts")
 public class Carts {
+
 	@Id
-	@Column(name = "cart_id")
-	private String cartId;
-	
 	@Column(name = "customer_id")
 	private String customerId;
 	
 	@Column(name = "painting_id")
 	private String paintingId;
-
+	
+	@Column(name = "price")
+	private Double price;
+	
+	@Column(name = "status")
+	private String status;
+	
 	public Carts() {
 	}
 
@@ -26,11 +30,12 @@ public class Carts {
 		this.paintingId = paintingId;
 	}
 
-	public Carts(String cartId, String customerId, String paintingId) {
+
+	public Carts(String customerId, String paintingId, Double price) {
 		super();
-		this.cartId = cartId;
 		this.customerId = customerId;
 		this.paintingId = paintingId;
+		this.price = price;
 	}
 
 	public String getCustomerId() {
@@ -49,12 +54,23 @@ public class Carts {
 		this.paintingId = paintingId;
 	}
 
-	public String getCartId() {
-		return cartId;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setCartId(String cartId) {
-		this.cartId = cartId;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
 
 }

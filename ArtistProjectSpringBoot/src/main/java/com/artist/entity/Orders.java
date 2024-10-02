@@ -21,14 +21,39 @@ public class Orders {
 	
 	@Column(name = "order_id")
 	private String customerId;
+	
+	@Column(name = "delivery_adress")
+	private String deliveryAddress;
+	
+	@Column(name = "att_name")
+	private String attName;
+	
+	@Column(name = "att_phone")
+	private String attPhone;
 
+	@Column(name = "delivery_instrictions")
+	private String deliveryInstrictions;
+	
 	public Orders() {
 	}
 
 	public Orders(String orderNumber, LocalDateTime orderDate, String customerId) {
+		super();
 		this.orderNumber = orderNumber;
 		this.orderDate = orderDate;
 		this.customerId = customerId;
+	}
+
+	public Orders(String orderNumber, LocalDateTime orderDate, String customerId, String deliveryAddress,
+			String attName, String attPhone, String deliveryInstrictions) {
+		super();
+		this.orderNumber = orderNumber;
+		this.orderDate = orderDate;
+		this.customerId = customerId;
+		this.deliveryAddress = deliveryAddress;
+		this.attName = attName;
+		this.attPhone = attPhone;
+		this.deliveryInstrictions = deliveryInstrictions;
 	}
 
 	public String getOrderNumber() {
@@ -54,4 +79,49 @@ public class Orders {
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
+
+
+
+	public String getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+
+
+	public void setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
+	}
+
+
+
+	public String getAttName() {
+		return attName;
+	}
+
+
+
+	public void setAttName(String attName) {
+		this.attName = attName;
+	}
+
+
+
+	public String getAttPhone() {
+		return attPhone;
+	}
+
+
+
+	public void setAttPhone(String attPhone) {
+		this.attPhone = attPhone;
+	}
+
+	public String getDeliveryInstrictions() {
+		return deliveryInstrictions;
+	}
+
+	public void setDeliveryInstrictions(String deliveryInstrictions) {
+		this.deliveryInstrictions = deliveryInstrictions;
+	}
+	
 }

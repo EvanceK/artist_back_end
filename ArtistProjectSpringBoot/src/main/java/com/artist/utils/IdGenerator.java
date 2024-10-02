@@ -3,13 +3,13 @@ package com.artist.utils;
 import java.sql.Connection;
 import java.util.List;
 
-import com.artist.dao.impl.ArtisDaoImpl;
+import com.artist.dao.impl.ArtistDaoImpl;
 import com.artist.dao.impl.CartsDaoImpl;
 import com.artist.dao.impl.CustomersDaoImpl;
 import com.artist.dao.impl.InventoriesDaoImpl;
 import com.artist.dao.impl.OrdersDaoImpl;
 import com.artist.dao.impl.PaintingsDaoImpl;
-import com.artist.entity.Artis;
+import com.artist.entity.Artist;
 import com.artist.entity.Carts;
 import com.artist.entity.Customers;
 import com.artist.entity.Inventories;
@@ -19,31 +19,31 @@ import com.artist.entity.Paintings;
 public class IdGenerator {
 	static Integer numCodelenght = 4;
 
-	static public String artisId() {
+	static public String artistId() {
 		String prefix = "AR";
-		ArtisDaoImpl adi = new ArtisDaoImpl();
-		List<Artis> artList = adi.selectAll();
+		ArtistDaoImpl adi = new ArtistDaoImpl();
+		List<Artist> artList = adi.selectAll();
 		if (artList.size() > 0) {
-			Artis lastesArtis = artList.get(artList.size() - 1);
-			String lastestId = lastesArtis.getArtisId();
+			Artist lastesArtist = artList.get(artList.size() - 1);
+			String lastestId = lastesArtist.getArtisId();
 			return IDGenerator(prefix, lastestId);
 		} else {
 			return IDGenerator(prefix, "0000");
 		}
 	}
 
-	static public String cartsId() {
-		String prefix = "CA";
-		CartsDaoImpl ctdi = new CartsDaoImpl();
-		List<Carts> cartList = ctdi.selectAll();
-		if (cartList.size() > 0) {
-			Carts lastesCarts = cartList.get(cartList.size() - 1);
-			String lastestId = lastesCarts.getCartId();
-			return IDGenerator(prefix, lastestId);
-		} else {
-			return IDGenerator(prefix, "0000");
-		}
-	}
+//	static public String cartsId() {
+//		String prefix = "CA";
+//		CartsDaoImpl ctdi = new CartsDaoImpl();
+//		List<Carts> cartList = ctdi.selectAll();
+//		if (cartList.size() > 0) {
+//			Carts lastesCarts = cartList.get(cartList.size() - 1);
+//			String lastestId = lastesCarts();
+//			return IDGenerator(prefix, lastestId);
+//		} else {
+//			return IDGenerator(prefix, "0000");
+//		}
+//	}
 
 	static public String customersId() {
 		String prefix = "CU";
