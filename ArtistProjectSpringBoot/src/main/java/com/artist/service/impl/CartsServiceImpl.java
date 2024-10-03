@@ -18,7 +18,7 @@ public class CartsServiceImpl implements CartsService{
 	carts.setCustomerId(customerId);	
 	carts.setPaintingId(paintingId);
 	carts.setPrice(price);
-	carts.setStatus("");
+	carts.setStatus("");//狀態的名詞要設定
 		
 		cr.save(carts);
 	}

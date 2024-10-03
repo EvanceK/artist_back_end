@@ -2,6 +2,8 @@ package com.artist.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Autowired // 這裡是用 com.artist.repository.PaintingsDao; //不是自己寫的 PaintingsDao
 	private PaintingsRepository ptr;
 
+	
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	// =========================================================================================================
 
 	// 用傳統的寫法
@@ -219,20 +223,20 @@ public class PaintingsServiceImpl implements PaintingsService {
 	
 	}
 	
-	//商品下架的邏輯 //每次前端有request時執行一次?
-	@Override
-	public void removeItems() {
-		//loading出目前已上架的商品
-		List<PaintingDTO> allPainting = pdi.selectAllforArtisName();
-		//計算出下架的時間
-		for(PaintingDTO pd:allPainting) {
-			LocalDateTime removeDate = pd.getUploadDate().plusDays(1L); //1天以上for測試
-			pd.setRemoveDate(removeDate);
-		//時間到時自動下架
-		 if (LocalDateTime.now().isAfter(removeDate)) {
-			 	this.setPaintingSold(pd.getPaintingId());
-	        }
-		}
-	}
-
+//	//商品下架的邏輯有request調一次 太耗資源
+//	@Override
+//	public void removeItems() {
+//		//loading出目前已上架的商品
+//		List<PaintingDTO> allPainting = pdi.selectAllforArtisName();
+//		//計算出下架的時間
+//		for(PaintingDTO pd:allPainting) {
+//			LocalDateTime removeDate = pd.getUploadDate().plusDays(1L); //1天以上for測試
+//			pd.setRemoveDate(removeDate);
+//		//時間到時自動下架
+//		 if (LocalDateTime.now().isAfter(removeDate)) {
+//			 	this.setPaintingSold(pd.getPaintingId());
+//	        }
+//		}
+//	}
+	        
 }
