@@ -29,7 +29,7 @@ public class ArtisDaoImpl  implements ArtisDao{
 		try {
 			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(SQL);
-			ps.setString(1, IdGenerator.artisId());
+			ps.setString(1, IdGenerator.artistId());
 			ps.setString(2, artName);
 			ps.executeUpdate();
 			conn.commit();
