@@ -42,12 +42,15 @@ public class PaintingsServiceTest {
 	}
 	
 	@Test
+	@Transactional
 	void testUpdatePaintingById() {
-		psi.updateUploadDate("PT0071", LocalDateTime.now().minusHours(3L));
-		psi.updateUploadDate("PT0072", LocalDateTime.now().minusHours(3L));
-		psi.updateUploadDate("PT0073", LocalDateTime.now().minusHours(3L));
-
-	
+		
+		for(int i=1;i<=107;i++) {
+		// 使用 String.format() 補零，"%04d" 代表總長度為4，前面補零
+		String x = String.format("PT%04d", i);
+		psi.updateUploadDate(x, LocalDateTime.now());
+		psi.setPaintingAvailable(x);
+		}
 	}
 	@Test
 	void testUpdatePrice() {
@@ -66,7 +69,8 @@ public class PaintingsServiceTest {
 	
 	@Test
 	void testRemoveDate() {
-		psi.removeItems();
+//		psi.removeItems();
+
 	}
 	
 	
