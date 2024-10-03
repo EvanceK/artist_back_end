@@ -168,8 +168,10 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return null;
 	}
 
+	
 	@Override
 	public List<Paintings> sortByArtisName(String artisName) {
+	
 		return null;
 	}
 

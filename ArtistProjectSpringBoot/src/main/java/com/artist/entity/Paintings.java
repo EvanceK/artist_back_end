@@ -45,17 +45,11 @@ public class Paintings {
 	@Column(name = "`upload_date`")
 	private LocalDateTime uploadDate;
 	
-	@Column(name = "`period`")
-	private String period;
-	
 	@Column(name = "genre")
 	private String genre;
 	
 	@Column(name = "media")
 	private String media;
-	
-	@Column(name = "dimensions")
-	private String dimensions;
 	
 	@Column(name = "delicated")
 	private Integer delicated;
@@ -69,8 +63,8 @@ public class Paintings {
 
 
 	public Paintings(String paintingId, String paintingName, String artisId, String largUrl, String smallUrl,
-			Double price, String date, String style, LocalDateTime uploadDate, String period, String genre,
-			String media, String dimensions, Integer delicated, String status) {
+			Double price, String date, String style, LocalDateTime uploadDate, String genre,
+			String media, Integer delicated, String status) {
 		super();
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
@@ -81,10 +75,8 @@ public class Paintings {
 		this.date = date;
 		this.style = style;
 		this.uploadDate = uploadDate;
-		this.period = period;
 		this.genre = genre;
 		this.media = media;
-		this.dimensions = dimensions;
 		this.delicated = delicated;
 		this.status = status;
 	}
@@ -163,13 +155,7 @@ public class Paintings {
 		this.uploadDate = uploadDate;
 	}
 
-	public String getPeriod() {
-		return period;
-	}
 
-	public void setPeriod(String period) {
-		this.period = period;
-	}
 
 	public String getGenre() {
 		return genre;
@@ -187,13 +173,6 @@ public class Paintings {
 		this.media = media;
 	}
 
-	public String getDimensions() {
-		return dimensions;
-	}
-
-	public void setDimensions(String dimensions) {
-		this.dimensions = dimensions;
-	}
 
 	public Integer getDelicated() {
 		return delicated;
@@ -221,10 +200,8 @@ public class Paintings {
 	public String toString() {
 		return "Paintings [paintingId=" + paintingId + ", paintingName=" + paintingName + ", artisId=" + artisId
 				+ ", largUrl=" + largUrl + ", smallUrl=" + smallUrl + ", price=" + price + ", date=" + date + ", style="
-				+ style + ", uploadDate=" + uploadDate + ", period=" + period + ", genre=" + genre + ", media=" + media
-				+ ", dimensions=" + dimensions + ", delicated=" + delicated + ", status=" + status + "]";
+				+ style + ", uploadDate=" + uploadDate + ", genre=" + genre + ", media=" + media + ", delicated="
+				+ delicated + ", status=" + status + "]";
 	}
-
-
 
 }
