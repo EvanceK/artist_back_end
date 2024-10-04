@@ -2,21 +2,22 @@ package com.artist.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.CreatedDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "paintings")
 public class Paintings {
-
+	
+	//關係
+    @ManyToOne
+    @JoinColumn(name = "artis_id", insertable = false, updatable = false)
+    private Artist artist;
+	
 	@Id
 	@Column(name = "painting_id")
 	private String paintingId;

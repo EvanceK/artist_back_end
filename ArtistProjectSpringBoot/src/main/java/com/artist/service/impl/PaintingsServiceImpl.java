@@ -2,6 +2,7 @@ package com.artist.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.artist.dao.impl.PaintingsDaoImpl;
 import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
+import com.artist.repository.ArtistRepository;
 import com.artist.repository.PaintingsRepository;
 import com.artist.service.PaintingsService;
 
@@ -23,8 +25,9 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Autowired // 這裡是用 com.artist.repository.PaintingsDao; //不是自己寫的 PaintingsDao
 	private PaintingsRepository ptr;
 
-	
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	private ArtistRepository ar;
+
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	// =========================================================================================================
 
 	// 用傳統的寫法
@@ -124,27 +127,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	}
 
 	@Override
-	public List<Paintings> findByArtisId(String artisId) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> findByArtisName(String artisName) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> findByDate(String date) {
-		return null;
-	}
-
-	@Override
 	public List<Paintings> findByStlye(String stlye) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> findByUploadDate(LocalDateTime date) {
 		return null;
 	}
 
@@ -168,25 +151,14 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return null;
 	}
 
-	
 	@Override
 	public List<Paintings> sortByArtisName(String artisName) {
-	
-		return null;
-	}
 
-	@Override
-	public List<Paintings> sortByDate(String paintingName) {
 		return null;
 	}
 
 	@Override
 	public List<Paintings> sortByUploadDate(LocalDateTime date) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> sortByStlye(String stlye) {
 		return null;
 	}
 
@@ -215,16 +187,31 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return null;
 	}
 
-	
-	
-	//商品上架的邏輯
+	// 商品上架的邏輯
 	public void uploadItems() {
-		//create new paintings
-		
+		// create new paintings
+
 		// re-upload
-	
+
 	}
-	
+
+	@Override
+	public List<PaintingDTO> findAllforArtisNameLike() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Paintings> findByPaintingsNameLike(String paintingName) {
+		return null;
+	}
+
+	@Override
+	public List<Paintings> findByArtisId(String artisId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 //	//商品下架的邏輯有request調一次 太耗資源
 //	@Override
 //	public void removeItems() {
@@ -240,5 +227,5 @@ public class PaintingsServiceImpl implements PaintingsService {
 //	        }
 //		}
 //	}
-	        
+
 }
