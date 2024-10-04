@@ -1,6 +1,7 @@
 package com.artist.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.artist.entity.Customers;
 import java.util.List;
@@ -12,6 +13,7 @@ public interface CustomersRepository extends JpaRepository<Customers, String> {
 
 	boolean existsByEmail(String email);
 
-	List<Customers> findAll();
+//	@Query("SELECT c FROM customers c")
+//	List<Customers> findAll();
 
 }

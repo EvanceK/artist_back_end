@@ -21,8 +21,9 @@ public class CustomersServiceImpl implements CustomersService {
 
 	@Autowired
 	private CustomersRepository cr;
-	 @Autowired
-	private IdGenerator idGenerator; // 注入 IdGenerator
+
+	@Autowired
+	IdGenerator idGenerator; // 注入 IdGenerator
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -34,7 +35,7 @@ public class CustomersServiceImpl implements CustomersService {
 
 	@Override
 	public void create(CustomersDTO customersDTO) {
-		Customers customer = new Customers();
+		Customers customer =new Customers();
 		customer.setCustomerId(idGenerator.customersId());
 		customer.setEmail(customersDTO.getEmail());
 		customer.setPassword(passwordEncoder.encode(customersDTO.getPassword()));
@@ -43,13 +44,12 @@ public class CustomersServiceImpl implements CustomersService {
 		customer.setNickName(customersDTO.getNickName());
 		customer.setPhone(customersDTO.getPhone());
 		customer.setAddress(customersDTO.getAddress());
-		customer.setAccount(customersDTO.getAccount());
 		customer.setCreditCardNo(customersDTO.getCreditCardNo());
 		cr.save(customer);
 	}
 
 	@Override
-	public void update(Customers Customers) {
+	public void update(CustomersDTO customersDTO) {
 
 	}
 

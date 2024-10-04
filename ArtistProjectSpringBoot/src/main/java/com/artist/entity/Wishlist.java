@@ -11,17 +11,16 @@ import jakarta.persistence.Table;
 @Table(name = "wishlist")
 public class Wishlist {
 	
-	@Id
+	//與Customers關聯
+    @ManyToOne
+    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    private Customers customer;
+	
 	@Column(name = "customer_id")
 	private String customerId;
+	@Id
 	@Column(name = "painting_id")
 	private String paintingId;
-	
-//	//與Customers關聯
-//    @ManyToOne
-//    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
-    
-//    private Customers customer;
 	
 	public Wishlist() {
 		super();
@@ -52,6 +51,16 @@ public class Wishlist {
 
 	public void setPaintingId(String paintingId) {
 		this.paintingId = paintingId;
+	}
+
+
+	public Customers getCustomer() {
+		return customer;
+	}
+
+
+	public void setCustomer(Customers customer) {
+		this.customer = customer;
 	}
 
 	

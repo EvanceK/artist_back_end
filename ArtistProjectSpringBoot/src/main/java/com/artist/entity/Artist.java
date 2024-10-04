@@ -2,6 +2,8 @@ package com.artist.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,10 +15,10 @@ import jakarta.persistence.Table;
 public class Artist {
 	@Id
 	@Column(name="artis_id")
-	private String artisId;
+	private String artistId;
 	
 	@Column(name="artis_name")
-	private String artisName;
+	private String artistName;
 	
 	@Column(name="desciption")
 	private String desciption;
@@ -27,59 +29,74 @@ public class Artist {
 	
 	// 與 Paintings 的關聯
     @OneToMany(mappedBy = "artist")
+    @JsonBackReference
     private List<Paintings> paintings;
-	
+
 
 	public Artist() {
+		super();
 	}
 
-	public Artist(String artisId, String artisName, String desciption, String url) {
+
+	public Artist(String artistId, String artistName, String desciption, String url, List<Paintings> paintings) {
 		super();
-		this.artisId = artisId;
-		this.artisName = artisName;
+		this.artistId = artistId;
+		this.artistName = artistName;
 		this.desciption = desciption;
 		this.url = url;
+		this.paintings = paintings;
 	}
 
-	public String getArtisId() {
-		return artisId;
+
+	public String getArtistId() {
+		return artistId;
 	}
 
-	public void setArtisId(String artisId) {
-		this.artisId = artisId;
+
+	public void setArtistId(String artistId) {
+		this.artistId = artistId;
 	}
 
-	public String getArtisName() {
-		return artisName;
+
+	public String getArtistName() {
+		return artistName;
 	}
 
-	public void setArtisName(String artisName) {
-		this.artisName = artisName;
+
+	public void setArtistName(String artistName) {
+		this.artistName = artistName;
 	}
+
 
 	public String getDesciption() {
 		return desciption;
 	}
 
+
 	public void setDesciption(String desciption) {
 		this.desciption = desciption;
 	}
+
 
 	public String getUrl() {
 		return url;
 	}
 
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
 
 	public List<Paintings> getPaintings() {
 		return paintings;
 	}
 
+
 	public void setPaintings(List<Paintings> paintings) {
 		this.paintings = paintings;
 	}
 	
+
 	
 }

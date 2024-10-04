@@ -5,40 +5,44 @@ import java.util.List;
 
 import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
+import org.springframework.data.domain.Page;
+
 
 public interface PaintingsService {
 
 	// Create
-    void create(Paintings painting);
+    void create(PaintingDTO paintingDTO);
 
     // Read
     Long findPaintingsTotalCount();
-    List<Paintings> findAll();
-    List<Paintings> findAllDesc();
+    List<PaintingDTO> getAll();
+    List<PaintingDTO> getAllDesc();
     
     //dto把ArtisName加上
-    List<PaintingDTO> findAllforArtisName();
-    List<PaintingDTO> findAllforArtisNameLike();
-    List<PaintingDTO> getAllAvailablePainting();
+    List<PaintingDTO> getAllforArtisName();
+    List<PaintingDTO> getAllforArtisNameLike();
+    
+    List<Paintings> getAllAvailablePainting();
 
     
     //用Paintings查詢
-    List<Paintings> findByPaintingsId(String paintingId);
-    List<Paintings> findByPaintingsName(String paintingName);
-    List<Paintings> findByPaintingsNameLike(String paintingName);
+    List<Paintings> getByPaintingsId(String paintingId);
+    List<Paintings> getByPaintingsName(String paintingName);
+    List<Paintings> getByPaintingsNameLike(String paintingName);
 
     
     //用ArtisId查詢
-    List<Paintings> findByArtisId(String artisId);
+    List<Paintings> getByArtisId(String artisId);
     //用Style查詢
-    List<Paintings> findByStlye(String stlye);
+    List<Paintings> getByStlye(String stlye);
     
-    List<Paintings> findByPeriod(String period);
-    List<Paintings> findByGenre(String genre);
+    List<Paintings> getByPeriod(String period);
+    List<Paintings> getByGenre(String genre);
     List<Paintings> UploadMedia(String media);
-    List<Paintings> findByDimensions(String dimensions);
+    List<Paintings> getByDimensions(String dimensions);
 
-    List<Paintings> findByPage(Integer pageSize, Integer currentPage);
+     
+    public Page<Paintings> getPaintingsByPage(Integer pageSize, Integer currentPage);
 
     //sort by 
     List<Paintings> sortByArtisName(String artisName);

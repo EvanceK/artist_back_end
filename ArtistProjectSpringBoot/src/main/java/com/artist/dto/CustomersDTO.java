@@ -14,8 +14,6 @@ public class CustomersDTO {
 	
 	private String address;
 	
-	private String account;
-
 	private String password;
 	
 	private String creditCardNo;
@@ -25,7 +23,7 @@ public class CustomersDTO {
 	}
 
 	public CustomersDTO(String customerId, String name, String nickName, String phone, String email, String address,
-			String account, String password, String creditCardNo) {
+			 String password, String creditCardNo) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
@@ -33,7 +31,6 @@ public class CustomersDTO {
 		this.phone = phone;
 		this.email = email;
 		this.address = address;
-		this.account = account;
 		this.password = password;
 		this.creditCardNo = creditCardNo;
 	}
@@ -84,14 +81,6 @@ public class CustomersDTO {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getAccount() {
-		return account;
-	}
-
-	public void setAccount(String account) {
-		this.account = account;
 	}
 
 	public String getPassword() {

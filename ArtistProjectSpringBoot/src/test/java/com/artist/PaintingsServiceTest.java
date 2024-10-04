@@ -31,7 +31,7 @@ public class PaintingsServiceTest {
 		painting.setUploadDate(LocalDateTime.now());  // 設置當前時間
 		painting.setDelicated(1);  // 設置當前時間
 
-		psi.create(painting);
+//		psi.create(painting);
 
 	}
 

@@ -1,8 +1,11 @@
 package com.artist.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,10 +16,10 @@ public class Customers {
 	@Column(name = "customer_id")
 	private String customerId;
 
-	@Column(name = "`name`")
+	@Column(name = "`Name`")
 	private String name;
 
-	@Column(name = "nick_Name")
+	@Column(name = "NickName")
 	private String nickName;
 	
 	@Column(name = "phone")
@@ -28,21 +31,26 @@ public class Customers {
 	@Column(name = "address")
 	private String address;
 	
-	@Column(name = "account")
-	private String account;
-
 	@Column(name = "password")
 	private String password;
 	
 	@Column(name = "credit_card_no")
 	private String creditCardNo;
+	
+    @OneToMany(mappedBy = "customer")
+    private List<Carts> cart;
+    @OneToMany(mappedBy = "customer123")
+    private List<Orders> Order;
+    @OneToMany(mappedBy = "customer")
+    private List<Wishlist> wish;
+
 
 	public Customers() {
 		super();
 	}
 
 	public Customers(String customerId, String name, String nickName, String phone, String email, String address,
-			String account, String password, String creditCardNo) {
+			String password, String creditCardNo) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
@@ -50,7 +58,6 @@ public class Customers {
 		this.phone = phone;
 		this.email = email;
 		this.address = address;
-		this.account = account;
 		this.password = password;
 		this.creditCardNo = creditCardNo;
 	}
@@ -103,14 +110,6 @@ public class Customers {
 		this.address = address;
 	}
 
-	public String getAccount() {
-		return account;
-	}
-
-	public void setAccount(String account) {
-		this.account = account;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -125,6 +124,30 @@ public class Customers {
 
 	public void setCreditCardNo(String creditCardNo) {
 		this.creditCardNo = creditCardNo;
+	}
+
+	public List<Carts> getCart() {
+		return cart;
+	}
+
+	public void setCart(List<Carts> cart) {
+		this.cart = cart;
+	}
+
+	public List<Orders> getOrder() {
+		return Order;
+	}
+
+	public void setOrder(List<Orders> order) {
+		Order = order;
+	}
+
+	public List<Wishlist> getWish() {
+		return wish;
+	}
+
+	public void setWish(List<Wishlist> wish) {
+		this.wish = wish;
 	}
 	
 }

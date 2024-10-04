@@ -4,6 +4,8 @@ package com.artist.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -35,7 +37,7 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
 //	以下自己寫的
 //	//確定返回只有一個對象會用Optional
 //    //關鍵字 Equal/Is/ Like
-//	Optional<Paintings> findByPaintingId(String paintingId); // where paintingId = ?1
+//	  Optional<Paintings> findByPaintingId(String paintingId); // where paintingId = ?1
 //    Optional<Paintings> findByfindByPaintingIdIs(Long id); // where paintingId = ?1
 //    Optional<Paintings> findByPaintingIdEqual(String paintingId); // where paintingId = ?1
 //    //關鍵字 Like
@@ -104,7 +106,22 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated = 1 ORDER BY p.paintingId")
     List<Paintings> findAllDelicatedPaintingsWithArtist();
     
+    @Query("SELECT p FROM Paintings p WHERE p.delicated = 1") // 例子：查找 delicated =1 by分頁
+   	Page<Paintings> findAllDelicatedPaintingsWithArtist(Pageable pageable);
+    
+    
+//    @Query("SELECT p FROM Paintings p JOIN p.artist a ORDER BY p.paintingId")
+//    List<Paintings> findAll();
 
-
+    
+    long countByDelicated(Integer delicatedValue);
+    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 1")
+    long countDelicatedEqualsOne();
+    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 0")
+    long countDelicatedEqualsZero();
+    
+   
+    
+    
     
 }

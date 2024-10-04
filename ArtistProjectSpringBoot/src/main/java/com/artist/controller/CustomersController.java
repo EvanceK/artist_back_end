@@ -18,14 +18,14 @@ public class CustomersController {
     private CustomersServiceImpl csi;
 
     //註冊
-    @PostMapping("/register")
+    @PostMapping(value ="/register", consumes = "application/json")
     public ResponseEntity<?> createCustomer(@RequestBody CustomersDTO customersDTO) {
     	csi.create(customersDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     
     //登入
-    @PostMapping("/login")
+    @PostMapping(value ="/login", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody CustomersDTO customersDTO) {
         String token = csi.login(customersDTO.getEmail(), customersDTO.getPassword());
         return ResponseEntity.ok((token));

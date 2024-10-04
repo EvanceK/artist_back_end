@@ -11,7 +11,7 @@ public interface CustomersService {
     // Read
 	public String login(String email ,String password);
     // Update
-    void update(Customers Customers);
+    void update(CustomersDTO customersDTO);
     // Delete
     void delete(Customers Customers);
     void deleteByEmail(String email);

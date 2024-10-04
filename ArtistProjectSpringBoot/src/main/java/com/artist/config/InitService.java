@@ -3,6 +3,7 @@ package com.artist.config;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -10,15 +11,18 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
-import com.artist.dao.impl.PaintingsDaoImpl;
 import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
+import com.artist.repository.PaintingsRepository;
+import com.artist.service.impl.PaintingsServiceImpl;
 
 public class InitService implements CommandLineRunner {
 
 	@Autowired // 用spring管理
-	PaintingsDaoImpl pdi;
-
+	PaintingsServiceImpl psi;
+	@Autowired // 用spring管理
+	PaintingsRepository ptr;
+	
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 	@Override
@@ -29,9 +33,9 @@ public class InitService implements CommandLineRunner {
 	// 商品下架的邏輯 自動計算下架時間
 	public void initializeAllPaintings() {
 		// loading出目前已上架的商品
-		List<PaintingDTO> allPaintings = pdi.selectAllforArtisName();
+		List<Paintings> allPaintings = psi.getAllAvailablePainting();
 
-		for (PaintingDTO painting : allPaintings) {
+		for (Paintings painting : allPaintings) {
 			// 計算下架時間
 			LocalDateTime uploadDate = painting.getUploadDate();
 			LocalDateTime removeDate = uploadDate.plusDays(10); // 這邊修改下架時間 plusDays plusHours plusMinutes
@@ -51,13 +55,13 @@ public class InitService implements CommandLineRunner {
 	}
 
 	public void setPaintingSold(String paintingId) {
-		List<Paintings> paintings = pdi.selectPaintingsByPaintingsId(paintingId);
-		Paintings painting = paintings.get(0);
-		if (painting != null) {
-			painting.setDelicated(0); // 改成賣出
-			pdi.update(painting);
-		} else {
-			System.out.println("找不到此id的畫作");
-		}
+		Optional<Paintings> optionalPainting  = ptr.findById(paintingId);
+	    if (optionalPainting.isPresent()) { // 檢查有沒有找到
+	        Paintings painting = optionalPainting.get(); // 得到 Painting 對象
+	        painting.setDelicated(0); // 改成賣出或過期 //之後狀態也要一起更新
+	        ptr.save(painting); // 更新畫作
+	    } else {
+	        System.out.println("找不到此 id 的畫");
+	    }
 	}
 }
