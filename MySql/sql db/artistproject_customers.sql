@@ -26,16 +26,14 @@ DROP TABLE IF EXISTS `customers`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
   `customer_id` varchar(10) NOT NULL,
-  `lName` varchar(45) NOT NULL,
-  `NickName` varchar(45) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `credit_card_no` varchar(255) DEFAULT NULL,
-  `account` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `nick_name` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `account` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `credit_card_no` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customer_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -47,6 +45,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+INSERT INTO `customers` VALUES ('CU0001','aaa','aaa','aaa','aaa','aaa','aaa','aaa','aaa'),('CU0002','bbb','bbb','bbb','bbb','aaa','aaa','bbb','aaa'),('CU0003','John Doe','Johnny','123-456-7890','test@test.com','123 Main St','johnny_account','$2a$10$QmHgGxTdfV/c0vLA1eE4..MLD1RiJN/eCv90hBmz0iDG34tlXERhi','4111111111111111');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-03 20:11:26
+-- Dump completed on 2024-10-04 23:59:17
