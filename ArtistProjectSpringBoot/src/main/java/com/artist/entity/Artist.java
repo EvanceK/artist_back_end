@@ -25,7 +25,7 @@ public class Artist {
 	private String url;
 	
 	
-	// 新增與 Paintings 的關聯
+	// 與 Paintings 的關聯
     @OneToMany(mappedBy = "artist")
     private List<Paintings> paintings;
 	
@@ -71,6 +71,14 @@ public class Artist {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public List<Paintings> getPaintings() {
+		return paintings;
+	}
+
+	public void setPaintings(List<Paintings> paintings) {
+		this.paintings = paintings;
 	}
 	
 	

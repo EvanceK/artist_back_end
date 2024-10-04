@@ -19,6 +19,8 @@ public interface PaintingsService {
     //dto把ArtisName加上
     List<PaintingDTO> findAllforArtisName();
     List<PaintingDTO> findAllforArtisNameLike();
+    List<PaintingDTO> getAllAvailablePainting();
+
     
     //用Paintings查詢
     List<Paintings> findByPaintingsId(String paintingId);
