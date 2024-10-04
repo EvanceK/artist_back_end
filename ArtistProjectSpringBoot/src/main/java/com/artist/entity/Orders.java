@@ -1,10 +1,14 @@
 package com.artist.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -34,6 +38,17 @@ public class Orders {
 	@Column(name = "delivery_instrictions")
 	private String deliveryInstrictions;
 	
+//	//與Customers關聯
+//    @ManyToOne
+//    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+//    private Customers customer;
+//	
+//	// 與 OrderDetails 的關聯
+//    @OneToMany(mappedBy = "orders")
+	
+//    private List<OrderDetails> OrderDetails;
+    
+    
 	public Orders() {
 	}
 

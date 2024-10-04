@@ -13,10 +13,10 @@ public class Customers {
 	@Column(name = "customer_id")
 	private String customerId;
 
-	@Column(name = "name")
+	@Column(name = "`name`")
 	private String name;
 
-	@Column(name = "nick_name")
+	@Column(name = "nick_Name")
 	private String nickName;
 	
 	@Column(name = "phone")
@@ -36,9 +36,9 @@ public class Customers {
 	
 	@Column(name = "credit_card_no")
 	private String creditCardNo;
-	
 
 	public Customers() {
+		super();
 	}
 
 	public Customers(String customerId, String name, String nickName, String phone, String email, String address,
@@ -126,6 +126,5 @@ public class Customers {
 	public void setCreditCardNo(String creditCardNo) {
 		this.creditCardNo = creditCardNo;
 	}
-
 	
 }

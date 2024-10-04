@@ -28,6 +28,13 @@ public class PaintingsController {
 		List<PaintingDTO> alllist = psi.findAllforArtisName();
 		return ResponseEntity.ok(alllist); // 自動轉換為 JSON
 	}
+	
+	
+	@GetMapping(value = "/findallavailable", produces = "application/json")
+	public ResponseEntity<?> getDelicatedPaintings() {
+		List<PaintingDTO> allAvailable = psi.getAllAvailablePainting();
+		return ResponseEntity.ok(allAvailable); // 
+	}
 
 	@GetMapping(value = "/findptname", produces = "application/json")
 	public ResponseEntity<?> findPaintingsName() {

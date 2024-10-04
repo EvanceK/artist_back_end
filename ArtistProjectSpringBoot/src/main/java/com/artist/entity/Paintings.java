@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Table(name = "paintings")
 public class Paintings {
 	
-	//關係
+	//與artist關聯
     @ManyToOne
     @JoinColumn(name = "artis_id", insertable = false, updatable = false)
     private Artist artist;
@@ -193,6 +193,18 @@ public class Paintings {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	
+
+	public Artist getArtist() {
+		return artist;
+	}
+
+
+
+	public void setArtist(Artist artist) {
+		this.artist = artist;
 	}
 
 

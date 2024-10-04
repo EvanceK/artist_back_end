@@ -2,9 +2,9 @@ package com.artist.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -125,6 +125,31 @@ public class PaintingsServiceImpl implements PaintingsService {
 	public void create(Paintings painting) {
 		ptr.save(painting);
 	}
+	
+	//查詢所有未下架的畫作
+	@Override
+	public List<PaintingDTO> getAllAvailablePainting() {
+	    List<Paintings> paintings = ptr.findAllDelicatedPaintingsWithArtist();
+	    return paintings.stream().map(p -> new PaintingDTO(
+	            p.getPaintingId(),
+	            p.getPaintingName(),
+	            p.getArtist().getArtisId(),
+	            p.getArtist().getArtisName(),
+	            p.getLargUrl(),
+	            p.getSmallUrl(),
+	            p.getPrice(),
+	            p.getDate(),
+	            p.getStyle(),
+	            p.getUploadDate(),
+	            p.getGenre(),
+	            p.getMedia(),
+	            p.getDelicated(),
+	            p.getStatus()
+	    )).collect(Collectors.toList());
+	}
+	
+
+	
 
 	@Override
 	public List<Paintings> findByStlye(String stlye) {
@@ -211,6 +236,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 //	//商品下架的邏輯有request調一次 太耗資源
 //	@Override
