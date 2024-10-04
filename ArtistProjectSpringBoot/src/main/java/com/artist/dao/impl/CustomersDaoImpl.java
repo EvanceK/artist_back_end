@@ -26,7 +26,6 @@ public class CustomersDaoImpl implements CustomersDao{
 
 	@Override
 	public List<Customers> selectAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

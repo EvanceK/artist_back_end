@@ -3,22 +3,25 @@ package com.artist.utils;
 import java.sql.Connection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.artist.dao.impl.ArtistDaoImpl;
-import com.artist.dao.impl.CartsDaoImpl;
-import com.artist.dao.impl.CustomersDaoImpl;
 import com.artist.dao.impl.InventoriesDaoImpl;
 import com.artist.dao.impl.OrdersDaoImpl;
 import com.artist.dao.impl.PaintingsDaoImpl;
 import com.artist.entity.Artist;
-import com.artist.entity.Carts;
 import com.artist.entity.Customers;
 import com.artist.entity.Inventories;
 import com.artist.entity.Orders;
 import com.artist.entity.Paintings;
-
+import com.artist.repository.CustomersRepository;
+@Component
 public class IdGenerator {
 	static Integer numCodelenght = 4;
-
+	@Autowired
+	private CustomersRepository cr;	
+	
 	static public String artistId() {
 		String prefix = "AR";
 		ArtistDaoImpl adi = new ArtistDaoImpl();
@@ -45,12 +48,12 @@ public class IdGenerator {
 //		}
 //	}
 
-	static public String customersId() {
+	public String customersId() {
 		String prefix = "CU";
-		CustomersDaoImpl cdi = new CustomersDaoImpl();
-		List<Customers> customersList = cdi.selectAll();
-		if (customersList.size() > 0) {
-			Customers lastesCustomers = customersList.get(customersList.size() - 1);
+	
+		List<Customers> all = cr.findAll();
+		if (all.size() > 0) {
+			Customers lastesCustomers = all.get(all.size() - 1);
 			String lastestId = lastesCustomers.getCustomerId();
 			return IDGenerator(prefix, lastestId);
 		} else {
