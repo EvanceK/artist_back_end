@@ -12,32 +12,37 @@ public interface PaintingsService {
     void create(Paintings painting);
 
     // Read
+    Long findPaintingsTotalCount();
     List<Paintings> findAll();
-    List<PaintingDTO> findAllforArtisName();
-
     List<Paintings> findAllDesc();
+    
+    //dto把ArtisName加上
+    List<PaintingDTO> findAllforArtisName();
+    List<PaintingDTO> findAllforArtisNameLike();
+    
+    //用Paintings查詢
     List<Paintings> findByPaintingsId(String paintingId);
     List<Paintings> findByPaintingsName(String paintingName);
+    List<Paintings> findByPaintingsNameLike(String paintingName);
+
+    
+    //用ArtisId查詢
     List<Paintings> findByArtisId(String artisId);
-    List<Paintings> findByArtisName(String artisName); 	//inner join or two times sql select
-    List<Paintings> findByDate(String date);
+    //用Style查詢
     List<Paintings> findByStlye(String stlye);
-    List<Paintings> findByUploadDate(LocalDateTime date);
+    
     List<Paintings> findByPeriod(String period);
     List<Paintings> findByGenre(String genre);
     List<Paintings> UploadMedia(String media);
     List<Paintings> findByDimensions(String dimensions);
 
     List<Paintings> findByPage(Integer pageSize, Integer currentPage);
-    Long findPaintingsTotalCount();
 
     //sort by 
-    List<Paintings> sortByArtisName(String artisName);	//inner join
-    List<Paintings> sortByUploadDate(LocalDateTime date);
-    List<Paintings> sortByStlye(String stlye);
+    List<Paintings> sortByArtisName(String artisName);
     List<Paintings> sortByPaintingName(String paintingName);
+    List<Paintings> sortByUploadDate(LocalDateTime date);
     List<Paintings> sortByPrice(Double price);
-    List<Paintings> sortByDate(String date);
     List<Paintings> sortBypopular(Integer popular);
     
     // Update
@@ -53,7 +58,6 @@ public interface PaintingsService {
     
     //上架下架機制
     void uploadItems();
-
-    void removeItems();
+//    void removeItems();//不用這個
     
 }

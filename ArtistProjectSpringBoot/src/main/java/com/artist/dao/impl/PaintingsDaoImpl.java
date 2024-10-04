@@ -23,7 +23,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
 	@Override
 	public void create(Paintings painting) {
 		PreparedStatement ps = null;
-		String sql = "insert into paintings(painting_id,painting_name, artis_id,larg_url, small_url, price,`date`, style,upload_date,`period`,genre, media,dimensions,delicated)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into paintings(painting_id,painting_name, artis_id,larg_url, small_url, price,`date`, style,upload_date,genre, media,delicated,status)values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			// 填充佔位符 ?
@@ -37,11 +37,11 @@ public class PaintingsDaoImpl implements PaintingsDao {
 			ps.setString(8, painting.getStyle());
 			// 將 LocalDateTime 類型，轉換為 Timestamp
 			ps.setTimestamp(9, Timestamp.valueOf(painting.getUploadDate()));
-			ps.setString(10, painting.getPeriod());
-			ps.setString(11, painting.getGenre());
-			ps.setString(12, painting.getMedia());
-			ps.setString(13, painting.getDimensions());
-			ps.setInt(14, painting.getDelicated());
+			ps.setString(10, painting.getGenre());
+			ps.setString(11, painting.getMedia());
+			ps.setInt(12, painting.getDelicated());
+			ps.setString(13, painting.getStatus());
+
 			// 執行
 			ps.executeUpdate();
 			System.out.println("新增成功");
@@ -76,11 +76,10 @@ public class PaintingsDaoImpl implements PaintingsDao {
 				if (rs.getTimestamp("upload_date") != null) {
 					paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
 				}
-				paintings.setPeriod(rs.getString("period"));
 				paintings.setGenre(rs.getString("genre"));
 				paintings.setMedia(rs.getString("media"));
-				paintings.setDimensions(rs.getString("dimensions"));
 				paintings.setDelicated(rs.getInt("delicated"));
+				paintings.setStatus(rs.getString("status"));
 
 				paintingsList.add(paintings);
 			}
@@ -93,7 +92,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
 	public List<PaintingDTO> selectAllforArtisName() {
 	    List<PaintingDTO> paintingsList = new ArrayList<>();
 	    PreparedStatement ps = null;
-		String sql = "Select painting_id,painting_name,artis_id,artis_name,larg_url,small_url,price,`date`,style,upload_date,`period`,genre,media,dimensions,delicated From paintings inner join artis USING (artis_id) Having delicated = 1 order by painting_id";
+		String sql = "Select painting_id,painting_name,artis_id,artis_name,larg_url,small_url,price,`date`,style,upload_date,genre,media,delicated,status From paintings inner join artis USING (artis_id) Having delicated = 1 order by painting_id";
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -111,11 +110,11 @@ public class PaintingsDaoImpl implements PaintingsDao {
 				if (rs.getTimestamp("upload_date") != null) {
 					paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
 				}
-				paintings.setPeriod(rs.getString("period"));
 				paintings.setGenre(rs.getString("genre"));
 				paintings.setMedia(rs.getString("media"));
-				paintings.setDimensions(rs.getString("dimensions"));
 				paintings.setDelicated(rs.getInt("delicated"));
+				paintings.setStatus(rs.getString("status"));
+
 
 				paintingsList.add(paintings);
 			}
@@ -149,11 +148,10 @@ public class PaintingsDaoImpl implements PaintingsDao {
 				if (rs.getTimestamp("upload_date") != null) {
 					paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
 				}
-				paintings.setPeriod(rs.getString("period"));
 				paintings.setGenre(rs.getString("genre"));
 				paintings.setMedia(rs.getString("media"));
-				paintings.setDimensions(rs.getString("dimensions"));
 				paintings.setDelicated(rs.getInt("delicated"));
+				paintings.setStatus(rs.getString("status"));
 
 				paintingsList.add(paintings);
 			}
@@ -166,7 +164,7 @@ public class PaintingsDaoImpl implements PaintingsDao {
 	@Override
 	public void update(Paintings painting) {
 		PreparedStatement ps = null;
-		String sql = "update paintings set painting_name =?, artis_id =?,larg_url =?, small_url =?, price =?,`date` =?, style =?,upload_date =?,`period` =?,genre =?, media =?,dimensions =?,delicated =? where painting_id =?";
+		String sql = "update paintings set painting_name =?, artis_id =?,larg_url =?, small_url =?, price =?,`date` =?, style =?,upload_date =?,genre =?, media =?,delicated =?,status =? where painting_id =?";
 		try {
 			ps = conn.prepareStatement(sql);
 			// 填充佔位符 ?
@@ -178,12 +176,11 @@ public class PaintingsDaoImpl implements PaintingsDao {
 			ps.setString(6, painting.getDate());
 			ps.setString(7, painting.getStyle());
 			ps.setTimestamp(8, Timestamp.valueOf(painting.getUploadDate()));
-			ps.setString(9, painting.getPeriod());
-			ps.setString(10, painting.getGenre());
-			ps.setString(11, painting.getMedia());
-			ps.setString(12, painting.getDimensions());
-			ps.setInt(13, painting.getDelicated());
-			ps.setString(14, painting.getPaintingId());
+			ps.setString(9, painting.getGenre());
+			ps.setString(10, painting.getMedia());
+			ps.setInt(11, painting.getDelicated());
+			ps.setString(12, painting.getStatus());
+			ps.setString(13, painting.getPaintingId());
 			System.out.println("修改成功");
 
 			// 執行
@@ -238,11 +235,10 @@ public class PaintingsDaoImpl implements PaintingsDao {
 				if (rs.getTimestamp("upload_date") != null) {
 					paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
 				}
-				paintings.setPeriod(rs.getString("period"));
 				paintings.setGenre(rs.getString("genre"));
 				paintings.setMedia(rs.getString("media"));
-				paintings.setDimensions(rs.getString("dimensions"));
 				paintings.setDelicated(rs.getInt("delicated"));
+				paintings.setStatus(rs.getString("status"));
 
 				paintingsList.add(paintings);
 			}
@@ -276,11 +272,10 @@ public class PaintingsDaoImpl implements PaintingsDao {
 					if (rs.getTimestamp("upload_date") != null) {
 						paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
 					}
-					paintings.setPeriod(rs.getString("period"));
 					paintings.setGenre(rs.getString("genre"));
 					paintings.setMedia(rs.getString("media"));
-					paintings.setDimensions(rs.getString("dimensions"));
 					paintings.setDelicated(rs.getInt("delicated"));
+					paintings.setStatus(rs.getString("status"));
 
 					paintingsList.add(paintings);
 				}
@@ -316,11 +311,10 @@ public class PaintingsDaoImpl implements PaintingsDao {
 				if (rs.getTimestamp("upload_date") != null) {
 					paintings.setUploadDate(rs.getTimestamp("upload_date").toLocalDateTime());
 				}
-				paintings.setPeriod(rs.getString("period"));
 				paintings.setGenre(rs.getString("genre"));
 				paintings.setMedia(rs.getString("media"));
-				paintings.setDimensions(rs.getString("dimensions"));
 				paintings.setDelicated(rs.getInt("delicated"));
+				paintings.setStatus(rs.getString("status"));
 
 				paintingsList.add(paintings);
 			}

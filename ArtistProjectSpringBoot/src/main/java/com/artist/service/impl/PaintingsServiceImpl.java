@@ -2,6 +2,9 @@ package com.artist.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.artist.dao.impl.PaintingsDaoImpl;
 import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
+import com.artist.repository.ArtistRepository;
 import com.artist.repository.PaintingsRepository;
 import com.artist.service.PaintingsService;
 
@@ -21,6 +25,9 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Autowired // 這裡是用 com.artist.repository.PaintingsDao; //不是自己寫的 PaintingsDao
 	private PaintingsRepository ptr;
 
+	private ArtistRepository ar;
+
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	// =========================================================================================================
 
 	// 用傳統的寫法
@@ -120,27 +127,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	}
 
 	@Override
-	public List<Paintings> findByArtisId(String artisId) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> findByArtisName(String artisName) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> findByDate(String date) {
-		return null;
-	}
-
-	@Override
 	public List<Paintings> findByStlye(String stlye) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> findByUploadDate(LocalDateTime date) {
 		return null;
 	}
 
@@ -166,21 +153,12 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	@Override
 	public List<Paintings> sortByArtisName(String artisName) {
-		return null;
-	}
 
-	@Override
-	public List<Paintings> sortByDate(String paintingName) {
 		return null;
 	}
 
 	@Override
 	public List<Paintings> sortByUploadDate(LocalDateTime date) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> sortByStlye(String stlye) {
 		return null;
 	}
 
@@ -209,30 +187,45 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return null;
 	}
 
-	
-	
-	//商品上架的邏輯
+	// 商品上架的邏輯
 	public void uploadItems() {
-		//create new paintings
-		
+		// create new paintings
+
 		// re-upload
-	
+
 	}
-	
-	//商品下架的邏輯 //每次前端有request時執行一次?
+
 	@Override
-	public void removeItems() {
-		//loading出目前已上架的商品
-		List<PaintingDTO> allPainting = pdi.selectAllforArtisName();
-		//計算出下架的時間
-		for(PaintingDTO pd:allPainting) {
-			LocalDateTime removeDate = pd.getUploadDate().plusDays(1L); //1天以上for測試
-			pd.setRemoveDate(removeDate);
-		//時間到時自動下架
-		 if (LocalDateTime.now().isAfter(removeDate)) {
-			 	this.setPaintingSold(pd.getPaintingId());
-	        }
-		}
+	public List<PaintingDTO> findAllforArtisNameLike() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public List<Paintings> findByPaintingsNameLike(String paintingName) {
+		return null;
+	}
+
+	@Override
+	public List<Paintings> findByArtisId(String artisId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	//商品下架的邏輯有request調一次 太耗資源
+//	@Override
+//	public void removeItems() {
+//		//loading出目前已上架的商品
+//		List<PaintingDTO> allPainting = pdi.selectAllforArtisName();
+//		//計算出下架的時間
+//		for(PaintingDTO pd:allPainting) {
+//			LocalDateTime removeDate = pd.getUploadDate().plusDays(1L); //1天以上for測試
+//			pd.setRemoveDate(removeDate);
+//		//時間到時自動下架
+//		 if (LocalDateTime.now().isAfter(removeDate)) {
+//			 	this.setPaintingSold(pd.getPaintingId());
+//	        }
+//		}
+//	}
 
 }

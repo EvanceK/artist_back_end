@@ -1,8 +1,11 @@
 package com.artist.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +24,10 @@ public class Artist {
 	@Column(name="url")
 	private String url;
 	
+	
+	// 新增與 Paintings 的關聯
+    @OneToMany(mappedBy = "artist")
+    private List<Paintings> paintings;
 	
 
 	public Artist() {

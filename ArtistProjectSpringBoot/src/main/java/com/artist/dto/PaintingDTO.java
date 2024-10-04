@@ -12,18 +12,18 @@ public class PaintingDTO {
 	private String date;
 	private String style;
 	private LocalDateTime uploadDate;
-	private String period;
 	private String genre;
 	private String media;
-	private String dimensions;
 	private Integer delicated;
+	private String status;
+
 	private LocalDateTime removeDate;
 
 	
 
 	public PaintingDTO(String paintingId, String paintingName, String artisName, String largUrl, String smallUrl,
-			Double price, String date, String style, LocalDateTime uploadDate, String period, String genre,
-			String media, String dimensions, Integer delicated, LocalDateTime removeDate) {
+			Double price, String date, String style, LocalDateTime uploadDate, String genre, String media,
+			Integer delicated, String status, LocalDateTime removeDate) {
 		super();
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
@@ -34,11 +34,10 @@ public class PaintingDTO {
 		this.date = date;
 		this.style = style;
 		this.uploadDate = uploadDate;
-		this.period = period;
 		this.genre = genre;
 		this.media = media;
-		this.dimensions = dimensions;
 		this.delicated = delicated;
+		this.status = status;
 		this.removeDate = removeDate;
 	}
 	public PaintingDTO() {
@@ -99,12 +98,7 @@ public class PaintingDTO {
 	public void setUploadDate(LocalDateTime uploadDate) {
 		this.uploadDate = uploadDate;
 	}
-	public String getPeriod() {
-		return period;
-	}
-	public void setPeriod(String period) {
-		this.period = period;
-	}
+
 	public String getGenre() {
 		return genre;
 	}
@@ -117,12 +111,6 @@ public class PaintingDTO {
 	public void setMedia(String media) {
 		this.media = media;
 	}
-	public String getDimensions() {
-		return dimensions;
-	}
-	public void setDimensions(String dimensions) {
-		this.dimensions = dimensions;
-	}
 	public Integer getDelicated() {
 		return delicated;
 	}
@@ -134,6 +122,12 @@ public class PaintingDTO {
 	}
 	public void setRemoveDate(LocalDateTime removeDate) {
 		this.removeDate = removeDate;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
