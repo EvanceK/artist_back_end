@@ -1,6 +1,9 @@
 package com.artist.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +30,6 @@ public class CustomersServiceImpl implements CustomersService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-
 	public CustomersServiceImpl(CustomersRepository cr, PasswordEncoder passwordEncoder) {
 		this.cr = cr;
 		this.passwordEncoder = passwordEncoder;
@@ -35,7 +37,7 @@ public class CustomersServiceImpl implements CustomersService {
 
 	@Override
 	public void create(CustomersDTO customersDTO) {
-		Customers customer =new Customers();
+		Customers customer = new Customers();
 		customer.setCustomerId(idGenerator.customersId());
 		customer.setEmail(customersDTO.getEmail());
 		customer.setPassword(passwordEncoder.encode(customersDTO.getPassword()));
@@ -63,20 +65,27 @@ public class CustomersServiceImpl implements CustomersService {
 
 	}
 
+	public Customers getCustomer(String email) {
+		Optional<Customers> optionalCustomers = cr.findByEmail(email);
+		if (optionalCustomers.isPresent()) {
+			Customers customer = optionalCustomers.get();
+			return customer;
+		}
+		return null;
+	}
+
 	@Override
 	public String login(String email, String password) {
 		// 根據電子郵件查找用戶
-		Customers customer = cr.findByEmail(email)
-				.orElseThrow(() -> new RuntimeException("Invalid email or password"));
-		
-		
+		Customers customer = cr.findByEmail(email).orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
 //		 // 直接比對密碼，不使用 passwordEncoder
 //	    if (password.equals(customer.getPassword())) {
 //	        return generateToken(customer);
 //	    } else {
 //	        throw new RuntimeException("Invalid email or password");
 //	    }
-		
+
 		// 檢查密碼是否匹配
 		if (passwordEncoder.matches(password, customer.getPassword())) {
 			// 生成 JWT
@@ -85,15 +94,18 @@ public class CustomersServiceImpl implements CustomersService {
 			throw new RuntimeException("Invalid email or password");
 		}
 	}
+
 	@Value("${jwt.secret}")
 	private String jwtSecret;
+
 	private String generateToken(Customers customer) {
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("nickname", customer.getNickName());
+
 		// 生成 JWT
-		return Jwts.builder()
-				.setSubject(customer.getEmail())
+		return Jwts.builder().setSubject(customer.getEmail()).addClaims(claims) // 添加其他 claims
 				.setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 天
-				.signWith(SignatureAlgorithm.HS512, jwtSecret)
-				.compact();
+				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
 }

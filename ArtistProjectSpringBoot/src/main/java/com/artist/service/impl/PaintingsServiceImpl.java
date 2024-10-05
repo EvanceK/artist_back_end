@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.artist.dao.impl.PaintingsDaoImpl;
 import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
 import com.artist.repository.PaintingsRepository;
@@ -64,7 +65,9 @@ public class PaintingsServiceImpl implements PaintingsService {
 	            p.getGenre(),
 	            p.getMedia(),
 	            p.getDelicated(),
-	            p.getStatus()
+	            p.getStatus(),
+	            p.getDimensions(),
+	            p.getPeriod()
 	    )).collect(Collectors.toList());
 	}
 	
@@ -141,17 +144,27 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	@Override
 	public void updateUploadDate(String paintingId, LocalDateTime uploadDate) {
-		// TODO Auto-generated method stub
-		
+		Optional<Paintings> optionalPainting  = ptr.findByPaintingId(paintingId);
+		  if (optionalPainting.isPresent()) { 
+		        Paintings painting = optionalPainting.get(); 
+		        painting.setUploadDate(LocalDateTime.now()); //設定日期
+		        ptr.save(painting); // 更新畫作
+				System.out.println("更新成功");
+		    } else {
+		        System.out.println("找不到此 id 的畫");
+		    }
 	}
 
 	@Override
 	public void setPaintingAvailable(String paintingId) {
-		Optional<Paintings> optionalPainting  = ptr.findById(paintingId);
+		Optional<Paintings> optionalPainting  = ptr.findByPaintingId(paintingId);
 	    if (optionalPainting.isPresent()) { 
 	        Paintings painting = optionalPainting.get(); 
+			System.out.println(painting.getPaintingId());
 	        painting.setDelicated(1); //設定有貨
 	        ptr.save(painting); // 更新畫作
+			System.out.println("更新成功");
+
 	    } else {
 	        System.out.println("找不到此 id 的畫");
 	    }
@@ -165,15 +178,16 @@ public class PaintingsServiceImpl implements PaintingsService {
 	        Paintings painting = optionalPainting.get(); // 得到 Painting 對象
 	        painting.setDelicated(0); // 改成賣出或過期 //之後狀態也要一起更新
 	        ptr.save(painting); // 更新畫作
+			System.out.println("更新成功");
 	    } else {
 	        System.out.println("找不到此 id 的畫");
 	    }
 	}
-	@Override
-	public void delete(String paintingId) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void delete(String paintingId) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 
 
@@ -242,6 +256,11 @@ public class PaintingsServiceImpl implements PaintingsService {
 	public List<Paintings> sortByPaintingName(String paintingName) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void delete(String paintingId) {
+		ptr.deleteById(paintingId);		
 	}
 
 
@@ -356,6 +375,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 //		List<Paintings> selectPaintingsLimit = pdi.selectPaintingsLimit(pageSize, currentPage);
 //		return selectPaintingsLimit;
 //	}
+
 
 	// =========================================================================================================
 

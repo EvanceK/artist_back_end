@@ -10,11 +10,14 @@ public interface CustomersService {
 
     // Read
 	public String login(String email ,String password);
+	public Customers getCustomer(String email);
+
     // Update
     void update(CustomersDTO customersDTO);
     // Delete
     void delete(Customers Customers);
     void deleteByEmail(String email);
     
+
 
 }

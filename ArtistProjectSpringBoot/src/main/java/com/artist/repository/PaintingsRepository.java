@@ -3,6 +3,7 @@ package com.artist.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -103,16 +104,19 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     
     
     //以下實作
+	
+	Optional<Paintings> findByPaintingId(String paintingId);
+	
     @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated = 1 ORDER BY p.paintingId")
     List<Paintings> findAllDelicatedPaintingsWithArtist();
     
     @Query("SELECT p FROM Paintings p WHERE p.delicated = 1") // 例子：查找 delicated =1 by分頁
    	Page<Paintings> findAllDelicatedPaintingsWithArtist(Pageable pageable);
     
-    
+
 //    @Query("SELECT p FROM Paintings p JOIN p.artist a ORDER BY p.paintingId")
 //    List<Paintings> findAll();
-
+    
     
     long countByDelicated(Integer delicatedValue);
     @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 1")

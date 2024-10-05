@@ -2,6 +2,8 @@ package com.artist.dto;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
+
 public class PaintingDTO {
 	private String paintingId;
 	private String paintingName;
@@ -16,6 +18,8 @@ public class PaintingDTO {
 	private String genre;
 	private String media;
 	private Integer delicated;
+	private String dimensions;
+	private String period;
 	private String status;
 
 
@@ -23,9 +27,10 @@ public class PaintingDTO {
 		super();
 	}
 
+
 	public PaintingDTO(String paintingId, String paintingName, String artisId, String artisName, String largUrl,
 			String smallUrl, Double price, String date, String style, LocalDateTime uploadDate, String genre,
-			String media, Integer delicated, String status) {
+			String media, Integer delicated, String dimensions, String period, String status) {
 		super();
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
@@ -40,8 +45,11 @@ public class PaintingDTO {
 		this.genre = genre;
 		this.media = media;
 		this.delicated = delicated;
+		this.dimensions = dimensions;
+		this.period = period;
 		this.status = status;
 	}
+
 
 	public String getPaintingId() {
 		return paintingId;
@@ -153,6 +161,26 @@ public class PaintingDTO {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+
+	public String getDimensions() {
+		return dimensions;
+	}
+
+
+	public void setDimensions(String dimensions) {
+		this.dimensions = dimensions;
+	}
+
+
+	public String getPeriod() {
+		return period;
+	}
+
+
+	public void setPeriod(String period) {
+		this.period = period;
 	}
 
 

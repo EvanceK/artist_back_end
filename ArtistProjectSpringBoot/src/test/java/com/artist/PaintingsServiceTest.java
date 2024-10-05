@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
 import com.artist.repository.PaintingsRepository;
 import com.artist.service.impl.PaintingsServiceImpl;
@@ -23,7 +24,7 @@ public class PaintingsServiceTest {
 	@Test
 	@Transactional
 	public void setUp() {
-		Paintings painting = new Paintings();
+		PaintingDTO painting = new PaintingDTO();
 		painting.setPaintingId("PT2222");
 		painting.setPaintingName("Mona Lisa");
 		painting.setArtisId("AR0009");
@@ -31,24 +32,25 @@ public class PaintingsServiceTest {
 		painting.setUploadDate(LocalDateTime.now());  // 設置當前時間
 		painting.setDelicated(1);  // 設置當前時間
 
-//		psi.create(painting);
+		psi.create(painting);
 
 	}
 
 	@Test
 	void testDeletePaintingById() {
-		psi.delete("PT0108");
-		psi.delete("PT0109");
+//		psi.delete("PT0104");
+//		psi.delete("PT0105");
+
+//		psi.delete("PT0109");
 	}
 	
 	@Test
-	@Transactional
 	void testUpdatePaintingById() {
 		
-		for(int i=1;i<=107;i++) {
+		for(int i=1;i<=106;i++) {
 		// 使用 String.format() 補零，"%04d" 代表總長度為4，前面補零
 		String x = String.format("PT%04d", i);
-		psi.updateUploadDate(x, LocalDateTime.now());
+//		psi.updateUploadDate(x, LocalDateTime.now());
 		psi.setPaintingAvailable(x);
 		}
 	}

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.CustomersDTO;
+import com.artist.dto.LoginResponse;
+import com.artist.entity.Customers;
 import com.artist.service.impl.CustomersServiceImpl;
 
 @RestController
@@ -28,7 +30,11 @@ public class CustomersController {
     @PostMapping(value ="/login", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody CustomersDTO customersDTO) {
         String token = csi.login(customersDTO.getEmail(), customersDTO.getPassword());
-        return ResponseEntity.ok((token));
+		Customers customer = csi.getCustomer(customersDTO.getEmail());
+        String nickName = 	customer.getNickName();
+        System.out.println(nickName);
+        LoginResponse response = new LoginResponse(token, nickName);
+        return ResponseEntity.ok((response));
     }
     
     

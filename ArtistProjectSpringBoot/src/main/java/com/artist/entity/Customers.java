@@ -19,7 +19,7 @@ public class Customers {
 	@Column(name = "`Name`")
 	private String name;
 
-	@Column(name = "NickName")
+	@Column(name = "nick_name")
 	private String nickName;
 	
 	@Column(name = "phone")

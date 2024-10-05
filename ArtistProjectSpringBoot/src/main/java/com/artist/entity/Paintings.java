@@ -14,62 +14,67 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "paintings")
 public class Paintings {
-	
-	//與artist關聯
-    @ManyToOne
-    @JsonManagedReference
-    @JoinColumn(name = "artis_id", insertable = false, updatable = false)
-    private Artist artist;
-	
+
+	// 與artist關聯
+	@ManyToOne
+	@JsonManagedReference
+	@JoinColumn(name = "artis_id", insertable = false, updatable = false)
+	private Artist artist;
+
 	@Id
 	@Column(name = "painting_id")
 	private String paintingId;
-	
+
 	@Column(name = "painting_name")
 	private String paintingName;
-	
+
 	@Column(name = "artis_id")
 	private String artisId;
-	
+
 	@Column(name = "larg_url")
 	private String largUrl;
-	
+
 	@Column(name = "small_url")
 	private String smallUrl;
-	
+
 	@Column(name = "price")
 	private Double price;
-	
+
 	@Column(name = "`date`")
 	private String date;
-	
+
 	@Column(name = "style")
 	private String style;
-	
+
 	@Column(name = "`upload_date`")
 	private LocalDateTime uploadDate;
-	
+
 	@Column(name = "genre")
 	private String genre;
-	
+
 	@Column(name = "media")
 	private String media;
-	
+
 	@Column(name = "delicated")
 	private Integer delicated;
-	
+
+	@Column(name = "dimensions")
+	private String dimensions;
+
+	@Column(name = "period")
+	private String period;
+
 	@Column(name = "status")
 	private String status;
 
 	public Paintings() {
 	}
 
-
-
-	public Paintings(String paintingId, String paintingName, String artisId, String largUrl, String smallUrl,
-			Double price, String date, String style, LocalDateTime uploadDate, String genre,
-			String media, Integer delicated, String status) {
+	public Paintings(Artist artist, String paintingId, String paintingName, String artisId, String largUrl,
+			String smallUrl, Double price, String date, String style, LocalDateTime uploadDate, String genre,
+			String media, Integer delicated, String dimensions, String period, String status) {
 		super();
+		this.artist = artist;
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
 		this.artisId = artisId;
@@ -82,10 +87,18 @@ public class Paintings {
 		this.genre = genre;
 		this.media = media;
 		this.delicated = delicated;
+		this.dimensions = dimensions;
+		this.period = period;
 		this.status = status;
 	}
 
+	public Artist getArtist() {
+		return artist;
+	}
 
+	public void setArtist(Artist artist) {
+		this.artist = artist;
+	}
 
 	public String getPaintingId() {
 		return paintingId;
@@ -159,8 +172,6 @@ public class Paintings {
 		this.uploadDate = uploadDate;
 	}
 
-
-
 	public String getGenre() {
 		return genre;
 	}
@@ -177,7 +188,6 @@ public class Paintings {
 		this.media = media;
 	}
 
-
 	public Integer getDelicated() {
 		return delicated;
 	}
@@ -186,38 +196,30 @@ public class Paintings {
 		this.delicated = delicated;
 	}
 
+	public String getDimensions() {
+		return dimensions;
+	}
 
+	public void setDimensions(String dimensions) {
+		this.dimensions = dimensions;
+	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
 
 	public String getStatus() {
 		return status;
 	}
 
-
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	
 
-	public Artist getArtist() {
-		return artist;
-	}
-
-
-
-	public void setArtist(Artist artist) {
-		this.artist = artist;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "Paintings [paintingId=" + paintingId + ", paintingName=" + paintingName + ", artisId=" + artisId
-				+ ", largUrl=" + largUrl + ", smallUrl=" + smallUrl + ", price=" + price + ", date=" + date + ", style="
-				+ style + ", uploadDate=" + uploadDate + ", genre=" + genre + ", media=" + media + ", delicated="
-				+ delicated + ", status=" + status + "]";
-	}
 
 }
