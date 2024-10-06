@@ -16,6 +16,7 @@ import com.artist.repository.CustomersRepository;
 import com.artist.service.CustomersService;
 import com.artist.utils.IdGenerator;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -78,18 +79,17 @@ public class CustomersServiceImpl implements CustomersService {
 	public String login(String email, String password) {
 		// 根據電子郵件查找用戶
 		Customers customer = cr.findByEmail(email).orElseThrow(() -> new RuntimeException("Invalid email or password"));
-
-//		 // 直接比對密碼，不使用 passwordEncoder
-//	    if (password.equals(customer.getPassword())) {
-//	        return generateToken(customer);
-//	    } else {
-//	        throw new RuntimeException("Invalid email or password");
-//	    }
-
 		// 檢查密碼是否匹配
 		if (passwordEncoder.matches(password, customer.getPassword())) {
 			// 生成 JWT
 			return generateToken(customer);
+			
+//			 // 直接比對密碼，不使用 passwordEncoder
+//		    if (password.equals(customer.getPassword())) {
+//		        return generateToken(customer);
+//		    } else {
+//		        throw new RuntimeException("Invalid email or password");
+//		    }
 		} else {
 			throw new RuntimeException("Invalid email or password");
 		}
@@ -101,11 +101,25 @@ public class CustomersServiceImpl implements CustomersService {
 	private String generateToken(Customers customer) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("nickname", customer.getNickName());
+		claims.put("customerId", customer.getCustomerId());
+
 
 		// 生成 JWT
 		return Jwts.builder().setSubject(customer.getEmail()).addClaims(claims) // 添加其他 claims
 				.setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 天
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
+	
+    public String getCustomerIdFromToken(String token) {
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
 
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return (String) claims.get("customerId");
+    }
 }

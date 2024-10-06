@@ -33,9 +33,9 @@ public class InitService implements CommandLineRunner {
 	// 商品下架的邏輯 自動計算下架時間
 	public void initializeAllPaintings() {
 		// loading出目前已上架的商品
-		List<Paintings> allPaintings = psi.getAllAvailablePainting();
+		List<PaintingDTO> allPaintings = psi.getAllAvailablePainting();
 
-		for (Paintings painting : allPaintings) {
+		for (PaintingDTO painting : allPaintings) {
 			// 計算下架時間
 			LocalDateTime uploadDate = painting.getUploadDate();
 			LocalDateTime removeDate = uploadDate.plusDays(10); // 這邊修改下架時間 plusDays plusHours plusMinutes

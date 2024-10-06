@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.PaintingDTO;
-import com.artist.entity.Paintings;
 import com.artist.service.impl.PaintingsServiceImpl;
 
 //@RestController 是 @Controller 和 @ResponseBody 的結合體
@@ -33,14 +32,14 @@ public class PaintingsController {
 	
 	@GetMapping(value = "/findallavailable")
 	public ResponseEntity<?> getDelicatedPaintings() {
-		List<Paintings> allAvailable = psi.getAllAvailablePainting();
+		List<PaintingDTO> allAvailable = psi.getAllAvailablePainting();
 		return ResponseEntity.ok(allAvailable); // 
 	}
 
 	@GetMapping(value = "/findpaintingname")
 	public ResponseEntity<?> findPaintingsName() {
 
-		List<Paintings> paintingsName = psi.getByPaintingsName("Portrait of a Youth Holding an Arrow");
+		List<PaintingDTO> paintingsName = psi.getByPaintingsName("Portrait of a Youth Holding an Arrow");
 		return ResponseEntity.ok(paintingsName); // 自動轉換為 JSON
 
 	}
@@ -58,7 +57,7 @@ public class PaintingsController {
 		System.out.println(totalPage);//11
 
 		// 3. 根據當前頁和每頁大小查詢分頁數據
-		Page<Paintings> paintingsByPage = psi.getPaintingsByPage(pageSize, currentPage);
+		Page<PaintingDTO> paintingsByPage = psi.getPaintingsByPage(pageSize, currentPage);
 		
 		// 4. 將數據封裝到 Map 中返回
 		Map<String, Object> result = new HashMap<>();

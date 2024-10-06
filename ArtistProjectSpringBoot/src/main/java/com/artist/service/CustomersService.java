@@ -11,6 +11,8 @@ public interface CustomersService {
     // Read
 	public String login(String email ,String password);
 	public Customers getCustomer(String email);
+    public String getCustomerIdFromToken(String token);
+
 
     // Update
     void update(CustomersDTO customersDTO);

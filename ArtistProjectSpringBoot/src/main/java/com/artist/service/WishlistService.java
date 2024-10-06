@@ -1,17 +1,14 @@
 package com.artist.service;
 
-import com.artist.entity.Wishlist;
+import java.util.List;
+
+import com.artist.dto.WishlistDTO;
 
 public interface WishlistService {
 	// Create
-    void create(Wishlist wish);
-
+    void addToWishlist(String customerId, String paintingId);
     // Read
-
-    
-    // Update
-
- 
+	List<WishlistDTO> findAllWishlistWithPaintings(String customerId);
     // Delete
     void delete(String paintingId);
 }
