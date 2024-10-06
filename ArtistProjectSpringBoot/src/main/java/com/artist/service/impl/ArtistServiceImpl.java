@@ -1,6 +1,9 @@
 package com.artist.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.artist.dto.ArtistDTO;
 import com.artist.entity.Artist;
@@ -8,13 +11,14 @@ import com.artist.repository.ArtistRepository;
 import com.artist.service.ArtistService;
 import com.artist.utils.IdGenerator;
 
-public class ArtistServiceImpl implements ArtistService{
+@Service
+public class ArtistServiceImpl implements ArtistService {
 	@Autowired
 	private ArtistRepository ar;
 
 	@Autowired
 	private IdGenerator idGenerator;
-	
+
 	@Override
 	public void create(ArtistDTO artistDTO) {
 		Artist artist = new Artist();
@@ -27,7 +31,12 @@ public class ArtistServiceImpl implements ArtistService{
 
 	@Override
 	public String getArtistInfo() {
+
 		return null;
+	}
+	@Override
+	public List<Artist> getAll() {
+		return ar.findAll();
 	}
 
 	@Override
@@ -54,7 +63,5 @@ public class ArtistServiceImpl implements ArtistService{
 		ar.deleteById(artistId);
 
 	}
-
-
 
 }
