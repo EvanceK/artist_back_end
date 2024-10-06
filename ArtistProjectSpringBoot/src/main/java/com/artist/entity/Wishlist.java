@@ -13,10 +13,10 @@ public class Wishlist {
 	
 	//與Customers關聯
     @ManyToOne
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customers customer;
 	
-	@Column(name = "customer_id")
+	@Column(name = "customer_id", insertable = false, updatable = false)
 	private String customerId;
 	@Id
 	@Column(name = "painting_id")

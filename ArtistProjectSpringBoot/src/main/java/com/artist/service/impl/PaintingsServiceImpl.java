@@ -1,36 +1,35 @@
 package com.artist.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.artist.dao.impl.PaintingsDaoImpl;
 import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
 import com.artist.repository.PaintingsRepository;
 import com.artist.service.PaintingsService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
 
 @Service
 public class PaintingsServiceImpl implements PaintingsService {
 
 	// 用spring data jpa 實現
-	
+
 	@Autowired // 這裡是用 com.paintingsRepository; //不是自己寫的 PaintingsDao
 	private PaintingsRepository ptr;
 
-	
-	//新增
+	// 新增
 	@Override
 	public void create(PaintingDTO paintingDTO) {
-		Paintings painting= new Paintings();
+		Paintings painting = new Paintings();
 		painting.setPaintingId(paintingDTO.getPaintingId());
 		painting.setPaintingName(paintingDTO.getPaintingName());
 		painting.setArtisId(paintingDTO.getArtisId());
@@ -46,44 +45,43 @@ public class PaintingsServiceImpl implements PaintingsService {
 		painting.setStatus(paintingDTO.getStatus());
 		ptr.save(painting);
 	}
-	
-	//查詢所有的畫作
+
+	// 查詢所有的畫作
 	@Override
 	public List<PaintingDTO> getAll() {
-	    List<Paintings> paintings = ptr.findAll();
-	    return paintings.stream().map(p -> new PaintingDTO(
-	            p.getPaintingId(),
-	            p.getPaintingName(),
-	            p.getArtist().getArtistId(),
-	            p.getArtist().getArtistName(),
-	            p.getLargUrl(),
-	            p.getSmallUrl(),
-	            p.getPrice(),
-	            p.getDate(),
-	            p.getStyle(),
-	            p.getUploadDate(),
-	            p.getGenre(),
-	            p.getMedia(),
-	            p.getDelicated(),
-	            p.getStatus(),
-	            p.getDimensions(),
-	            p.getPeriod()
-	    )).collect(Collectors.toList());
+		List<Paintings> paintings = ptr.findAll();
+		return paintings.stream()
+				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
+						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getMedia(), p.getDelicated(), p.getStatus(),
+						p.getDimensions(), p.getPeriod()))
+				.collect(Collectors.toList());
 	}
-	
-	//查詢所有未下架的畫作
-	@Override
-	public List<Paintings> getAllAvailablePainting() {
-	    List<Paintings> paintings = ptr.findAllDelicatedPaintingsWithArtist();
-	    return paintings;
-	}
-	
-    public Page<Paintings> getPaintingsByPage(Integer pageSize, Integer currentPage){
-    	 Pageable pageable = PageRequest.of(currentPage, pageSize); // 创建分页请求
-         return ptr.findAllDelicatedPaintingsWithArtist(pageable); // 获取分页结果    	
-    }
 
-	
+	// 查詢所有未下架的畫作
+	@Override
+	public List<PaintingDTO> getAllAvailablePainting() {
+		List<Paintings> paintings = ptr.findAllDelicatedPaintingsWithArtist();
+		return paintings.stream()
+				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
+						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getMedia(), p.getDelicated(), p.getStatus(),
+						p.getDimensions(), p.getPeriod()))
+				.collect(Collectors.toList());
+	}
+
+	public Page<PaintingDTO> getPaintingsByPage(Integer pageSize, Integer currentPage) {
+		Pageable pageable = PageRequest.of(currentPage, pageSize); // 创建分页请求
+		Page<Paintings> paintingsPage = ptr.findAllDelicatedPaintingsWithArtist(pageable);
+		// 映射到 Page<PaintingDTO>
+		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
+				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
+						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getMedia(), p.getDelicated(), p.getStatus(),
+						p.getDimensions(), p.getPeriod()))
+				.collect(Collectors.toList());
+		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements()); // 获取分页结果
+	}
 
 	@Override
 	public List<Paintings> getByStlye(String stlye) {
@@ -99,12 +97,11 @@ public class PaintingsServiceImpl implements PaintingsService {
 	public List<Paintings> getByGenre(String genre) {
 		return null;
 	}
-	
+
 	@Override
 	public List<Paintings> sortByUploadDate(LocalDateTime date) {
 		return null;
 	}
-
 
 	@Override
 	public List<Paintings> sortByPrice(Double price) {
@@ -116,8 +113,6 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return null;
 	}
 
-
-
 	// 商品上架的邏輯
 	public void uploadItems() {
 		// create new paintings
@@ -126,70 +121,64 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	}
 
-	
-
 	@Override
 	public Long findPaintingsTotalCount() {
 		long countByDelicated = ptr.countByDelicated(1);
 		return countByDelicated;
 	}
 
-
-
 	@Override
 	public void updatePrice(String paintingId, Double price) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void updateUploadDate(String paintingId, LocalDateTime uploadDate) {
-		Optional<Paintings> optionalPainting  = ptr.findByPaintingId(paintingId);
-		  if (optionalPainting.isPresent()) { 
-		        Paintings painting = optionalPainting.get(); 
-		        painting.setUploadDate(LocalDateTime.now()); //設定日期
-		        ptr.save(painting); // 更新畫作
-				System.out.println("更新成功");
-		    } else {
-		        System.out.println("找不到此 id 的畫");
-		    }
+		Optional<Paintings> optionalPainting = ptr.findByPaintingId(paintingId);
+		if (optionalPainting.isPresent()) {
+			Paintings painting = optionalPainting.get();
+			painting.setUploadDate(LocalDateTime.now()); // 設定日期
+			ptr.save(painting); // 更新畫作
+			System.out.println("更新成功");
+		} else {
+			System.out.println("找不到此 id 的畫");
+		}
 	}
 
 	@Override
 	public void setPaintingAvailable(String paintingId) {
-		Optional<Paintings> optionalPainting  = ptr.findByPaintingId(paintingId);
-	    if (optionalPainting.isPresent()) { 
-	        Paintings painting = optionalPainting.get(); 
+		Optional<Paintings> optionalPainting = ptr.findByPaintingId(paintingId);
+		if (optionalPainting.isPresent()) {
+			Paintings painting = optionalPainting.get();
 			System.out.println(painting.getPaintingId());
-	        painting.setDelicated(1); //設定有貨
-	        ptr.save(painting); // 更新畫作
+			painting.setDelicated(1); // 設定有貨
+			ptr.save(painting); // 更新畫作
 			System.out.println("更新成功");
 
-	    } else {
-	        System.out.println("找不到此 id 的畫");
-	    }
-		
+		} else {
+			System.out.println("找不到此 id 的畫");
+		}
+
 	}
 
 	@Override
 	public void setPaintingSold(String paintingId) {
-		Optional<Paintings> optionalPainting  = ptr.findById(paintingId);
-	    if (optionalPainting.isPresent()) { // 檢查有沒有找到
-	        Paintings painting = optionalPainting.get(); // 得到 Painting 對象
-	        painting.setDelicated(0); // 改成賣出或過期 //之後狀態也要一起更新
-	        ptr.save(painting); // 更新畫作
+		Optional<Paintings> optionalPainting = ptr.findById(paintingId);
+		if (optionalPainting.isPresent()) { // 檢查有沒有找到
+			Paintings painting = optionalPainting.get(); // 得到 Painting 對象
+			painting.setDelicated(0); // 改成賣出或過期 //之後狀態也要一起更新
+			ptr.save(painting); // 更新畫作
 			System.out.println("更新成功");
-	    } else {
-	        System.out.println("找不到此 id 的畫");
-	    }
+		} else {
+			System.out.println("找不到此 id 的畫");
+		}
 	}
 //	@Override
 //	public void delete(String paintingId) {
 //		// TODO Auto-generated method stub
 //		
 //	}
-
-
 
 	@Override
 	public List<PaintingDTO> getAllDesc() {
@@ -210,15 +199,45 @@ public class PaintingsServiceImpl implements PaintingsService {
 	}
 
 	@Override
-	public List<Paintings> getByPaintingsId(String paintingId) {
-		// TODO Auto-generated method stub
+	public PaintingDTO getByPaintingsId(String paintingId) {
+		Optional<Paintings> byPaintingId = ptr.findByPaintingId(paintingId);
+		if (byPaintingId.isPresent()) {
+            Paintings paintings = byPaintingId.get();
+
+		return new PaintingDTO(
+                paintings.getPaintingId(),
+                paintings.getPaintingName(),
+                paintings.getArtist().getArtistId(),
+                paintings.getArtist().getArtistName(),
+                paintings.getLargUrl(),
+                paintings.getSmallUrl(),
+                paintings.getPrice(),
+                paintings.getDate(),
+                paintings.getStyle(),
+                paintings.getUploadDate(),
+                paintings.getGenre(),
+                paintings.getMedia(),
+                paintings.getDelicated(),
+                paintings.getStatus(),
+                paintings.getDimensions(),
+                paintings.getPeriod());
+		}else {
 		return null;
 	}
-
+	}
 	@Override
-	public List<Paintings> getByPaintingsName(String paintingName) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PaintingDTO> getByPaintingsName(String paintingName) {
+		List<Paintings> listPaintingId = ptr.findByPaintingName(paintingName);
+		if (listPaintingId.isEmpty()) {
+			return Collections.emptyList();
+		}
+		return listPaintingId.stream()
+				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
+						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
+						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
+						painting.getUploadDate(), painting.getGenre(), painting.getMedia(), painting.getDelicated(),
+						painting.getStatus(), painting.getDimensions(), painting.getPeriod()))
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -245,7 +264,6 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return null;
 	}
 
-
 	@Override
 	public List<Paintings> sortByArtisName(String artisName) {
 		// TODO Auto-generated method stub
@@ -260,9 +278,8 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	@Override
 	public void delete(String paintingId) {
-		ptr.deleteById(paintingId);		
+		ptr.deleteById(paintingId);
 	}
-
 
 //	//商品下架的邏輯有request調一次 太耗資源
 //	@Override
@@ -279,13 +296,9 @@ public class PaintingsServiceImpl implements PaintingsService {
 //	        }
 //		}
 //	}
-	
-
-
-
 
 // =========================================================================================================
-	
+
 //	@Autowired // 用spring管理
 //	PaintingsDaoImpl pdi;
 	// 用傳統的寫法
@@ -376,10 +389,6 @@ public class PaintingsServiceImpl implements PaintingsService {
 //		return selectPaintingsLimit;
 //	}
 
-
 	// =========================================================================================================
-
-	
-	
 
 }

@@ -22,12 +22,12 @@ public interface PaintingsService {
     List<PaintingDTO> getAllforArtisName();
     List<PaintingDTO> getAllforArtisNameLike();
     
-    List<Paintings> getAllAvailablePainting();
+    List<PaintingDTO> getAllAvailablePainting();
 
     
     //用Paintings查詢
-    List<Paintings> getByPaintingsId(String paintingId);
-    List<Paintings> getByPaintingsName(String paintingName);
+    PaintingDTO getByPaintingsId(String paintingId);
+    List<PaintingDTO> getByPaintingsName(String paintingName);
     List<Paintings> getByPaintingsNameLike(String paintingName);
 
     
@@ -41,8 +41,7 @@ public interface PaintingsService {
     List<Paintings> UploadMedia(String media);
     List<Paintings> getByDimensions(String dimensions);
 
-     
-    public Page<Paintings> getPaintingsByPage(Integer pageSize, Integer currentPage);
+    public Page<PaintingDTO> getPaintingsByPage(Integer pageSize, Integer currentPage);
 
     //sort by 
     List<Paintings> sortByArtisName(String artisName);

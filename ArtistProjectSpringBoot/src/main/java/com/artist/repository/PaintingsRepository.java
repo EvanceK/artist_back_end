@@ -105,7 +105,8 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     
     //以下實作
 	
-	Optional<Paintings> findByPaintingId(String paintingId);
+	Optional <Paintings> findByPaintingId(String paintingId);
+	List<Paintings> findByPaintingName(String paintingName);
 	
     @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated = 1 ORDER BY p.paintingId")
     List<Paintings> findAllDelicatedPaintingsWithArtist();
