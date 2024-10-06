@@ -1,17 +1,15 @@
 package com.artist;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.jupiter.api.Test; // 確保使用 JUnit 5 的 @Test
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.artist.dto.PaintingDTO;
-import com.artist.entity.Paintings;
-import com.artist.repository.PaintingsRepository;
 import com.artist.service.impl.PaintingsServiceImpl;
 
 @RunWith(SpringRunner.class)
@@ -22,7 +20,6 @@ public class PaintingsServiceTest {
 	private PaintingsServiceImpl psi;
 
 	@Test
-	@Transactional
 	public void setUp() {
 		PaintingDTO painting = new PaintingDTO();
 		painting.setPaintingId("PT2222");
@@ -74,6 +71,17 @@ public class PaintingsServiceTest {
 //		psi.removeItems();
 
 	}
-	
+	@Test
+	void testgetByPaintingsId(String paintingId) {
+		paintingId="PT0002";
+		PaintingDTO byPaintingsId = psi.getByPaintingsId(paintingId);
+		System.out.println(byPaintingsId);
+	}
+	@Test
+	void testgetAll(){
+		List<PaintingDTO> all = psi.getAll();
+		System.out.println(all);
+
+	}
 	
 }

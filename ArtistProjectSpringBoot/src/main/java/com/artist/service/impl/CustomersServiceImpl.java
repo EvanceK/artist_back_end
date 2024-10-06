@@ -83,7 +83,7 @@ public class CustomersServiceImpl implements CustomersService {
 		if (passwordEncoder.matches(password, customer.getPassword())) {
 			// 生成 JWT
 			return generateToken(customer);
-			
+
 //			 // 直接比對密碼，不使用 passwordEncoder
 //		    if (password.equals(customer.getPassword())) {
 //		        return generateToken(customer);
@@ -103,23 +103,29 @@ public class CustomersServiceImpl implements CustomersService {
 		claims.put("nickname", customer.getNickName());
 		claims.put("customerId", customer.getCustomerId());
 
-
 		// 生成 JWT
 		return Jwts.builder().setSubject(customer.getEmail()).addClaims(claims) // 添加其他 claims
 				.setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 天
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
-	
-    public String getCustomerIdFromToken(String token) {
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
 
-        Claims claims = Jwts.parser()
-                .setSigningKey(jwtSecret)
-                .parseClaimsJws(token)
-                .getBody();
+	public String getCustomerIdFromToken(String token) {
+		if (token.startsWith("Bearer ")) {
+			token = token.substring(7);
+		}
 
-        return (String) claims.get("customerId");
-    }
+		Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+
+		return (String) claims.get("customerId");
+	}
+
+	public Customers getByCustomerId(String customerId) {
+		Optional<Customers> optionalCustomerId = cr.findByCustomerId(customerId);
+		if (optionalCustomerId.isPresent()) {
+			Customers customers = optionalCustomerId.get();
+			return customers;
+		} else {
+			return null;
+		}
+	}
 }

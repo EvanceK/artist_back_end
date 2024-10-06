@@ -43,6 +43,15 @@ public class PaintingsController {
 		return ResponseEntity.ok(paintingsName); // 自動轉換為 JSON
 
 	}
+	
+	@GetMapping(value = "/findpaintingid")
+	public ResponseEntity<?> getpaintingsid() {
+
+		PaintingDTO byPaintingsId = psi.getByPaintingsId("PT0002");
+	
+		return ResponseEntity.ok(byPaintingsId); // 自動轉換為 JSON
+
+	}
 
 	@GetMapping(value = "/findByPage")
 	public ResponseEntity<Map<String, Object>> findByPage(

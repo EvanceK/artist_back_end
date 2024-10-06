@@ -10,5 +10,5 @@ public interface WishlistService {
     // Read
 	List<WishlistDTO> findAllWishlistWithPaintings(String customerId);
     // Delete
-    void delete(String paintingId);
+	void deleteFromWishlist(String customerId,String paintingId);
 }

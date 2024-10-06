@@ -200,9 +200,15 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	@Override
 	public PaintingDTO getByPaintingsId(String paintingId) {
-		Optional<Paintings> byPaintingId = ptr.findByPaintingId(paintingId);
-		if (byPaintingId.isPresent()) {
-            Paintings paintings = byPaintingId.get();
+		Optional<Paintings> painting = ptr.findById(paintingId);
+		System.out.println("Querying painting with ID: " + paintingId);//這邊正常
+		
+		
+		System.out.println("Found painting: " + painting);//這邊異常
+		
+		if (painting.isPresent()) {
+            Paintings paintings = painting.get();
+            System.out.println("Found painting: " + paintings);
 
 		return new PaintingDTO(
                 paintings.getPaintingId(),
@@ -222,8 +228,10 @@ public class PaintingsServiceImpl implements PaintingsService {
                 paintings.getDimensions(),
                 paintings.getPeriod());
 		}else {
+	        System.out.println("No painting found for ID: " + paintingId);
+
 		return null;
-	}
+		}
 	}
 	@Override
 	public List<PaintingDTO> getByPaintingsName(String paintingName) {

@@ -63,6 +63,12 @@ public class Wishlist {
 		this.customer = customer;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Wishlist [customerId=" + customerId + ", paintingId=" + paintingId + "]";
+	}
+
 	
 	
 }

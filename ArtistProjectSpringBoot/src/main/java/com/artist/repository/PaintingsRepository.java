@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.artist.entity.Paintings;
 
@@ -104,8 +105,12 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     
     
     //以下實作
+//	Optional <Paintings> findByPaintingId(String paintingId);
+	//一直抓不到....手動實現
+	@Query("SELECT p FROM Paintings p WHERE p.paintingId = :paintingId")
+	Optional<Paintings> findByPaintingId(@Param("paintingId") String paintingId);
 	
-	Optional <Paintings> findByPaintingId(String paintingId);
+	
 	List<Paintings> findByPaintingName(String paintingName);
 	
     @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated = 1 ORDER BY p.paintingId")

@@ -12,6 +12,7 @@ public interface CustomersService {
 	public String login(String email ,String password);
 	public Customers getCustomer(String email);
     public String getCustomerIdFromToken(String token);
+	public Customers getByCustomerId(String customerId);
 
 
     // Update
