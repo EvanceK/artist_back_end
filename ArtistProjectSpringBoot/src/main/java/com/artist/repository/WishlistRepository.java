@@ -13,4 +13,5 @@ public interface WishlistRepository  extends JpaRepository<Wishlist, String>{
 
 	void deleteByCustomerIdAndPaintingId(String customerId,String paintingId);
 
+
 }

@@ -30,7 +30,7 @@ CREATE TABLE `inventorydetails` (
   PRIMARY KEY (`inventory_number`,`painting_id`),
   KEY `fk_inventoryDetails_paintings1_idx` (`painting_id`),
   CONSTRAINT `fk_inventoryDetails_inventories1` FOREIGN KEY (`inventory_number`) REFERENCES `inventories` (`inventory_number`),
-  CONSTRAINT `fk_inventoryDetails_paintings1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`painting_id`)
+  CONSTRAINT `fk_inventoryDetails_paintings1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`painting_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-04 23:59:17
+-- Dump completed on 2024-10-07 14:00:05

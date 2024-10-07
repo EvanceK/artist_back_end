@@ -40,7 +40,6 @@ public class PaintingsServiceImpl implements PaintingsService {
 		painting.setStyle(paintingDTO.getStyle());
 		painting.setUploadDate(LocalDateTime.now());
 		painting.setGenre(paintingDTO.getGenre());
-		painting.setMedia(paintingDTO.getMedia());
 		painting.setDelicated(paintingDTO.getDelicated());
 		painting.setStatus(paintingDTO.getStatus());
 		ptr.save(painting);
@@ -53,8 +52,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return paintings.stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
-						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getMedia(), p.getDelicated(), p.getStatus(),
-						p.getDimensions(), p.getPeriod()))
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
 				.collect(Collectors.toList());
 	}
 
@@ -65,8 +63,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return paintings.stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
-						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getMedia(), p.getDelicated(), p.getStatus(),
-						p.getDimensions(), p.getPeriod()))
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
 				.collect(Collectors.toList());
 	}
 
@@ -77,8 +74,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
-						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getMedia(), p.getDelicated(), p.getStatus(),
-						p.getDimensions(), p.getPeriod()))
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
 				.collect(Collectors.toList());
 		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements()); // 获取分页结果
 	}
@@ -201,38 +197,25 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Override
 	public PaintingDTO getByPaintingsId(String paintingId) {
 		Optional<Paintings> painting = ptr.findById(paintingId);
-		System.out.println("Querying painting with ID: " + paintingId);//這邊正常
-		
-		
-		System.out.println("Found painting: " + painting);//這邊異常
-		
+		System.out.println("Querying painting with ID: " + paintingId);// 這邊正常
+
+		System.out.println("Found painting: " + painting);// 這邊異常
+
 		if (painting.isPresent()) {
-            Paintings paintings = painting.get();
-            System.out.println("Found painting: " + paintings);
+			Paintings paintings = painting.get();
+			System.out.println("Found painting: " + paintings);
 
-		return new PaintingDTO(
-                paintings.getPaintingId(),
-                paintings.getPaintingName(),
-                paintings.getArtist().getArtistId(),
-                paintings.getArtist().getArtistName(),
-                paintings.getLargUrl(),
-                paintings.getSmallUrl(),
-                paintings.getPrice(),
-                paintings.getDate(),
-                paintings.getStyle(),
-                paintings.getUploadDate(),
-                paintings.getGenre(),
-                paintings.getMedia(),
-                paintings.getDelicated(),
-                paintings.getStatus(),
-                paintings.getDimensions(),
-                paintings.getPeriod());
-		}else {
-	        System.out.println("No painting found for ID: " + paintingId);
+			return new PaintingDTO(paintings.getPaintingId(), paintings.getPaintingName(),
+					paintings.getArtist().getArtistId(), paintings.getArtist().getArtistName(), paintings.getLargUrl(),
+					paintings.getSmallUrl(), paintings.getPrice(), paintings.getDate(), paintings.getStyle(),
+					paintings.getUploadDate(), paintings.getGenre(), paintings.getDelicated(), paintings.getStatus());
+		} else {
+			System.out.println("No painting found for ID: " + paintingId);
 
-		return null;
+			return null;
 		}
 	}
+
 	@Override
 	public List<PaintingDTO> getByPaintingsName(String paintingName) {
 		List<Paintings> listPaintingId = ptr.findByPaintingName(paintingName);
@@ -243,8 +226,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
 						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
 						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
-						painting.getUploadDate(), painting.getGenre(), painting.getMedia(), painting.getDelicated(),
-						painting.getStatus(), painting.getDimensions(), painting.getPeriod()))
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
 				.collect(Collectors.toList());
 	}
 

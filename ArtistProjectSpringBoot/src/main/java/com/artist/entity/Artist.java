@@ -11,13 +11,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "artis")
+@Table(name = "artist")
 public class Artist {
 	@Id
-	@Column(name="artis_id")
+	@Column(name="artist_id")
 	private String artistId;
 	
-	@Column(name="artis_name")
+	@Column(name="artist_name")
 	private String artistName;
 	
 	@Column(name="desciption")
@@ -38,6 +38,8 @@ public class Artist {
 	}
 
 
+
+
 	public Artist(String artistId, String artistName, String desciption, String url, List<Paintings> paintings) {
 		super();
 		this.artistId = artistId;
@@ -48,9 +50,13 @@ public class Artist {
 	}
 
 
+
+
 	public String getArtistId() {
 		return artistId;
 	}
+
+
 
 
 	public void setArtistId(String artistId) {
@@ -58,9 +64,13 @@ public class Artist {
 	}
 
 
+
+
 	public String getArtistName() {
 		return artistName;
 	}
+
+
 
 
 	public void setArtistName(String artistName) {
@@ -68,9 +78,13 @@ public class Artist {
 	}
 
 
+
+
 	public String getDesciption() {
 		return desciption;
 	}
+
+
 
 
 	public void setDesciption(String desciption) {
@@ -78,14 +92,20 @@ public class Artist {
 	}
 
 
+
+
 	public String getUrl() {
 		return url;
 	}
 
 
+
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+
 
 
 	public List<Paintings> getPaintings() {

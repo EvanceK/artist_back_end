@@ -29,10 +29,10 @@ CREATE TABLE `customers` (
   `name` varchar(255) DEFAULT NULL,
   `nick_name` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   `account` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
   `credit_card_no` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customer_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
@@ -45,7 +45,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES ('CU0001','aaa','aaa','aaa','aaa','aaa','aaa','aaa','aaa'),('CU0002','bbb','bbb','bbb','bbb','aaa','aaa','bbb','aaa'),('CU0003','John Doe','Johnny','123-456-7890','test@test.com','123 Main St','johnny_account','$2a$10$QmHgGxTdfV/c0vLA1eE4..MLD1RiJN/eCv90hBmz0iDG34tlXERhi','4111111111111111');
+INSERT INTO `customers` VALUES ('CU0001','aaa','aaa','aaa','aaa','aaa','aaa','aaa','aaa'),('CU0002','bbb','bbb','bbb','bbb','aaa','aaa','bbb','aaa'),('CU0003','John Doe','Johnny','123-456-7890','test@test.com','123 Main St','johnny_account','$2a$10$QmHgGxTdfV/c0vLA1eE4..MLD1RiJN/eCv90hBmz0iDG34tlXERhi','4111111111111111'),('CU0004','tester1','tester1','0909999999','tester1@email.com','no where',NULL,'$2a$10$yTLSDDXOeUTPZeeMOqV4UuNRGu23cCz3A8ch5h8lFquuc3HjEtYxm',NULL),('CU0005','Allen Doe','Allen Allen','+1234567890','Allen.test@example.com','123  St, Cityville, Country',NULL,'$2a$10$inlt/9Mh6zr1m528KpzV.OAp0K2N3MCkjTCKkqFIQF16dsBNAj2km','4111111111111111');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-04 23:59:17
+-- Dump completed on 2024-10-07 14:00:05

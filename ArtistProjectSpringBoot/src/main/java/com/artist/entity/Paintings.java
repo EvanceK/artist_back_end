@@ -18,7 +18,7 @@ public class Paintings {
 	// 與artist關聯
 	@ManyToOne
 	@JsonManagedReference
-	@JoinColumn(name = "artis_id", insertable = false, updatable = false)
+	@JoinColumn(name = "artist_id", insertable = false, updatable = false)
 	private Artist artist;
 
 	@Id
@@ -28,7 +28,7 @@ public class Paintings {
 	@Column(name = "painting_name")
 	private String paintingName;
 
-	@Column(name = "artis_id")
+	@Column(name = "artist_id")
 	private String artisId;
 
 	@Column(name = "larg_url")
@@ -52,17 +52,9 @@ public class Paintings {
 	@Column(name = "genre")
 	private String genre;
 
-	@Column(name = "media")
-	private String media;
 
 	@Column(name = "delicated")
 	private Integer delicated;
-
-	@Column(name = "dimensions")
-	private String dimensions;
-
-	@Column(name = "period")
-	private String period;
 
 	@Column(name = "status")
 	private String status;
@@ -72,7 +64,7 @@ public class Paintings {
 
 	public Paintings(Artist artist, String paintingId, String paintingName, String artisId, String largUrl,
 			String smallUrl, Double price, String date, String style, LocalDateTime uploadDate, String genre,
-			String media, Integer delicated, String dimensions, String period, String status) {
+			Integer delicated, String status) {
 		super();
 		this.artist = artist;
 		this.paintingId = paintingId;
@@ -85,13 +77,9 @@ public class Paintings {
 		this.style = style;
 		this.uploadDate = uploadDate;
 		this.genre = genre;
-		this.media = media;
 		this.delicated = delicated;
-		this.dimensions = dimensions;
-		this.period = period;
 		this.status = status;
 	}
-
 	public Artist getArtist() {
 		return artist;
 	}
@@ -180,36 +168,12 @@ public class Paintings {
 		this.genre = genre;
 	}
 
-	public String getMedia() {
-		return media;
-	}
-
-	public void setMedia(String media) {
-		this.media = media;
-	}
-
 	public Integer getDelicated() {
 		return delicated;
 	}
 
 	public void setDelicated(Integer delicated) {
 		this.delicated = delicated;
-	}
-
-	public String getDimensions() {
-		return dimensions;
-	}
-
-	public void setDimensions(String dimensions) {
-		this.dimensions = dimensions;
-	}
-
-	public String getPeriod() {
-		return period;
-	}
-
-	public void setPeriod(String period) {
-		this.period = period;
 	}
 
 	public String getStatus() {
