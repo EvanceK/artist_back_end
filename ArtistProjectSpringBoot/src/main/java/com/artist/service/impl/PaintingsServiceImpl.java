@@ -68,7 +68,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	}
 
 	public Page<PaintingDTO> getPaintingsByPage(Integer pageSize, Integer currentPage) {
-		Pageable pageable = PageRequest.of(currentPage, pageSize); // 创建分页请求
+		Pageable pageable = PageRequest.of(currentPage, pageSize); 
 		Page<Paintings> paintingsPage = ptr.findAllDelicatedPaintingsWithArtist(pageable);
 		// 映射到 Page<PaintingDTO>
 		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
@@ -76,7 +76,19 @@ public class PaintingsServiceImpl implements PaintingsService {
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
 						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
 				.collect(Collectors.toList());
-		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements()); // 获取分页结果
+		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements()); 
+	}
+	
+	@Override
+	public Page<PaintingDTO> getAllforArtistIdByPage(Integer pageSize, Integer currentPage, String artistId) {
+		Pageable pageable = PageRequest.of(currentPage, pageSize); 
+		Page<Paintings> pagePaintingsWithArtist = ptr.findAllDelicatedWithArtist(pageable, artistId);
+		List<PaintingDTO> paintingDTOs = pagePaintingsWithArtist.getContent().stream()
+				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
+						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
+				.collect(Collectors.toList());
+		return new PageImpl<>(paintingDTOs, pageable, pagePaintingsWithArtist.getTotalElements());
 	}
 
 	@Override
@@ -121,6 +133,10 @@ public class PaintingsServiceImpl implements PaintingsService {
 	public Long findPaintingsTotalCount() {
 		long countByDelicated = ptr.countByDelicated(1);
 		return countByDelicated;
+	}
+	public long countByDelicatedAndArtistId(Integer delicatedValue, String artistId) {
+		long countByDelicatedAndArtistId = ptr.countByDelicatedAndArtistId(delicatedValue, artistId);
+		return countByDelicatedAndArtistId;
 	}
 
 	@Override

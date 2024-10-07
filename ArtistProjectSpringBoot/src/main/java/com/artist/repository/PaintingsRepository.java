@@ -130,7 +130,12 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 0")
     long countDelicatedEqualsZero();
     
-   
+    //給畫家頁面用的
+    @Query("SELECT p FROM Paintings p WHERE p.delicated = 1 AND p.artistId = :artistId")
+    Page<Paintings> findAllDelicatedWithArtist(Pageable pageable, @Param("artistId") String artistId);
+    
+    long countByDelicatedAndArtistId(Integer delicatedValue,String artistId);
+    
     
     
     

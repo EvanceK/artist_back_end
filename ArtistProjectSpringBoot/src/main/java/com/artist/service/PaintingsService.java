@@ -42,6 +42,7 @@ public interface PaintingsService {
     List<Paintings> getByDimensions(String dimensions);
 
     public Page<PaintingDTO> getPaintingsByPage(Integer pageSize, Integer currentPage);
+	public Page<PaintingDTO> getAllforArtistIdByPage(Integer pageSize, Integer currentPage, String artistId);
 
     //sort by 
     List<Paintings> sortByArtisName(String artisName);

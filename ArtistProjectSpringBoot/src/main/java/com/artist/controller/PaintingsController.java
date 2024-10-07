@@ -55,7 +55,7 @@ public class PaintingsController {
 
 	@GetMapping(value = "/findByPage")
 	public ResponseEntity<Map<String, Object>> findByPage(
-			@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+			@RequestParam(value = "currentPage", defaultValue = "0") int currentPage,
 			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 		// 1. 查詢總數
 		Long totalCount = psi.findPaintingsTotalCount();
@@ -65,8 +65,9 @@ public class PaintingsController {
 		int totalPage = (int) Math.ceil((double) totalCount / pageSize);
 		System.out.println(totalPage);//11
 
+		int page = currentPage-1;	//JPA分頁機制是從0開始。
 		// 3. 根據當前頁和每頁大小查詢分頁數據
-		Page<PaintingDTO> paintingsByPage = psi.getPaintingsByPage(pageSize, currentPage);
+		Page<PaintingDTO> paintingsByPage = psi.getPaintingsByPage(pageSize, page);
 		
 		// 4. 將數據封裝到 Map 中返回
 		Map<String, Object> result = new HashMap<>();
