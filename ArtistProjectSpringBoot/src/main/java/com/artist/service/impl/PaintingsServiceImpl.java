@@ -32,7 +32,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		Paintings painting = new Paintings();
 		painting.setPaintingId(paintingDTO.getPaintingId());
 		painting.setPaintingName(paintingDTO.getPaintingName());
-		painting.setArtisId(paintingDTO.getArtisId());
+		painting.setArtistId(paintingDTO.getArtistId());
 		painting.setLargUrl(paintingDTO.getLargUrl());
 		painting.setSmallUrl(paintingDTO.getSmallUrl());
 		painting.setPrice(paintingDTO.getPrice());

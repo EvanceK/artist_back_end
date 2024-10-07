@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class PaintingDTO {
 	private String paintingId;
 	private String paintingName;
-	private String artisId;
+	private String artistId;
 	private String artisName;
 	private String largUrl;
 	private String smallUrl;
@@ -31,11 +31,11 @@ public class PaintingDTO {
 	public void setPaintingName(String paintingName) {
 		this.paintingName = paintingName;
 	}
-	public String getArtisId() {
-		return artisId;
+	public String getArtistId() {
+		return artistId;
 	}
-	public void setArtisId(String artisId) {
-		this.artisId = artisId;
+	public void setArtistId(String artistId) {
+		this.artistId = artistId;
 	}
 	public String getArtisName() {
 		return artisName;
@@ -97,13 +97,13 @@ public class PaintingDTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public PaintingDTO(String paintingId, String paintingName, String artisId, String artisName, String largUrl,
+	public PaintingDTO(String paintingId, String paintingName, String artistId, String artisName, String largUrl,
 			String smallUrl, Double price, String date, String style, LocalDateTime uploadDate, String genre,
 			Integer delicated, String status) {
 		super();
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
-		this.artisId = artisId;
+		this.artistId = artistId;
 		this.artisName = artisName;
 		this.largUrl = largUrl;
 		this.smallUrl = smallUrl;

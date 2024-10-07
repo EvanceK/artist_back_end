@@ -18,35 +18,28 @@ USE `artistproject`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customers`
+-- Table structure for table `artis`
 --
 
-DROP TABLE IF EXISTS `customers`;
+DROP TABLE IF EXISTS `artis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `customers` (
-  `customer_id` varchar(10) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `nick_name` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `account` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `credit_card_no` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`customer_id`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
+CREATE TABLE `artis` (
+  `artis_id` varchar(255) NOT NULL,
+  `artis_name` varchar(255) DEFAULT NULL,
+  `desciption` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`artis_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `customers`
+-- Dumping data for table `artis`
 --
 
-LOCK TABLES `customers` WRITE;
-/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES ('CU0001','aaa','aaa','aaa','aaa','aaa','aaa','aaa','aaa'),('CU0002','bbb','bbb','bbb','bbb','aaa','aaa','bbb','aaa'),('CU0003','John Doe','Johnny','123-456-7890','test@test.com','123 Main St','johnny_account','$2a$10$QmHgGxTdfV/c0vLA1eE4..MLD1RiJN/eCv90hBmz0iDG34tlXERhi','4111111111111111'),('CU0004','tester1','tester1','0909999999','tester1@email.com','no where',NULL,'$2a$10$yTLSDDXOeUTPZeeMOqV4UuNRGu23cCz3A8ch5h8lFquuc3HjEtYxm',NULL),('CU0005','Allen Doe','Allen Allen','+1234567890','Allen.test@example.com','123  St, Cityville, Country',NULL,'$2a$10$inlt/9Mh6zr1m528KpzV.OAp0K2N3MCkjTCKkqFIQF16dsBNAj2km','4111111111111111');
-/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
+LOCK TABLES `artis` WRITE;
+/*!40000 ALTER TABLE `artis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `artis` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

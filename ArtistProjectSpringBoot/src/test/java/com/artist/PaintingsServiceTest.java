@@ -24,7 +24,7 @@ public class PaintingsServiceTest {
 		PaintingDTO painting = new PaintingDTO();
 		painting.setPaintingId("PT2222");
 		painting.setPaintingName("Mona Lisa");
-		painting.setArtisId("AR0009");
+		painting.setArtistId("AR0009");
 		painting.setPrice(2222222.0);
 		painting.setUploadDate(LocalDateTime.now());  // 設置當前時間
 		painting.setDelicated(1);  // 設置當前時間

@@ -29,7 +29,7 @@ public class Paintings {
 	private String paintingName;
 
 	@Column(name = "artist_id")
-	private String artisId;
+	private String artistId;
 
 	@Column(name = "larg_url")
 	private String largUrl;
@@ -62,14 +62,14 @@ public class Paintings {
 	public Paintings() {
 	}
 
-	public Paintings(Artist artist, String paintingId, String paintingName, String artisId, String largUrl,
+	public Paintings(Artist artist, String paintingId, String paintingName, String artistId, String largUrl,
 			String smallUrl, Double price, String date, String style, LocalDateTime uploadDate, String genre,
 			Integer delicated, String status) {
 		super();
 		this.artist = artist;
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
-		this.artisId = artisId;
+		this.artistId = artistId;
 		this.largUrl = largUrl;
 		this.smallUrl = smallUrl;
 		this.price = price;
@@ -104,12 +104,12 @@ public class Paintings {
 		this.paintingName = paintingName;
 	}
 
-	public String getArtisId() {
-		return artisId;
+	public String getArtistId() {
+		return artistId;
 	}
 
-	public void setArtisId(String artisId) {
-		this.artisId = artisId;
+	public void setArtistId(String artistId) {
+		this.artistId = artistId;
 	}
 
 	public String getLargUrl() {
