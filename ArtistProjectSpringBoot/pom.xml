@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.artist</groupId>
-	<artifactId>ArtisProjectSpringBoot</artifactId>
+	<artifactId>ArtistProjectSpringBoot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ArtisProjectSpringBoot</name>
-	<description>Artis project for Spring Boot</description>
+	<name>ArtistProjectSpringBoot</name>
+	<description>Artist project for Spring Boot</description>
 	<url />
 	<licenses>
 		<license />

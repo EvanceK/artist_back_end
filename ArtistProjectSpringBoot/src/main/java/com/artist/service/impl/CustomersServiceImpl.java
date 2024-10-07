@@ -17,6 +17,7 @@ import com.artist.service.CustomersService;
 import com.artist.utils.IdGenerator;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -35,6 +36,10 @@ public class CustomersServiceImpl implements CustomersService {
 		this.cr = cr;
 		this.passwordEncoder = passwordEncoder;
 	}
+	
+	@Value("${jwt.secret}")
+	private String jwtSecret;
+
 
 	@Override
 	public void create(CustomersDTO customersDTO) {
@@ -83,23 +88,15 @@ public class CustomersServiceImpl implements CustomersService {
 		if (passwordEncoder.matches(password, customer.getPassword())) {
 			// 生成 JWT
 			return generateToken(customer);
-
-//			 // 直接比對密碼，不使用 passwordEncoder
-//		    if (password.equals(customer.getPassword())) {
-//		        return generateToken(customer);
-//		    } else {
-//		        throw new RuntimeException("Invalid email or password");
-//		    }
 		} else {
 			throw new RuntimeException("Invalid email or password");
 		}
 	}
 
-	@Value("${jwt.secret}")
-	private String jwtSecret;
-
+	// 建立 token
 	private String generateToken(Customers customer) {
 		Map<String, Object> claims = new HashMap<>();
+		//將想放近token的資訊一併寫入
 		claims.put("nickname", customer.getNickName());
 		claims.put("customerId", customer.getCustomerId());
 
@@ -108,6 +105,29 @@ public class CustomersServiceImpl implements CustomersService {
 				.setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 天
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
+	
+	// 檢查 token 過期
+	public boolean isTokenExpired(String token) {
+		try {
+			Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+			return claims.getExpiration().before(new Date());
+		} catch (ExpiredJwtException e) {
+			return true;
+		}
+	}
+
+	// 刷新 token
+	public String refreshToken(String token) {
+		if (isTokenExpired(token)) {
+			Customers customer = getByCustomerId(getCustomerIdFromToken(token));
+			if (customer != null) {
+				return generateToken(customer); // 重新生成 token
+			}
+		}
+		return null;
+	}
+	
+	
 
 	public String getCustomerIdFromToken(String token) {
 		if (token.startsWith("Bearer ")) {

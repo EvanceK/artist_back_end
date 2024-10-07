@@ -47,6 +47,7 @@ public class InitService implements CommandLineRunner {
 			} else {
 				// 如果還未到下架時間，則設置定時任務
 				scheduler.schedule(() -> {
+					//未來要增加有查詢到有出過價錢，取最高的出價紀錄然後新增至order表與orderdetail表。
 					setPaintingSold(painting.getPaintingId());
 					System.out.println("商品已自動下架：" + painting.getPaintingId());
 				}, delay, TimeUnit.MILLISECONDS);
