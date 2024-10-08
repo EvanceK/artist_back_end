@@ -3,6 +3,8 @@ package com.artist.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,16 +29,18 @@ public class CustomersController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     
-    //登入
+    // 登入
     @PostMapping(value ="/login", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody CustomersDTO customersDTO) {
         String token = csi.login(customersDTO.getEmail(), customersDTO.getPassword());
-		String customerId = csi.getCustomerIdFromToken(token);
-		Customers customer = csi.getByCustomerId(customerId);
+        String customerId = csi.getCustomerIdFromToken(token);
+        Customers customer = csi.getByCustomerId(customerId);
+        System.out.println(customer);
         String nickName = customer.getNickName();
         LoginResponse response = new LoginResponse(token, nickName);
-        return ResponseEntity.ok((response));
+        return ResponseEntity.ok(response);
     }
+    
     // 刷新 token
     @PostMapping("/token/refresh")
     public ResponseEntity<?> refreshToken(@RequestParam String token) {

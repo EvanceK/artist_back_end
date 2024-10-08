@@ -6,14 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.artist.dao.impl.ArtistDaoImpl;
-import com.artist.dao.impl.InventoriesDaoImpl;
-import com.artist.dao.impl.OrdersDaoImpl;
-import com.artist.dao.impl.PaintingsDaoImpl;
 import com.artist.entity.Artist;
 import com.artist.entity.Customers;
-import com.artist.entity.Inventories;
-import com.artist.entity.Orders;
 import com.artist.entity.Paintings;
 import com.artist.repository.ArtistRepository;
 import com.artist.repository.CustomersRepository;

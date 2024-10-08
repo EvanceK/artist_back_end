@@ -16,7 +16,7 @@ public class Customers {
 	@Column(name = "customer_id")
 	private String customerId;
 
-	@Column(name = "`Name`")
+	@Column(name = "`name`")
 	private String name;
 
 	@Column(name = "nick_name")

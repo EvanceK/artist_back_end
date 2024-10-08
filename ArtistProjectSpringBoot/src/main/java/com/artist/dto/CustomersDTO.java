@@ -23,7 +23,7 @@ public class CustomersDTO {
 	}
 
 	public CustomersDTO(String customerId, String name, String nickName, String phone, String email, String address,
-			 String password, String creditCardNo) {
+			String password, String creditCardNo) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
@@ -98,6 +98,7 @@ public class CustomersDTO {
 	public void setCreditCardNo(String creditCardNo) {
 		this.creditCardNo = creditCardNo;
 	}
+
 
 	
 }

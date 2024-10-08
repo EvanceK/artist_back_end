@@ -9,18 +9,16 @@ public interface CustomersService {
 	void create(CustomersDTO customersDTO);
 
     // Read
-	public String login(String email ,String password);
-	public Customers getCustomer(String email);
-    public String getCustomerIdFromToken(String token);
-	public Customers getByCustomerId(String customerId);
-
+	String login(String email ,String password);
+	Customers getCustomer(String email);
+	Customers getByCustomerId(String customerId);
+    String getCustomerIdFromToken(String token);
+    String refreshToken(String token);
 
     // Update
     void update(CustomersDTO customersDTO);
     // Delete
     void delete(Customers Customers);
     void deleteByEmail(String email);
-    
-
 
 }
