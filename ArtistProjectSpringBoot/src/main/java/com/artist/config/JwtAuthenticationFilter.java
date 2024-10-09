@@ -39,6 +39,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		logger.info("JwtAuthenticationFilter triggered");
 
 		String requestToken = request.getHeader("Authorization");
+		
+		//=================================================暫時先這樣處理
+	    // 不論前端發什麼 token，後端都會將其替換為萬用 token
+	    if (requestToken == null || !requestToken.startsWith("Bearer ")) {
+	        // 如果沒有 token 或者格式不對，設置為萬用 token
+	        requestToken = UNIVERSAL_TOKEN;
+	    } else {
+	        // 如果有 token，無論是什麼 token，一律替換成萬用 token
+	        requestToken = UNIVERSAL_TOKEN;
+	    }
+		//=================================================暫時先這樣處理
 
 		// 檢查是否為萬用的 token
 		if (requestToken != null && requestToken.equals(UNIVERSAL_TOKEN)) {
