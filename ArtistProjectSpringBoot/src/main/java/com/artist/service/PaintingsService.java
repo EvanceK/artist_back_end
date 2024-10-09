@@ -6,6 +6,7 @@ import java.util.List;
 import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 
 
 public interface PaintingsService {
@@ -20,15 +21,16 @@ public interface PaintingsService {
     
     //dto把ArtisName加上
     List<PaintingDTO> getAllforArtisName();
-    List<PaintingDTO> getAllforArtisNameLike();
-    
     List<PaintingDTO> getAllAvailablePainting();
 
     
     //用Paintings查詢
     PaintingDTO getByPaintingsId(String paintingId);
     List<PaintingDTO> getByPaintingsName(String paintingName);
-    List<Paintings> getByPaintingsNameLike(String paintingName);
+    
+    
+    //Like查詢
+	List<PaintingDTO> findPaintingAndArtistPartOfName(String name); 
 
     
     //用ArtisId查詢

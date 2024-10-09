@@ -8,11 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.artist.dto.CustomersDTO;
+import com.artist.dto.LoginResponse;
 import com.artist.dto.PaintingDTO;
+import com.artist.entity.Customers;
 import com.artist.service.impl.PaintingsServiceImpl;
 
 //@RestController 是 @Controller 和 @ResponseBody 的結合體
@@ -79,5 +84,12 @@ public class PaintingsController {
 		
 		return ResponseEntity.ok(result);
 	}
-
+	
+    // 首頁search
+	@GetMapping(value = "/search")
+    public ResponseEntity<?> getPaintingsAndArtistPartOfName(@RequestParam() String keyword) {
+    	List<PaintingDTO> paintingAndArtistPartOfName = psi.findPaintingAndArtistPartOfName(keyword);
+    	return ResponseEntity.ok(paintingAndArtistPartOfName);
+    }
+   
 }

@@ -2,10 +2,12 @@ package com.artist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
-@SpringBootApplication(scanBasePackages = "com.artist") 
+@SpringBootApplication
+@ComponentScan(basePackages = "com.artist")
 @EnableTransactionManagement
 public class ArtistProjectSpringBootApplication {
 

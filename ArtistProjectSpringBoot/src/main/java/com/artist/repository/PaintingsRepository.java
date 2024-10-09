@@ -137,6 +137,10 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     long countByDelicatedAndArtistId(Integer delicatedValue,String artistId);
     
   boolean existsBypaintingId(String paintingId);
-    
+  
+  
+  //給首頁search用
+  @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated = 1 AND (p.paintingName LIKE CONCAT('%', :keyword, '%') OR a.artistName LIKE CONCAT('%', :keyword, '%')) ORDER BY p.paintingId")
+  List<Paintings> findPaintingAndArtistPartOfName(@Param("keyword") String keyword);
     
 }
