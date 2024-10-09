@@ -11,4 +11,7 @@ public interface WishlistService {
 	List<WishlistDTO> findAllWishlistWithPaintings(String customerId);
     // Delete
 	void deleteFromWishlist(String customerId,String paintingId);
+	
+	boolean existsBycustomerIdAndpaintingId(String customerId, String paintingId);
+
 }

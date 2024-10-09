@@ -2,6 +2,7 @@ package com.artist.dto;
 
 public class WishlistDTO {
 
+	private String paintingId;
 	private String paintingName;
 	private String artisName;
 	private Double price;
@@ -11,13 +12,16 @@ public class WishlistDTO {
 		super();
 	}
 
-	public WishlistDTO(String paintingName, String artisName, Double price, String smallUrl) {
+
+	public WishlistDTO(String paintingId, String paintingName, String artisName, Double price, String smallUrl) {
 		super();
+		this.paintingId = paintingId;
 		this.paintingName = paintingName;
 		this.artisName = artisName;
 		this.price = price;
 		this.smallUrl = smallUrl;
 	}
+
 
 	public String getPaintingName() {
 		return paintingName;
@@ -49,6 +53,16 @@ public class WishlistDTO {
 
 	public void setSmallUrl(String smallUrl) {
 		this.smallUrl = smallUrl;
+	}
+
+
+	public String getPaintingId() {
+		return paintingId;
+	}
+
+
+	public void setPaintingId(String paintingId) {
+		this.paintingId = paintingId;
 	}
 	
 }

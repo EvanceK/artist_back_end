@@ -32,6 +32,7 @@ public class WishlistServiceImpl implements WishlistService {
 			String paintingId = w.getId().getPaintingId();			
 			PaintingDTO paintings = psi.getByPaintingsId(paintingId);
 			WishlistDTO wishlistDTO = new WishlistDTO();
+			wishlistDTO.setPaintingId(paintingId);
 			wishlistDTO.setPaintingName(paintings.getPaintingName());
 			wishlistDTO.setArtisName(paintings.getArtisName());
 			wishlistDTO.setPrice(paintings.getPrice());
@@ -62,6 +63,15 @@ public class WishlistServiceImpl implements WishlistService {
 
 
 	}
+
+	@Override
+	public boolean existsBycustomerIdAndpaintingId(String customerId, String paintingId) {
+		
+		return wr.existsById_CustomerIdAndId_PaintingId(customerId, paintingId);
+
+	}
+	
+	
 
 }
 

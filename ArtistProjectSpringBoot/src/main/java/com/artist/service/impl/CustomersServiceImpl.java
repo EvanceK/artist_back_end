@@ -19,10 +19,12 @@ import com.artist.utils.IdGenerator;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.SignatureException;
 
 @Service
 public class CustomersServiceImpl implements CustomersService {
 
+	
 	@Autowired
 	private CustomersRepository cr;
 
@@ -104,7 +106,7 @@ public class CustomersServiceImpl implements CustomersService {
 
 		// 生成 JWT
 		return Jwts.builder().setSubject(customer.getEmail()).addClaims(claims) // 添加其他 claims
-				.setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 天
+				.setExpiration(new Date(System.currentTimeMillis() + 864000000)) // 10 天
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
@@ -117,6 +119,18 @@ public class CustomersServiceImpl implements CustomersService {
 
 		return (String) claims.get("customerId");
 	}
+	
+	public String getEmailFromToken(String token) {
+		if (token.startsWith("Bearer ")) {
+			token = token.substring(7);
+		}
+		   Claims claims = Jwts.parser()
+	                .setSigningKey(jwtSecret)
+	                .parseClaimsJws(token)
+	                .getBody();
+	        return claims.getSubject(); // 獲取 subject，也就是 email
+	}
+	
     public String refreshToken(String token) {
 //    	 // 檢查 token 是否已過期
 //        if (!jwtUtil.isTokenExpired(token)) {
@@ -132,6 +146,22 @@ public class CustomersServiceImpl implements CustomersService {
         return null; // 或者拋出自定義異常，例如 throw new RuntimeException("Token has expired");
     }
 
-
+    public boolean validateToken(String token, String username) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(jwtSecret)
+                    .parseClaimsJws(token)
+                    .getBody();
+            // 確認 Token 的過期時間
+            Date expiration = claims.getExpiration();
+            return (expiration != null && !expiration.before(new Date()) && claims.getSubject().equals(username));
+        } catch (SignatureException e) {
+            // Token 的簽名不正確
+            return false;
+        } catch (Exception e) {
+            // 其他任何錯誤處理
+            return false;
+        }
+    }
 
 }

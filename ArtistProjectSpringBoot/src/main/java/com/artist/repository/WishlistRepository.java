@@ -14,4 +14,7 @@ public interface WishlistRepository extends JpaRepository<Wishlist, WishlistId> 
 	// 根據 customerId 和 paintingId 刪除 Wishlist
 	void deleteById_CustomerIdAndId_PaintingId(String customerId, String paintingId);
 
+	boolean existsById_CustomerIdAndId_PaintingId(String customerId, String paintingId);
+
+	
 }
