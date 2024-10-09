@@ -287,6 +287,11 @@ public class PaintingsServiceImpl implements PaintingsService {
 		ptr.deleteById(paintingId);
 	}
 
+	@Override
+	public boolean existsBypaintingId(String paintingId) {
+		return ptr.existsBypaintingId(paintingId);
+	}
+
 //	//商品下架的邏輯有request調一次 太耗資源
 //	@Override
 //	public void removeItems() {

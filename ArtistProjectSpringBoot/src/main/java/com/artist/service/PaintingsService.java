@@ -65,5 +65,7 @@ public interface PaintingsService {
     //上架下架機制
     void uploadItems();
 //    void removeItems();//不用這個
-    
+    //判斷用
+    boolean existsBypaintingId(String paintingId);
+
 }

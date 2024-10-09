@@ -136,7 +136,7 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     
     long countByDelicatedAndArtistId(Integer delicatedValue,String artistId);
     
-    
+  boolean existsBypaintingId(String paintingId);
     
     
 }

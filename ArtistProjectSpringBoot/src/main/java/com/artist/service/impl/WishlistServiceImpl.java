@@ -26,36 +26,42 @@ public class WishlistServiceImpl implements WishlistService {
 
 	@Override
 	public List<WishlistDTO> findAllWishlistWithPaintings(String customerId) {
-		List<WishlistDTO> wishlistDTOLsit = new ArrayList<>();
-		List<Wishlist> allwish = wr.findAllByCustomerId(customerId);
+		List<WishlistDTO> wishlistDTOList = new ArrayList<>();
+		List<Wishlist> allwish = wr.findAllById_CustomerId(customerId);
 		for (Wishlist w : allwish) {
-			String paintingId = w.getPaintingId();			
+			String paintingId = w.getId().getPaintingId();			
 			PaintingDTO paintings = psi.getByPaintingsId(paintingId);
 			WishlistDTO wishlistDTO = new WishlistDTO();
 			wishlistDTO.setPaintingName(paintings.getPaintingName());
 			wishlistDTO.setArtisName(paintings.getArtisName());
 			wishlistDTO.setPrice(paintings.getPrice());
 			wishlistDTO.setSmallUrl(paintings.getSmallUrl());
-			wishlistDTOLsit.add(wishlistDTO);
+			wishlistDTOList.add(wishlistDTO);
 		}
-		return wishlistDTOLsit;
+		return wishlistDTOList;
 	}
 
 	@Override
 	@Transactional
 	public void deleteFromWishlist(String customerId,String paintingId) {
-		wr.deleteByCustomerIdAndPaintingId(customerId, paintingId);
+		wr.deleteById_CustomerIdAndId_PaintingId(customerId, paintingId);
 	}
 
 	@Override
 	public void addToWishlist(String customerId, String paintingId) {
 		Customers customer = csi.getByCustomerId(customerId);
-				
-		Wishlist wishlist = new Wishlist(customerId, paintingId);
-		wishlist.setCustomer(customer);
-		System.out.println(wishlist);
-		wr.save(wishlist);
+		if(psi.existsBypaintingId(paintingId)) {
+			Wishlist wishlist = new Wishlist(customerId, paintingId);
+			wishlist.setCustomer(customer);
+			System.out.println(wishlist);
+			wr.save(wishlist);
+		}else {
+			  System.out.println("畫作id不存在");
+		      throw new IllegalArgumentException("畫作ID不存在: " + paintingId);
+		}
+
 
 	}
 
 }
+
