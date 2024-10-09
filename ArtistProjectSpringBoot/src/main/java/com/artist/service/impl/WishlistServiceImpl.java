@@ -60,8 +60,6 @@ public class WishlistServiceImpl implements WishlistService {
 			  System.out.println("畫作id不存在");
 		      throw new IllegalArgumentException("畫作ID不存在: " + paintingId);
 		}
-
-
 	}
 
 	@Override
