@@ -3,7 +3,7 @@ package com.artist.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +37,7 @@ public class CustomersController {
         Customers customer = csi.getByCustomerId(customerId);
         System.out.println(customer);
         String nickName = customer.getNickName();
-        LoginResponse response = new LoginResponse(token, nickName);
+        LoginResponse response = new LoginResponse(token, nickName,customerId);
         return ResponseEntity.ok(response);
     }
     
@@ -52,8 +52,15 @@ public class CustomersController {
         }
     }
     
+    // 填充客戶資料
+    @PostMapping("/initEditData")
+    public ResponseEntity<?> initEdit(@RequestParam String customerId) {
+    	Customers customer = csi.getByCustomerId(customerId);
+    	System.out.println(customer.toString());
+    	return ResponseEntity.ok(customer); // 自動轉換為 JSON
+    }
     // 編輯客戶資料
-    @PutMapping(value ="/edit")
+    @PutMapping(value ="/EditAccount")
     public ResponseEntity<?> updateCustomer(
     		@RequestParam(value = "customerId") String customerId,
     		@RequestParam(value = "password") String pwd,

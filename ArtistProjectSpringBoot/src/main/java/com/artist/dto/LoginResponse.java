@@ -3,10 +3,12 @@ package com.artist.dto;
 public class LoginResponse {
     private String token;
     private String nickName;
-
-    public LoginResponse(String token, String nickName) {
+    private String customerId;
+    
+    public LoginResponse(String token, String nickName,String customerId) {
         this.token = token;
         this.nickName = nickName;
+        this.customerId = customerId;
     }
 
     public String getToken() {
@@ -16,4 +18,13 @@ public class LoginResponse {
     public String getNickName() {
         return nickName;
     }
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getCustomerId() {
+		return customerId;
+	}
+    
 }
