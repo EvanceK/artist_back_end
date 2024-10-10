@@ -1,6 +1,6 @@
 package com.artist.service;
 
-import com.artist.dto.CustomersDTO;
+import com.artist.dto.request.CustomersDTO;
 import com.artist.entity.Customers;
 
 public interface CustomersService {

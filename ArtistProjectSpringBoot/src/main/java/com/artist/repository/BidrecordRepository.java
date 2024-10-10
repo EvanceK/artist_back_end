@@ -11,4 +11,6 @@ public interface BidrecordRepository extends JpaRepository<Bidrecord,Long> {
 	
   List<Bidrecord> findByPaintingIdOrderByBidAmountDesc(String paintingId); // where  paintingId = ?1 order by bidAmount=?2 desc
 
+  List<Bidrecord> findByBidderIdOrderByBidTimeDesc(String bidderId); // where  bidId = ?1 order by bidTime desc
+
 }

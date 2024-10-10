@@ -1,4 +1,4 @@
-package com.artist.dto;
+package com.artist.dto.response;
 
 import java.time.LocalDateTime;
 

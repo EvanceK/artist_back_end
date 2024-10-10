@@ -1,67 +1,61 @@
-package com.artist.dto;
+package com.artist.dto.request;
 
 import java.time.LocalDateTime;
 
-public class BidrecordDTO {
+public class BiddingRequest {
 	
-	private String nickName;  //from customers
-	private String bidderId; //等於customerId
+	
+	private String paintingId;
+	
+	private String bidderId;
+	
 	private LocalDateTime bidTime;
+	
 	private Double bidAmount;
-	
-	
-	public BidrecordDTO() {
+
+	public BiddingRequest() {
 		super();
 	}
 
-
-	public BidrecordDTO(String nickName, String bidderId, LocalDateTime bidTime, Double bidAmount) {
+	public BiddingRequest(String paintingId, Double bidAmount) {
 		super();
-		this.nickName = nickName;
+		this.paintingId = paintingId;
 		this.bidderId = bidderId;
-		this.bidTime = bidTime;
 		this.bidAmount = bidAmount;
 	}
 
-
-	public String getNickName() {
-		return nickName;
+	public String getPaintingId() {
+		return paintingId;
 	}
 
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setPaintingId(String paintingId) {
+		this.paintingId = paintingId;
 	}
-
 
 	public String getBidderId() {
 		return bidderId;
 	}
 
-
 	public void setBidderId(String bidderId) {
 		this.bidderId = bidderId;
 	}
-
 
 	public LocalDateTime getBidTime() {
 		return bidTime;
 	}
 
-
 	public void setBidTime(LocalDateTime bidTime) {
 		this.bidTime = bidTime;
 	}
-
 
 	public Double getBidAmount() {
 		return bidAmount;
 	}
 
-
 	public void setBidAmount(Double bidAmount) {
 		this.bidAmount = bidAmount;
 	}
-
-
+	
+	
+	
 }

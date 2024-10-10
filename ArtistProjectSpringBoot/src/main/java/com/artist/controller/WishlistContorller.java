@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.artist.dto.WishlistDTO;
-import com.artist.dto.WishlistRequest;
+import com.artist.dto.request.WishlistRequest;
+import com.artist.dto.response.WishlistDTO;
 import com.artist.service.impl.CustomersServiceImpl;
 import com.artist.service.impl.WishlistServiceImpl;
 

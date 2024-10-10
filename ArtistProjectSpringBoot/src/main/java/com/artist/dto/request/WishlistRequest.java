@@ -1,4 +1,4 @@
-package com.artist.dto;
+package com.artist.dto.request;
 
 public class WishlistRequest {
     private String paintingId;

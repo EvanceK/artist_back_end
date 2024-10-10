@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
-import com.artist.dto.PaintingDTO;
+import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Paintings;
 import com.artist.repository.PaintingsRepository;
 import com.artist.service.impl.PaintingsServiceImpl;

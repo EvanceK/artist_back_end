@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.artist.dto.CustomersDTO;
-import com.artist.dto.LoginResponse;
+import com.artist.dto.request.CustomersDTO;
+import com.artist.dto.response.LoginResponse;
 import com.artist.entity.Customers;
 import com.artist.service.impl.CustomersServiceImpl;
 

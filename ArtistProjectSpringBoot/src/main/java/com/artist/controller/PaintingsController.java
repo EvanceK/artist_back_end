@@ -8,16 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.artist.dto.CustomersDTO;
-import com.artist.dto.LoginResponse;
-import com.artist.dto.PaintingDTO;
-import com.artist.entity.Customers;
+import com.artist.dto.response.PaintingDTO;
 import com.artist.service.impl.PaintingsServiceImpl;
 
 //@RestController 是 @Controller 和 @ResponseBody 的結合體
@@ -41,23 +37,26 @@ public class PaintingsController {
 		return ResponseEntity.ok(allAvailable); // 
 	}
 
+	
+	//GetMapping 
+	//方式一 路徑會長這樣>>>>   /findpaintingname?findpaintingname=xxxxx
+	
 	@GetMapping(value = "/findpaintingname")
-	public ResponseEntity<?> findPaintingsName() {
+	public ResponseEntity<?> findPaintingsName(@RequestParam("paintingname") String paintingname) {
 
-		List<PaintingDTO> paintingsName = psi.getByPaintingsName("Portrait of a Youth Holding an Arrow");
-		return ResponseEntity.ok(paintingsName); // 自動轉換為 JSON
-
+		List<PaintingDTO> paintingsName = psi.getByPaintingsName(paintingname);
+		return ResponseEntity.ok(paintingsName);
 	}
 	
-	@GetMapping(value = "/findpaintingid")
-	public ResponseEntity<?> getpaintingsid() {
+	//方式二 路徑會長這樣>>>>   /findpaintingid/PT0002
+	@GetMapping(value = "/findpaintingid/{id}")
+	public ResponseEntity<?> getpaintingId(@PathVariable("paintingId") String paintingId) {
 
-		PaintingDTO byPaintingsId = psi.getByPaintingsId("PT0002");
-	
+		PaintingDTO byPaintingsId = psi.getByPaintingsId("paintingId");
 		return ResponseEntity.ok(byPaintingsId); // 自動轉換為 JSON
-
 	}
 
+	//多組參數
 	@GetMapping(value = "/findByPage")
 	public ResponseEntity<Map<String, Object>> findByPage(
 			@RequestParam(value = "currentPage", defaultValue = "0") int currentPage,

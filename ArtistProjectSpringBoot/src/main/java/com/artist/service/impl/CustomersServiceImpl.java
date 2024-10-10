@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.artist.dto.CustomersDTO;
+import com.artist.dto.request.CustomersDTO;
 import com.artist.entity.Customers;
 import com.artist.repository.CustomersRepository;
 import com.artist.service.CustomersService;
@@ -106,7 +106,7 @@ public class CustomersServiceImpl implements CustomersService {
 
 		// 生成 JWT
 		return Jwts.builder().setSubject(customer.getEmail()).addClaims(claims) // 添加其他 claims
-				.setExpiration(new Date(System.currentTimeMillis() + 864000000)) // 10 天
+				.setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 天
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
@@ -119,6 +119,17 @@ public class CustomersServiceImpl implements CustomersService {
 
 		return (String) claims.get("customerId");
 	}
+	public String getNicknameFromToken(String token) {
+		if (token.startsWith("Bearer ")) {
+			token = token.substring(7);
+		}
+
+		Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+
+		return (String) claims.get("nickname");
+	}
+	
+	
 	
 	public String getEmailFromToken(String token) {
 		if (token.startsWith("Bearer ")) {

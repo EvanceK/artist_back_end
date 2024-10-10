@@ -3,7 +3,7 @@ package com.artist.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.artist.dto.PaintingDTO;
+import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Paintings;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;

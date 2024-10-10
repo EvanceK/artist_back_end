@@ -2,7 +2,7 @@ package com.artist.service;
 
 import java.util.List;
 
-import com.artist.dto.WishlistDTO;
+import com.artist.dto.response.WishlistDTO;
 
 public interface WishlistService {
 	// Create

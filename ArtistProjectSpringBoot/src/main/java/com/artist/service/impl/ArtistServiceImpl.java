@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.artist.dto.ArtistDTO;
+import com.artist.dto.response.ArtistDTO;
 import com.artist.entity.Artist;
 import com.artist.repository.ArtistRepository;
 import com.artist.service.ArtistService;
