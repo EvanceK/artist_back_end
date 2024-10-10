@@ -149,5 +149,12 @@ public class Customers {
 	public void setWish(List<Wishlist> wish) {
 		this.wish = wish;
 	}
+
+	@Override
+	public String toString() {
+		return "Customers [customerId=" + customerId + ", name=" + name + ", nickName=" + nickName + ", phone=" + phone
+				+ ", email=" + email + ", address=" + address + ", password=" + password + ", creditCardNo="
+				+ creditCardNo + ", cart=" + cart + ", Order=" + Order + ", wish=" + wish + "]";
+	}
 	
 }

@@ -54,15 +54,33 @@ public class CustomersServiceImpl implements CustomersService {
 
 //	@SuppressWarnings("unused")
 	@Override
-	public void update(CustomersDTO customersDTO) {
-		Customers customer = cr.findByCustomerId(customersDTO.getCustomerId());
-		customer.setPassword(passwordEncoder.encode(customersDTO.getPassword()));
-
-		customer.setName(customersDTO.getName());
-		customer.setNickName(customersDTO.getNickName());
-		customer.setPhone(customersDTO.getPhone());
-		customer.setAddress(customersDTO.getAddress());
-		cr.save(customer);
+	public void update(String CustomerId,
+					   String pwd,
+					   String name,
+					   String nickName,
+					   String phone,
+					   String address) {
+		Optional<Customers> optionalCustomers  = cr.findByCustomerId(CustomerId);
+		if (optionalCustomers.isPresent()) {
+			Customers customer = optionalCustomers.get();
+			customer.setPassword(passwordEncoder.encode(pwd));
+			
+			customer.setName(name);
+			customer.setNickName(nickName);
+			customer.setPhone(phone);
+			customer.setAddress(address);
+			cr.save(customer);
+		}else {
+			System.out.println("找不到此 id 的客戶");
+		}
+		
+//		customer.setPassword(passwordEncoder.encode(customersDTO.getPassword()));
+//
+//		customer.setName(customersDTO.getName());
+//		customer.setNickName(customersDTO.getNickName());
+//		customer.setPhone(customersDTO.getPhone());
+//		customer.setAddress(customersDTO.getAddress());
+//		cr.save(customer);
 	}
 
 	@Override

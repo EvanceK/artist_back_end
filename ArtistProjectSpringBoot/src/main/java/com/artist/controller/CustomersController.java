@@ -3,7 +3,9 @@ package com.artist.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,10 +53,16 @@ public class CustomersController {
     }
     
     // 編輯客戶資料
-    @PostMapping(value ="/edit", consumes = "application/json")
-    public ResponseEntity<?> updateCustomer(@RequestBody CustomersDTO customersDTO) {
-    	csi.update(customersDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    @PutMapping(value ="/edit")
+    public ResponseEntity<?> updateCustomer(
+    		@RequestParam(value = "customerId") String customerId,
+    		@RequestParam(value = "password") String pwd,
+    		@RequestParam(value = "name") String name,
+    		@RequestParam(value = "nickname") String nickname,
+    		@RequestParam(value = "phone") String phone,
+    		@RequestParam(value = "address") String address) {
+    	csi.update(customerId,pwd,name,nickname,phone,address);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
     
     
