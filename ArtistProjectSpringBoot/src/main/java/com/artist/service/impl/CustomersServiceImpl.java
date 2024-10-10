@@ -52,9 +52,19 @@ public class CustomersServiceImpl implements CustomersService {
 		cr.save(customer);
 	}
 
+//	@SuppressWarnings("unused")
 	@Override
 	public void update(CustomersDTO customersDTO) {
+		Customers customer = cr.findByCustomerId(customersDTO.getCustomerId());
+		customer.setEmail(customersDTO.getEmail());
+		customer.setPassword(passwordEncoder.encode(customersDTO.getPassword()));
 
+		customer.setName(customersDTO.getName());
+		customer.setNickName(customersDTO.getNickName());
+		customer.setPhone(customersDTO.getPhone());
+		customer.setAddress(customersDTO.getAddress());
+		customer.setCreditCardNo(customersDTO.getCreditCardNo());
+		cr.save(customer);
 	}
 
 	@Override

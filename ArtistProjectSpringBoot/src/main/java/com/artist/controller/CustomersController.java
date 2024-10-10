@@ -50,4 +50,13 @@ public class CustomersController {
         }
     }
     
+    // 編輯客戶資料
+    @PostMapping(value ="/update", consumes = "application/json")
+    public ResponseEntity<?> updateCustomer(@RequestBody CustomersDTO customersDTO) {
+    	csi.update(customersDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    
+    
+    
 }
