@@ -6,7 +6,7 @@ import java.util.List;
 import com.artist.dto.PaintingDTO;
 import com.artist.entity.Paintings;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
+//import org.springframework.data.repository.query.Param;
 
 
 public interface PaintingsService {
