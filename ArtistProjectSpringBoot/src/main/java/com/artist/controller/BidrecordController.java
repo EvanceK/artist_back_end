@@ -47,8 +47,8 @@ public class BidrecordController {
 	// 查詢"畫作"所有bidding history的方法
 	@GetMapping("/{paintingId}")
 	public ResponseEntity<BiddingHistoryResponse> getAuctionBiddingHistory(@RequestHeader("Authorization") String token,@PathVariable String paintingId) {
-		String bidderId = csi.getCustomerIdFromToken(token);
-	    String nickname = csi.getNicknameFromToken(token);
+//		String bidderId = csi.getCustomerIdFromToken(token);
+//	    String nickname = csi.getNicknameFromToken(token);
 	    List<BidrecordDTO> biddingHistory = bsi.getAllBiddingHistoryByPaintings(paintingId);
 	    PaintingDTO painting = psi.getByPaintingsId(paintingId);
 	    

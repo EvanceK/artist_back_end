@@ -70,6 +70,7 @@ public class BidrecordServiceImpl implements BidrecordService {
 	public List<BiddingHistoryDTO> getAllBiddingHistoryBycustomerId(String bidderId, String nickname) {
 		List<BiddingHistoryDTO> bidrecordDTOList = new ArrayList<>();
 		List<Bidrecord> Bidderlist = brr.findByBidderIdOrderByBidTimeDesc(bidderId);
+
 		for (Bidrecord b : Bidderlist) {
 
 			PaintingDTO paintings = psi.getByPaintingsId(b.getPaintingId());
@@ -87,7 +88,7 @@ public class BidrecordServiceImpl implements BidrecordService {
 			bidrecordDTOList.add(historyDTO);
 		}
 
-		return null;
+		return bidrecordDTOList;
 	}
 
 }
