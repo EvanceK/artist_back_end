@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `artistproject` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `artistproject`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: artistproject
@@ -28,13 +30,14 @@ CREATE TABLE `bidrecord` (
   `bidder_id` varchar(45) NOT NULL,
   `bid_time` datetime NOT NULL,
   `bid_amount` double NOT NULL,
-  `is_winning_bid` bit(1) DEFAULT NULL,
+  `is_winning_bid` bit(1) NOT NULL,
+  `deposit` double NOT NULL,
   PRIMARY KEY (`bid_id`),
   KEY `fk_painting_idx` (`painting_id`),
   KEY `fk_customer_idx` (`bidder_id`),
   CONSTRAINT `fk_customer` FOREIGN KEY (`bidder_id`) REFERENCES `customers` (`customer_id`),
   CONSTRAINT `fk_painting` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`painting_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +46,7 @@ CREATE TABLE `bidrecord` (
 
 LOCK TABLES `bidrecord` WRITE;
 /*!40000 ALTER TABLE `bidrecord` DISABLE KEYS */;
-INSERT INTO `bidrecord` VALUES (2,'PT0001','CU0006','2024-10-10 00:32:59',100,_binary '\0'),(3,'PT0001','CU0004','2024-10-10 00:35:08',110,_binary '\0'),(4,'PT0001','CU0006','2024-10-10 00:36:04',300,_binary '\0'),(5,'PT0001','CU0004','2024-10-10 22:32:48',500,_binary '');
+INSERT INTO `bidrecord` VALUES (2,'PT0001','CU0006','2024-10-10 00:32:59',100,_binary '\0',10),(3,'PT0001','CU0004','2024-10-10 00:35:08',110,_binary '\0',11),(4,'PT0001','CU0006','2024-10-10 00:36:04',300,_binary '\0',30),(5,'PT0001','CU0004','2024-10-10 22:32:48',500,_binary '\0',50),(6,'PT0001','CU0006','2024-10-11 10:15:05',600,_binary '\0',60),(7,'PT0001','CU0004','2024-10-11 10:15:45',650,_binary '',65),(8,'PT0002','CU0004','2024-10-11 10:15:54',150,_binary '\0',15),(9,'PT0003','CU0006','2024-10-11 10:16:22',100,_binary '',10),(10,'PT0004','CU0006','2024-10-11 10:16:27',100,_binary '',10),(11,'PT0002','CU0006','2024-10-11 10:16:31',300,_binary '\0',30),(12,'PT0002','CU0004','2024-10-11 10:18:09',350,_binary '',35);
 /*!40000 ALTER TABLE `bidrecord` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-11  1:38:01
+-- Dump completed on 2024-10-11 12:30:51

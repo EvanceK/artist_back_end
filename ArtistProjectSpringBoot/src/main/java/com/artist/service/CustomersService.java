@@ -16,9 +16,9 @@ public interface CustomersService {
     String refreshToken(String token);
 
     // Update
-    void update(CustomersDTO customersDTO);
+    void update(Customers customer);
     // Delete
-    void delete(Customers Customers);
+    void delete(Customers customers);
     void deleteByEmail(String email);
 
 }

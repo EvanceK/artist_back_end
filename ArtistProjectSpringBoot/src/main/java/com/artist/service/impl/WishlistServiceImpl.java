@@ -51,11 +51,11 @@ public class WishlistServiceImpl implements WishlistService {
 	@Override
 	public void addToWishlist(String customerId, String paintingId) {
 		Customers customer = csi.getByCustomerId(customerId);
-		System.out.println("點一下"+paintingId);
+//		System.out.println("點一下"+paintingId);
 		if(psi.existsBypaintingId(paintingId)) {
 			Wishlist wishlist = new Wishlist(customerId, paintingId);
 			wishlist.setCustomer(customer);
-			System.out.println(wishlist);
+//			System.out.println(wishlist);
 			wr.save(wishlist);
 		}else {
 			  System.out.println("畫作id不存在");

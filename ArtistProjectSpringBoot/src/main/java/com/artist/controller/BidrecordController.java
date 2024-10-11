@@ -34,6 +34,7 @@ public class BidrecordController {
 	@Autowired
 	private BidrecordServiceImpl bsi;
 	
+	//出價
 	@PostMapping(value ="/bid", consumes = "application/json")
 	public ResponseEntity<Void> bidding(@RequestHeader("Authorization") String token,
 			@RequestBody BiddingRequest request) {

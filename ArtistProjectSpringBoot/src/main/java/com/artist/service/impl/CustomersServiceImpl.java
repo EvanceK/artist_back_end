@@ -53,12 +53,12 @@ public class CustomersServiceImpl implements CustomersService {
 	}
 
 	@Override
-	public void update(CustomersDTO customersDTO) {
-
+	public void update(Customers customer) {
+		cr.save(customer);
 	}
 
 	@Override
-	public void delete(Customers Customers) {
+	public void delete(Customers customers) {
 
 	}
 

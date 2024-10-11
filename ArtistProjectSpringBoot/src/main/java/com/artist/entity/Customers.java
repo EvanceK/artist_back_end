@@ -37,6 +37,12 @@ public class Customers {
 	@Column(name = "credit_card_no")
 	private String creditCardNo;
 	
+	@Column(name = "bank_account")
+	private String bankAccount;
+	
+	@Column(name = "bank_balance")
+	private Double bankBalance;
+	
     @OneToMany(mappedBy = "customer")
     private List<Carts> cart;
     @OneToMany(mappedBy = "customer123")
@@ -60,6 +66,27 @@ public class Customers {
 		this.address = address;
 		this.password = password;
 		this.creditCardNo = creditCardNo;
+	}
+	
+	
+
+	public Customers(String customerId, String name, String nickName, String phone, String email, String address,
+			String password, String creditCardNo, String bankAccount, Double bankBalance, List<Carts> cart,
+			List<Orders> order, List<Wishlist> wish) {
+		super();
+		this.customerId = customerId;
+		this.name = name;
+		this.nickName = nickName;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+		this.password = password;
+		this.creditCardNo = creditCardNo;
+		this.bankAccount = bankAccount;
+		this.bankBalance = bankBalance;
+		this.cart = cart;
+		Order = order;
+		this.wish = wish;
 	}
 
 	public String getCustomerId() {
@@ -148,6 +175,22 @@ public class Customers {
 
 	public void setWish(List<Wishlist> wish) {
 		this.wish = wish;
+	}
+
+	public String getBankAccount() {
+		return bankAccount;
+	}
+
+	public void setBankAccount(String bankAccount) {
+		this.bankAccount = bankAccount;
+	}
+
+	public Double getBankBalance() {
+		return bankBalance;
+	}
+
+	public void setBankBalance(Double bankBalance) {
+		this.bankBalance = bankBalance;
 	}
 	
 }

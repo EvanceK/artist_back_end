@@ -34,7 +34,16 @@ public class Bidrecord {
 	
 	@Column(name = "deposit")
 	private Double deposit;
+	
+	@Column(name = "deposit_status")
+	private String depositStatus;
 
+	@Column(name = "refund_date")
+	private LocalDateTime refundDate;
+	
+	@Column(name = "refund_amount")
+	private Double refundAmount;
+	
 	public Bidrecord() {
 		super();
 	}
@@ -50,6 +59,22 @@ public class Bidrecord {
 		this.deposit=deposit;
 	}
 
+
+	
+	
+	public Bidrecord(String paintingId, String bidderId, LocalDateTime bidTime, Double bidAmount,
+			Boolean isWinningBid, Double deposit, String depositStatus,
+			Double refundAmount) {
+		super();
+		this.paintingId = paintingId;
+		this.bidderId = bidderId;
+		this.bidTime = bidTime;
+		this.bidAmount = bidAmount;
+		this.isWinningBid = isWinningBid;
+		this.deposit = deposit;
+		this.depositStatus = depositStatus;
+		this.refundAmount = refundAmount;
+	}
 
 	public Long getBidId() {
 		return bidId;
@@ -107,6 +132,30 @@ public class Bidrecord {
 
 	public void setDeposit(Double deposit) {
 		this.deposit = deposit;
+	}
+
+	public String getDepositStatus() {
+		return depositStatus;
+	}
+
+	public void setDepositStatus(String depositStatus) {
+		this.depositStatus = depositStatus;
+	}
+
+	public LocalDateTime getRefundDate() {
+		return refundDate;
+	}
+
+	public void setRefundDate(LocalDateTime refundDate) {
+		this.refundDate = refundDate;
+	}
+
+	public Double getRefundAmount() {
+		return refundAmount;
+	}
+
+	public void setRefundAmount(Double refundAmount) {
+		this.refundAmount = refundAmount;
 	}
 
 	

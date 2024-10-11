@@ -40,11 +40,11 @@ public class ArtistController {
 			@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
 			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 		Long totalCount = psi.countByDelicatedAndArtistId(1,artistId);
-		System.out.println(totalCount);
+//		System.out.println(totalCount);
 
 		// 2. 計算總頁數
 		int totalPage = (int) Math.ceil((double) totalCount / pageSize);
-		System.out.println(totalPage);
+//		System.out.println(totalPage);
 		
 		int page = currentPage-1;	//JPA分頁機制是從0開始。
 		// 3. 根據當前頁和每頁大小查詢分頁數據

@@ -12,6 +12,7 @@ import com.artist.dto.response.BiddingHistoryDTO;
 import com.artist.dto.response.BidrecordDTO;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Bidrecord;
+import com.artist.entity.Customers;
 import com.artist.repository.BidrecordRepository;
 import com.artist.service.BidrecordService;
 
@@ -23,6 +24,7 @@ public class BidrecordServiceImpl implements BidrecordService {
 	PaintingsServiceImpl psi;
 	@Autowired
 	CustomersServiceImpl csi;
+	
 
 	@Override
 	@Transactional
@@ -31,19 +33,28 @@ public class BidrecordServiceImpl implements BidrecordService {
 		LocalDateTime bidTime = LocalDateTime.now();
 		Boolean isWinningBid = true;
 		Double deposit = bidAmount/10; //押金收10%
-		Bidrecord bidrecord = new Bidrecord(paintingId, bidderId, bidTime, bidAmount, isWinningBid, deposit);
+		Bidrecord bidrecord = new Bidrecord(paintingId, bidderId, bidTime, bidAmount, isWinningBid, deposit, "pending" ,0.0);
 		List<Bidrecord> binddinglist = brr.findByPaintingIdOrderByBidAmountDesc(paintingId);
-
+		
 		if (binddinglist.isEmpty()) {
 			brr.save(bidrecord);// 第一筆出價，直接存
 			// 出價有大於舊的最高
 		} else if (bidAmount > (binddinglist.get(0).getBidAmount())) {
-			// 存入新的data
-			brr.save(bidrecord);
-			Bidrecord oldwinningBid = binddinglist.get(0);
+			brr.save(bidrecord);// 存入新的data
+			
 			// 抓出舊的最高價 isWinningBid -->改成false
-			oldwinningBid.setIsWinningBid(false);
+			Bidrecord oldwinningBid = binddinglist.get(0);
+			oldwinningBid.setIsWinningBid(false);						//設成不是最高
+			oldwinningBid.setRefundAmount(oldwinningBid.getDeposit());	//紀錄退多少錢
+			oldwinningBid.setRefundDate(LocalDateTime.now());			//紀錄時間
+			oldwinningBid.setDepositStatus("refunded");					//更改狀態
 			brr.save(oldwinningBid);// update之前最高的
+
+			Customers customer = csi.getByCustomerId(oldwinningBid.getBidderId());
+			Double bankBalance = customer.getBankBalance();
+			bankBalance+=oldwinningBid.getDeposit();
+			customer.setBankBalance(bankBalance);
+			csi.update(customer);					//更改customer表的account值
 		} else {
 			System.out.println("出價邏輯異常");
 
