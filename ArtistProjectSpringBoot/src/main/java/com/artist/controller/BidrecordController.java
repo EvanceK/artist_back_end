@@ -34,7 +34,7 @@ public class BidrecordController {
 	@Autowired
 	private BidrecordServiceImpl bsi;
 	
-	@PostMapping
+	@PostMapping(value ="/bid", consumes = "application/json")
 	public ResponseEntity<Void> bidding(@RequestHeader("Authorization") String token,
 			@RequestBody BiddingRequest request) {
 		String bidderId = csi.getCustomerIdFromToken(token);

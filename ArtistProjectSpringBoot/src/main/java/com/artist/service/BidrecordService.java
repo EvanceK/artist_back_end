@@ -16,5 +16,7 @@ public interface BidrecordService {
 	List<BiddingHistoryDTO> getAllBiddingHistoryBycustomerId(String bidderId ,String nickname);
 
 	//截標後移除所有紀錄by painting -->最高價到order Table 增加一筆 order
+	
+	
 	//標寄mail?告知所有投過標最終的結果?--> 有無得標???
 }

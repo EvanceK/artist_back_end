@@ -32,23 +32,23 @@ public class Bidrecord {
 	@Column(name = "is_winning_bid")
 	private Boolean isWinningBid;
 	
+	@Column(name = "deposit")
+	private Double deposit;
 
 	public Bidrecord() {
 		super();
 	}
 
-
-
-	public Bidrecord(String paintingId, String bidderId, LocalDateTime bidTime,Double bidAmount, 
-			Boolean isWinningBid) {
+	public Bidrecord(String paintingId, String bidderId, LocalDateTime bidTime, Double bidAmount,
+			Boolean isWinningBid, Double deposit) {
 		super();
 		this.paintingId = paintingId;
 		this.bidderId = bidderId;
-		this.bidAmount = bidAmount;
 		this.bidTime = bidTime;
+		this.bidAmount = bidAmount;
 		this.isWinningBid = isWinningBid;
+		this.deposit=deposit;
 	}
-
 
 
 	public Long getBidId() {
@@ -99,4 +99,15 @@ public class Bidrecord {
 		this.isWinningBid = isWinningBid;
 	}
 
+
+
+	public Double getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(Double deposit) {
+		this.deposit = deposit;
+	}
+
+	
 }

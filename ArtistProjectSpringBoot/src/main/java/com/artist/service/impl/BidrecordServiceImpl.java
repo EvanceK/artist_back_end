@@ -12,7 +12,6 @@ import com.artist.dto.response.BiddingHistoryDTO;
 import com.artist.dto.response.BidrecordDTO;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Bidrecord;
-import com.artist.entity.Customers;
 import com.artist.repository.BidrecordRepository;
 import com.artist.service.BidrecordService;
 
@@ -31,7 +30,8 @@ public class BidrecordServiceImpl implements BidrecordService {
 
 		LocalDateTime bidTime = LocalDateTime.now();
 		Boolean isWinningBid = true;
-		Bidrecord bidrecord = new Bidrecord(paintingId, bidderId, bidTime, bidAmount, isWinningBid);
+		Double deposit = bidAmount/10; //押金收10%
+		Bidrecord bidrecord = new Bidrecord(paintingId, bidderId, bidTime, bidAmount, isWinningBid, deposit);
 		List<Bidrecord> binddinglist = brr.findByPaintingIdOrderByBidAmountDesc(paintingId);
 
 		if (binddinglist.isEmpty()) {
@@ -48,7 +48,6 @@ public class BidrecordServiceImpl implements BidrecordService {
 			System.out.println("出價邏輯異常");
 
 		}
-
 	}
 
 	@Override

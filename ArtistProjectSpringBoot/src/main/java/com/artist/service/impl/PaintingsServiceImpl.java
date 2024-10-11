@@ -209,13 +209,12 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Override
 	public PaintingDTO getByPaintingsId(String paintingId) {
 		Optional<Paintings> painting = ptr.findById(paintingId);
-		System.out.println("Querying painting with ID: " + paintingId);// 這邊正常
+//		System.out.println("Querying painting with ID: " + paintingId);// 這邊正常
 
-		System.out.println("Found painting: " + painting);// 這邊異常
 
 		if (painting.isPresent()) {
 			Paintings paintings = painting.get();
-			System.out.println("Found painting: " + paintings);
+//			System.out.println("Found painting: " + paintings);
 
 			return new PaintingDTO(paintings.getPaintingId(), paintings.getPaintingName(),
 					paintings.getArtist().getArtistId(), paintings.getArtist().getArtistName(), paintings.getLargUrl(),

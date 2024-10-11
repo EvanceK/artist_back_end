@@ -63,11 +63,11 @@ public class PaintingsController {
 			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 		// 1. 查詢總數
 		Long totalCount = psi.findPaintingsTotalCount();
-		System.out.println(totalCount);//106
+//		System.out.println(totalCount);//106
 
 		// 2. 計算總頁數
 		int totalPage = (int) Math.ceil((double) totalCount / pageSize);
-		System.out.println(totalPage);//11
+//		System.out.println(totalPage);//11
 
 		int page = currentPage-1;	//JPA分頁機制是從0開始。
 		// 3. 根據當前頁和每頁大小查詢分頁數據

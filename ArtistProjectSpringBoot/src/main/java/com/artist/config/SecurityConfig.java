@@ -33,7 +33,7 @@ public class SecurityConfig {
 						// 允許未認證用戶訪問 "/customers/login", "/customers/register" 路徑
 						.requestMatchers("/customers/login", "/customers/register").permitAll()
 						// "/api/**" 開頭的路徑需要身份驗證
-						.requestMatchers("/api/**").authenticated()
+						.requestMatchers("/api/wishlist", "/api/bidding/history","/api/bidding/bid").authenticated()
 						// 其他所有路徑允許訪問
 						.anyRequest().permitAll());
 
