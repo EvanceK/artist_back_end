@@ -49,6 +49,9 @@ public class Customers {
     private List<Orders> Order;
     @OneToMany(mappedBy = "customer")
     private List<Wishlist> wish;
+    
+    @OneToMany(mappedBy = "bidrecord")
+    private List<Bidrecord> bidrecord;
 
 
 	public Customers() {

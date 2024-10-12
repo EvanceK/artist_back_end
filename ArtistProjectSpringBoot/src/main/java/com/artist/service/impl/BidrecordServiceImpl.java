@@ -101,5 +101,8 @@ public class BidrecordServiceImpl implements BidrecordService {
 
 		return bidrecordDTOList;
 	}
+	
+	
+	
 
 }

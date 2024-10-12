@@ -53,7 +53,7 @@ public class PaintingsController {
 	public ResponseEntity<?> getpaintingId(@PathVariable("paintingId") String paintingId) {
 
 		PaintingDTO byPaintingsId = psi.getByPaintingsId("paintingId");
-		return ResponseEntity.ok(byPaintingsId); // 自動轉換為 JSON
+		return ResponseEntity.ok(byPaintingsId);
 	}
 
 	//多組參數

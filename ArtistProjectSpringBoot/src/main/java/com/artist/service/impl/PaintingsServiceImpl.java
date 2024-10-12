@@ -210,8 +210,6 @@ public class PaintingsServiceImpl implements PaintingsService {
 	public PaintingDTO getByPaintingsId(String paintingId) {
 		Optional<Paintings> painting = ptr.findById(paintingId);
 //		System.out.println("Querying painting with ID: " + paintingId);// 這邊正常
-
-
 		if (painting.isPresent()) {
 			Paintings paintings = painting.get();
 //			System.out.println("Found painting: " + paintings);

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +21,11 @@ public class Bidrecord {
 	
 	@Column(name = "painting_id")
 	private String paintingId;
+	
+	//與Customers關聯
+    @ManyToOne
+    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    private Customers bidrecord;
 	
 	@Column(name = "bidder_id")
 	private String bidderId;

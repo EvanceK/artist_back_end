@@ -1,5 +1,7 @@
 package com.artist.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +32,18 @@ public class CustomersController {
     // 登入
     @PostMapping(value ="/login", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody CustomersDTO customersDTO) {
-        String token = csi.login(customersDTO.getEmail(), customersDTO.getPassword());
-        String customerId = csi.getCustomerIdFromToken(token);
-        Customers customer = csi.getByCustomerId(customerId);
-        System.out.println(customer);
-        String nickName = customer.getNickName();
-        LoginResponse response = new LoginResponse(token, nickName);
-        return ResponseEntity.ok(response);
+        try {
+			String token = csi.login(customersDTO.getEmail(), customersDTO.getPassword());
+			String customerId = csi.getCustomerIdFromToken(token);
+			Customers customer = csi.getByCustomerId(customerId);
+			System.out.println(customer);
+			String nickName = customer.getNickName();
+			LoginResponse response = new LoginResponse(token, nickName);
+			return ResponseEntity.ok(response);
+		} catch (RuntimeException  e) {
+			 // 捕捉密碼或電子郵件錯誤，返回錯誤信息
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+		}
     }
     
     // 刷新 token
@@ -49,5 +56,6 @@ public class CustomersController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token.");
         }
     }
+    
     
 }

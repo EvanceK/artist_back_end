@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.service.impl.PaintingsServiceImpl;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 public class PaintingsServiceTest {
 

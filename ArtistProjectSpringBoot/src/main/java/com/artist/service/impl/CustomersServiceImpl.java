@@ -79,7 +79,7 @@ public class CustomersServiceImpl implements CustomersService {
 	@Override
 	public String login(String email, String password) {
 		// 根據電子郵件查找用戶
-		Customers customer = cr.findByEmail(email).orElseThrow(() -> new RuntimeException("Invalid email"));
+		Customers customer = cr.findByEmail(email).orElseThrow(() -> new RuntimeException("Email doesn't exist"));
 		// 檢查密碼是否匹配
 		if (passwordEncoder.matches(password, customer.getPassword())) {
 			// 生成 JWT
@@ -157,7 +157,7 @@ public class CustomersServiceImpl implements CustomersService {
         return null; // 或者拋出自定義異常，例如 throw new RuntimeException("Token has expired");
     }
 
-    public boolean validateToken(String token, String username) {
+    public boolean validateToken(String token, String email) {
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(jwtSecret)
@@ -165,7 +165,7 @@ public class CustomersServiceImpl implements CustomersService {
                     .getBody();
             // 確認 Token 的過期時間
             Date expiration = claims.getExpiration();
-            return (expiration != null && !expiration.before(new Date()) && claims.getSubject().equals(username));
+            return (expiration != null && !expiration.before(new Date()) && claims.getSubject().equals(email));
         } catch (SignatureException e) {
             // Token 的簽名不正確
             return false;
@@ -175,4 +175,5 @@ public class CustomersServiceImpl implements CustomersService {
         }
     }
 
+   
 }
