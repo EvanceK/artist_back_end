@@ -18,29 +18,36 @@ USE `artistproject`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `carts`
+-- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `carts`;
+DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `carts` (
+CREATE TABLE `orders` (
+  `order_number` varchar(10) NOT NULL,
+  `order_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `customer_id` varchar(10) NOT NULL,
-  `painting_id` varchar(255) NOT NULL,
-  `price` double DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`customer_id`,`painting_id`),
-  CONSTRAINT `fk_carts_customers1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
+  `status` varchar(45) DEFAULT NULL,
+  `delivery_address` varchar(200) DEFAULT NULL,
+  `att_name` varchar(255) DEFAULT NULL,
+  `att_phone` varchar(255) DEFAULT NULL,
+  `delivery_instructions` varchar(100) DEFAULT NULL,
+  `delivery_adress` varchar(255) DEFAULT NULL,
+  `delivery_instrictions` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`order_number`,`customer_id`),
+  KEY `fk_orders_customers1_idx` (`customer_id`),
+  CONSTRAINT `fk_orders_customers1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `carts`
+-- Dumping data for table `orders`
 --
 
-LOCK TABLES `carts` WRITE;
-/*!40000 ALTER TABLE `carts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `carts` ENABLE KEYS */;
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-12 11:25:40
+-- Dump completed on 2024-10-12 11:26:29

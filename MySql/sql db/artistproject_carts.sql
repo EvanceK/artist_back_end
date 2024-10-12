@@ -18,29 +18,29 @@ USE `artistproject`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `inventorydetails`
+-- Table structure for table `carts`
 --
 
-DROP TABLE IF EXISTS `inventorydetails`;
+DROP TABLE IF EXISTS `carts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `inventorydetails` (
-  `inventory_number` varchar(10) NOT NULL,
-  `painting_id` varchar(10) NOT NULL,
-  PRIMARY KEY (`inventory_number`,`painting_id`),
-  KEY `fk_inventoryDetails_paintings1_idx` (`painting_id`),
-  CONSTRAINT `fk_inventoryDetails_inventories1` FOREIGN KEY (`inventory_number`) REFERENCES `inventories` (`inventory_number`),
-  CONSTRAINT `fk_inventoryDetails_paintings1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`painting_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+CREATE TABLE `carts` (
+  `customer_id` varchar(10) NOT NULL,
+  `painting_id` varchar(255) NOT NULL,
+  `price` double DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`customer_id`,`painting_id`),
+  CONSTRAINT `fk_carts_customers1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `inventorydetails`
+-- Dumping data for table `carts`
 --
 
-LOCK TABLES `inventorydetails` WRITE;
-/*!40000 ALTER TABLE `inventorydetails` DISABLE KEYS */;
-/*!40000 ALTER TABLE `inventorydetails` ENABLE KEYS */;
+LOCK TABLES `carts` WRITE;
+/*!40000 ALTER TABLE `carts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `carts` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-12 11:25:41
+-- Dump completed on 2024-10-12 11:26:28

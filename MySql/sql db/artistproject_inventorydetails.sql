@@ -18,28 +18,29 @@ USE `artistproject`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `wishlist`
+-- Table structure for table `inventorydetails`
 --
 
-DROP TABLE IF EXISTS `wishlist`;
+DROP TABLE IF EXISTS `inventorydetails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `wishlist` (
-  `customer_id` varchar(10) NOT NULL,
-  `painting_id` varchar(255) NOT NULL,
-  PRIMARY KEY (`customer_id`,`painting_id`),
-  CONSTRAINT `fk_wishlist_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+CREATE TABLE `inventorydetails` (
+  `inventory_number` varchar(10) NOT NULL,
+  `painting_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`inventory_number`,`painting_id`),
+  KEY `fk_inventoryDetails_paintings1_idx` (`painting_id`),
+  CONSTRAINT `fk_inventoryDetails_inventories1` FOREIGN KEY (`inventory_number`) REFERENCES `inventories` (`inventory_number`),
+  CONSTRAINT `fk_inventoryDetails_paintings1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`painting_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `wishlist`
+-- Dumping data for table `inventorydetails`
 --
 
-LOCK TABLES `wishlist` WRITE;
-/*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
-INSERT INTO `wishlist` VALUES ('CU0001','PT0008'),('CU0002','PT0008'),('CU0002','PT0009'),('CU0003','PT0001'),('CU0003','PT0008'),('CU0004','PT0006'),('CU0004','PT0007'),('CU0004','PT0030'),('CU0004','PT0090'),('CU0004','PT0091'),('CU0005','PT0008'),('CU0006','PT0001'),('CU0006','PT0002'),('CU0006','PT0003'),('CU0006','PT0007'),('CU0006','PT0027'),('CU0006','PT0031');
-/*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
+LOCK TABLES `inventorydetails` WRITE;
+/*!40000 ALTER TABLE `inventorydetails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventorydetails` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-12 11:25:41
+-- Dump completed on 2024-10-12 11:26:29
