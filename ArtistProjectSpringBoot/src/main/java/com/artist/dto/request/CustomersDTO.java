@@ -17,7 +17,12 @@ public class CustomersDTO {
 	private String password;
 	
 	private String creditCardNo;
-
+	
+	private String bankAccount;
+	
+	private Double bankBalance;
+	
+	
 	public CustomersDTO() {
 		super();
 	}
@@ -97,6 +102,22 @@ public class CustomersDTO {
 
 	public void setCreditCardNo(String creditCardNo) {
 		this.creditCardNo = creditCardNo;
+	}
+
+	public String getBankAccount() {
+		return bankAccount;
+	}
+
+	public void setBankAccount(String bankAccount) {
+		this.bankAccount = bankAccount;
+	}
+
+	public Double getBankBalance() {
+		return bankBalance;
+	}
+
+	public void setBankBalance(Double bankBalance) {
+		this.bankBalance = bankBalance;
 	}
 
 

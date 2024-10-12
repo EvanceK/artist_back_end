@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.artist.dto.response.BiddingHistoryDTO;
 import com.artist.dto.response.BidrecordDTO;
+import com.artist.dto.response.WalletDTO;
 
 public interface BidrecordService {
 
@@ -16,8 +17,7 @@ public interface BidrecordService {
 	List<BiddingHistoryDTO> getAllBiddingHistoryBycustomerId(String bidderId ,String nickname);
 
 	//for my wallet information 退款紀錄
-	
-	List<BiddingHistoryDTO> getDepositRecord(String bidderId ,String nickname);
+	public List<WalletDTO> getDepositRecord(String bidderId, String depositStatus);
 
 
 }

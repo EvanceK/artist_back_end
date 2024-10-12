@@ -1,8 +1,12 @@
 package com.artist.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.request.CustomersDTO;
 import com.artist.dto.response.LoginResponse;
+import com.artist.dto.response.WalletDTO;
+import com.artist.dto.response.WalletResponse;
 import com.artist.entity.Customers;
+import com.artist.service.impl.BidrecordServiceImpl;
 import com.artist.service.impl.CustomersServiceImpl;
 
 @RestController
@@ -19,6 +26,8 @@ import com.artist.service.impl.CustomersServiceImpl;
 public class CustomersController {
     @Autowired
     private CustomersServiceImpl csi;
+    @Autowired
+    private BidrecordServiceImpl bsi;
 
     // 註冊
     @PostMapping(value ="/register", consumes = "application/json")
@@ -59,5 +68,28 @@ public class CustomersController {
         }
     }
     
+    // 
+    @GetMapping("/mywallet/{token}")
+    public ResponseEntity<?> wallet(@PathVariable String token) {
+        try {
+            String customerId = csi.getCustomerIdFromToken(token);
+            Customers customer = csi.getByCustomerId(customerId);
+
+            if (customer == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("客戶不存在");
+            }
+
+            String bankAccount = customer.getBankAccount();
+            Double bankBalance = customer.getBankBalance();
+            String creditCardNo = customer.getCreditCardNo();
+            List<WalletDTO> depositRecord = bsi.getDepositRecord(customerId, "refunded");
+
+            WalletResponse walletDTO = new WalletResponse(bankAccount, creditCardNo, bankBalance, depositRecord);
+            return ResponseEntity.ok(walletDTO);
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的請求：" + e.getMessage());
+        }
+    }
     
 }

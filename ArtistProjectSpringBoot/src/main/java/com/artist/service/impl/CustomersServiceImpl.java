@@ -15,6 +15,7 @@ import com.artist.entity.Customers;
 import com.artist.repository.CustomersRepository;
 import com.artist.service.CustomersService;
 import com.artist.utils.IdGenerator;
+import com.artist.utils.JwtUtil;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -34,6 +35,9 @@ public class CustomersServiceImpl implements CustomersService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+    
 	@Value("${jwt.secret}")
 	private String jwtSecret;
 	
@@ -149,18 +153,18 @@ public class CustomersServiceImpl implements CustomersService {
 	}
 	
     public String refreshToken(String token) {
-//    	 // 檢查 token 是否已過期
-//        if (!jwtUtil.isTokenExpired(token)) {
-//            // 如果 token 未過期，提取 email 並生成新的 token
-//            String email = jwtUtil.extractEmail(token);
-//            Optional<Customers> byEmail = cr.findByEmail(email);
-//            if(byEmail.isPresent()) {
-//            	Customers customers = byEmail.get();
-//                return jwtUtil.generateToken(customers);
-//            }
-//        }
-//        // 如果 token 已過期，返回 null 或拋出異常
-        return null; // 或者拋出自定義異常，例如 throw new RuntimeException("Token has expired");
+    	 // 檢查 token 是否已過期
+        if (!jwtUtil.isTokenExpired(token)) {
+            // 如果 token 未過期，提取 email 並生成新的 token
+            String email = jwtUtil.extractEmail(token);
+            Optional<Customers> byEmail = cr.findByEmail(email);
+            if(byEmail.isPresent()) {
+            	Customers customers = byEmail.get();
+                return generateToken(customers);// 生成新 token
+            }
+        }
+        // 如果 token 已過期，拋出自定義異常
+        throw new RuntimeException("Token has expired");
     }
 
     public boolean validateToken(String token, String email) {

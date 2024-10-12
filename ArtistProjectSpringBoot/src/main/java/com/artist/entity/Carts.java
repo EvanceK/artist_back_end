@@ -11,10 +11,6 @@ import jakarta.persistence.Table;
 @Table(name = "carts")
 public class Carts {
 
-	//與Customers關聯
-    @ManyToOne
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
-    private Customers customer;
 	
 	@Column(name = "customer_id")
 	private String customerId;
@@ -75,15 +71,6 @@ public class Carts {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public Customers getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customers customer) {
-		this.customer = customer;
-	}
-
 
 
 

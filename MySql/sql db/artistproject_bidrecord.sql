@@ -36,15 +36,12 @@ CREATE TABLE `bidrecord` (
   `deposit_status` varchar(255) DEFAULT NULL,
   `refund_date` datetime DEFAULT NULL,
   `refund_amount` double DEFAULT NULL,
-  `customer_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`bid_id`),
   KEY `fk_painting_idx` (`painting_id`),
   KEY `fk_customer_idx` (`bidder_id`),
-  KEY `FKedrpj30hfyritpb9v9jmhckwo` (`customer_id`),
   CONSTRAINT `fk_customer` FOREIGN KEY (`bidder_id`) REFERENCES `customers` (`customer_id`),
-  CONSTRAINT `fk_painting` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`painting_id`),
-  CONSTRAINT `FKedrpj30hfyritpb9v9jmhckwo` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_painting` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`painting_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +50,7 @@ CREATE TABLE `bidrecord` (
 
 LOCK TABLES `bidrecord` WRITE;
 /*!40000 ALTER TABLE `bidrecord` DISABLE KEYS */;
-INSERT INTO `bidrecord` VALUES (1,'PT0001','CU0004','競標中','2024-10-11 15:29:30',110,_binary '\0',11,'refunded','2024-10-11 15:32:41',11,NULL),(2,'PT0002','CU0004','競標中','2024-10-11 15:29:52',120,_binary '',12,'pending',NULL,0,NULL),(3,'PT0003','CU0004','競標中','2024-10-11 15:29:57',120,_binary '\0',12,'refunded','2024-10-11 15:34:23',12,NULL),(6,'PT0001','CU0006','競標中','2024-10-11 15:32:41',200,_binary '',20,'pending',NULL,0,NULL),(7,'PT0003','CU0006','競標中','2024-10-11 15:34:23',300,_binary '',30,'pending',NULL,0,NULL);
+INSERT INTO `bidrecord` VALUES (1,'PT0001','CU0004','In Bidding','2024-10-13 00:03:08',1100,_binary '\0',110,'refunded','2024-10-13 00:04:24',110),(2,'PT0002','CU0004','In Bidding','2024-10-13 00:03:13',1100,_binary '\0',110,'refunded','2024-10-13 00:04:27',110),(3,'PT0005','CU0004','In Bidding','2024-10-13 00:03:19',1500,_binary '\0',150,'refunded','2024-10-13 00:04:38',150),(4,'PT0004','CU0004','In Bidding','2024-10-13 00:03:22',1500,_binary '\0',150,'refunded','2024-10-13 00:04:29',150),(5,'PT0003','CU0004','In Bidding','2024-10-13 00:03:24',1500,_binary '\0',150,'refunded','2024-10-13 00:04:20',150),(6,'PT0003','CU0006','In Bidding','2024-10-13 00:04:20',2000,_binary '',200,'pending',NULL,0),(7,'PT0001','CU0006','In Bidding','2024-10-13 00:04:24',2000,_binary '\0',200,'refunded','2024-10-13 00:06:45',200),(8,'PT0002','CU0006','In Bidding','2024-10-13 00:04:27',2000,_binary '',200,'pending',NULL,0),(9,'PT0004','CU0006','In Bidding','2024-10-13 00:04:29',2000,_binary '',200,'pending',NULL,0),(10,'PT0005','CU0006','In Bidding','2024-10-13 00:04:38',2000,_binary '\0',200,'refunded','2024-10-13 00:04:59',200),(11,'PT0005','CU0006','In Bidding','2024-10-13 00:04:59',2200,_binary '',220,'pending',NULL,0),(12,'PT0001','CU0004','In Bidding','2024-10-13 00:06:45',2200,_binary '\0',220,'refunded','2024-10-13 00:07:08',220),(13,'PT0001','CU0006','In Bidding','2024-10-13 00:07:08',2400,_binary '\0',240,'refunded','2024-10-13 00:08:09',240),(14,'PT0001','CU0004','In Bidding','2024-10-13 00:08:09',3000,_binary '\0',300,'refunded','2024-10-13 00:15:25',300),(15,'PT0001','CU0006','In Bidding','2024-10-13 00:15:25',3500,_binary '',350,'pending',NULL,0);
 /*!40000 ALTER TABLE `bidrecord` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -66,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-12 11:26:29
+-- Dump completed on 2024-10-13  2:12:26

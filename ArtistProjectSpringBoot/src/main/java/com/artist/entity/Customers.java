@@ -43,15 +43,10 @@ public class Customers {
 	@Column(name = "bank_balance")
 	private Double bankBalance;
 	
-    @OneToMany(mappedBy = "customer")
-    private List<Carts> cart;
-    @OneToMany(mappedBy = "customer123")
+      @OneToMany(mappedBy = "customer123")
     private List<Orders> Order;
     @OneToMany(mappedBy = "customer")
     private List<Wishlist> wish;
-    
-    @OneToMany(mappedBy = "bidrecord")
-    private List<Bidrecord> bidrecord;
 
 
 	public Customers() {
@@ -87,7 +82,6 @@ public class Customers {
 		this.creditCardNo = creditCardNo;
 		this.bankAccount = bankAccount;
 		this.bankBalance = bankBalance;
-		this.cart = cart;
 		Order = order;
 		this.wish = wish;
 	}
@@ -154,14 +148,6 @@ public class Customers {
 
 	public void setCreditCardNo(String creditCardNo) {
 		this.creditCardNo = creditCardNo;
-	}
-
-	public List<Carts> getCart() {
-		return cart;
-	}
-
-	public void setCart(List<Carts> cart) {
-		this.cart = cart;
 	}
 
 	public List<Orders> getOrder() {

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.artist.dto.response.BiddingHistoryDTO;
 import com.artist.dto.response.BidrecordDTO;
 import com.artist.dto.response.PaintingDTO;
+import com.artist.dto.response.WalletDTO;
 import com.artist.entity.Bidrecord;
 import com.artist.entity.Customers;
 import com.artist.repository.BidrecordRepository;
@@ -33,10 +34,14 @@ public class BidrecordServiceImpl implements BidrecordService {
 		LocalDateTime bidTime = LocalDateTime.now();
 		Boolean isWinningBid = true;
 		Double deposit = bidAmount/10; //押金收10%
-		Bidrecord bidrecord = new Bidrecord(paintingId, bidderId, bidTime, bidAmount, isWinningBid, deposit, "pending" ,0.0);
+		Bidrecord bidrecord = new Bidrecord(paintingId, bidderId,"In Bidding", bidTime, bidAmount, isWinningBid, deposit, "pending" ,0.0);
 		List<Bidrecord> binddinglist = brr.findByPaintingIdOrderByBidAmountDesc(paintingId);
-		
-		if (binddinglist.isEmpty()) {
+		//查出底價
+		PaintingDTO paintingsId = psi.getByPaintingsId(paintingId);
+		Double price = paintingsId.getPrice();
+		if (bidAmount<=price) {
+			 throw new RuntimeException("出價需大於底價");
+		}else if(binddinglist.isEmpty()){
 			brr.save(bidrecord);// 第一筆出價，直接存
 			// 出價有大於舊的最高
 		} else if (bidAmount > (binddinglist.get(0).getBidAmount())) {
@@ -56,8 +61,7 @@ public class BidrecordServiceImpl implements BidrecordService {
 			customer.setBankBalance(bankBalance);
 			csi.update(customer);					//更改customer表的account值
 		} else {
-			System.out.println("出價邏輯異常");
-
+			 throw new RuntimeException("需高於最高價");
 		}
 	}
 
@@ -102,20 +106,18 @@ public class BidrecordServiceImpl implements BidrecordService {
 
 		return bidrecordDTOList;
 	}
-
+	
 	@Override
-	public List<BiddingHistoryDTO> getDepositRecord(String bidderId, String nickname) {
-
-		List<Bidrecord> byBidderIdAndDepositStatusOrderByBidTime = brr.findByBidderIdAndDepositStatusOrderByBidTime(bidderId, "refunded");
-		
-		
-		return null;
+	public List<WalletDTO> getDepositRecord(String bidderId, String depositStatus){
+	List<WalletDTO> walletDTOList = new ArrayList<>();
+	List<Bidrecord> bidInfo = brr.findByBidderIdAndDepositStatusOrderByBidTime(bidderId, depositStatus);
+	for(Bidrecord b:bidInfo) {
+		WalletDTO walletDTO = new WalletDTO();
+		walletDTO.setRefundDate(b.getRefundDate());
+		walletDTO.setRefundAmount(b.getRefundAmount());
+		walletDTOList.add(walletDTO);
+		}
+	
+	return walletDTOList;
 	}
-	
-	
-	
-	
-	
-	
-
 }

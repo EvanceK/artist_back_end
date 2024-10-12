@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,11 +19,6 @@ public class Bidrecord {
 	
 	@Column(name = "painting_id")
 	private String paintingId;
-	
-	//與Customers關聯
-    @ManyToOne
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
-    private Customers bidrecord;
 	
 	@Column(name = "bidder_id")
 	private String bidderId;
@@ -58,33 +51,24 @@ public class Bidrecord {
 		super();
 	}
 
-	public Bidrecord(String paintingId, String bidderId, LocalDateTime bidTime, Double bidAmount,
-			Boolean isWinningBid, Double deposit) {
+
+
+	public Bidrecord(String paintingId, String bidderId, String status, LocalDateTime bidTime, Double bidAmount,
+			Boolean isWinningBid, Double deposit, String depositStatus, Double refundAmount) {
 		super();
 		this.paintingId = paintingId;
 		this.bidderId = bidderId;
-		this.bidTime = bidTime;
-		this.bidAmount = bidAmount;
-		this.isWinningBid = isWinningBid;
-		this.deposit=deposit;
-	}
-
-
-	
-	
-	public Bidrecord(String paintingId, String bidderId, LocalDateTime bidTime, Double bidAmount,
-			Boolean isWinningBid, Double deposit, String depositStatus,
-			Double refundAmount) {
-		super();
-		this.paintingId = paintingId;
-		this.bidderId = bidderId;
+		this.status = status;
 		this.bidTime = bidTime;
 		this.bidAmount = bidAmount;
 		this.isWinningBid = isWinningBid;
 		this.deposit = deposit;
 		this.depositStatus = depositStatus;
+		this.refundDate = refundDate;
 		this.refundAmount = refundAmount;
 	}
+
+
 
 	public Long getBidId() {
 		return bidId;
@@ -168,13 +152,6 @@ public class Bidrecord {
 		this.refundAmount = refundAmount;
 	}
 
-	public Customers getBidrecord() {
-		return bidrecord;
-	}
-
-	public void setBidrecord(Customers bidrecord) {
-		this.bidrecord = bidrecord;
-	}
 
 	public String getStatus() {
 		return status;

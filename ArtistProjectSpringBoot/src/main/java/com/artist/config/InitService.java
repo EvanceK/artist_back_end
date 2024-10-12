@@ -12,10 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
 import com.artist.dto.response.PaintingDTO;
+import com.artist.entity.Bidrecord;
 import com.artist.entity.Paintings;
+import com.artist.repository.BidrecordRepository;
 import com.artist.repository.PaintingsRepository;
-import com.artist.service.impl.BidrecordServiceImpl;
-import com.artist.service.impl.EmailServiceImpl;
+import com.artist.service.impl.OrderDetailsServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
 
 public class InitService implements CommandLineRunner {
@@ -25,9 +26,9 @@ public class InitService implements CommandLineRunner {
 	@Autowired
 	PaintingsRepository ptr;
 	@Autowired
-	BidrecordServiceImpl bsi;
+	BidrecordRepository brr;
 	@Autowired
-	EmailServiceImpl esi; 
+	OrderDetailsServiceImpl  odsi;
 	
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -49,30 +50,29 @@ public class InitService implements CommandLineRunner {
 			long delay = Duration.between(LocalDateTime.now(), removeDate).toMillis();
 			// 如果下架時間已過，就立即標記為下架
 			if (delay <= 0) {
-				setPaintingSold(painting.getPaintingId());
+				setPaintingSatus(painting.getPaintingId());
 			} else {
 				// 如果還未到下架時間，則設置定時任務
 				scheduler.schedule(() -> {
-					//有查詢到有出過價錢，取最高的出價紀錄然後新增至order表與orderdetail表。
-					
-					//用order表和orderdetail表查 
-//				    esi.sendBidSuccessEmail(painting.getBidderEmail(), painting.getPaintingId(), painting.getFinalBidAmount());
-					setPaintingSold(painting.getPaintingId());
+					odsi.finalizeHighestBidAsOrder(painting, removeDate);
+					setPaintingSatus(painting.getPaintingId());
 					System.out.println("商品已自動下架：" + painting.getPaintingId());
 				}, delay, TimeUnit.MILLISECONDS);
 			}
 		}
 	}
 
-	public void setPaintingSold(String paintingId) {
+	public void setPaintingSatus(String paintingId) {
 		Optional<Paintings> optionalPainting  = ptr.findById(paintingId);
 			    if (optionalPainting.isPresent()) { // 檢查有沒有找到
 	        Paintings painting = optionalPainting.get(); // 得到 Painting 對象
 	        painting.setDelicated(0); // 改成賣出或過期 //之後狀態也要一起更新
-	        
-//	        painting.setStatus("Auction closed");
-	        painting.setStatus("Unsold");
-
+	     List<Bidrecord> paintingList = brr.findByPaintingId(paintingId);
+	      
+	     // 使用 Streams 
+	        boolean exists = paintingList.stream()
+	            .anyMatch(bid -> bid.getPaintingId().equals(paintingId));
+	        painting.setStatus(exists ? "Auction closed" : "Unsold"); //如果bid表有查到表示有被出過價 //更改painting表的畫作狀態
 	        ptr.save(painting); // 更新畫作
 	    } else {
 	        System.out.println("找不到此 id 的畫");

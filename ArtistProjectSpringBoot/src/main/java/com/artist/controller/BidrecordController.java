@@ -36,13 +36,17 @@ public class BidrecordController {
 	
 	//出價
 	@PostMapping(value ="/bid", consumes = "application/json")
-	public ResponseEntity<Void> bidding(@RequestHeader("Authorization") String token,
-			@RequestBody BiddingRequest request) {
-		String bidderId = csi.getCustomerIdFromToken(token);
-		String paintingId = request.getPaintingId();
-		Double bidAmount = request.getBidAmount();
-		bsi.bidding(paintingId, bidderId, bidAmount);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	public ResponseEntity<String> bidding(@RequestHeader("Authorization") String token,
+		@RequestBody BiddingRequest request) {
+		try {
+			String bidderId = csi.getCustomerIdFromToken(token);
+			String paintingId = request.getPaintingId();
+			Double bidAmount = request.getBidAmount();
+			bsi.bidding(paintingId, bidderId, bidAmount);
+			return ResponseEntity.status(HttpStatus.CREATED).body("出價成功");
+		} catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
 		
 	}
 	// 查詢"畫作"所有bidding history的方法

@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 
 import com.artist.entity.Artist;
 import com.artist.entity.Customers;
+import com.artist.entity.OrderDetails;
 import com.artist.entity.Paintings;
 import com.artist.repository.ArtistRepository;
 import com.artist.repository.CustomersRepository;
+import com.artist.repository.OrderDetailsRepository;
 import com.artist.repository.PaintingsRepository;
 @Component
 public class IdGenerator {
@@ -21,6 +23,10 @@ public class IdGenerator {
 	private PaintingsRepository ptr;	
 	@Autowired
 	private ArtistRepository arr;	 
+	@Autowired
+	private OrderDetailsRepository odr;
+
+
 	
 	public String artistId() {
 		String prefix = "AR";
@@ -35,7 +41,6 @@ public class IdGenerator {
 	}
 	public String customersId() {
 		String prefix = "CU";
-	
 		List<Customers> all = cr.findAll();
 		if (all.size() > 0) {
 			Customers lastesCustomers = all.get(all.size() - 1);
@@ -46,7 +51,7 @@ public class IdGenerator {
 		}
 
 	}
-	public String paintingId(Connection conn) {
+	public String paintingId() {
 		String prefix = "PT";
 		List<Paintings> paintingsList = ptr.findAll();
 		if (paintingsList.size() > 0) {
@@ -78,32 +83,33 @@ public class IdGenerator {
 		return pre + newSub;
 
 	}
-//	static public String inventoriesId() {
-//		String prefix = "IN";
-//		InventoriesDaoImpl idi = new InventoriesDaoImpl();
-//		List<Inventories> inventoriesList = idi.selectAll();
-//		if (inventoriesList.size() > 0) {
-//			Inventories lastesInventories = inventoriesList.get(inventoriesList.size() - 1);
-//			String lastestId = lastesInventories.getInventoryNumber();
-//			return IDGenerator(prefix, lastestId);
-//		} else {
-//			return IDGenerator(prefix, "0000");
-//		}
-//	}
-
-//
-//	static public String orderId() {
-//		String prefix = "OR";
-//		OrdersDaoImpl odi = new OrdersDaoImpl();
-//		List<Orders> ordersList = odi.selectAll();
-//		if (ordersList.size() > 0) {
-//			Orders lastesOrders = ordersList.get(ordersList.size() - 1);
-//			String lastestId = lastesOrders.getOrderNumber();
-//			return IDGenerator(prefix, lastestId);
-//		} else {
-//			return IDGenerator(prefix, "0000");
-//		}
-//	}
 	
+	public String orderId() {
+		String prefix = "OR";
+		List<OrderDetails> orderDetailsList = odr.findAll();
+		
+		
+		if (orderDetailsList.size() > 0) {
+			OrderDetails lastesOrders = orderDetailsList.get(orderDetailsList.size() - 1);
+			String lastestId = lastesOrders.getOrderNumber();
+			return IDGenerator(prefix, lastestId);
+		} else {
+			return IDGenerator(prefix, "0000");
+		}
+	}
 	
 }
+//static public String inventoriesId() {
+//String prefix = "IN";
+//InventoriesDaoImpl idi = new InventoriesDaoImpl();
+//List<Inventories> inventoriesList = idi.selectAll();
+//if (inventoriesList.size() > 0) {
+//	Inventories lastesInventories = inventoriesList.get(inventoriesList.size() - 1);
+//	String lastestId = lastesInventories.getInventoryNumber();
+//	return IDGenerator(prefix, lastestId);
+//} else {
+//	return IDGenerator(prefix, "0000");
+//}
+//}
+
+//

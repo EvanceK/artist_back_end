@@ -1,18 +1,11 @@
 package com.artist.service.impl;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.artist.service.EmailService;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class EmailServiceImpl implements EmailService{
@@ -30,24 +23,12 @@ public class EmailServiceImpl implements EmailService{
 	    public void sendPasswordResetEmail(String email, String resetLink) {
 	        SimpleMailMessage message = new SimpleMailMessage();
 	        message.setTo(email);
-	        message.setSubject("重置密碼請求");
-	        message.setText("請點擊以下連結來重置您的密碼:\n" + resetLink);
+	        message.setSubject("Artist重置密碼請求");
+	        message.setText("我們收到您更改密碼的請求。如果您希望重置密碼，請點擊下方按鈕。如果這不是您的操作，請忽略此郵件。\n" + resetLink+"\n請注意，此鏈接將在 15分鐘內過期。");
+
 	        mailSender.send(message);
 	    }
-	    
-	    //生成 JWT 的方法
-	    public String generatePasswordResetToken(String email) {
-	        Map<String, Object> claims = new HashMap<>();
-	        claims.put("email", email);
-	        return Jwts.builder()
-	                .setSubject(email)
-	                .addClaims(claims)
-	                .setIssuedAt(new Date(System.currentTimeMillis()))
-	                .setExpiration(new Date(System.currentTimeMillis() + 900000)) // 15 分鐘
-	                .signWith(SignatureAlgorithm.HS512, jwtSecret)
-	                .compact();
-	    }
-	    
+	       
 	    
 	    //發送得標信
 	    public void sendBidSuccessEmail(String email, String itemName, double bidAmount) {
