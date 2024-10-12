@@ -14,14 +14,20 @@ import org.springframework.boot.CommandLineRunner;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Paintings;
 import com.artist.repository.PaintingsRepository;
+import com.artist.service.impl.BidrecordServiceImpl;
+import com.artist.service.impl.EmailServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
 
 public class InitService implements CommandLineRunner {
 
 	@Autowired // 用spring管理
 	PaintingsServiceImpl psi;
-	@Autowired // 用spring管理
+	@Autowired
 	PaintingsRepository ptr;
+	@Autowired
+	BidrecordServiceImpl bsi;
+	@Autowired
+	EmailServiceImpl esi; 
 	
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -47,7 +53,10 @@ public class InitService implements CommandLineRunner {
 			} else {
 				// 如果還未到下架時間，則設置定時任務
 				scheduler.schedule(() -> {
-					//未來要增加有查詢到有出過價錢，取最高的出價紀錄然後新增至order表與orderdetail表。
+					//有查詢到有出過價錢，取最高的出價紀錄然後新增至order表與orderdetail表。
+					
+					//用order表和orderdetail表查 
+//				    esi.sendBidSuccessEmail(painting.getBidderEmail(), painting.getPaintingId(), painting.getFinalBidAmount());
 					setPaintingSold(painting.getPaintingId());
 					System.out.println("商品已自動下架：" + painting.getPaintingId());
 				}, delay, TimeUnit.MILLISECONDS);
@@ -57,9 +66,13 @@ public class InitService implements CommandLineRunner {
 
 	public void setPaintingSold(String paintingId) {
 		Optional<Paintings> optionalPainting  = ptr.findById(paintingId);
-	    if (optionalPainting.isPresent()) { // 檢查有沒有找到
+			    if (optionalPainting.isPresent()) { // 檢查有沒有找到
 	        Paintings painting = optionalPainting.get(); // 得到 Painting 對象
 	        painting.setDelicated(0); // 改成賣出或過期 //之後狀態也要一起更新
+	        
+//	        painting.setStatus("Auction closed");
+	        painting.setStatus("Unsold");
+
 	        ptr.save(painting); // 更新畫作
 	    } else {
 	        System.out.println("找不到此 id 的畫");

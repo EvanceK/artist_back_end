@@ -49,5 +49,20 @@ public class EmailServiceImpl implements EmailService{
 	    }
 	    
 	    
+	    //發送得標信
+	    public void sendBidSuccessEmail(String email, String itemName, double bidAmount) {
+	        SimpleMailMessage message = new SimpleMailMessage();
+	        message.setTo(email);
+	        message.setSubject("Congratulations! You have successfully placed a bid!");
+	        message.setText(String.format(
+	                "Thank you for participating! We are pleased to inform you:\n\n" +
+	                "Item: %s\n" +
+	                "Winning Amount: %.2f\n\n" +
+	                "Please complete your payment within 24 hours. If you have any questions, please contact us.\n\n" +
+	                "Thank you for your support, and we look forward to seeing you at the next auction!",
+	                itemName, bidAmount
+	        ));
+	        mailSender.send(message);
+	    }
 
 }

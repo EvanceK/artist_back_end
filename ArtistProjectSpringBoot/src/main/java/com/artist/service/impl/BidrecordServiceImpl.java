@@ -96,11 +96,24 @@ public class BidrecordServiceImpl implements BidrecordService {
 			historyDTO.setPaintingName(paintings.getPaintingName());
 			historyDTO.setArtisName(paintings.getArtisName());
 			historyDTO.setSmallUrl(paintings.getSmallUrl());
+			historyDTO.setStatus("競標中");
 			bidrecordDTOList.add(historyDTO);
 		}
 
 		return bidrecordDTOList;
 	}
+
+	@Override
+	public List<BiddingHistoryDTO> getDepositRecord(String bidderId, String nickname) {
+
+		List<Bidrecord> byBidderIdAndDepositStatusOrderByBidTime = brr.findByBidderIdAndDepositStatusOrderByBidTime(bidderId, "refunded");
+		
+		
+		return null;
+	}
+	
+	
+	
 	
 	
 	

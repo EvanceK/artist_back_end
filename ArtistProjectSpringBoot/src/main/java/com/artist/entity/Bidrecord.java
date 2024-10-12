@@ -30,6 +30,9 @@ public class Bidrecord {
 	@Column(name = "bidder_id")
 	private String bidderId;
 	
+	@Column(name = "status")
+	private String status;
+	
 	@Column(name = "bid_time")
 	private LocalDateTime bidTime;
 	
@@ -163,6 +166,22 @@ public class Bidrecord {
 
 	public void setRefundAmount(Double refundAmount) {
 		this.refundAmount = refundAmount;
+	}
+
+	public Customers getBidrecord() {
+		return bidrecord;
+	}
+
+	public void setBidrecord(Customers bidrecord) {
+		this.bidrecord = bidrecord;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	

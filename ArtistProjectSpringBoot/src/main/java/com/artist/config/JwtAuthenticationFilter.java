@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     private String jwtSecret;
 
 
-	private static final String UNIVERSAL_TOKEN = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0ZXIxQGVtYWlsLmNvbSIsIm5pY2tuYW1lIjoidGVzdGVyMSIsImN1c3RvbWVySWQiOiJDVTAwMDQiLCJleHAiOjE3MjkzMTgzNjd9.xOz-AEu_yJpTOGN6q8Jc-wvbgRPWm3sW5m7aZfqg7ZfCBIpHSNsIz5O2KO1R4_rqFpVG48pyYz5oaIbve3qxQQ";
+//	private static final String UNIVERSAL_TOKEN = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0ZXIxQGVtYWlsLmNvbSIsIm5pY2tuYW1lIjoidGVzdGVyMSIsImN1c3RvbWVySWQiOiJDVTAwMDQiLCJleHAiOjE3MjkzMTgzNjd9.xOz-AEu_yJpTOGN6q8Jc-wvbgRPWm3sW5m7aZfqg7ZfCBIpHSNsIz5O2KO1R4_rqFpVG48pyYz5oaIbve3qxQQ";
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

@@ -11,13 +11,14 @@ public class BiddingHistoryDTO {
 	private String smallUrl;
 	private LocalDateTime bidTime;
 	private Double bidAmount;
+	private String status;
 
 	public BiddingHistoryDTO() {
 		super();
 	}
 
-	public BiddingHistoryDTO(String nickName, String bidderId, String paintingId, String paintingName, String artisName,
-			String smallUrl, LocalDateTime bidTime, Double bidAmount) {
+	public BiddingHistoryDTO(String nickName, String paintingId, String paintingName, String artisName, String smallUrl,
+			LocalDateTime bidTime, Double bidAmount, String status) {
 		super();
 		this.nickName = nickName;
 		this.paintingId = paintingId;
@@ -26,6 +27,7 @@ public class BiddingHistoryDTO {
 		this.smallUrl = smallUrl;
 		this.bidTime = bidTime;
 		this.bidAmount = bidAmount;
+		this.status = status;
 	}
 
 	public String getNickName() {
@@ -82,6 +84,14 @@ public class BiddingHistoryDTO {
 
 	public void setSmallUrl(String smallUrl) {
 		this.smallUrl = smallUrl;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
