@@ -41,6 +41,9 @@ public class CustomersServiceImpl implements CustomersService {
 	public void create(CustomersDTO customersDTO) {
 		Customers customer = new Customers();
 		customer.setCustomerId(idGenerator.customersId());
+		  if (cr.existsByEmail(customersDTO.getEmail())) {
+		        throw new RuntimeException("email already exists"); 
+		    }
 		customer.setEmail(customersDTO.getEmail());
 		customer.setPassword(passwordEncoder.encode(customersDTO.getPassword()));
 
@@ -49,6 +52,9 @@ public class CustomersServiceImpl implements CustomersService {
 		customer.setPhone(customersDTO.getPhone());
 		customer.setAddress(customersDTO.getAddress());
 		customer.setCreditCardNo(customersDTO.getCreditCardNo());
+		customer.setBankAccount("823 Nextbank");//暫時先這樣
+		customer.setBankBalance(0.0);//預設0.0
+
 		cr.save(customer);
 	}
 

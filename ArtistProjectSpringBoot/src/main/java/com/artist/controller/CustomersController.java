@@ -1,7 +1,5 @@
 package com.artist.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +23,12 @@ public class CustomersController {
     // 註冊
     @PostMapping(value ="/register", consumes = "application/json")
     public ResponseEntity<?> createCustomer(@RequestBody CustomersDTO customersDTO) {
-    	csi.create(customersDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        try {
+        	csi.create(customersDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("註冊成功");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
     
     // 登入
