@@ -4,7 +4,14 @@
 <a href="https://github.com/Chenchen-GitHub-812"><img src="https://img.shields.io/badge/Member-Chenchen-orange"/></a>
 <a href="https://github.com/DannyTan8x"><img src="https://img.shields.io/badge/Danny%20Tan-brightgreen"/></a>
 <a href="https://github.com/EvanceK"><img src="https://img.shields.io/badge/Evance.K-brown"/></a>
+<a href="https://github.com/jack23h67"><img src="https://img.shields.io/badge/jack23h67-yellow"/></a>
 <a href="https://github.com/Chenchen-GitHub-812"><img src="https://img.shields.io/badge/YangYang890120%20-blue"/></a>
+
+
+
+ 
+
+
 <h2>Languages</h2>
 <a href="https://www.oracle.com/tw/java/technologies/downloads/"><img src="https://img.shields.io/badge/java- 17-red"/></a>
 <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-purple?logo=python"/></a>
