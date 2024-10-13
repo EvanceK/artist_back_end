@@ -22,9 +22,6 @@ public class Orders {
 	@Column(name = "order_date")
 	private LocalDateTime orderDate;
 	
-	@Column(name = "customer_id")
-	private String customerId;
-	
 	@Column(name = "status")
 	private String status;
 	
@@ -43,27 +40,25 @@ public class Orders {
 	
 	//與Customers關聯
     @ManyToOne
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
-    private Customers customer123;
+    @JoinColumn(name = "customer_id")
+    private Customers customer;
 
 	public Orders() {
 		super();
 	}
 
-	
 
-	public Orders(String orderNumber, LocalDateTime orderDate, String customerId, String status, String attName,
-			String attPhone, String deliveryAdress, String deliveryInstrictions, Customers customer123) {
+	public Orders(String orderNumber, LocalDateTime orderDate, String status, String attName, String attPhone,
+			String deliveryAdress, String deliveryInstrictions, Customers customer) {
 		super();
 		this.orderNumber = orderNumber;
 		this.orderDate = orderDate;
-		this.customerId = customerId;
 		this.status = status;
 		this.attName = attName;
 		this.attPhone = attPhone;
 		this.deliveryAdress = deliveryAdress;
 		this.deliveryInstrictions = deliveryInstrictions;
-		this.customer123 = customer123;
+		this.customer = customer;
 	}
 
 
@@ -90,17 +85,6 @@ public class Orders {
 		this.orderDate = orderDate;
 	}
 
-
-
-	public String getCustomerId() {
-		return customerId;
-	}
-
-
-
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
 
 
 
@@ -164,17 +148,15 @@ public class Orders {
 
 
 
-	public Customers getCustomer123() {
-		return customer123;
+	public Customers getCustomer() {
+		return customer;
 	}
 
 
 
-	public void setCustomer123(Customers customer123) {
-		this.customer123 = customer123;
+	public void setCustomer(Customers customer) {
+		this.customer = customer;
 	}
-
-
 
     
 }

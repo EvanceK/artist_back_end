@@ -150,7 +150,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		Optional<Paintings> optionalPainting = ptr.findByPaintingId(paintingId);
 		if (optionalPainting.isPresent()) {
 			Paintings painting = optionalPainting.get();
-			painting.setUploadDate(LocalDateTime.now()); // 設定日期
+			painting.setUploadDate(uploadDate); // 設定日期
 			ptr.save(painting); // 更新畫作
 			System.out.println("更新成功");
 		} else {
@@ -165,6 +165,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 			Paintings painting = optionalPainting.get();
 			System.out.println(painting.getPaintingId());
 			painting.setDelicated(1); // 設定有貨
+			painting.setStatus("In Bidding");
 			ptr.save(painting); // 更新畫作
 			System.out.println("更新成功");
 

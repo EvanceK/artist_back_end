@@ -10,15 +10,16 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Bidrecord;
 import com.artist.entity.Paintings;
 import com.artist.repository.BidrecordRepository;
 import com.artist.repository.PaintingsRepository;
-import com.artist.service.impl.OrderDetailsServiceImpl;
+import com.artist.service.impl.OrdersServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
-
+@Component
 public class InitService implements CommandLineRunner {
 
 	@Autowired // 用spring管理
@@ -28,7 +29,7 @@ public class InitService implements CommandLineRunner {
 	@Autowired
 	BidrecordRepository brr;
 	@Autowired
-	OrderDetailsServiceImpl  odsi;
+	OrdersServiceImpl  osi;
 	
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -45,16 +46,18 @@ public class InitService implements CommandLineRunner {
 		for (PaintingDTO painting : allPaintings) {
 			// 計算下架時間
 			LocalDateTime uploadDate = painting.getUploadDate();
-			LocalDateTime removeDate = uploadDate.plusDays(10); // 這邊修改下架時間 plusDays plusHours plusMinutes
+			LocalDateTime removeDate = uploadDate.plusDays(3); // 這邊修改下架時間 plusDays plusHours plusMinutes
 			// 計算現在時間和下架時間的時間差
 			long delay = Duration.between(LocalDateTime.now(), removeDate).toMillis();
 			// 如果下架時間已過，就立即標記為下架
 			if (delay <= 0) {
 				setPaintingSatus(painting.getPaintingId());
+				osi.finalizeHighestBidAsOrder(painting, removeDate);
+				System.out.println("商品已自動下架：" + painting.getPaintingId());
 			} else {
 				// 如果還未到下架時間，則設置定時任務
 				scheduler.schedule(() -> {
-					odsi.finalizeHighestBidAsOrder(painting, removeDate);
+					osi.finalizeHighestBidAsOrder(painting, removeDate);
 					setPaintingSatus(painting.getPaintingId());
 					System.out.println("商品已自動下架：" + painting.getPaintingId());
 				}, delay, TimeUnit.MILLISECONDS);

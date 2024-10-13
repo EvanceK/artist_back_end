@@ -43,8 +43,9 @@ public class Customers {
 	@Column(name = "bank_balance")
 	private Double bankBalance;
 	
-      @OneToMany(mappedBy = "customer123")
-    private List<Orders> Order;
+    @OneToMany(mappedBy = "customer")
+    private List<Orders> orders;
+    
     @OneToMany(mappedBy = "customer")
     private List<Wishlist> wish;
 
@@ -68,9 +69,10 @@ public class Customers {
 	
 	
 
+
 	public Customers(String customerId, String name, String nickName, String phone, String email, String address,
-			String password, String creditCardNo, String bankAccount, Double bankBalance, List<Carts> cart,
-			List<Orders> order, List<Wishlist> wish) {
+			String password, String creditCardNo, String bankAccount, Double bankBalance, List<Orders> orders,
+			List<Wishlist> wish) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
@@ -82,7 +84,7 @@ public class Customers {
 		this.creditCardNo = creditCardNo;
 		this.bankAccount = bankAccount;
 		this.bankBalance = bankBalance;
-		Order = order;
+		this.orders = orders;
 		this.wish = wish;
 	}
 
@@ -150,12 +152,14 @@ public class Customers {
 		this.creditCardNo = creditCardNo;
 	}
 
-	public List<Orders> getOrder() {
-		return Order;
+
+
+	public List<Orders> getOrders() {
+		return orders;
 	}
 
-	public void setOrder(List<Orders> order) {
-		Order = order;
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
 	}
 
 	public List<Wishlist> getWish() {

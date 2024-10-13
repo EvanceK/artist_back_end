@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.service.impl.PaintingsServiceImpl;
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class PaintingsServiceTest {
 
@@ -44,11 +44,19 @@ public class PaintingsServiceTest {
 	@Test
 	void testUpdatePaintingById() {
 		
-		for(int i=11;i<=106;i++) {
+		for(int i=1;i<=10;i++) {
 		// 使用 String.format() 補零，"%04d" 代表總長度為4，前面補零
 		String x = String.format("PT%04d", i);
-		psi.updateUploadDate(x, LocalDateTime.now());
-//		psi.setPaintingAvailable(x);
+		//設定現在時間
+//		psi.updateUploadDate(x, LocalDateTime.now());
+		
+		// 指定時間
+		LocalDateTime specificDateTime = LocalDateTime.of(2024, 10, 10, 17, 30, 0);
+		psi.updateUploadDate(x, specificDateTime);
+		
+		
+		psi.setPaintingAvailable(x);
+
 		}
 	}
 	@Test
