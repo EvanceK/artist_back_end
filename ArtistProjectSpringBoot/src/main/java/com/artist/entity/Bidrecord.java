@@ -64,7 +64,6 @@ public class Bidrecord {
 		this.isWinningBid = isWinningBid;
 		this.deposit = deposit;
 		this.depositStatus = depositStatus;
-		this.refundDate = refundDate;
 		this.refundAmount = refundAmount;
 	}
 
