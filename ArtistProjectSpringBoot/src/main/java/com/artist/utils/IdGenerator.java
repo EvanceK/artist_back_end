@@ -1,6 +1,5 @@
 package com.artist.utils;
 
-import java.sql.Connection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

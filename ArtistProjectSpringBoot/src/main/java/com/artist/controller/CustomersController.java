@@ -1,6 +1,7 @@
 package com.artist.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.artist.dto.request.CustomersDTO;
+import com.artist.dto.response.CustomersDTO;
 import com.artist.dto.response.LoginResponse;
 import com.artist.dto.response.WalletDTO;
 import com.artist.dto.response.WalletResponse;
@@ -43,12 +44,13 @@ public class CustomersController {
     
     // 登入
     @PostMapping(value ="/login", consumes = "application/json")
-    public ResponseEntity<?> login(@RequestBody CustomersDTO customersDTO) {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+        String password = requestBody.get("password");
         try {
-			String token = csi.login(customersDTO.getEmail(), customersDTO.getPassword());
+			String token = csi.login(email, password);
 			String customerId = csi.getCustomerIdFromToken(token);
 			Customers customer = csi.getByCustomerId(customerId);
-			System.out.println(customer);
 			String nickName = customer.getNickName();
 			LoginResponse response = new LoginResponse(token, nickName);
 			return ResponseEntity.ok(response);
@@ -94,11 +96,11 @@ public class CustomersController {
     }
     
     // 填充客戶資料
-    @PostMapping("/initEditData")
-    public ResponseEntity<?> initEdit(@RequestParam String customerId) {
-    	Customers customer = csi.getByCustomerId(customerId);
-    	System.out.println(customer.toString());
-    	return ResponseEntity.ok(customer); // 自動轉換為 JSON
+    @GetMapping("/initEditData/{token}")
+    public ResponseEntity<?> initEdit(@PathVariable String token) {
+        String customerId = csi.getCustomerIdFromToken(token);
+    	CustomersDTO customerDTO = csi.getCustomerDTO(customerId);
+    	return ResponseEntity.ok(customerDTO); 
     }
     // 編輯客戶資料
     @PutMapping(value ="/EditAccount")
@@ -109,8 +111,8 @@ public class CustomersController {
     		@RequestParam(value = "nickname") String nickname,
     		@RequestParam(value = "phone") String phone,
     		@RequestParam(value = "address") String address) {
-    	csi.update(customerId,pwd,name,nickname,phone,address);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    	csi.deitAccountUpdate(customerId,pwd,name,nickname,phone,address);
+        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
     
     

@@ -5,10 +5,9 @@ public class LoginResponse {
     private String nickName;
     private String customerId;
     
-    public LoginResponse(String token, String nickName,String customerId) {
+    public LoginResponse(String token, String nickName) {
         this.token = token;
         this.nickName = nickName;
-        this.customerId = customerId;
     }
 
     public String getToken() {

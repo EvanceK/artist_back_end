@@ -1,4 +1,4 @@
-package com.artist.dto.request;
+package com.artist.dto.response;
 
 public class CustomersDTO {
 

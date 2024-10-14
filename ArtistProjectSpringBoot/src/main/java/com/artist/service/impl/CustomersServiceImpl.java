@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.artist.dto.request.CustomersDTO;
+import com.artist.dto.response.CustomersDTO;
 import com.artist.entity.Customers;
 import com.artist.repository.CustomersRepository;
 import com.artist.service.CustomersService;
@@ -66,7 +66,8 @@ public class CustomersServiceImpl implements CustomersService {
 	@Override
 	public void update(Customers customer) {
 		cr.save(customer);
-	public void update2(String CustomerId,
+	}
+	public void deitAccountUpdate(String CustomerId,
 					   String pwd,
 					   String name,
 					   String nickName,
@@ -117,14 +118,15 @@ public class CustomersServiceImpl implements CustomersService {
 	@Override
 	public String login(String email, String password) {
 		// 根據電子郵件查找用戶
-		Customers customer = cr.findByEmail(email).orElseThrow(() -> new RuntimeException("Email doesn't exist"));
+		Customers customer = cr.findByEmail(email).orElseThrow(() -> new RuntimeException("Email doesn't exist"));		
 		// 檢查密碼是否匹配
 		if (passwordEncoder.matches(password, customer.getPassword())) {
 			// 生成 JWT
 			return generateToken(customer);
-		} else {
-			throw new RuntimeException("Invalid password");
-		}
+	    } else {
+	        throw new RuntimeException("Invalid password");
+	    }
+	    
 	}
 
 	public Customers getByCustomerId(String customerId) {
@@ -133,6 +135,23 @@ public class CustomersServiceImpl implements CustomersService {
 			Customers customers = optionalCustomerId.get();
 
 			return customers;
+		} else {
+			return null;
+		}
+	}
+	public CustomersDTO getCustomerDTO(String customerId) {
+		Optional<Customers> optionalCustomerId = cr.findById(customerId);
+	if (optionalCustomerId.isPresent()) {
+			Customers customers = optionalCustomerId.get();
+			CustomersDTO customerDTO = new CustomersDTO();
+			customerDTO.setName(customers.getName());
+			customerDTO.setNickName(customers.getNickName());
+			customerDTO.setEmail(customers.getEmail());
+			customerDTO.setPhone(customers.getPhone());
+			customerDTO.setAddress(customers.getAddress());
+			customerDTO.setPassword(customers.getPassword());
+
+			return customerDTO;
 		} else {
 			return null;
 		}

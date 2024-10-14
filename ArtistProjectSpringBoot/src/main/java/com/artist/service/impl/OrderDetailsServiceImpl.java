@@ -1,16 +1,11 @@
 package com.artist.service.impl;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.artist.dto.response.PaintingDTO;
-import com.artist.entity.Bidrecord;
 import com.artist.entity.OrderDetails;
-import com.artist.repository.BidrecordRepository;
 import com.artist.repository.OrderDetailsRepository;
 import com.artist.service.OrderDetailsService;
 @Service

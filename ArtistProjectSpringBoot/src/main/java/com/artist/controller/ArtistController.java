@@ -30,7 +30,7 @@ public class ArtistController {
 	@GetMapping(value = "/findall")
 	public ResponseEntity<?> findall(){
 		List<Artist> alllist = asi.getAll();
-		System.out.println(alllist);
+//		System.out.println(alllist);
 		return ResponseEntity.ok(alllist);
 		
 	}
