@@ -10,7 +10,9 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class WishlistId implements Serializable {
 
-    @Column(name = "customer_id")
+	private static final long serialVersionUID = 1L;
+
+	@Column(name = "customer_id")
     private String customerId;
 
     @Column(name = "painting_id")

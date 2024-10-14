@@ -4,15 +4,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Test; // 確保使用 JUnit 5 的 @Test
-import org.junit.runner.RunWith;
+//import org.junit.jupiter.api.extension.ExtendWith;
+//import org.springframework.test.context.junit.jupiter.SpringExtension;
+//import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+//import org.springframework.test.context.junit4.SpringRunner;
 
 import com.artist.dto.response.PaintingDTO;
 import com.artist.service.impl.PaintingsServiceImpl;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
+//@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class PaintingsServiceTest {
 

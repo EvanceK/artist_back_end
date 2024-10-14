@@ -17,6 +17,8 @@ public interface CustomersService {
 
     // Update
     void update(Customers customer);
+    void update2(String CustomerId, String pwd, String name, 
+    		    String nickName, String phone, String address);
     // Delete
     void delete(Customers customers);
     void deleteByEmail(String email);

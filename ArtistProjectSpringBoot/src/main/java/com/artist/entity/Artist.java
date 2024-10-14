@@ -19,8 +19,8 @@ public class Artist {
 	
 	@Column(name="artist_name")
 	private String artistName;
-	
-	@Column(name="desciption")
+
+	@Column(name="desciption", length = 1024)
 	private String desciption;
 	
 	@Column(name="url")

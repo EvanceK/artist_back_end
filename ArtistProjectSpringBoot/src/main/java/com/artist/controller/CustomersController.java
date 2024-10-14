@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,5 +92,27 @@ public class CustomersController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的請求：" + e.getMessage());
         }
     }
+    
+    // 填充客戶資料
+    @PostMapping("/initEditData")
+    public ResponseEntity<?> initEdit(@RequestParam String customerId) {
+    	Customers customer = csi.getByCustomerId(customerId);
+    	System.out.println(customer.toString());
+    	return ResponseEntity.ok(customer); // 自動轉換為 JSON
+    }
+    // 編輯客戶資料
+    @PutMapping(value ="/EditAccount")
+    public ResponseEntity<?> updateCustomer(
+    		@RequestParam(value = "customerId") String customerId,
+    		@RequestParam(value = "password") String pwd,
+    		@RequestParam(value = "name") String name,
+    		@RequestParam(value = "nickname") String nickname,
+    		@RequestParam(value = "phone") String phone,
+    		@RequestParam(value = "address") String address) {
+    	csi.update(customerId,pwd,name,nickname,phone,address);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+    
+    
     
 }
