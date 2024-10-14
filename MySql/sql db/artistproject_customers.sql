@@ -46,7 +46,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES ('CU0001','aaa','aaa','aaa','aaa','aaa','aaa','aaa','823 Nextbank',0),('CU0002','bbb','bbb','bbb','bbb','aaa','bbb','aaa','823 Nextbank',0),('CU0003','John Doe','Johnny','123-456-7890','test@test.com','123 Main St','$2a$10$QmHgGxTdfV/c0vLA1eE4..MLD1RiJN/eCv90hBmz0iDG34tlXERhi','4111111111111111','823 Nextbank',0),('CU0004','tester1','tester1','0909999999','tester1@email.com','no where','$2a$10$yTLSDDXOeUTPZeeMOqV4UuNRGu23cCz3A8ch5h8lFquuc3HjEtYxm',NULL,'823 Nextbank',1190),('CU0005','Allen Doe','Allen Allen','+1234567890','Allen.test@example.com','123  St, Cityville, Country','$2a$10$inlt/9Mh6zr1m528KpzV.OAp0K2N3MCkjTCKkqFIQF16dsBNAj2km','4111111111111111','823 Nextbank',0),('CU0006','Emily Davis','Em','+2233445566','emily.davis@example.com','1010 Road, Villagetown, Country','$2a$10$tP2sPWjGSq5LoXM0Ux8./ukCumt1VYbKxSbPl0n9fPZeHhiMedcHm','123','823 Nextbank',640),('CU0007','E.K','EK','+88633331111','tiredevance.k@gmail.com','1010 Road, Villagetown, Country','$2a$10$gyIcWFt8xfun0dYmDT6X..bKJkp5fudPBI7FmUbscNAR0/nDBvyNO','1234','823 Nextbank',0);
+INSERT INTO `customers` VALUES ('CU0001','aaa','aaa','aaa','aaa','aaa','aaa','aaa','823 Nextbank',0),('CU0002','bbb','bbb','bbb','bbb','aaa','bbb','aaa','823 Nextbank',0),('CU0003','John Doe','Johnny','123-456-7890','test@test.com','123 Main St','$2a$10$QmHgGxTdfV/c0vLA1eE4..MLD1RiJN/eCv90hBmz0iDG34tlXERhi','4111111111111111','823 Nextbank',0),('CU0004','tester1','tester1','0909999999','tester1@email.com','no where','$2a$10$yTLSDDXOeUTPZeeMOqV4UuNRGu23cCz3A8ch5h8lFquuc3HjEtYxm',NULL,'823 Nextbank',0),('CU0005','Allen Doe','Allen Allen','+1234567890','Allen.test@example.com','123  St, Cityville, Country','$2a$10$inlt/9Mh6zr1m528KpzV.OAp0K2N3MCkjTCKkqFIQF16dsBNAj2km','4111111111111111','823 Nextbank',0),('CU0006','Emily Davis','Em','+2233445566','emily.davis@example.com','1010 Road, Villagetown, Country','$2a$10$tP2sPWjGSq5LoXM0Ux8./ukCumt1VYbKxSbPl0n9fPZeHhiMedcHm','123','823 Nextbank',0),('CU0007','E.K','EK','+88633331111','tiredevance.k@gmail.com','1010 Road, Villagetown, Country','$2a$10$gyIcWFt8xfun0dYmDT6X..bKJkp5fudPBI7FmUbscNAR0/nDBvyNO','1234','823 Nextbank',0);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-13 22:09:20
+-- Dump completed on 2024-10-14 13:29:23

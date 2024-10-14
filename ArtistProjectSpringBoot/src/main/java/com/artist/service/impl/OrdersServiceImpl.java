@@ -67,6 +67,13 @@ public class OrdersServiceImpl implements OrdersService {
 			return; //
 		} else {
 			//如果有出過價
+			
+			// 使用 Lambda 表達式更新每個 Bidrecord 的 status 並保存
+			binddinglist.forEach(bid -> {
+			    bid.setStatus("Auction closed");
+			    brr.save(bid); // 儲存更新後的 Bidrecord
+			});
+		
 			Bidrecord bidrecord = binddinglist.get(0);
 			String customerId = bidrecord.getBidderId(); //得到customerId
 			String orderNumber = create(removeDate, customerId, "Pending Final Payment"); //這邊拿到orderNumber
