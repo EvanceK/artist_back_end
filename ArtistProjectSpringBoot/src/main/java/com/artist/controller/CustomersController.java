@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,8 +73,8 @@ public class CustomersController {
     }
     
     // 
-    @GetMapping("/mywallet/{token}")
-    public ResponseEntity<?> wallet(@PathVariable String token) {
+    @GetMapping("/mywallet")
+    public ResponseEntity<?> wallet(@RequestHeader("Authorization") String token) {
         try {
             String customerId = csi.getCustomerIdFromToken(token);
             Customers customer = csi.getByCustomerId(customerId);
@@ -96,8 +97,8 @@ public class CustomersController {
     }
     
     // 填充客戶資料
-    @GetMapping("/initEditData/{token}")
-    public ResponseEntity<?> initEdit(@PathVariable String token) {
+    @GetMapping("/initEditData")
+    public ResponseEntity<?> initEdit(@RequestHeader("Authorization") String token) {
         String customerId = csi.getCustomerIdFromToken(token);
     	CustomersDTO customerDTO = csi.getCustomerDTO(customerId);
     	return ResponseEntity.ok(customerDTO); 
