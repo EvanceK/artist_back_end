@@ -134,6 +134,17 @@ public class PaintingsController {
         
     	return ResponseEntity.ok(response);
     }
+	
+	@GetMapping("/closing-soon")
+    public ResponseEntity<List<PaintingDTO>> getUpcomingAuction() {
+        List<PaintingDTO> paintings = psi.getUpcomingAuction();
+        return ResponseEntity.ok(paintings);
+    }
+	@GetMapping("/recentuploads")
+    public ResponseEntity<List<PaintingDTO>> getRecentUploads() {
+        List<PaintingDTO> paintings = psi.getRecentlyUploaded();
+        return ResponseEntity.ok(paintings);
+    }
    
    
 }

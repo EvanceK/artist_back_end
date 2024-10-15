@@ -297,8 +297,33 @@ public class PaintingsServiceImpl implements PaintingsService {
 	}
 
 	@Override
-	public List<Paintings> sortByUploadDate(LocalDateTime date) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PaintingDTO> getUpcomingAuction() {
+		List<Paintings> upcomingAuction = ptr.findPaintingsClosingSoon();
+		if (upcomingAuction.isEmpty()) {
+			return Collections.emptyList();
+		}
+		return upcomingAuction.stream()
+				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
+						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
+						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+				.collect(Collectors.toList());
+	
 	}
+	
+	@Override
+	public List<PaintingDTO> getRecentlyUploaded() {
+		List<Paintings> recentlyUploaded = ptr.findRecentlyUploaded();
+		if (recentlyUploaded.isEmpty()) {
+			return Collections.emptyList();
+		}
+		return recentlyUploaded.stream()
+				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
+						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
+						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+				.collect(Collectors.toList());
+	
+	}
+
 }

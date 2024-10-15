@@ -2,7 +2,6 @@ package com.artist.repository;
 
 
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -144,8 +143,23 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
   @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated = 1 AND (p.paintingName LIKE CONCAT('%', :keyword, '%') OR a.artistName LIKE CONCAT('%', :keyword, '%')) ORDER BY p.paintingId")
   List<Paintings> findPaintingAndArtistPartOfName(@Param("keyword") String keyword);
     
-  //用於查快結標得商品 < 1天?
-  Page<Paintings> findByUploadDateBefore(Pageable pageable,LocalDateTime date);
+  //用於查快結標得商品 < 1天
+  @Query(value = "SELECT * FROM paintings p " +
+          "WHERE TIMESTAMPDIFF(HOUR, CURRENT_TIMESTAMP, DATE_ADD(p.upload_date, INTERVAL 3 DAY)) <= 24 " +
+          "AND TIMESTAMPDIFF(HOUR, CURRENT_TIMESTAMP, DATE_ADD(p.upload_date, INTERVAL 3 DAY)) >= 0 " +
+          "ORDER BY TIMESTAMPDIFF(HOUR, CURRENT_TIMESTAMP, DATE_ADD(p.upload_date, INTERVAL 3 DAY)) ASC", 
+          nativeQuery = true)
+   List<Paintings> findPaintingsClosingSoon();
+  
+  
+  @Query(value = "SELECT * FROM paintings p " +
+          "WHERE TIMESTAMPDIFF(HOUR, p.upload_date, CURRENT_TIMESTAMP) <= 24 " +
+          "ORDER BY p.upload_date DESC", 
+          nativeQuery = true)
+   List<Paintings> findRecentlyUploaded();
+  
+ 
+  
 
 
   

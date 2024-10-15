@@ -49,9 +49,13 @@ public interface PaintingsService {
     //sort by 
     List<Paintings> sortByArtisName(String artisName);
     List<Paintings> sortByPaintingName(String paintingName);
-    List<Paintings> sortByUploadDate(LocalDateTime date);
     List<Paintings> sortByPrice(Double price);
     List<Paintings> sortBypopular(Integer popular);
+    //即將結束<24hr
+	List<PaintingDTO> getUpcomingAuction();
+    //新上架 <24hr
+	List<PaintingDTO> getRecentlyUploaded();
+
     
     // Update
     void updatePrice(String paintingId, Double price);
