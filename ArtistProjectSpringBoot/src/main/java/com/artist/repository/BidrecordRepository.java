@@ -23,7 +23,10 @@ public interface BidrecordRepository extends JpaRepository<Bidrecord,Long> {
   
   
 	@Query("SELECT b.paintingId AS paintingId, COUNT(b.paintingId) AS paintingCount " +
-		       "FROM Bidrecord b GROUP BY b.paintingId ORDER BY COUNT(b.paintingId) DESC")
+		       "FROM Bidrecord b "+
+		       "JOIN Paintings p ON b.paintingId = p.paintingId " +
+	           "WHERE p.delicated = 1 " +
+		       "GROUP BY b.paintingId ORDER BY COUNT(b.paintingId) DESC")
 		List<Tuple> findTopBiddingWithLimit(Pageable pageable);
 
 }

@@ -1,6 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.38, for macos14 (arm64)
+CREATE DATABASE  IF NOT EXISTS `artistproject` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `artistproject`;
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: localhost    Database: artistproject
+-- Host: 127.0.0.1    Database: artistproject
 -- ------------------------------------------------------
 -- Server version	8.0.39
 
@@ -36,7 +38,7 @@ CREATE TABLE `wishlist` (
 
 LOCK TABLES `wishlist` WRITE;
 /*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
-INSERT INTO `wishlist` VALUES ('CU0001','PT0008'),('CU0002','PT0008'),('CU0002','PT0009'),('CU0003','PT0001'),('CU0003','PT0008'),('CU0004','PT0012'),('CU0004','PT0015'),('CU0005','PT0008'),('CU0006','PT0001'),('CU0006','PT0002'),('CU0006','PT0003'),('CU0006','PT0007'),('CU0006','PT0027'),('CU0006','PT0031');
+INSERT INTO `wishlist` VALUES ('CU0001','PT0008'),('CU0002','PT0008'),('CU0002','PT0009'),('CU0003','PT0001'),('CU0003','PT0008'),('CU0004','PT0012'),('CU0004','PT0015'),('CU0005','PT0008'),('CU0006','PT0001'),('CU0006','PT0002'),('CU0006','PT0003'),('CU0006','PT0007'),('CU0006','PT0027'),('CU0006','PT0031'),('CU0007','PT0012'),('CU0007','PT0015');
 /*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-15 13:42:11
+-- Dump completed on 2024-10-15 14:16:37

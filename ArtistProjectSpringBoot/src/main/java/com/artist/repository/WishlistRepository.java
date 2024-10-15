@@ -21,9 +21,13 @@ public interface WishlistRepository extends JpaRepository<Wishlist, WishlistId> 
 	boolean existsById_CustomerIdAndId_PaintingId(String customerId, String paintingId);
 
 	
-	@Query("SELECT w.id.paintingId AS paintingId, COUNT(w.id.paintingId) AS paintingCount " +
-		       "FROM Wishlist w GROUP BY w.id.paintingId ORDER BY COUNT(w.id.paintingId) DESC")
-		List<Tuple> findTopFavoritesWithLimit(Pageable pageable);
-//	PageRequest.of(0, 3) 表示查詢結果的第 1 頁，每頁顯示 3 條記錄。
+	   @Query("SELECT w.id.paintingId AS paintingId, COUNT(w.id.paintingId) AS paintingCount " +
+	           "FROM Wishlist w " +
+	           "JOIN Paintings p ON w.id.paintingId = p.id " +
+	           "WHERE p.delicated = 1 " +
+	           "GROUP BY w.id.paintingId " +
+	           "ORDER BY COUNT(w.id.paintingId) DESC")
+	   List<Tuple> findTopFavoritesWithLimit(Pageable pageable);
+//	PageRequest.of(0, 3) 表示查詢結果的第 1 頁，每頁顯示 3 條記錄。	
 
 }

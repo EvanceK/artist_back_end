@@ -1,6 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.38, for macos14 (arm64)
+CREATE DATABASE  IF NOT EXISTS `artistproject` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `artistproject`;
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: localhost    Database: artistproject
+-- Host: 127.0.0.1    Database: artistproject
 -- ------------------------------------------------------
 -- Server version	8.0.39
 
@@ -56,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-15 13:42:11
+-- Dump completed on 2024-10-15 14:16:37
