@@ -68,7 +68,7 @@ public class CustomersServiceImpl implements CustomersService {
 		cr.save(customer);
 	}
 	public void deitAccountUpdate(String CustomerId,
-					   String pwd,
+//					   String pwd,
 					   String name,
 					   String nickName,
 					   String phone,
@@ -76,7 +76,7 @@ public class CustomersServiceImpl implements CustomersService {
 		Optional<Customers> optionalCustomers  = cr.findByCustomerId(CustomerId);
 		if (optionalCustomers.isPresent()) {
 			Customers customer = optionalCustomers.get();
-			customer.setPassword(passwordEncoder.encode(pwd));
+//			customer.setPassword(passwordEncoder.encode(pwd));
 			
 			customer.setName(name);
 			customer.setNickName(nickName);
@@ -86,15 +86,16 @@ public class CustomersServiceImpl implements CustomersService {
 		}else {
 			System.out.println("找不到此 id 的客戶");
 		}
-		
-//		customer.setPassword(passwordEncoder.encode(customersDTO.getPassword()));
-//
-//		customer.setName(customersDTO.getName());
-//		customer.setNickName(customersDTO.getNickName());
-//		customer.setPhone(customersDTO.getPhone());
-//		customer.setAddress(customersDTO.getAddress());
-//		cr.save(customer);
 	}
+	public void deitAccountUpdate(CustomersDTO customersDTO) {
+		Customers customer = getCustomer(customersDTO.getEmail());
+		customer.setName(customersDTO.getName());
+		customer.setNickName(customersDTO.getNickName());
+		customer.setPhone(customersDTO.getPhone());
+		customer.setAddress(customersDTO.getAddress());
+		cr.save(customer);
+	}
+
 
 	@Override
 	public void delete(Customers customers) {

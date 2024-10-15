@@ -103,19 +103,26 @@ public class CustomersController {
     	CustomersDTO customerDTO = csi.getCustomerDTO(customerId);
     	return ResponseEntity.ok(customerDTO); 
     }
+//    // 編輯客戶資料
+//    @PutMapping(value ="/EditAccount")
+//    public ResponseEntity<?> updateCustomer(
+//    		@RequestHeader("Authorization") String token,
+////    		@RequestParam(value = "customerId") String customerId,
+////    		@RequestParam(value = "password") String pwd,
+//    		@RequestParam(value = "name") String name,
+//    		@RequestParam(value = "nickname") String nickname,
+//    		@RequestParam(value = "phone") String phone,
+//    		@RequestParam(value = "address") String address) {
+//    	csi.deitAccountUpdate(customerId,name,nickname,phone,address);
+//        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
+//    }
     // 編輯客戶資料
-    @PutMapping(value ="/EditAccount")
-    public ResponseEntity<?> updateCustomer(
-    		@RequestParam(value = "customerId") String customerId,
-    		@RequestParam(value = "password") String pwd,
-    		@RequestParam(value = "name") String name,
-    		@RequestParam(value = "nickname") String nickname,
-    		@RequestParam(value = "phone") String phone,
-    		@RequestParam(value = "address") String address) {
-    	csi.deitAccountUpdate(customerId,pwd,name,nickname,phone,address);
+    @PutMapping(value ="/EditAccount", consumes = "application/json")
+    public ResponseEntity<?> updateCustomer(@RequestBody CustomersDTO customersDTO){
+    		
+    	csi.deitAccountUpdate(customersDTO);
         return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
-    
     
     
 }

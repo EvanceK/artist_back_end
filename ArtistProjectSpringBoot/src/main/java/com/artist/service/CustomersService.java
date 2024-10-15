@@ -19,7 +19,7 @@ public interface CustomersService {
 
     // Update
     void update(Customers customer);
-    void deitAccountUpdate(String CustomerId, String pwd, String name, 
+    void deitAccountUpdate(String CustomerId, String name, 
     		    String nickName, String phone, String address);
     // Delete
     void delete(Customers customers);
