@@ -1,5 +1,6 @@
 package com.artist.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.response.PaintingDTO;
+import com.artist.dto.response.TopBiddingsDTO;
+import com.artist.dto.response.TopFavoritesDTO;
+import com.artist.service.impl.BidrecordServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
+import com.artist.service.impl.WishlistServiceImpl;
 
 //@RestController 是 @Controller 和 @ResponseBody 的結合體
 @RestController
@@ -23,6 +28,12 @@ public class PaintingsController {
 
 	@Autowired // 透過 @Autowired 的方式，去加入想要使用的 serviceimpl
 	private PaintingsServiceImpl psi;
+	@Autowired
+	private WishlistServiceImpl wsi;
+	
+	@Autowired
+	private BidrecordServiceImpl bsi;
+
 
 	@GetMapping(value = "/findall")
 	public ResponseEntity<?> findall() {
@@ -90,5 +101,39 @@ public class PaintingsController {
     	List<PaintingDTO> paintingAndArtistPartOfName = psi.findPaintingAndArtistPartOfName(keyword);
     	return ResponseEntity.ok(paintingAndArtistPartOfName);
     }
+	
+	@GetMapping(value = "/topfavorites")
+    public ResponseEntity<Map<String, Object>>getTopFavorites(@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
+		List<TopFavoritesDTO> topFavorites = wsi.getTopFavorites(pageSize);//前三
+        List<PaintingDTO> paintingDetails = new ArrayList<>();
+        
+        for (TopFavoritesDTO p : topFavorites) {
+            String pId = p.getPaintingId();
+         PaintingDTO paintingsId = psi.getByPaintingsId(pId);   // 單個查詢，因為數量不多，所以計畫分次查。
+            paintingDetails.add(paintingsId);
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("paintingsCount", topFavorites);
+        response.put("detailedPaintings", paintingDetails);
+        
+    	return ResponseEntity.ok(response);
+    }
+	
+	@GetMapping(value = "/topbiddings")
+    public ResponseEntity<Map<String, Object>>getTopbiggings(@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
+		List<TopBiddingsDTO> topBiddings= bsi.getTopBidding(pageSize);//前三
+        List<PaintingDTO> paintingDetails = new ArrayList<>();
+        for (TopBiddingsDTO p : topBiddings) {
+            String pId = p.getPaintingId();
+         PaintingDTO paintingsId = psi.getByPaintingsId(pId);  // 單個查詢，因為數量不多，所以計畫分次查。
+         paintingDetails.add(paintingsId);
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("paintingsCount", topBiddings);
+        response.put("detailedPaintings", paintingDetails);
+        
+    	return ResponseEntity.ok(response);
+    }
+   
    
 }

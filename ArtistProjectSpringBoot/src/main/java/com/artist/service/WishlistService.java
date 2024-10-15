@@ -2,6 +2,9 @@ package com.artist.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
+import com.artist.dto.response.TopFavoritesDTO;
 import com.artist.dto.response.WishlistDTO;
 
 public interface WishlistService {
@@ -9,6 +12,8 @@ public interface WishlistService {
     void addToWishlist(String customerId, String paintingId);
     // Read
 	List<WishlistDTO> findAllWishlistWithPaintings(String customerId);
+	List<TopFavoritesDTO> getTopFavorites(int size);
+	
     // Delete
 	void deleteFromWishlist(String customerId,String paintingId);
 	

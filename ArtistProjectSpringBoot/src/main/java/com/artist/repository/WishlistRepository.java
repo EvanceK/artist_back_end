@@ -2,10 +2,14 @@ package com.artist.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.artist.entity.Wishlist;
 import com.artist.entity.WishlistId;
+
+import jakarta.persistence.Tuple;
 
 public interface WishlistRepository extends JpaRepository<Wishlist, WishlistId> {
 	// 根據 customerId 查詢所有 Wishlist
@@ -17,4 +21,9 @@ public interface WishlistRepository extends JpaRepository<Wishlist, WishlistId> 
 	boolean existsById_CustomerIdAndId_PaintingId(String customerId, String paintingId);
 
 	
+	@Query("SELECT w.id.paintingId AS paintingId, COUNT(w.id.paintingId) AS paintingCount " +
+		       "FROM Wishlist w GROUP BY w.id.paintingId ORDER BY COUNT(w.id.paintingId) DESC")
+		List<Tuple> findTopFavoritesWithLimit(Pageable pageable);
+//	PageRequest.of(0, 3) 表示查詢結果的第 1 頁，每頁顯示 3 條記錄。
+
 }

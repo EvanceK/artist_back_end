@@ -2,6 +2,7 @@ package com.artist.repository;
 
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -143,4 +144,9 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
   @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated = 1 AND (p.paintingName LIKE CONCAT('%', :keyword, '%') OR a.artistName LIKE CONCAT('%', :keyword, '%')) ORDER BY p.paintingId")
   List<Paintings> findPaintingAndArtistPartOfName(@Param("keyword") String keyword);
     
+  //用於查快結標得商品 < 1天?
+  Page<Paintings> findByUploadDateBefore(Pageable pageable,LocalDateTime date);
+
+
+  
 }

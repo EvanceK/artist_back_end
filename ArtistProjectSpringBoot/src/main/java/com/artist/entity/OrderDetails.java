@@ -26,6 +26,12 @@ public class OrderDetails {
     @ManyToOne
     @JoinColumn(name = "order_number", insertable = false, updatable = false)
     private Orders order;
+    
+
+	//與paintings關聯
+    @ManyToOne
+    @JoinColumn(name = "painting_id", insertable = false, updatable = false)
+    private Paintings painting;
 	
 	public OrderDetails() {
 	}
@@ -59,4 +65,21 @@ public class OrderDetails {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
+	public Orders getOrder() {
+		return order;
+	}
+
+	public void setOrder(Orders order) {
+		this.order = order;
+	}
+
+	public Paintings getPainting() {
+		return painting;
+	}
+
+	public void setPainting(Paintings painting) {
+		this.painting = painting;
+	}
+	
 }

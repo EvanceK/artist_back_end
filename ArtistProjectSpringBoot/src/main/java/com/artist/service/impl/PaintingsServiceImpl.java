@@ -106,10 +106,13 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return null;
 	}
 
-	@Override
-	public List<Paintings> sortByUploadDate(LocalDateTime date) {
-		return null;
-	}
+//	@Override
+//	public Page<PaintingDTO> sortByUploadDate(Integer pageSize, Integer currentPage, LocalDateTime date) {
+//		Pageable pageable = PageRequest.of(currentPage, pageSize); 
+//		Page<Paintings> byUploadDateBefore = ptr.findByUploadDateBefore(pageable, date);
+//		
+//		return null;
+//	}
 
 	@Override
 	public List<Paintings> sortByPrice(Double price) {
@@ -291,5 +294,11 @@ public class PaintingsServiceImpl implements PaintingsService {
 						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
 						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Paintings> sortByUploadDate(LocalDateTime date) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

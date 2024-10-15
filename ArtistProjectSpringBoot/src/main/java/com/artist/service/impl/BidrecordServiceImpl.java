@@ -3,19 +3,25 @@ package com.artist.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.artist.dto.response.BiddingHistoryDTO;
 import com.artist.dto.response.BidrecordDTO;
 import com.artist.dto.response.PaintingDTO;
+import com.artist.dto.response.TopBiddingsDTO;
 import com.artist.dto.response.WalletDTO;
 import com.artist.entity.Bidrecord;
 import com.artist.entity.Customers;
 import com.artist.repository.BidrecordRepository;
 import com.artist.service.BidrecordService;
+
+import jakarta.persistence.Tuple;
 
 @Service
 public class BidrecordServiceImpl implements BidrecordService {
@@ -120,4 +126,18 @@ public class BidrecordServiceImpl implements BidrecordService {
 	
 	return walletDTOList;
 	}
+	
+	@Override
+	public List<TopBiddingsDTO> getTopBidding(int size) {
+        Pageable pageable = PageRequest.of(0, size);
+        List<Tuple> results = brr.findTopBiddingWithLimit(pageable);
+        return results.stream()
+                .map(tuple -> new TopBiddingsDTO(
+                        tuple.get("paintingId", String.class),
+                        tuple.get("paintingCount", Long.class)
+                ))
+                .collect(Collectors.toList());
+     
+	}
+	
 }

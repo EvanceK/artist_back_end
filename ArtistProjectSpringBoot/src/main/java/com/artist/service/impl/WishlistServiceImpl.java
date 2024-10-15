@@ -2,17 +2,24 @@ package com.artist.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.artist.dto.response.PaintingDTO;
+import com.artist.dto.response.TopFavoritesDTO;
 import com.artist.dto.response.WishlistDTO;
 import com.artist.entity.Customers;
 import com.artist.entity.Wishlist;
 import com.artist.repository.WishlistRepository;
 import com.artist.service.WishlistService;
+
+import jakarta.persistence.Tuple;
 
 @Service
 public class WishlistServiceImpl implements WishlistService {
@@ -70,7 +77,17 @@ public class WishlistServiceImpl implements WishlistService {
 
 	}
 	
-	
-
+	@Override
+	public List<TopFavoritesDTO> getTopFavorites(int size) {
+        Pageable pageable = PageRequest.of(0, size);
+        List<Tuple> results = wr.findTopFavoritesWithLimit(pageable);
+        return results.stream()
+                .map(tuple -> new TopFavoritesDTO(
+                        tuple.get("paintingId", String.class),
+                        tuple.get("paintingCount", Long.class)
+                ))
+                .collect(Collectors.toList());
+     
+	}
 }
 
