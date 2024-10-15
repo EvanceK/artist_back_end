@@ -25,19 +25,18 @@ import com.artist.service.impl.PaintingsServiceImpl;
 @RestController
 @RequestMapping("/api/bidding")
 public class BidrecordController {
-	
-	
+
 	@Autowired
 	private PaintingsServiceImpl psi;
 	@Autowired
 	private CustomersServiceImpl csi;
 	@Autowired
 	private BidrecordServiceImpl bsi;
-	
-	//出價
-	@PostMapping(value ="/bid", consumes = "application/json")
+
+	// 出價
+	@PostMapping(value = "/bid", consumes = "application/json")
 	public ResponseEntity<String> bidding(@RequestHeader("Authorization") String token,
-		@RequestBody BiddingRequest request) {
+			@RequestBody BiddingRequest request) {
 		try {
 			String bidderId = csi.getCustomerIdFromToken(token);
 			String paintingId = request.getPaintingId();
@@ -45,28 +44,30 @@ public class BidrecordController {
 			bsi.bidding(paintingId, bidderId, bidAmount);
 			return ResponseEntity.status(HttpStatus.CREATED).body("出價成功");
 		} catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
-		
+
 	}
+
 	// 查詢"畫作"所有bidding history的方法
 	@GetMapping("/{paintingId}")
 	public ResponseEntity<BiddingHistoryResponse> getAuctionBiddingHistory(@PathVariable String paintingId) {
 //		String bidderId = csi.getCustomerIdFromToken(token);
 //	    String nickname = csi.getNicknameFromToken(token);
-	    List<BidrecordDTO> biddingHistory = bsi.getAllBiddingHistoryByPaintings(paintingId);
-	    PaintingDTO painting = psi.getByPaintingsId(paintingId);
-	    
-	    BiddingHistoryResponse response = new BiddingHistoryResponse(painting,biddingHistory);
+		List<BidrecordDTO> biddingHistory = bsi.getAllBiddingHistoryByPaintings(paintingId);
+		PaintingDTO painting = psi.getByPaintingsId(paintingId);
+		painting.setPrice(biddingHistory.get(0).getBidAmount());
+		BiddingHistoryResponse response = new BiddingHistoryResponse(painting, biddingHistory);
 		return ResponseEntity.ok(response);
-		
+
 	}
+
 	// 查詢"用戶"所有bidding history的方法
 	@GetMapping("/history")
 	public ResponseEntity<List<BiddingHistoryDTO>> getBidHistory(@RequestHeader("Authorization") String token) {
-	    String bidId = csi.getCustomerIdFromToken(token);
-	    String nickname = csi.getNicknameFromToken(token);
-	    List<BiddingHistoryDTO> biddingHistory = bsi.getAllBiddingHistoryBycustomerId(bidId, nickname);
-	    return ResponseEntity.ok(biddingHistory); //假設這裡需要返回ResponseEntity
+		String bidId = csi.getCustomerIdFromToken(token);
+		String nickname = csi.getNicknameFromToken(token);
+		List<BiddingHistoryDTO> biddingHistory = bsi.getAllBiddingHistoryBycustomerId(bidId, nickname);
+		return ResponseEntity.ok(biddingHistory); // 假設這裡需要返回ResponseEntity
 	}
 }
