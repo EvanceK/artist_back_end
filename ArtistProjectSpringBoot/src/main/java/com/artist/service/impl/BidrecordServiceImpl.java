@@ -36,39 +36,45 @@ public class BidrecordServiceImpl implements BidrecordService {
 	@Override
 	@Transactional
 	public void bidding(String paintingId, String bidderId, Double bidAmount) {
-
-		LocalDateTime bidTime = LocalDateTime.now();
-		Boolean isWinningBid = true;
-		Double deposit = bidAmount/10; //押金收10%
-		Bidrecord bidrecord = new Bidrecord(paintingId, bidderId,"In Bidding", bidTime, bidAmount, isWinningBid, deposit, "pending" ,0.0);
-		List<Bidrecord> binddinglist = brr.findByPaintingIdOrderByBidAmountDesc(paintingId);
-		//查出底價
 		PaintingDTO paintingsId = psi.getByPaintingsId(paintingId);
-		Double price = paintingsId.getPrice();
-		if (bidAmount<=price) {
-			 throw new RuntimeException("出價需大於底價");
-		}else if(binddinglist.isEmpty()){
-			brr.save(bidrecord);// 第一筆出價，直接存
-			// 出價有大於舊的最高
-		} else if (bidAmount > (binddinglist.get(0).getBidAmount())) {
-			brr.save(bidrecord);// 存入新的data
+		
+		if(paintingsId.getDelicated()==2) {
+			throw new RuntimeException("尚未開放競價");
 			
-			// 抓出舊的最高價 isWinningBid -->改成false
-			Bidrecord oldwinningBid = binddinglist.get(0);
-			oldwinningBid.setIsWinningBid(false);						//設成不是最高
-			oldwinningBid.setRefundAmount(oldwinningBid.getDeposit());	//紀錄退多少錢
-			oldwinningBid.setRefundDate(LocalDateTime.now());			//紀錄時間
-			oldwinningBid.setDepositStatus("refunded");					//更改狀態
-			brr.save(oldwinningBid);// update之前最高的
+		}else {
+			LocalDateTime bidTime = LocalDateTime.now();
+			Boolean isWinningBid = true;
+			Double deposit = bidAmount/10; //押金收10%
+			Bidrecord bidrecord = new Bidrecord(paintingId, bidderId,"In Bidding", bidTime, bidAmount, isWinningBid, deposit, "pending" ,0.0);
+			List<Bidrecord> binddinglist = brr.findByPaintingIdOrderByBidAmountDesc(paintingId);
+			//查出底價
+			Double price = paintingsId.getPrice();
+			if (bidAmount<=price) {
+				 throw new RuntimeException("出價需大於底價");
+			}else if(binddinglist.isEmpty()){
+				brr.save(bidrecord);// 第一筆出價，直接存
+				// 出價有大於舊的最高
+			} else if (bidAmount > (binddinglist.get(0).getBidAmount())) {
+				brr.save(bidrecord);// 存入新的data
+				
+				// 抓出舊的最高價 isWinningBid -->改成false
+				Bidrecord oldwinningBid = binddinglist.get(0);
+				oldwinningBid.setIsWinningBid(false);						//設成不是最高
+				oldwinningBid.setRefundAmount(oldwinningBid.getDeposit());	//紀錄退多少錢
+				oldwinningBid.setRefundDate(LocalDateTime.now());			//紀錄時間
+				oldwinningBid.setDepositStatus("refunded");					//更改狀態
+				brr.save(oldwinningBid);// update之前最高的
 
-			Customers customer = csi.getByCustomerId(oldwinningBid.getBidderId());
-			Double bankBalance = customer.getBankBalance();
-			bankBalance+=oldwinningBid.getDeposit();
-			customer.setBankBalance(bankBalance);
-			csi.update(customer);					//更改customer表的account值
-		} else {
-			 throw new RuntimeException("需高於最高價");
+				Customers customer = csi.getByCustomerId(oldwinningBid.getBidderId());
+				Double bankBalance = customer.getBankBalance();
+				bankBalance+=oldwinningBid.getDeposit();
+				customer.setBankBalance(bankBalance);
+				csi.update(customer);					//更改customer表的account值
+			} else {
+				 throw new RuntimeException("需高於最高價");
+			}
 		}
+
 	}
 
 	@Override

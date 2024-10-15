@@ -113,10 +113,10 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
 	
 	List<Paintings> findByPaintingName(String paintingName);
 	
-    @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated = 1 ORDER BY p.paintingId")
+    @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated >= 1 ORDER BY p.paintingId")
     List<Paintings> findAllDelicatedPaintingsWithArtist();
     
-    @Query("SELECT p FROM Paintings p WHERE p.delicated = 1") // 例子：查找 delicated =1 by分頁
+    @Query("SELECT p FROM Paintings p WHERE p.delicated >= 1") // 例子：查找 delicated =1 by分頁
    	Page<Paintings> findAllDelicatedPaintingsWithArtist(Pageable pageable);
     
 
@@ -125,22 +125,21 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     
     
     long countByDelicated(Integer delicatedValue);
-    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 1")
+    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated >= 1")
     long countDelicatedEqualsOne();
     @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 0")
     long countDelicatedEqualsZero();
     
     //給畫家頁面用的
-    @Query("SELECT p FROM Paintings p WHERE p.delicated = 1 AND p.artistId = :artistId")
+    @Query("SELECT p FROM Paintings p WHERE p.delicated >= 1 AND p.artistId = :artistId")
     Page<Paintings> findAllDelicatedWithArtist(Pageable pageable, @Param("artistId") String artistId);
     
     long countByDelicatedAndArtistId(Integer delicatedValue,String artistId);
     
     boolean existsBypaintingId(String paintingId);
   
-  
   //給首頁search用
-  @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated = 1 AND (p.paintingName LIKE CONCAT('%', :keyword, '%') OR a.artistName LIKE CONCAT('%', :keyword, '%')) ORDER BY p.paintingId")
+  @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated >= 1 AND (p.paintingName LIKE CONCAT('%', :keyword, '%') OR a.artistName LIKE CONCAT('%', :keyword, '%')) ORDER BY p.paintingId")
   List<Paintings> findPaintingAndArtistPartOfName(@Param("keyword") String keyword);
     
   //用於查快結標得商品 < 1天
@@ -158,7 +157,8 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
           nativeQuery = true)
    List<Paintings> findRecentlyUploaded();
   
- 
+  Optional<Paintings> findByPaintingIdAndDelicated(String paintingId, Integer Delicated); // where paintingId = ?1 and paintingName = ?2
+
   
 
 

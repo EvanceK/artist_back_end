@@ -24,7 +24,7 @@ public interface WishlistRepository extends JpaRepository<Wishlist, WishlistId> 
 	   @Query("SELECT w.id.paintingId AS paintingId, COUNT(w.id.paintingId) AS paintingCount " +
 	           "FROM Wishlist w " +
 	           "JOIN Paintings p ON w.id.paintingId = p.id " +
-	           "WHERE p.delicated = 1 " +
+	           "WHERE p.delicated > 0 " +
 	           "GROUP BY w.id.paintingId " +
 	           "ORDER BY COUNT(w.id.paintingId) DESC")
 	   List<Tuple> findTopFavoritesWithLimit(Pageable pageable);

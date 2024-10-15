@@ -56,10 +56,14 @@ public class BidrecordController {
 //	    String nickname = csi.getNicknameFromToken(token);
 		List<BidrecordDTO> biddingHistory = bsi.getAllBiddingHistoryByPaintings(paintingId);
 		PaintingDTO painting = psi.getByPaintingsId(paintingId);
-		painting.setPrice(biddingHistory.get(0).getBidAmount());
-		BiddingHistoryResponse response = new BiddingHistoryResponse(painting, biddingHistory);
-		return ResponseEntity.ok(response);
-
+		if (biddingHistory.isEmpty()) {
+			BiddingHistoryResponse response = new BiddingHistoryResponse(painting, biddingHistory);
+			return ResponseEntity.ok(response);
+		}else {
+			painting.setPrice(biddingHistory.get(0).getBidAmount());
+			BiddingHistoryResponse response = new BiddingHistoryResponse(painting, biddingHistory);
+			return ResponseEntity.ok(response);
+		}
 	}
 
 	// 查詢"用戶"所有bidding history的方法
