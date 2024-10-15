@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -59,6 +60,10 @@ public class Paintings {
 	@Column(name = "status")
 	private String status;
 
+	@Lob
+	@Column(name = "image")
+    private byte[] image;
+	
 	public Paintings() {
 	}
 
@@ -183,6 +188,15 @@ public class Paintings {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
 
 
 

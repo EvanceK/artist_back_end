@@ -1,7 +1,13 @@
 package com.artist;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test; // 確保使用 JUnit 5 的 @Test
 //import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.context.junit4.SpringRunner;
 
 import com.artist.dto.response.PaintingDTO;
+import com.artist.entity.Paintings;
+import com.artist.repository.PaintingsRepository;
 import com.artist.service.impl.PaintingsServiceImpl;
 
 //@RunWith(SpringRunner.class)
@@ -21,6 +29,8 @@ public class PaintingsServiceTest {
 
 	@Autowired
 	private PaintingsServiceImpl psi;
+	@Autowired
+	private PaintingsRepository ptr;
 
 	@Test
 	public void setUp() {
@@ -95,4 +105,23 @@ public class PaintingsServiceTest {
 
 	}
 	
+	@Test
+	void savePaintingWithImage() throws IOException {
+	    // 讀取圖片檔案
+	    String filePath = "C:/Users/speci/ForGitHub/Artist/artist_back_end/Allpainting"+
+	    "/paint_Johannes Vermeer/paint_big/"+
+	    "Woman_Holding_a_Balance_big.jpg";
+	   
+	    byte[] imageData = Files.readAllBytes(new File(filePath).toPath());
+	    // 使用輸入的 paintingId 查找 Paintings 實例
+	    Optional<Paintings> byId = ptr.findById("PT0029");
+	    if (byId.isPresent()) {
+	        Paintings paintings = byId.get();
+	        paintings.setImage(imageData);
+	        ptr.save(paintings);
+	    } else {
+	        System.out.println("Painting with ID " +" not found.");
+	    }
+	}
 }
+	

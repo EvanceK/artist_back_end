@@ -51,9 +51,6 @@ public class OrdersServiceImpl implements OrdersService {
 	            .orElseThrow(() -> new RuntimeException("Customer not found"));
 	    order.setCustomer(customer);
 
-	    System.out.println(order);
-	    or.save(order); // 保存订单
-		System.out.println(order);
 		or.save(order);
 		return order.getOrderNumber();
 	}

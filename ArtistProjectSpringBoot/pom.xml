@@ -82,7 +82,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
-			<artifactId>jaxb-runtime</artifactId>		
+			<artifactId>jaxb-runtime</artifactId>
 		</dependency>
 
 		<dependency>
@@ -104,10 +104,11 @@
 		<!-- JUnit 5 -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.7.0</version> <!-- 確保使用合適的版本 -->
 			<scope>test</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

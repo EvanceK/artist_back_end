@@ -119,16 +119,25 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     @Query("SELECT p FROM Paintings p WHERE p.delicated >= 1") // 例子：查找 delicated =1 by分頁
    	Page<Paintings> findAllDelicatedPaintingsWithArtist(Pageable pageable);
     
+    @Query("SELECT p FROM Paintings p WHERE p.delicated = 2") // 例子：查找 delicated =1 by分頁
+   	Page<Paintings> findAllPresaleExhibition(Pageable pageable);
+    
+    @Query("SELECT p FROM Paintings p WHERE p.delicated = 1") // 例子：查找 delicated =1 by分頁
+   	Page<Paintings> findAllInBidding(Pageable pageable);
+    
+    
 
 //    @Query("SELECT p FROM Paintings p JOIN p.artist a ORDER BY p.paintingId")
 //    List<Paintings> findAll();
     
-    
-    long countByDelicated(Integer delicatedValue);
     @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated >= 1")
-    long countDelicatedEqualsOne();
-    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 0")
-    long countDelicatedEqualsZero();
+    long countByDelicated();
+    
+    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 2")
+    long countByPresaleExhibition();
+    
+    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 1")
+    long countByInBidding();
     
     //給畫家頁面用的
     @Query("SELECT p FROM Paintings p WHERE p.delicated >= 1 AND p.artistId = :artistId")

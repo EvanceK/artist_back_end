@@ -68,7 +68,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	}
 
 	public Page<PaintingDTO> getPaintingsByPage(Integer pageSize, Integer currentPage) {
-		Pageable pageable = PageRequest.of(currentPage, pageSize); 
+		Pageable pageable = PageRequest.of(currentPage, pageSize);
 		Page<Paintings> paintingsPage = ptr.findAllDelicatedPaintingsWithArtist(pageable);
 		// 映射到 Page<PaintingDTO>
 		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
@@ -76,12 +76,36 @@ public class PaintingsServiceImpl implements PaintingsService {
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
 						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
 				.collect(Collectors.toList());
-		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements()); 
+		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements());
 	}
-	
+
+	public Page<PaintingDTO> getAllInBidding(Integer pageSize, Integer currentPage) {
+		Pageable pageable = PageRequest.of(currentPage, pageSize);
+		Page<Paintings> paintingsPage = ptr.findAllInBidding(pageable);
+		// 映射到 Page<PaintingDTO>
+		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
+				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
+						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
+				.collect(Collectors.toList());
+		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements());
+	}
+
+	public Page<PaintingDTO> getAllInPresaleExhibition(Integer pageSize, Integer currentPage) {
+		Pageable pageable = PageRequest.of(currentPage, pageSize);
+		Page<Paintings> paintingsPage = ptr.findAllPresaleExhibition(pageable);
+		// 映射到 Page<PaintingDTO>
+		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
+				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
+						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
+				.collect(Collectors.toList());
+		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements());
+	}
+
 	@Override
 	public Page<PaintingDTO> getAllforArtistIdByPage(Integer pageSize, Integer currentPage, String artistId) {
-		Pageable pageable = PageRequest.of(currentPage, pageSize); 
+		Pageable pageable = PageRequest.of(currentPage, pageSize);
 		Page<Paintings> pagePaintingsWithArtist = ptr.findAllDelicatedWithArtist(pageable, artistId);
 		List<PaintingDTO> paintingDTOs = pagePaintingsWithArtist.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
@@ -92,60 +116,26 @@ public class PaintingsServiceImpl implements PaintingsService {
 	}
 
 	@Override
-	public List<Paintings> getByStlye(String stlye) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> getByPeriod(String period) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> getByGenre(String genre) {
-		return null;
-	}
-
-//	@Override
-//	public Page<PaintingDTO> sortByUploadDate(Integer pageSize, Integer currentPage, LocalDateTime date) {
-//		Pageable pageable = PageRequest.of(currentPage, pageSize); 
-//		Page<Paintings> byUploadDateBefore = ptr.findByUploadDateBefore(pageable, date);
-//		
-//		return null;
-//	}
-
-	@Override
-	public List<Paintings> sortByPrice(Double price) {
-		return null;
-	}
-
-	@Override
-	public List<Paintings> sortBypopular(Integer popular) {
-		return null;
-	}
-
-	// 商品上架的邏輯
-	public void uploadItems() {
-		// create new paintings
-
-		// re-upload
-
-	}
-
-	@Override
 	public Long findPaintingsTotalCount() {
-		long countByDelicated = ptr.countByDelicated(1);
+		long countByDelicated = ptr.countByDelicated();
 		return countByDelicated;
 	}
+
+	@Override
+	public Long findPresaleExhibitionTotalCount() {
+		long countByDelicated = ptr.countByPresaleExhibition();
+		return countByDelicated;
+	}
+
+	@Override
+	public Long findInBiddingTotalCount() {
+		long countByDelicated = ptr.countByInBidding();
+		return countByDelicated;
+	}
+
 	public long countByDelicatedAndArtistId(Integer delicatedValue, String artistId) {
 		long countByDelicatedAndArtistId = ptr.countByDelicatedAndArtistId(delicatedValue, artistId);
 		return countByDelicatedAndArtistId;
-	}
-
-	@Override
-	public void updatePrice(String paintingId, Double price) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -190,25 +180,6 @@ public class PaintingsServiceImpl implements PaintingsService {
 			System.out.println("找不到此 id 的畫");
 		}
 	}
-//	@Override
-//	public void delete(String paintingId) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
-	@Override
-	public List<PaintingDTO> getAllDesc() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PaintingDTO> getAllforArtisName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 	@Override
 	public PaintingDTO getByPaintingsId(String paintingId) {
@@ -239,38 +210,6 @@ public class PaintingsServiceImpl implements PaintingsService {
 				.collect(Collectors.toList());
 	}
 
-
-
-	@Override
-	public List<Paintings> getByArtisId(String artisId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Paintings> UploadMedia(String media) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Paintings> getByDimensions(String dimensions) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Paintings> sortByArtisName(String artisName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Paintings> sortByPaintingName(String paintingName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public void delete(String paintingId) {
 		ptr.deleteById(paintingId);
@@ -284,7 +223,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Override
 	public List<PaintingDTO> findPaintingAndArtistPartOfName(String keyword) {
 		List<Paintings> paintingAndArtistPartOfName = ptr.findPaintingAndArtistPartOfName(keyword);
-		
+
 		if (paintingAndArtistPartOfName.isEmpty()) {
 			return Collections.emptyList();
 		}
@@ -308,9 +247,9 @@ public class PaintingsServiceImpl implements PaintingsService {
 						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
 						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
 				.collect(Collectors.toList());
-	
+
 	}
-	
+
 	@Override
 	public List<PaintingDTO> getRecentlyUploaded() {
 		List<Paintings> recentlyUploaded = ptr.findRecentlyUploaded();
@@ -323,7 +262,15 @@ public class PaintingsServiceImpl implements PaintingsService {
 						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
 						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
 				.collect(Collectors.toList());
-	
+
+	}
+
+	@Override
+	public void updatePrice(String paintingId, Double price) {
+		Optional<Paintings> byId = ptr.findById(paintingId);
+		Paintings paintings = byId.get();
+		paintings.setPrice(price);
+		ptr.save(paintings);
 	}
 
 }

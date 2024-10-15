@@ -35,7 +35,7 @@ public class PaintingsController {
 	private BidrecordServiceImpl bsi;
 
 
-	@GetMapping(value = "/findall")
+	@GetMapping(value = "/selectall")
 	public ResponseEntity<?> findall() {
 		List<PaintingDTO> alllist = psi.getAll();
 		return ResponseEntity.ok(alllist); // 自動轉換為 JSON
@@ -95,6 +95,88 @@ public class PaintingsController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@GetMapping(value = "/findAllInBidding")
+	public ResponseEntity<Map<String, Object>> findAllInBidding(
+			@RequestParam(value = "currentPage", defaultValue = "0") int currentPage,
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+		// 1. 查詢總數
+		Long totalCount = psi.findInBiddingTotalCount();
+//		System.out.println(totalCount);//106
+
+		// 2. 計算總頁數
+		int totalPage = (int) Math.ceil((double) totalCount / pageSize);
+//		System.out.println(totalPage);//11
+
+		int page = currentPage-1;	//JPA分頁機制是從0開始。
+		// 3. 根據當前頁和每頁大小查詢分頁數據
+		Page<PaintingDTO> paintingsByPage = psi.getAllInBidding(pageSize, page);
+		
+		// 4. 將數據封裝到 Map 中返回
+		Map<String, Object> result = new HashMap<>();
+		result.put("totalCount", totalCount);
+		result.put("totalPage", totalPage);
+		result.put("currentPage", currentPage);
+		result.put("pageSize", pageSize);
+		result.put("paintingsList", paintingsByPage.getContent());
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	
+	@GetMapping(value = "/findAllPresaleExhibition")
+	public ResponseEntity<Map<String, Object>> findAllPresaleExhibition(
+			@RequestParam(value = "currentPage", defaultValue = "0") int currentPage,
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+		// 1. 查詢總數
+		Long totalCount = psi.findPresaleExhibitionTotalCount();
+//		System.out.println(totalCount);//106
+
+		// 2. 計算總頁數
+		int totalPage = (int) Math.ceil((double) totalCount / pageSize);
+//		System.out.println(totalPage);//11
+
+		int page = currentPage-1;	//JPA分頁機制是從0開始。
+		// 3. 根據當前頁和每頁大小查詢分頁數據
+		Page<PaintingDTO> paintingsByPage = psi.getAllInPresaleExhibition(pageSize, page);
+		
+		// 4. 將數據封裝到 Map 中返回
+		Map<String, Object> result = new HashMap<>();
+		result.put("totalCount", totalCount);
+		result.put("totalPage", totalPage);
+		result.put("currentPage", currentPage);
+		result.put("pageSize", pageSize);
+		result.put("paintingsList", paintingsByPage.getContent());
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping(value = "/artists")
+	public ResponseEntity<Map<String, Object>> findByPage(
+			@RequestParam(value = "artistId") String artistId,
+			@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+		Long totalCount = psi.countByDelicatedAndArtistId(1,artistId);
+//		System.out.println(totalCount);
+
+		// 2. 計算總頁數
+		int totalPage = (int) Math.ceil((double) totalCount / pageSize);
+//		System.out.println(totalPage);
+		
+		int page = currentPage-1;	//JPA分頁機制是從0開始。
+		// 3. 根據當前頁和每頁大小查詢分頁數據
+		Page<PaintingDTO> paintingsforArtistId = psi.getAllforArtistIdByPage(pageSize, page, artistId);
+		
+		// 4. 將數據封裝到 Map 中返回
+		Map<String, Object> result = new HashMap<>();
+		result.put("totalCount", totalCount);
+		result.put("totalPage", totalPage);
+		result.put("currentPage", currentPage);
+		result.put("pageSize", pageSize);
+		result.put("paintingsList", paintingsforArtistId.getContent());
+		
+		return ResponseEntity.ok(result);
+	}
+	
     // 首頁search
 	@GetMapping(value = "/search")
     public ResponseEntity<?> getPaintingsAndArtistPartOfName(@RequestParam() String keyword) {
@@ -146,5 +228,13 @@ public class PaintingsController {
         return ResponseEntity.ok(paintings);
     }
    
+//	//加載圖片的API
+//	@GetMapping("/image/{id}")
+//	public ResponseEntity<byte[]> getImageById(@PathVariable Long id) {
+//	    Paintings painting = paintingRepository.findById(id)
+//	            .orElseThrow(() -> new RuntimeException("Painting not found"));
+//	    byte[] image = painting.getImageBlob();  // 假設圖片字段是 imageBlob
+//	    return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+//	}
    
 }
