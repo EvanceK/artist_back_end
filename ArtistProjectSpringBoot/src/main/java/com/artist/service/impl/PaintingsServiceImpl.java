@@ -106,10 +106,13 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return null;
 	}
 
-	@Override
-	public List<Paintings> sortByUploadDate(LocalDateTime date) {
-		return null;
-	}
+//	@Override
+//	public Page<PaintingDTO> sortByUploadDate(Integer pageSize, Integer currentPage, LocalDateTime date) {
+//		Pageable pageable = PageRequest.of(currentPage, pageSize); 
+//		Page<Paintings> byUploadDateBefore = ptr.findByUploadDateBefore(pageable, date);
+//		
+//		return null;
+//	}
 
 	@Override
 	public List<Paintings> sortByPrice(Double price) {
@@ -292,4 +295,35 @@ public class PaintingsServiceImpl implements PaintingsService {
 						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
 				.collect(Collectors.toList());
 	}
+
+	@Override
+	public List<PaintingDTO> getUpcomingAuction() {
+		List<Paintings> upcomingAuction = ptr.findPaintingsClosingSoon();
+		if (upcomingAuction.isEmpty()) {
+			return Collections.emptyList();
+		}
+		return upcomingAuction.stream()
+				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
+						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
+						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+				.collect(Collectors.toList());
+	
+	}
+	
+	@Override
+	public List<PaintingDTO> getRecentlyUploaded() {
+		List<Paintings> recentlyUploaded = ptr.findRecentlyUploaded();
+		if (recentlyUploaded.isEmpty()) {
+			return Collections.emptyList();
+		}
+		return recentlyUploaded.stream()
+				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
+						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
+						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+				.collect(Collectors.toList());
+	
+	}
+
 }

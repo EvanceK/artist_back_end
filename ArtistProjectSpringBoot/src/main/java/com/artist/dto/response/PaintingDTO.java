@@ -16,6 +16,7 @@ public class PaintingDTO {
 	private String genre;
 	private Integer delicated;
 	private String status;
+	
 	public PaintingDTO() {
 		super();
 	}
@@ -115,6 +116,5 @@ public class PaintingDTO {
 		this.delicated = delicated;
 		this.status = status;
 	}
-
 	
 }

@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Customers;
 import com.artist.service.impl.CustomersServiceImpl;
 import com.artist.service.impl.EmailServiceImpl;
+import com.artist.service.impl.OrdersServiceImpl;
+import com.artist.service.impl.PaintingsServiceImpl;
 import com.artist.utils.JwtUtil;
 
 	@RestController
@@ -24,7 +27,12 @@ import com.artist.utils.JwtUtil;
 	    
 	    @Autowired
 	    private CustomersServiceImpl csi;
+	    @Autowired
+	    private OrdersServiceImpl osi;
 	    
+	    @Autowired
+	    private PaintingsServiceImpl psi;
+
 	    @Autowired
 	    private JwtUtil jwtUtil;
 	    
@@ -60,20 +68,7 @@ import com.artist.utils.JwtUtil;
 	        customer.setEmail(newPassword);
 	        csi.update(customer);
 	        return ResponseEntity.ok("密碼已成功重置。");
-	    }
-
-	    
-	    //發送得標信
-	    @PostMapping("/bid-success")
-	    public String bidSuccess(
-	            @RequestParam String email,
-	            @RequestParam String paintingId,
-	            @RequestParam double bidAmount) {
-	        emailService.sendBidSuccessEmail(email, paintingId, bidAmount);
-	        return "The winning letter has been sent!";
-	    }
-	    
-	    
+	    }  
 	    
 	}
 

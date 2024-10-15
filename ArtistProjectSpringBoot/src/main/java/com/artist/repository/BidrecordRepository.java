@@ -2,9 +2,13 @@ package com.artist.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.artist.entity.Bidrecord;
+
+import jakarta.persistence.Tuple;
 
 public interface BidrecordRepository extends JpaRepository<Bidrecord,Long> {
 	
@@ -16,5 +20,10 @@ public interface BidrecordRepository extends JpaRepository<Bidrecord,Long> {
   List<Bidrecord> findByBidderIdAndDepositStatusOrderByBidTime(String bidderId, String depositStatus);
   
   List<Bidrecord> findByPaintingId(String paintingId); 
+  
+  
+	@Query("SELECT b.paintingId AS paintingId, COUNT(b.paintingId) AS paintingCount " +
+		       "FROM Bidrecord b GROUP BY b.paintingId ORDER BY COUNT(b.paintingId) DESC")
+		List<Tuple> findTopBiddingWithLimit(Pageable pageable);
 
 }

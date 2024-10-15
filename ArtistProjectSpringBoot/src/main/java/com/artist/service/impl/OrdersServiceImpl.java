@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Bidrecord;
@@ -56,7 +57,7 @@ public class OrdersServiceImpl implements OrdersService {
 		or.save(order);
 		return order.getOrderNumber();
 	}
-
+	@Transactional
 	public void finalizeHighestBidAsOrder(PaintingDTO painting, LocalDateTime removeDate) {
 		// 有查詢到有出過價錢，取最高的出價紀錄然後新增至order表。
 		List<Bidrecord> binddinglist = brr.findByPaintingIdOrderByBidAmountDesc(painting.getPaintingId());
