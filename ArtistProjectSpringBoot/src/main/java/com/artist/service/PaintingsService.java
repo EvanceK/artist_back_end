@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.artist.dto.response.PaintingDTO;
+import com.artist.entity.Paintings;
 
 
 public interface PaintingsService {
@@ -13,6 +14,9 @@ public interface PaintingsService {
 	// Create
     void create(PaintingDTO paintingDTO);
 
+    // update
+    void update(PaintingDTO PaintingDTO);
+    
     // Read
     Long findPaintingsTotalCount();
 	Long findPresaleExhibitionTotalCount();

@@ -44,6 +44,33 @@ public class PaintingsServiceImpl implements PaintingsService {
 		painting.setStatus(paintingDTO.getStatus());
 		ptr.save(painting);
 	}
+	
+	// update
+	@Override
+	public void update(PaintingDTO paintingDTO)
+	{
+		String paintingid = paintingDTO.getPaintingId();
+		if(!paintingid.isBlank())
+		{
+			Paintings painting = new Paintings();
+			painting.setPaintingId(paintingDTO.getPaintingId());
+			painting.setPaintingName(paintingDTO.getPaintingName());
+			painting.setArtistId(paintingDTO.getArtistId());
+			painting.setLargUrl(paintingDTO.getLargUrl());
+			painting.setSmallUrl(paintingDTO.getSmallUrl());
+			painting.setPrice(paintingDTO.getPrice());
+			painting.setDate(paintingDTO.getDate());
+			painting.setStyle(paintingDTO.getStyle());
+			painting.setUploadDate(LocalDateTime.now());
+			painting.setGenre(paintingDTO.getGenre());
+			painting.setDelicated(paintingDTO.getDelicated());
+			painting.setStatus(paintingDTO.getStatus());
+			ptr.save(painting);
+		}else {
+			System.out.println("data not fond");
+		}
+		
+	}
 
 	// 查詢所有的畫作
 	@Override
