@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.TopBiddingsDTO;
 import com.artist.dto.response.TopFavoritesDTO;
 import com.artist.service.impl.BidrecordServiceImpl;
+import com.artist.service.impl.CustomersServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
 import com.artist.service.impl.WishlistServiceImpl;
 
@@ -33,6 +35,8 @@ public class PaintingsController {
 	
 	@Autowired
 	private BidrecordServiceImpl bsi;
+	@Autowired
+	private CustomersServiceImpl csi;
 
 
 	@GetMapping(value = "/selectall")
@@ -185,10 +189,20 @@ public class PaintingsController {
     }
 	
 	@GetMapping(value = "/topfavorites")
-    public ResponseEntity<Map<String, Object>>getTopFavorites(@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
-		List<TopFavoritesDTO> topFavorites = wsi.getTopFavorites(pageSize);//前三
+    public ResponseEntity<Map<String, Object>>getTopFavorites(
+    		@RequestHeader("Authorization") String token,
+    		@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
+		
+		
+		String customerId = csi.getCustomerIdFromToken(token);
+		List<TopFavoritesDTO> topFavorites;
+		if(customerId!=null) {
+		topFavorites = wsi.getTopFavorites(customerId,pageSize);//排除掉自己的前三
+		}else {
+		topFavorites = wsi.getTopFavorites(pageSize);//所有人都算的前三
+		}
+		
         List<PaintingDTO> paintingList = new ArrayList<>();
-        
         for (TopFavoritesDTO p : topFavorites) {
             String pId = p.getPaintingId();
          PaintingDTO paintingsId = psi.getByPaintingsId(pId);   // 單個查詢，因為數量不多，所以計畫分次查。

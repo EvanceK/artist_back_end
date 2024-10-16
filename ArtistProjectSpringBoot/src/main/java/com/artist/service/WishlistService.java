@@ -10,8 +10,9 @@ public interface WishlistService {
     void addToWishlist(String customerId, String paintingId);
     // Read
 	List<WishlistDTO> findAllWishlistWithPaintings(String customerId);
+	List<TopFavoritesDTO> getTopFavorites(String customerId,int size);
 	List<TopFavoritesDTO> getTopFavorites(int size);
-	
+
     // Delete
 	void deleteFromWishlist(String customerId,String paintingId);
 	
