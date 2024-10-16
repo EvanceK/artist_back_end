@@ -2,16 +2,12 @@ package com.artist.config;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -48,16 +44,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				Customers customer = csi.getCustomer(email);
 				if (customer != null && csi.validateToken(jwt.get(), customer.getEmail())) {
-					// 提取角色信息
-                    List<String> roles = csi.getRolesFromToken(email); 
-					List<GrantedAuthority> authorities = roles.stream()
-						    .map(role -> new SimpleGrantedAuthority(role))
-						    .collect(Collectors.toList());
-						
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            customer, null, authorities);
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                  
+					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+							customer, null, Collections.emptyList());
+					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 				}
 			}
 		}

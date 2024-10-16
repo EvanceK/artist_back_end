@@ -187,11 +187,11 @@ public class CustomersServiceImpl implements CustomersService {
         List<String> roles = new ArrayList<>();
         // 用email模擬 role
         if (email.equals("artistjava2024@gmail.com")) {
-            roles.add("ROLE_ADMIN");
+            roles.add("ADMIN");
         } else if (cr.existsByEmail(email)){
-            roles.add("ROLE_CUSTOMER");
+            roles.add("CUSTOMER");
         }else {
-        	roles.add("ROLE_GUEST");
+        	roles.add("GUEST");
         }
         return roles;
     }
@@ -219,14 +219,10 @@ public class CustomersServiceImpl implements CustomersService {
 		if (token.startsWith("Bearer ")) {
 			token = token.substring(7);
 		}
-		try {
+		System.out.println(token);
 	        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-	        // 获取角色信息并转为 List<String>
 	        return claims.get("roles", List.class); // 使用 List.class 进行类型转换
-	    } catch (Exception e) {
-	        System.out.println("Error getting roles from token: " + e.getMessage());
-	        return Collections.emptyList(); // 处理错误，返回空列表
-	    }
+	   
 	}
 	
 	
