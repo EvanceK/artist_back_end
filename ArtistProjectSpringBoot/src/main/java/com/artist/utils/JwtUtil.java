@@ -1,10 +1,13 @@
 package com.artist.utils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 //import java.util.Date;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.artist.entity.Customers;
+import com.artist.repository.CustomersRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -30,6 +34,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtUtil {
 
+	
+	@Autowired
+	private CustomersRepository cr;
     @Value("${jwt.secret}")
     private String jwtSecret;
 
@@ -61,27 +68,29 @@ public class JwtUtil {
 		//將想放近token的資訊一併寫入
 		claims.put("nickname", customer.getNickName());
 		claims.put("customerId", customer.getCustomerId());
+		
+		// 添加角色信息
+	    List<String> roles = fetchRolesForCustomer(customer.getEmail()); // 從其他地方得到角色信息
+	    claims.put("roles", roles); // 將角色信息添加到 claims
 
-		// 生成 JWT
 		return Jwts.builder().setSubject(customer.getEmail()).addClaims(claims) // 添加其他 claims
 				.setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 天
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
     
-<<<<<<< HEAD
     private List<String> fetchRolesForCustomer(String email) {
         List<String> roles = new ArrayList<>();
         // 用email模擬 role
         if (email.equals("artistjava2024@gmail.com")) {
             roles.add("ROLE_ADMIN");
-        } else {
+        } else if (cr.existsByEmail(email)){
             roles.add("ROLE_CUSTOMER");
+        }else {
+        	roles.add("ROLE_GUEST");
         }
         return roles;
     }
     
-=======
->>>>>>> parent of d88b63d (revise winning)
     
     // 驗證 Token 是否有效
     public Boolean validateToken(String token, Customers customer) {
