@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.WinningRecords;
+import com.artist.entity.Orders;
 
 public interface OrdersService {
 	// Create
@@ -12,13 +13,15 @@ public interface OrdersService {
 
     // Read
     List<WinningRecords> getAllWinningRecordsByCustomerId(String customerId);
-
+    public List<?> getAll();
+    public Orders getOneByOrdernumber(String ordernumber);
 
 
     // Update
- 
+    public void update(Orders orders);
+    
     // Delete
-	
+	public void delete(String orderId); 
 	
 	//自動下架用
 	public void finalizeHighestBidAsOrder(PaintingDTO painting, LocalDateTime removeDate);
