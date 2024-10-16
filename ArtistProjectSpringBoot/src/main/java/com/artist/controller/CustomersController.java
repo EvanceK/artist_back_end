@@ -19,89 +19,94 @@ import com.artist.dto.response.CustomersDTO;
 import com.artist.dto.response.LoginResponse;
 import com.artist.dto.response.WalletDTO;
 import com.artist.dto.response.WalletResponse;
+import com.artist.dto.response.WinningRecords;
 import com.artist.entity.Customers;
 import com.artist.service.impl.BidrecordServiceImpl;
 import com.artist.service.impl.CustomersServiceImpl;
+import com.artist.service.impl.OrdersServiceImpl;
 
 @RestController
 @RequestMapping("/customers")
 public class CustomersController {
-    @Autowired
-    private CustomersServiceImpl csi;
-    @Autowired
-    private BidrecordServiceImpl bsi;
+	@Autowired
+	private CustomersServiceImpl csi;
+	@Autowired
+	private BidrecordServiceImpl bsi;
+	@Autowired
+	private OrdersServiceImpl osi;
 
-    // 註冊
-    @PostMapping(value ="/register", consumes = "application/json")
-    public ResponseEntity<?> createCustomer(@RequestBody CustomersDTO customersDTO) {
-        try {
-        	csi.create(customersDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("註冊成功");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
-    }
-    
-    // 登入
-    @PostMapping(value ="/login", consumes = "application/json")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        String email =  request.getEmail();
-        String password = request.getPassword();
-        try {
+	// 註冊
+	@PostMapping(value = "/register", consumes = "application/json")
+	public ResponseEntity<?> createCustomer(@RequestBody CustomersDTO customersDTO) {
+		try {
+			csi.create(customersDTO);
+			return ResponseEntity.status(HttpStatus.CREATED).body("註冊成功");
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
+	}
+
+	// 登入
+	@PostMapping(value = "/login", consumes = "application/json")
+	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+		String email = request.getEmail();
+		String password = request.getPassword();
+		try {
 			String token = csi.login(email, password);
 			String customerId = csi.getCustomerIdFromToken(token);
 			Customers customer = csi.getByCustomerId(customerId);
 			String nickName = customer.getNickName();
 			LoginResponse response = new LoginResponse(token, nickName);
 			return ResponseEntity.ok(response);
-		} catch (RuntimeException  e) {
-			 // 捕捉密碼或電子郵件錯誤，返回錯誤信息
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+		} catch (RuntimeException e) {
+			// 捕捉密碼或電子郵件錯誤，返回錯誤信息
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
 		}
-    }
-    
-    // 刷新 token
-    @PostMapping("/token/refresh")
-    public ResponseEntity<?> refreshToken(@RequestParam String token) {
-        String newToken = csi.refreshToken(token);
-        if (newToken != null) {
-            return ResponseEntity.ok(newToken);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token.");
-        }
-    }
-    
-    // 
-    @GetMapping("/mywallet")
-    public ResponseEntity<?> wallet(@RequestHeader("Authorization") String token) {
-        try {
-            String customerId = csi.getCustomerIdFromToken(token);
-            Customers customer = csi.getByCustomerId(customerId);
+	}
 
-            if (customer == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("客戶不存在");
-            }
+	// 刷新 token
+	@PostMapping("/token/refresh")
+	public ResponseEntity<?> refreshToken(@RequestParam String token) {
+		String newToken = csi.refreshToken(token);
+		if (newToken != null) {
+			return ResponseEntity.ok(newToken);
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token.");
+		}
+	}
 
-            String bankAccount = customer.getBankAccount();
-            Double bankBalance = customer.getBankBalance();
-            String creditCardNo = customer.getCreditCardNo();
-            List<WalletDTO> depositRecord = bsi.getDepositRecord(customerId, "refunded");
+	//
+	@GetMapping("/mywallet")
+	public ResponseEntity<?> wallet(@RequestHeader("Authorization") String token) {
+		try {
+			String customerId = csi.getCustomerIdFromToken(token);
+			Customers customer = csi.getByCustomerId(customerId);
 
-            WalletResponse walletDTO = new WalletResponse(bankAccount, creditCardNo, bankBalance, depositRecord);
-            return ResponseEntity.ok(walletDTO);
-            
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的請求：" + e.getMessage());
-        }
-    }
-    
-    // 填充客戶資料
-    @GetMapping("/initEditData")
-    public ResponseEntity<?> initEdit(@RequestHeader("Authorization") String token) {
-        String customerId = csi.getCustomerIdFromToken(token);
-    	CustomersDTO customerDTO = csi.getCustomerDTO(customerId);
-    	return ResponseEntity.ok(customerDTO); 
-    }
+			if (customer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("客戶不存在");
+			}
+
+			String bankAccount = customer.getBankAccount();
+			Double bankBalance = customer.getBankBalance();
+			String creditCardNo = customer.getCreditCardNo();
+			List<WalletDTO> depositRecord = bsi.getDepositRecord(customerId, "refunded");
+
+			WalletResponse walletDTO = new WalletResponse(bankAccount, creditCardNo, bankBalance, depositRecord);
+			return ResponseEntity.ok(walletDTO);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的請求：" + e.getMessage());
+		}
+	}
+
+	// 填充客戶資料
+	@GetMapping("/initEditData")
+	public ResponseEntity<?> initEdit(@RequestHeader("Authorization") String token) {
+		String customerId = csi.getCustomerIdFromToken(token);
+		CustomersDTO customerDTO = csi.getCustomerDTO(customerId);
+		return ResponseEntity.ok(customerDTO);
+	}
+
 //    // 編輯客戶資料
 //    @PutMapping(value ="/EditAccount")
 //    public ResponseEntity<?> updateCustomer(
@@ -115,13 +120,33 @@ public class CustomersController {
 //    	csi.deitAccountUpdate(customerId,name,nickname,phone,address);
 //        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
 //    }
-    // 編輯客戶資料
-    @PutMapping(value ="/EditAccount", consumes = "application/json")
-    public ResponseEntity<?> updateCustomer(@RequestBody CustomersDTO customersDTO){
-    		
-    	csi.deitAccountUpdate(customersDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
-    }
-    
-    
+	// 編輯客戶資料
+	@PutMapping(value = "/EditAccount", consumes = "application/json")
+	public ResponseEntity<?> updateCustomer(@RequestBody CustomersDTO customersDTO) {
+
+		csi.deitAccountUpdate(customersDTO);
+		return ResponseEntity.status(HttpStatus.OK).body("修改成功");
+	}
+
+	@GetMapping("/mywinningrecords")
+	public ResponseEntity<?> myWinningRecords(@RequestHeader("Authorization") String token) {
+		try {
+			String customerId = csi.getCustomerIdFromToken(token);
+			Customers customer = csi.getByCustomerId(customerId);
+
+			if (customer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("客戶不存在");
+			}
+			List<WinningRecords> allWinningRecords = osi.getAllWinningRecordsByCustomerId(customerId);
+			if (allWinningRecords.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("沒有得標資料");
+
+			} else {
+				return ResponseEntity.ok(allWinningRecords);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的請求：" + e.getMessage());
+		}
+	}
 }

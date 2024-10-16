@@ -1,13 +1,16 @@
 package com.artist.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.artist.dto.response.PaintingDTO;
+import com.artist.dto.response.WinningRecords;
 import com.artist.entity.Bidrecord;
 import com.artist.entity.Customers;
 import com.artist.entity.Orders;
@@ -87,6 +90,29 @@ public class OrdersServiceImpl implements OrdersService {
 
 		}
 
+	}
+	@Override
+	public List<WinningRecords> getAllWinningRecordsByCustomerId(String customerId) {
+		List<Orders> orderList = or.findByCustomerId(customerId);
+		List<WinningRecords> WinningRecordslist = new ArrayList<>();
+
+		if (orderList.isEmpty()) {
+			return null;
+		}else {
+			for(Orders o:orderList) {
+			
+				WinningRecords winningRecords = new WinningRecords();
+				winningRecords.setPaintingId(o.getOrderDetail().getPaintingId());
+				winningRecords.setPaintingName(o.getOrderDetail().getPainting().getPaintingName());
+				winningRecords.setPrice(o.getOrderDetail().getPrice()*0.9);//收剩下的9成
+				winningRecords.setSmallUrl(o.getOrderDetail().getPainting().getSmallUrl());
+				winningRecords.setArtistId(o.getOrderDetail().getPainting().getArtist().getArtistId());
+				winningRecords.setArtisName(o.getOrderDetail().getPainting().getArtist().getArtistName());
+				WinningRecordslist.add(winningRecords);
+			}
+		}
+		return WinningRecordslist;
+	
 	}
 
 }

@@ -2,11 +2,15 @@ package com.artist.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
@@ -21,6 +25,9 @@ public class Orders {
 	
 	@Column(name = "order_date")
 	private LocalDateTime orderDate;
+	
+	@Column(name = "customer_id")
+    private String customerId;
 	
 	@Column(name = "status")
 	private String status;
@@ -38,9 +45,16 @@ public class Orders {
 	private String deliveryInstrictions;
 	
 	
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private OrderDetails orderDetail;
+	
+
+
+
 	//與Customers關聯
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
     private Customers customer;
 
 	public Orders() {
@@ -156,6 +170,16 @@ public class Orders {
 
 	public void setCustomer(Customers customer) {
 		this.customer = customer;
+	}
+    
+    
+	public OrderDetails getOrderDetail() {
+		return orderDetail;
+	}
+
+
+	public void setOrderDetail(OrderDetails orderDetail) {
+		this.orderDetail = orderDetail;
 	}
 
     

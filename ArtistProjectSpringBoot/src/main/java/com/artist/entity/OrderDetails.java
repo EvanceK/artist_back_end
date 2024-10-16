@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,8 +24,8 @@ public class OrderDetails {
 	private Double price;
 
 	//與Orders關聯
-    @ManyToOne
-    @JoinColumn(name = "order_number", insertable = false, updatable = false)
+    @OneToOne
+    @JoinColumn(name = "order_number", referencedColumnName = "orderNumber")
     private Orders order;
     
 
