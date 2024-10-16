@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.request.LoginRequest;
+import com.artist.dto.response.BiddingHistoryResponse;
 import com.artist.dto.response.CustomersDTO;
 import com.artist.dto.response.LoginResponse;
 import com.artist.dto.response.WalletDTO;
 import com.artist.dto.response.WalletResponse;
+import com.artist.dto.response.WinningRecordResponse;
 import com.artist.dto.response.WinningRecords;
 import com.artist.entity.Customers;
 import com.artist.service.impl.BidrecordServiceImpl;
@@ -142,7 +144,9 @@ public class CustomersController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("沒有得標資料");
 
 			} else {
-				return ResponseEntity.ok(allWinningRecords);
+				WinningRecordResponse response = new WinningRecordResponse(customer, allWinningRecords);
+
+				return ResponseEntity.ok(response);
 			}
 
 		} catch (Exception e) {

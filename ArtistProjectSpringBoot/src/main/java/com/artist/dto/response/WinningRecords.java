@@ -7,9 +7,11 @@ public class WinningRecords {
 	private String artisName;
 	private String smallUrl;
 	private Double price;
+	
 	public WinningRecords() {
 		super();
 	}
+
 	public WinningRecords(String paintingId, String paintingName, String artistId, String artisName, String smallUrl,
 			Double price) {
 		super();
@@ -19,7 +21,9 @@ public class WinningRecords {
 		this.artisName = artisName;
 		this.smallUrl = smallUrl;
 		this.price = price;
+	
 	}
+
 	public String getPaintingId() {
 		return paintingId;
 	}
