@@ -3,6 +3,7 @@ package com.artist.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,22 @@ public class OrdersServiceImpl implements OrdersService {
 		or.save(order);
 		return order.getOrderNumber();
 	}
+	
+	@Override
+	public void update(Orders orders) {
+		String orderNum  = orders.getOrderNumber();
+		String status = orders.getStatus();
+		
+		Optional<Orders> optionalOrder = or.findByOrderNumber(orderNum);
+		if (optionalOrder.isPresent()) { 
+			Orders o = optionalOrder.get(); 
+			o.setStatus(status);
+			or.save(o);
+		} else {
+			System.out.println("not find");
+		}		
+	}
+	
 	@Transactional
 	public void finalizeHighestBidAsOrder(PaintingDTO painting, LocalDateTime removeDate) {
 		// 有查詢到有出過價錢，取最高的出價紀錄然後新增至order表。
@@ -112,6 +129,21 @@ public class OrdersServiceImpl implements OrdersService {
 		}
 		return WinningRecordslist;
 	
+	}
+	
+	@Override
+	public void delete(String orderId) {
+		or.deleteById(orderId);
+	}
+
+	@Override
+	public List<Orders> getAll() {
+		List<Orders> orderList = or.findAll();
+		if (orderList.isEmpty()) {
+			return null;
+		}else {
+			return orderList;
+		}
 	}
 
 }
