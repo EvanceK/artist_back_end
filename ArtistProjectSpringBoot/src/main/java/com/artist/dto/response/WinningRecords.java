@@ -1,6 +1,7 @@
 package com.artist.dto.response;
 
 public class WinningRecords {
+	private String orderNumber;
 	private String paintingId;
 	private String paintingName;
 	private String artistId;
@@ -8,12 +9,13 @@ public class WinningRecords {
 	private String smallUrl;
 	private Double price;
 	
+	
 	public WinningRecords() {
 		super();
 	}
 
 	public WinningRecords(String paintingId, String paintingName, String artistId, String artisName, String smallUrl,
-			Double price) {
+			Double price, String orderNumber) {
 		super();
 		this.paintingId = paintingId;
 		this.paintingName = paintingName;
@@ -21,7 +23,7 @@ public class WinningRecords {
 		this.artisName = artisName;
 		this.smallUrl = smallUrl;
 		this.price = price;
-	
+		this.orderNumber = orderNumber;
 	}
 
 	public String getPaintingId() {
@@ -59,6 +61,14 @@ public class WinningRecords {
 	}
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public String getOrderNumber() {
+		return orderNumber;
+	}
+
+	public void setOrderNumber(String orderNumber) {
+		this.orderNumber = orderNumber;
 	}
 	
 	

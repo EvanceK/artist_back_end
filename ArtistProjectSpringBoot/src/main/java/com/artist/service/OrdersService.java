@@ -3,6 +3,7 @@ package com.artist.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.artist.dto.request.RecipientInformation;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.WinningRecords;
 import com.artist.entity.Orders;
@@ -19,7 +20,7 @@ public interface OrdersService {
 
     // Update
     public void update(Orders orders);
-    
+	public void updateOrderInfo(RecipientInformation recipient);
     // Delete
 	public void delete(String orderId); 
 	

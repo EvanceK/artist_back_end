@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.request.EditCreditCard;
 import com.artist.dto.request.LoginRequest;
+import com.artist.dto.request.RecipientInformation;
 import com.artist.dto.response.CustomersDTO;
 import com.artist.dto.response.LoginResponse;
 import com.artist.dto.response.WalletDTO;
@@ -175,6 +176,18 @@ public class CustomersController {
 
 		csi.editPassword(customersDTO);
 		return ResponseEntity.status(HttpStatus.OK).body("修改成功");
+	}
+	
+	
+	// 編輯客戶的訂單資訊
+	@PutMapping(value = "/EditOrder", consumes = "application/json")
+	public ResponseEntity<?> updateOrderInfo(@RequestHeader("Authorization") String token,@RequestBody RecipientInformation recipient ) {
+		try {
+			osi.updateOrderInfo(recipient);
+			return ResponseEntity.status(HttpStatus.OK).body("編輯訂單資訊成功");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 
 }
