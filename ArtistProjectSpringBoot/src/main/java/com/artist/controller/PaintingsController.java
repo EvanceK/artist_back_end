@@ -196,7 +196,7 @@ public class PaintingsController {
         }
         Map<String, Object> response = new HashMap<>();
         response.put("paintingsCount", topFavorites);
-        response.put("detailedPaintings", paintingList);
+        response.put("paintingsList", paintingList);
         
     	return ResponseEntity.ok(response);
     }
@@ -212,7 +212,7 @@ public class PaintingsController {
         }
         Map<String, Object> response = new HashMap<>();
         response.put("paintingsCount", topBiddings);
-        response.put("detailedPaintings", paintingList);
+        response.put("paintingsList", paintingList);
         
     	return ResponseEntity.ok(response);
     }
