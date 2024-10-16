@@ -95,7 +95,12 @@ public class CustomersServiceImpl implements CustomersService {
 		customer.setAddress(customersDTO.getAddress());
 		cr.save(customer);
 	}
-
+	public void editPassword(CustomersDTO customersDTO) {
+		Customers customer = getCustomer(customersDTO.getEmail());
+		customer.setPassword(passwordEncoder.encode(customersDTO.getPassword()));
+		
+		cr.save(customer);
+	}
 
 	@Override
 	public void delete(Customers customers) {

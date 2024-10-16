@@ -122,6 +122,12 @@ public class CustomersController {
     	csi.deitAccountUpdate(customersDTO);
         return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
-    
+    // 編輯客戶密碼
+    @PutMapping(value ="/EditPassword", consumes = "application/json")
+    public ResponseEntity<?> updatePassword(@RequestBody CustomersDTO customersDTO){
+    		
+    	csi.editPassword(customersDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
+    }
     
 }
