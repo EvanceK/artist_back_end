@@ -110,7 +110,7 @@ public class CustomersController {
 	}
 
 	
-	@PostMapping("/editcreditcard")
+	@PutMapping("/editcreditcard")
 	public ResponseEntity<?> editCreditCard(@RequestHeader("Authorization") String token,
 			@RequestBody EditCreditCard request) {
 		String customerId = csi.getCustomerIdFromToken(token);
