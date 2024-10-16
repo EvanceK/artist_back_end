@@ -2,7 +2,6 @@ package com.artist.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.WinningRecords;

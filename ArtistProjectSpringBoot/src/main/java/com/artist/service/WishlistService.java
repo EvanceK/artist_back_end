@@ -2,8 +2,6 @@ package com.artist.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
 import com.artist.dto.response.TopFavoritesDTO;
 import com.artist.dto.response.WishlistDTO;
 

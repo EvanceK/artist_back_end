@@ -21,6 +21,9 @@ public interface CustomersService {
     void update(Customers customer);
     void deitAccountUpdate(String CustomerId, String name, 
     		    String nickName, String phone, String address);
+	void editPassword(CustomersDTO customersDTO);
+	void editPasswordforemail(Customers customer, String password);
+	
     // Delete
     void delete(Customers customers);
     void deleteByEmail(String email);

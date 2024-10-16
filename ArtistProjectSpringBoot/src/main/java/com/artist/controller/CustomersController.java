@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.request.LoginRequest;
-import com.artist.dto.response.BiddingHistoryResponse;
 import com.artist.dto.response.CustomersDTO;
 import com.artist.dto.response.LoginResponse;
 import com.artist.dto.response.WalletDTO;

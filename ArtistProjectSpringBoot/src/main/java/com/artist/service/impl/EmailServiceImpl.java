@@ -6,6 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.artist.entity.Customers;
 import com.artist.repository.OrderDetailsRepository;
 import com.artist.repository.OrdersRepository;
 import com.artist.service.EmailService;
@@ -92,4 +93,5 @@ public class EmailServiceImpl implements EmailService {
 //		}
 //
 	}
+
 }

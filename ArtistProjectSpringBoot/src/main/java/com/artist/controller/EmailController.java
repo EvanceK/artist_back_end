@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Customers;
 import com.artist.service.impl.CustomersServiceImpl;
 import com.artist.service.impl.EmailServiceImpl;
@@ -64,9 +63,7 @@ import com.artist.utils.JwtUtil;
 	        // 解析 token
 	        String customerId = jwtUtil.getCustomerIdFromToken(token);
 	        Customers customer = csi.getByCustomerId(customerId);
-	        // 更新用户密碼
-	        customer.setEmail(newPassword);
-	        csi.update(customer);
+	        csi.editPasswordforemail(customer,newPassword);
 	        return ResponseEntity.ok("密碼已成功重置。");
 	    }  
 	    

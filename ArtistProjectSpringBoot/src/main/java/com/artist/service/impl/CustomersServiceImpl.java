@@ -101,6 +101,11 @@ public class CustomersServiceImpl implements CustomersService {
 		
 		cr.save(customer);
 	}
+	
+	public void editPasswordforemail(Customers customer, String password) {
+		customer.setPassword(passwordEncoder.encode(password));
+		cr.save(customer);
+	}
 
 	@Override
 	public void delete(Customers customers) {
