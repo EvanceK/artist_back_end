@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.artist.dto.request.EditCreditCard;
 import com.artist.dto.request.LoginRequest;
 import com.artist.dto.response.CustomersDTO;
 import com.artist.dto.response.LoginResponse;
@@ -108,6 +109,20 @@ public class CustomersController {
 		return ResponseEntity.ok(customerDTO);
 	}
 
+	
+	@PostMapping("/editcreditcard")
+	public ResponseEntity<?> editCreditCard(@RequestHeader("Authorization") String token,
+			@RequestBody EditCreditCard request) {
+		String customerId = csi.getCustomerIdFromToken(token);
+		String bankAccount = request.getBankAccount();
+		String creditCardNo = request.getCreditCardNo();
+		try {csi.editCreditCard(customerId,bankAccount, creditCardNo);
+			return ResponseEntity.status(HttpStatus.CREATED).body("修改成功");
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
+	}
+
 //    // 編輯客戶資料
 //    @PutMapping(value ="/EditAccount")
 //    public ResponseEntity<?> updateCustomer(
@@ -145,19 +160,21 @@ public class CustomersController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的請求：" + e.getMessage());
 		}
 	}
-    // 編輯客戶資料
-    @PutMapping(value ="/EditAccount", consumes = "application/json")
-    public ResponseEntity<?> updateCustomer(@RequestBody CustomersDTO customersDTO){
-    		
-    	csi.deitAccountUpdate(customersDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
-    }
-    // 編輯客戶密碼
-    @PutMapping(value ="/EditPassword", consumes = "application/json")
-    public ResponseEntity<?> updatePassword(@RequestBody CustomersDTO customersDTO){
-    		
-    	csi.editPassword(customersDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
-    }
-    
+
+	// 編輯客戶資料
+	@PutMapping(value = "/EditAccount", consumes = "application/json")
+	public ResponseEntity<?> updateCustomer(@RequestBody CustomersDTO customersDTO) {
+
+		csi.editAccountUpdate(customersDTO);
+		return ResponseEntity.status(HttpStatus.OK).body("修改成功");
+	}
+
+	// 編輯客戶密碼
+	@PutMapping(value = "/EditPassword", consumes = "application/json")
+	public ResponseEntity<?> updatePassword(@RequestBody CustomersDTO customersDTO) {
+
+		csi.editPassword(customersDTO);
+		return ResponseEntity.status(HttpStatus.OK).body("修改成功");
+	}
+
 }

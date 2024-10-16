@@ -19,10 +19,11 @@ public interface CustomersService {
 
     // Update
     void update(Customers customer);
-    void deitAccountUpdate(String CustomerId, String name, 
-    		    String nickName, String phone, String address);
+    void editAccountUpdate(CustomersDTO customersDTO);
 	void editPassword(CustomersDTO customersDTO);
 	void editPasswordforemail(Customers customer, String password);
+	void editCreditCard(String customerId,String bankAccount, String creditCardNo);
+
 	
     // Delete
     void delete(Customers customers);

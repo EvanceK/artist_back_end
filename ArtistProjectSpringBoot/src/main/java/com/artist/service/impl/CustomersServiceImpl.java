@@ -1,7 +1,5 @@
 package com.artist.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -90,7 +88,7 @@ public class CustomersServiceImpl implements CustomersService {
 			System.out.println("找不到此 id 的客戶");
 		}
 	}
-	public void deitAccountUpdate(CustomersDTO customersDTO) {
+	public void editAccountUpdate(CustomersDTO customersDTO) {
 		Customers customer = getCustomer(customersDTO.getEmail());
 		customer.setName(customersDTO.getName());
 		customer.setNickName(customersDTO.getNickName());
@@ -270,6 +268,14 @@ public class CustomersServiceImpl implements CustomersService {
             return false;
         }
     }
+
+	@Override
+	public void editCreditCard(String customerId,String bankAccount, String creditCardNo) {
+		Customers customer = getByCustomerId(customerId);
+		customer.setBankAccount(bankAccount);
+		customer.setCreditCardNo(creditCardNo);
+		cr.save(customer);
+	}
 
    
 }
