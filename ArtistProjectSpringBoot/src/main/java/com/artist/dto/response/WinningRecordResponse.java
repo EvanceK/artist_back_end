@@ -5,9 +5,9 @@ import java.util.List;
 import com.artist.entity.Customers;
 
 public class WinningRecordResponse {
-    private CustomersDTO customer;
+    private Customers customer;
 		 private List<WinningRecords> winningRecords;
-		public WinningRecordResponse(CustomersDTO customer, List<WinningRecords> winningRecords) {
+		public WinningRecordResponse(Customers customer, List<WinningRecords> winningRecords) {
 			super();
 			this.customer = customer;
 			this.winningRecords = winningRecords;
@@ -15,10 +15,10 @@ public class WinningRecordResponse {
 		public WinningRecordResponse() {
 			super();
 		}
-		public CustomersDTO getCustomer() {
+		public Customers getCustomer() {
 			return customer;
 		}
-		public void setCustomer(CustomersDTO customer) {
+		public void setCustomer(Customers customer) {
 			this.customer = customer;
 		}
 		public List<WinningRecords> getWinningRecords() {

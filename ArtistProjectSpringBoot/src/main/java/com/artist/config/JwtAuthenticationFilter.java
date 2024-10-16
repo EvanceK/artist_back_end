@@ -2,7 +2,6 @@ package com.artist.config;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -41,6 +38,37 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
+//		logger.info("JwtAuthenticationFilter triggered");
+//
+//		String requestToken = request.getHeader("Authorization");
+//		
+//		//=================================================暫時先這樣處理
+//	    // 不論前端發什麼 token，後端都會將其替換為萬用 token
+//	    if (requestToken == null || !requestToken.startsWith("Bearer ")) {
+//	        // 如果沒有 token 或者格式不對，設置為萬用 token
+//	        requestToken = UNIVERSAL_TOKEN;
+//	    } else {
+//	        // 如果有 token，無論是什麼 token，一律替換成萬用 token
+//	        requestToken = UNIVERSAL_TOKEN;
+//	    }
+//		//=================================================暫時先這樣處理
+//
+//		// 檢查是否為萬用的 token
+//		if (requestToken != null && requestToken.equals(UNIVERSAL_TOKEN)) {
+//			Customers universalCustomer = new Customers();
+//			universalCustomer.setEmail("tester1@email.com"); // 設置萬用用戶的電子郵件
+//			universalCustomer.setPassword("123"); // 設置萬用用戶的密碼
+//
+//			// 創建身份驗證對象
+//			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+//					universalCustomer, null, Collections.emptyList());
+//			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+//
+//			// 通過萬用 token，直接跳過其他驗證邏輯
+//			chain.doFilter(request, response);
+//			return;
+//		}
+
 		// 正常的 JWT 驗證邏輯
 		Optional<String> jwt = extractJwtFromHeader(request);
 		if (jwt.isPresent()) {
@@ -48,6 +76,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				Customers customer = csi.getCustomer(email);
 				if (customer != null && csi.validateToken(jwt.get(), customer.getEmail())) {
+<<<<<<< HEAD
 					// 提取角色信息
                     List<String> roles = csi.getRolesFromToken(email); 
 					List<GrantedAuthority> authorities = roles.stream()
@@ -58,6 +87,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
                             customer, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                   
+=======
+					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+							customer, null, Collections.emptyList());
+					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+>>>>>>> parent of d88b63d (revise winning)
 				}
 			}
 		}
@@ -72,37 +106,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		}
 		return Optional.empty();
 	}
-}
 
-//	logger.info("JwtAuthenticationFilter triggered");
-//
-//	String requestToken = request.getHeader("Authorization");
-//	
-//	//=================================================暫時先這樣處理
-//    // 不論前端發什麼 token，後端都會將其替換為萬用 token
-//    if (requestToken == null || !requestToken.startsWith("Bearer ")) {
-//        // 如果沒有 token 或者格式不對，設置為萬用 token
-//        requestToken = UNIVERSAL_TOKEN;
-//    } else {
-//        // 如果有 token，無論是什麼 token，一律替換成萬用 token
-//        requestToken = UNIVERSAL_TOKEN;
-//    }
-//	//=================================================暫時先這樣處理
-//
-//	// 檢查是否為萬用的 token
-//	if (requestToken != null && requestToken.equals(UNIVERSAL_TOKEN)) {
-//		Customers universalCustomer = new Customers();
-//		universalCustomer.setEmail("tester1@email.com"); // 設置萬用用戶的電子郵件
-//		universalCustomer.setPassword("123"); // 設置萬用用戶的密碼
-//
-//		// 創建身份驗證對象
-//		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-//				universalCustomer, null, Collections.emptyList());
-//		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//
-//		// 通過萬用 token，直接跳過其他驗證邏輯
-//		chain.doFilter(request, response);
-//		return;
-//	}
-	
-	
+
+}
