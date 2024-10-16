@@ -12,9 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+=======
+>>>>>>> parent of 91c8ef3 (update topfavorites)
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -218,7 +221,11 @@ public class PaintingsController {
 	@GetMapping(value = "/topfavorites")
     public ResponseEntity<Map<String, Object>>getTopFavorites(@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
 		List<TopFavoritesDTO> topFavorites = wsi.getTopFavorites(pageSize);//前三
+<<<<<<< HEAD
         List<PaintingDTO> paintingDetails = new ArrayList<>();
+=======
+        List<PaintingDTO> paintingList = new ArrayList<>();
+>>>>>>> parent of 91c8ef3 (update topfavorites)
         
         for (TopFavoritesDTO p : topFavorites) {
             String pId = p.getPaintingId();
