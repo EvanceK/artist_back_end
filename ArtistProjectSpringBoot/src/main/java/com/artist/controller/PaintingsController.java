@@ -187,16 +187,16 @@ public class PaintingsController {
 	@GetMapping(value = "/topfavorites")
     public ResponseEntity<Map<String, Object>>getTopFavorites(@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
 		List<TopFavoritesDTO> topFavorites = wsi.getTopFavorites(pageSize);//前三
-        List<PaintingDTO> paintingDetails = new ArrayList<>();
+        List<PaintingDTO> paintingList = new ArrayList<>();
         
         for (TopFavoritesDTO p : topFavorites) {
             String pId = p.getPaintingId();
          PaintingDTO paintingsId = psi.getByPaintingsId(pId);   // 單個查詢，因為數量不多，所以計畫分次查。
-            paintingDetails.add(paintingsId);
+         paintingList.add(paintingsId);
         }
         Map<String, Object> response = new HashMap<>();
         response.put("paintingsCount", topFavorites);
-        response.put("detailedPaintings", paintingDetails);
+        response.put("detailedPaintings", paintingList);
         
     	return ResponseEntity.ok(response);
     }
@@ -204,15 +204,15 @@ public class PaintingsController {
 	@GetMapping(value = "/topbiddings")
     public ResponseEntity<Map<String, Object>>getTopbiggings(@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
 		List<TopBiddingsDTO> topBiddings= bsi.getTopBidding(pageSize);//前三
-        List<PaintingDTO> paintingDetails = new ArrayList<>();
+        List<PaintingDTO> paintingList = new ArrayList<>();
         for (TopBiddingsDTO p : topBiddings) {
             String pId = p.getPaintingId();
          PaintingDTO paintingsId = psi.getByPaintingsId(pId);  // 單個查詢，因為數量不多，所以計畫分次查。
-         paintingDetails.add(paintingsId);
+         paintingList.add(paintingsId);
         }
         Map<String, Object> response = new HashMap<>();
         response.put("paintingsCount", topBiddings);
-        response.put("detailedPaintings", paintingDetails);
+        response.put("detailedPaintings", paintingList);
         
     	return ResponseEntity.ok(response);
     }

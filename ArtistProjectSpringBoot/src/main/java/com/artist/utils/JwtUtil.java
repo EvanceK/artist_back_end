@@ -69,27 +69,27 @@ public class JwtUtil {
 		claims.put("nickname", customer.getNickName());
 		claims.put("customerId", customer.getCustomerId());
 		
-		// 添加角色信息
-	    List<String> roles = fetchRolesForCustomer(customer.getEmail()); // 從其他地方得到角色信息
-	    claims.put("roles", roles); // 將角色信息添加到 claims
+//		// 添加角色信息
+//	    List<String> roles = fetchRolesForCustomer(customer.getEmail()); // 從其他地方得到角色信息
+//	    claims.put("roles", roles); // 將角色信息添加到 claims
 
 		return Jwts.builder().setSubject(customer.getEmail()).addClaims(claims) // 添加其他 claims
 				.setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 天
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
     
-    private List<String> fetchRolesForCustomer(String email) {
-        List<String> roles = new ArrayList<>();
-        // 用email模擬 role
-        if (email.equals("artistjava2024@gmail.com")) {
-            roles.add("ROLE_ADMIN");
-        } else if (cr.existsByEmail(email)){
-            roles.add("ROLE_CUSTOMER");
-        }else {
-        	roles.add("ROLE_GUEST");
-        }
-        return roles;
-    }
+//    private List<String> fetchRolesForCustomer(String email) {
+//        List<String> roles = new ArrayList<>();
+//        // 用email模擬 role
+//        if (email.equals("artistjava2024@gmail.com")) {
+//            roles.add("ROLE_ADMIN");
+//        } else if (cr.existsByEmail(email)){
+//            roles.add("ROLE_CUSTOMER");
+//        }else {
+//        	roles.add("ROLE_GUEST");
+//        }
+//        return roles;
+//    }
     
     
     // 驗證 Token 是否有效

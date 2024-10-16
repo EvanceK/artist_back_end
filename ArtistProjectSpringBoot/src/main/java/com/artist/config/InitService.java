@@ -49,7 +49,7 @@ public class InitService implements CommandLineRunner {
 		for (PaintingDTO painting : allPaintings) {
 			// 計算下架時間
 			LocalDateTime uploadDate = painting.getUploadDate();
-			LocalDateTime removeDate = uploadDate.plusDays(3); // 這邊修改下架時間 plusDays plusHours plusMinutes
+			LocalDateTime removeDate = uploadDate.plusDays(5); // 這邊修改下架時間 plusDays plusHours plusMinutes
 			// 計算現在時間和下架時間的時間差
 			long delay = Duration.between(LocalDateTime.now(), removeDate).toMillis();
 			// 如果下架時間已過，就立即標記為下架
@@ -69,7 +69,7 @@ public class InitService implements CommandLineRunner {
 		                    setSatusCanBid(painting.getPaintingId()); // 改成可以下單
 		                    System.out.println("可以下單：" + painting.getPaintingId());
 		                } catch (Exception e) {
-		                    System.err.println("设置状态为可下单时发生错误：" + e.getMessage());
+		                    System.err.println("下單時發生錯誤：" + e.getMessage());
 		                }
 				}, statusChangeDelay, TimeUnit.MILLISECONDS);
 			}else {
