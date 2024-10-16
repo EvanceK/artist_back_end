@@ -36,7 +36,7 @@ public class ArtistController {
 		return ResponseEntity.ok(alllist);
 		
 	}
-	
+
 	// 新增
 	@PostMapping(value = "/createArtist", consumes = "application/json")
 	public ResponseEntity<?> createArtist(@RequestBody ArtistDTO artistDTO) {

@@ -12,12 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-=======
->>>>>>> parent of 91c8ef3 (update topfavorites)
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +24,7 @@ import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.TopBiddingsDTO;
 import com.artist.dto.response.TopFavoritesDTO;
 import com.artist.service.impl.BidrecordServiceImpl;
+import com.artist.service.impl.CustomersServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
 import com.artist.service.impl.WishlistServiceImpl;
 
@@ -41,34 +40,37 @@ public class PaintingsController {
 	
 	@Autowired
 	private BidrecordServiceImpl bsi;
+	@Autowired
+	private CustomersServiceImpl csi;
 
 	// 新增
-	@PostMapping(value = "/createPainting", consumes = "application/json")
-	public ResponseEntity<?> createPainting(@RequestBody PaintingDTO paintingDTO) {
-		try {
-			psi.create(paintingDTO);
-			return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		@PostMapping(value = "/createPainting", consumes = "application/json")
+		public ResponseEntity<?> createPainting(@RequestBody PaintingDTO paintingDTO) {
+			try {
+				psi.create(paintingDTO);
+				return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
+			} catch (RuntimeException e) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+			}
 		}
-	}
-	
-	
-	// 修改
-	@PutMapping(value ="/editPainting", consumes = "application/json")
-    public ResponseEntity<?> updatePaintings(@RequestBody PaintingDTO paintingDTO){
-		psi.update(paintingDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
-    }
-	
-	
-	// 刪除
-	@DeleteMapping("/{paintingId}")
-	public ResponseEntity<Void> deletePaintingById(@PathVariable String paintingId) {
-		psi.delete(paintingId);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
-
+		
+		
+		// 修改
+		@PutMapping(value ="/editPainting", consumes = "application/json")
+	    public ResponseEntity<?> updatePaintings(@RequestBody PaintingDTO paintingDTO){
+			psi.update(paintingDTO);
+	        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
+	    }
+		
+		
+		// 刪除
+		@DeleteMapping("/{paintingId}")
+		public ResponseEntity<Void> deletePaintingById(@PathVariable String paintingId) {
+			psi.delete(paintingId);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		
+		
 	@GetMapping(value = "/selectall")
 	public ResponseEntity<?> findall() {
 		List<PaintingDTO> alllist = psi.getAll();
@@ -219,22 +221,28 @@ public class PaintingsController {
     }
 	
 	@GetMapping(value = "/topfavorites")
-    public ResponseEntity<Map<String, Object>>getTopFavorites(@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
-		List<TopFavoritesDTO> topFavorites = wsi.getTopFavorites(pageSize);//前三
-<<<<<<< HEAD
-        List<PaintingDTO> paintingDetails = new ArrayList<>();
-=======
+    public ResponseEntity<Map<String, Object>>getTopFavorites(
+    		@RequestHeader("Authorization") String token,
+    		@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
+		
+		
+		String customerId = csi.getCustomerIdFromToken(token);
+		List<TopFavoritesDTO> topFavorites;
+		if(customerId!=null) {
+		topFavorites = wsi.getTopFavorites(customerId,pageSize);//排除掉自己的前三
+		}else {
+		topFavorites = wsi.getTopFavorites(pageSize);//所有人都算的前三
+		}
+		
         List<PaintingDTO> paintingList = new ArrayList<>();
->>>>>>> parent of 91c8ef3 (update topfavorites)
-        
         for (TopFavoritesDTO p : topFavorites) {
             String pId = p.getPaintingId();
          PaintingDTO paintingsId = psi.getByPaintingsId(pId);   // 單個查詢，因為數量不多，所以計畫分次查。
-            paintingDetails.add(paintingsId);
+         paintingList.add(paintingsId);
         }
         Map<String, Object> response = new HashMap<>();
         response.put("paintingsCount", topFavorites);
-        response.put("detailedPaintings", paintingDetails);
+        response.put("paintingsList", paintingList);
         
     	return ResponseEntity.ok(response);
     }
@@ -242,15 +250,15 @@ public class PaintingsController {
 	@GetMapping(value = "/topbiddings")
     public ResponseEntity<Map<String, Object>>getTopbiggings(@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
 		List<TopBiddingsDTO> topBiddings= bsi.getTopBidding(pageSize);//前三
-        List<PaintingDTO> paintingDetails = new ArrayList<>();
+        List<PaintingDTO> paintingList = new ArrayList<>();
         for (TopBiddingsDTO p : topBiddings) {
             String pId = p.getPaintingId();
          PaintingDTO paintingsId = psi.getByPaintingsId(pId);  // 單個查詢，因為數量不多，所以計畫分次查。
-         paintingDetails.add(paintingsId);
+         paintingList.add(paintingsId);
         }
         Map<String, Object> response = new HashMap<>();
         response.put("paintingsCount", topBiddings);
-        response.put("detailedPaintings", paintingDetails);
+        response.put("paintingsList", paintingList);
         
     	return ResponseEntity.ok(response);
     }

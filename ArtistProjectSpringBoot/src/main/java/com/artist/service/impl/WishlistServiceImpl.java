@@ -77,6 +77,17 @@ public class WishlistServiceImpl implements WishlistService {
 	}
 	
 	@Override
+	public List<TopFavoritesDTO> getTopFavorites(String customerId,int size) {
+        Pageable pageable = PageRequest.of(0, size);
+        List<Tuple> results = wr.findTopFavoritesWithLimit(customerId,pageable);
+        return results.stream()
+                .map(tuple -> new TopFavoritesDTO(
+                        tuple.get("paintingId", String.class),
+                        tuple.get("paintingCount", Long.class)
+                ))
+                .collect(Collectors.toList());
+	}
+	@Override
 	public List<TopFavoritesDTO> getTopFavorites(int size) {
         Pageable pageable = PageRequest.of(0, size);
         List<Tuple> results = wr.findTopFavoritesWithLimit(pageable);
@@ -86,7 +97,6 @@ public class WishlistServiceImpl implements WishlistService {
                         tuple.get("paintingCount", Long.class)
                 ))
                 .collect(Collectors.toList());
-     
 	}
 }
 
