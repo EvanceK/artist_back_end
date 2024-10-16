@@ -122,13 +122,6 @@ public class CustomersController {
 //    	csi.deitAccountUpdate(customerId,name,nickname,phone,address);
 //        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
 //    }
-	// 編輯客戶資料
-	@PutMapping(value = "/EditAccount", consumes = "application/json")
-	public ResponseEntity<?> updateCustomer(@RequestBody CustomersDTO customersDTO) {
-
-		csi.deitAccountUpdate(customersDTO);
-		return ResponseEntity.status(HttpStatus.OK).body("修改成功");
-	}
 
 	@GetMapping("/mywinningrecords")
 	public ResponseEntity<?> myWinningRecords(@RequestHeader("Authorization") String token) {
@@ -153,4 +146,19 @@ public class CustomersController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的請求：" + e.getMessage());
 		}
 	}
+    // 編輯客戶資料
+    @PutMapping(value ="/EditAccount", consumes = "application/json")
+    public ResponseEntity<?> updateCustomer(@RequestBody CustomersDTO customersDTO){
+    		
+    	csi.deitAccountUpdate(customersDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
+    }
+    // 編輯客戶密碼
+    @PutMapping(value ="/EditPassword", consumes = "application/json")
+    public ResponseEntity<?> updatePassword(@RequestBody CustomersDTO customersDTO){
+    		
+    	csi.editPassword(customersDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("修改成功");
+    }
+    
 }
