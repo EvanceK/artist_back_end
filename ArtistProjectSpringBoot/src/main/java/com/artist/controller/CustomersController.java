@@ -126,7 +126,7 @@ public class CustomersController {
 	public ResponseEntity<?> myWinningRecords(@RequestHeader("Authorization") String token) {
 		try {
 			String customerId = csi.getCustomerIdFromToken(token);
-			Customers customer = csi.getByCustomerId(customerId);
+			CustomersDTO customer = csi.getCustomerDTO(customerId);
 
 			if (customer == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("客戶不存在");
