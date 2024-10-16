@@ -76,7 +76,7 @@ public class JwtUtil {
     private List<String> fetchRolesForCustomer(String email) {
         List<String> roles = new ArrayList<>();
         // 用email模擬 role
-        if (email.equals("admin@example.com")) {
+        if (email.equals("artistjava2024@gmail.com")) {
             roles.add("ROLE_ADMIN");
         } else {
             roles.add("ROLE_CUSTOMER");

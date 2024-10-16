@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,14 +49,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 				Customers customer = csi.getCustomer(email);
 				if (customer != null && csi.validateToken(jwt.get(), customer.getEmail())) {
 					// 提取角色信息
-//                    List<String> roles = csi.getRolesForCustomer(email); // 确保这里是正确的方法调用
-//                    List<GrantedAuthority> authorities = roles.stream()
-//                            .map(role -> new SimpleGrantedAuthority(role))
-//                            .toList();
-//					
-					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-							customer, null, Collections.emptyList());
-					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    List<String> roles = csi.getRolesFromToken(email); 
+					List<GrantedAuthority> authorities = roles.stream()
+						    .map(role -> new SimpleGrantedAuthority(role))
+						    .collect(Collectors.toList());
+						
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                            customer, null, authorities);
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                  
 				}
 			}
 		}

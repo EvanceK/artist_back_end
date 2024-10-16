@@ -1,7 +1,9 @@
 package com.artist.service.impl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -195,6 +197,19 @@ public class CustomersServiceImpl implements CustomersService {
 		Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
 
 		return (String) claims.get("nickname");
+	}
+	public List<String> getRolesFromToken(String token) {
+		if (token.startsWith("Bearer ")) {
+			token = token.substring(7);
+		}
+		try {
+	        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+	        // 获取角色信息并转为 List<String>
+	        return claims.get("roles", List.class); // 使用 List.class 进行类型转换
+	    } catch (Exception e) {
+	        System.out.println("Error getting roles from token: " + e.getMessage());
+	        return Collections.emptyList(); // 处理错误，返回空列表
+	    }
 	}
 	
 	
