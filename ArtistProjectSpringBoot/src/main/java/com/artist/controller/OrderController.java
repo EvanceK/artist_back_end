@@ -30,11 +30,17 @@ public class OrderController {
 		return ResponseEntity.ok(alllist); // 自動轉換為 JSON
 	}
 	
+	@GetMapping(value = "/{ordernumber}")
+	public ResponseEntity<?> getByOrdernumber(String ordernumber) {
+		Orders o = osi.getOneByOrdernumber(ordernumber);
+		return ResponseEntity.ok(o); // 自動轉換為 JSON
+	}
+	
 	// 新增
 //	@PostMapping(value = "/createOrder", consumes = "application/json")
-//	public ResponseEntity<?> createOrder(@RequestBody PaintingDTO paintingDTO) {
+//	public ResponseEntity<?> createOrder(@RequestBody Orders orders) {
 //		try {
-//			osi.create(paintingDTO);
+//			osi.create(orders);
 //			return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
 //		} catch (RuntimeException e) {
 //			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

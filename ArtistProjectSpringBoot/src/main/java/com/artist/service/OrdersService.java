@@ -14,6 +14,7 @@ public interface OrdersService {
     // Read
     List<WinningRecords> getAllWinningRecordsByCustomerId(String customerId);
     public List<?> getAll();
+    public Orders getOneByOrdernumber(String ordernumber);
 
 
     // Update

@@ -146,4 +146,16 @@ public class OrdersServiceImpl implements OrdersService {
 		}
 	}
 
+	@Override
+	public Orders getOneByOrdernumber(String ordernumber) {
+		Optional<Orders> optionalOrder = or.findByOrderNumber(ordernumber);
+		if (optionalOrder.isPresent()) { 
+			Orders o = optionalOrder.get(); 
+			return o;
+		} else {
+			System.out.println("not find");
+			return null;
+		}
+	}
+
 }
