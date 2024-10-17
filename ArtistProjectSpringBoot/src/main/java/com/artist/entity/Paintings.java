@@ -3,6 +3,7 @@ package com.artist.entity;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -19,7 +20,8 @@ public class Paintings {
 
 	// 與artist關聯
 	@ManyToOne
-	@JsonManagedReference
+//	@JsonManagedReference
+	@JsonBackReference
 	@JoinColumn(name = "artist_id", insertable = false, updatable = false)
 	private Artist artist;
 

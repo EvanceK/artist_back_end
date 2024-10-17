@@ -3,6 +3,7 @@ package com.artist.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +30,8 @@ public class Artist {
 	
 	// 與 Paintings 的關聯
     @OneToMany(mappedBy = "artist")
-    @JsonBackReference
+//    @JsonBackReference
+    @JsonManagedReference
     private List<Paintings> paintings;
 
 
