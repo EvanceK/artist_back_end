@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.artist.dto.response.OrdersDTO;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.WinningRecords;
 import com.artist.entity.Bidrecord;
@@ -59,9 +60,9 @@ public class OrdersServiceImpl implements OrdersService {
 	}
 	
 	@Override
-	public void update(Orders orders) {
-		String orderNum  = orders.getOrderNumber();
-		String status = orders.getStatus();
+	public void update(OrdersDTO ordersDTO) {
+		String orderNum  = ordersDTO.getOrderNumber();
+		String status = ordersDTO.getStatus();
 		
 		Optional<Orders> optionalOrder = or.findByOrderNumber(orderNum);
 		if (optionalOrder.isPresent()) { 

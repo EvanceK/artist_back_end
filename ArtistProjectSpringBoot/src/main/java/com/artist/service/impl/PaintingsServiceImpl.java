@@ -17,11 +17,15 @@ import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Paintings;
 import com.artist.repository.PaintingsRepository;
 import com.artist.service.PaintingsService;
+import com.artist.utils.IdGenerator;
 
 @Service
 public class PaintingsServiceImpl implements PaintingsService {
 
 	// 用spring data jpa 實現
+	
+	@Autowired
+	private IdGenerator idGenerator; // 注入 IdGenerator
 
 	@Autowired // 這裡是用 com.paintingsRepository; //不是自己寫的 PaintingsDao
 	private PaintingsRepository ptr;
@@ -30,7 +34,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Override
 	public void create(PaintingDTO paintingDTO) {
 		Paintings painting = new Paintings();
-		painting.setPaintingId(paintingDTO.getPaintingId());
+		painting.setPaintingId(idGenerator.paintingId());
 		painting.setPaintingName(paintingDTO.getPaintingName());
 		painting.setArtistId(paintingDTO.getArtistId());
 		painting.setLargUrl(paintingDTO.getLargUrl());
