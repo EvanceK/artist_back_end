@@ -1,11 +1,11 @@
 package com.artist.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.artist.dto.response.ArtistDTO;
 import com.artist.entity.Artist;
 import com.artist.repository.ArtistRepository;
 import com.artist.service.ArtistService;
@@ -20,13 +20,13 @@ public class ArtistServiceImpl implements ArtistService {
 	private IdGenerator idGenerator;
 
 	@Override
-	public void create(ArtistDTO artistDTO) {
-		Artist artist = new Artist();
-		artist.setArtistId(idGenerator.artistId());
-		artist.setArtistName(artistDTO.getArtistName());
-		artist.setDesciption(artistDTO.getDesciption());
-		artist.setUrl(artistDTO.getUrl());
-		ar.save(artist);
+	public void create(Artist artist) {
+		Artist art = new Artist();
+		art.setArtistId(idGenerator.artistId());
+		art.setArtistName(artist.getArtistName());
+		art.setDesciption(artist.getDesciption());
+		art.setUrl(artist.getUrl());
+		ar.save(art);
 	}
 
 	@Override
@@ -40,7 +40,15 @@ public class ArtistServiceImpl implements ArtistService {
 	}
 
 	@Override
-	public void update(ArtistDTO artistDTO) {
+	public void update(Artist artist) {
+		Optional<Artist> optionalArtistId = ar.findById(artist.getArtistId());
+		if (optionalArtistId.isPresent()) {
+			Artist art = optionalArtistId.get();
+			ar.save(art);
+		}else {
+			System.out.println("Artist is not find");
+		}
+		
 //		Artist artist = new Artist();
 //		artist.setArtistName(artistDTO.getArtistName());
 //		artist.setDesciption(artistDTO.getDesciption());
@@ -61,7 +69,17 @@ public class ArtistServiceImpl implements ArtistService {
 	@Override
 	public void deleteByArtistId(String artistId) {
 		ar.deleteById(artistId);
+	}
 
+	@Override
+	public Artist getOneById(String artistId) {
+		Optional<Artist> optionalArtistId = ar.findById(artistId);//.getById(artistId);
+		if (optionalArtistId.isPresent()) {
+			Artist artist = optionalArtistId.get();
+			return artist;
+		}else {
+			return null;
+		}
 	}
 
 }

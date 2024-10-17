@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.artist.dto.response.ArtistDTO;
 import com.artist.entity.Artist;
 import com.artist.service.impl.ArtistServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
@@ -29,6 +28,7 @@ public class ArtistController {
 	@Autowired
 	PaintingsServiceImpl psi;
 	
+	// 取得全部
 	@GetMapping(value = "/findall")
 	public ResponseEntity<?> findall(){
 		List<Artist> alllist = asi.getAll();
@@ -36,12 +36,20 @@ public class ArtistController {
 		return ResponseEntity.ok(alllist);
 		
 	}
-
+	
+	// 用artistId取得Artist
+	@GetMapping(value = "/{artistId}")
+	public ResponseEntity<Artist> findOneById(@PathVariable String ArtistId){
+		Artist art = asi.getOneById(ArtistId);
+//		System.out.println(art);
+		return ResponseEntity.ok(art);
+	}
+	
 	// 新增
 	@PostMapping(value = "/createArtist", consumes = "application/json")
-	public ResponseEntity<?> createArtist(@RequestBody ArtistDTO artistDTO) {
+	public ResponseEntity<?> createArtist(@RequestBody Artist artist) {
 		try {
-			asi.create(artistDTO);
+			asi.create(artist);
 			return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -50,8 +58,8 @@ public class ArtistController {
 	
 	// 修改
 	@PutMapping(value ="/editArtist", consumes = "application/json")
-    public ResponseEntity<?> updateArtist(@RequestBody ArtistDTO artistDTO){
-		asi.update(artistDTO);
+    public ResponseEntity<?> updateArtist(@RequestBody Artist artist){
+		asi.update(artist);
         return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
 	
