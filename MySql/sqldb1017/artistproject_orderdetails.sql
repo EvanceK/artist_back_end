@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `artistproject` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `artistproject` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `artistproject`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: localhost    Database: artistproject
+-- Host: 127.0.0.1    Database: artistproject
 -- ------------------------------------------------------
 -- Server version	8.0.39
 
@@ -41,7 +41,7 @@ CREATE TABLE `orderdetails` (
 
 LOCK TABLES `orderdetails` WRITE;
 /*!40000 ALTER TABLE `orderdetails` DISABLE KEYS */;
-INSERT INTO `orderdetails` VALUES ('OR0001','PT0001',3500),('OR0002','PT0002',2000),('OR0003','PT0003',2000),('OR0004','PT0004',2000),('OR0005','PT0005',2200);
+INSERT INTO `orderdetails` VALUES ('OR0001','PT0001',3500),('OR0002','PT0002',2000),('OR0003','PT0003',2000),('OR0004','PT0004',2000),('OR0005','PT0005',2200),('OR0006','PT0010',3000);
 /*!40000 ALTER TABLE `orderdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-17 19:58:40
+-- Dump completed on 2024-10-17 15:20:08
