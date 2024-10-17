@@ -300,4 +300,11 @@ public class PaintingsServiceImpl implements PaintingsService {
 		ptr.save(paintings);
 	}
 
+	@Override
+	public Paintings getOnePaintingsById(String paintingId) {
+		Optional<Paintings> byId = ptr.findById(paintingId);
+		Paintings paintings = byId.get();
+		return paintings;
+	}
+
 }

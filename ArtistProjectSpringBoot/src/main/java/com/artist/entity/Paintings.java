@@ -1,6 +1,7 @@
 package com.artist.entity;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -195,6 +196,14 @@ public class Paintings {
 
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	@Override
+	public String toString() {
+		return "Paintings [artist=" + artist + ", paintingId=" + paintingId + ", paintingName=" + paintingName
+				+ ", artistId=" + artistId + ", largUrl=" + largUrl + ", smallUrl=" + smallUrl + ", price=" + price
+				+ ", date=" + date + ", style=" + style + ", uploadDate=" + uploadDate + ", genre=" + genre
+				+ ", delicated=" + delicated + ", status=" + status + ", image=" + Arrays.toString(image) + "]";
 	}
 
 

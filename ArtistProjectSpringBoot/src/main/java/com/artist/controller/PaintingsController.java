@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.TopBiddingsDTO;
 import com.artist.dto.response.TopFavoritesDTO;
+import com.artist.entity.Paintings;
 import com.artist.service.impl.BidrecordServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
 import com.artist.service.impl.WishlistServiceImpl;
@@ -91,10 +92,11 @@ public class PaintingsController {
 	}
 	
 	//方式二 路徑會長這樣>>>>   /findpaintingid/PT0002
-	@GetMapping(value = "/findpaintingid/{id}")
+	@GetMapping(value = "/findpaintingid/{paintingId}")
 	public ResponseEntity<?> getpaintingId(@PathVariable("paintingId") String paintingId) {
 
-		PaintingDTO byPaintingsId = psi.getByPaintingsId("paintingId");
+		Paintings byPaintingsId = psi.getOnePaintingsById(paintingId);
+		//System.out.println(byPaintingsId.toString());
 		return ResponseEntity.ok(byPaintingsId);
 	}
 
