@@ -48,7 +48,7 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	// 發送得標信
-	public void sendAuctionWinningEmail(String painting) throws MessagingException {
+	public void sendAuctionWinningEmail(String painting){
 		Optional<OrderDetails> orderNumberWithPaintings = odr.findOrderNumberWithPaintings(painting);
 		if (orderNumberWithPaintings.isEmpty()) {
 		    System.out.println("信件寄發異常：訂單不存在");
@@ -74,16 +74,19 @@ public class EmailServiceImpl implements EmailService {
 
 		// 創建 MIME 消息
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+		MimeMessageHelper helper;
+		try {
+			helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+	
 
 		// 設置郵件標題
-		helper.setSubject("[Your App Name] 恭喜您！您已贏得拍賣品");
+		helper.setSubject("Artist 恭喜您！您已贏得拍賣品");
 
 		// 設置收件人
 		helper.setTo(email);
 
 		// 設置發件人
-		helper.setFrom("your-email@gmail.com");
+		helper.setFrom("artistjava2024@gmail.com");
 
 		// 純文本內容（非 HTML 支持的郵件客戶端會顯示此內容）
 		String plainText = "親愛的用戶，恭喜您贏得了拍賣品 '" + paintingName + "'。" + "請在拍賣結束後 24 小時內確認付款資訊。" + "付款資訊連結："
@@ -102,10 +105,12 @@ public class EmailServiceImpl implements EmailService {
 				+ paymentLink + "\">" + paymentLink + "</a></p>" + "<p>謝謝您參與我們的拍賣活動！</p>"
 				+ "<p>[Your App Name] 團隊</p>" + "<hr>"
 				+ "<p style=\"font-size: 0.9em; color: #555;\">此郵件為系統自動發送，請勿回覆。</p>" + "</div>";
-
+	
 		// 使用帶兩個參數的 setText 方法設置純文本和 HTML 內容
 		helper.setText(plainText, htmlText);
-
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 		// 發送郵件
 		mailSender.send(mimeMessage);
 	
