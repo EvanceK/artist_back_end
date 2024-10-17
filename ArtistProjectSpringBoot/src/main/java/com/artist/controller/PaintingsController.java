@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.TopBiddingsDTO;
 import com.artist.dto.response.TopFavoritesDTO;
+import com.artist.entity.Paintings;
 import com.artist.service.impl.BidrecordServiceImpl;
 import com.artist.service.impl.CustomersServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
@@ -99,8 +100,9 @@ public class PaintingsController {
 	@GetMapping(value = "/findpaintingid/{paintingId}")
 	public ResponseEntity<?> getpaintingId(@PathVariable("paintingId") String paintingId) {
 
-		PaintingDTO PaintingsId = psi.getByPaintingsId("paintingId");
-		return ResponseEntity.ok(PaintingsId);
+		Paintings byPaintingsId = psi.getOnePaintingsById(paintingId);
+		//System.out.println(byPaintingsId.toString());
+		return ResponseEntity.ok(byPaintingsId);
 	}
 
 	//多組參數

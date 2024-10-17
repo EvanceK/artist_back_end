@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import com.artist.dto.response.PaintingDTO;
+import com.artist.entity.Paintings;
 
 public interface PaintingsService {
 
@@ -33,6 +34,7 @@ public interface PaintingsService {
     //用Paintings查詢
     PaintingDTO getByPaintingsId(String paintingId);
     List<PaintingDTO> getByPaintingsName(String paintingName);
+    Paintings getOnePaintingsById(String paintingId);
     
     
     //Like查詢
