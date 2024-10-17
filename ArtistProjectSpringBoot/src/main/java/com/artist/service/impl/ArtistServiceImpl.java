@@ -26,6 +26,7 @@ public class ArtistServiceImpl implements ArtistService {
 		art.setArtistName(artist.getArtistName());
 		art.setDesciption(artist.getDesciption());
 		art.setUrl(artist.getUrl());
+		art.setPaintings(artist.getPaintings());
 		ar.save(art);
 	}
 
@@ -44,6 +45,10 @@ public class ArtistServiceImpl implements ArtistService {
 		Optional<Artist> optionalArtistId = ar.findById(artist.getArtistId());
 		if (optionalArtistId.isPresent()) {
 			Artist art = optionalArtistId.get();
+			art.setArtistName(artist.getArtistName());
+			art.setDesciption(artist.getDesciption());
+			art.setUrl(artist.getUrl());
+			art.setPaintings(artist.getPaintings());
 			ar.save(art);
 		}else {
 			System.out.println("Artist is not find");
