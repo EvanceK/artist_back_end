@@ -21,6 +21,8 @@ import com.artist.repository.OrdersRepository;
 import com.artist.service.OrdersService;
 import com.artist.utils.IdGenerator;
 
+import jakarta.mail.MessagingException;
+
 @Service
 public class OrdersServiceImpl implements OrdersService {
 
@@ -42,19 +44,16 @@ public class OrdersServiceImpl implements OrdersService {
 	public String create(LocalDateTime orderDate, String customerId, String status) {
 		Orders order = new Orders();
 		String orderNumber = idGenerator.orderId();
-		
+		Optional<Customers> byCustomerId = cr.findByCustomerId(customerId);
 		order.setOrderNumber(orderNumber);
 		order.setOrderDate(orderDate);
 		order.setStatus(status);
+		order.setCustomerId(customerId);
 		order.setAttName("");
 		order.setAttPhone("");
 		order.setDeliveryAdress("");
 		order.setDeliveryInstrictions("");
 		
-	    Customers customer = cr.findByCustomerId(customerId)
-	            .orElseThrow(() -> new RuntimeException("Customer not found"));
-	    order.setCustomer(customer);
-
 		or.save(order);
 		return order.getOrderNumber();
 	}
@@ -94,17 +93,19 @@ public class OrdersServiceImpl implements OrdersService {
 		
 			Bidrecord bidrecord = binddinglist.get(0);
 			String customerId = bidrecord.getBidderId(); //得到customerId
+			
 			String orderNumber = create(removeDate, customerId, "Pending Final Payment"); //這邊拿到orderNumber
 
 			String paintingId = bidrecord.getPaintingId();
 			Double bidAmount = bidrecord.getBidAmount();
 
 			odsi.create(orderNumber, paintingId, bidAmount);
-
-			// 未實現
-			// 用order表和orderdetail表查
-//			esi.sendBidSuccessEmail(painting.getBidderEmail(), painting.getPaintingId(), painting.getFinalBidAmount());
-
+//			try {
+//				esi.sendAuctionWinningEmail(painting.getPaintingId());
+//			} catch (MessagingException e) {
+//				e.printStackTrace();
+//			}
+//			
 		}
 
 	}

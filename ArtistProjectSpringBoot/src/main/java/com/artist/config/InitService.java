@@ -76,7 +76,7 @@ public class InitService implements CommandLineRunner {
                 setSatusCanBid(painting.getPaintingId()); // 改成可以下單
 			} 
 			
-			if (twoDaysInMillis>delay && delay>0){// 如果還未到下架時間，則設置定時任務
+			if (delay>0){// 如果還未到下架時間，則設置定時任務
 	            System.out.println("安排下架任务：" + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
 
 				scheduler.schedule(() -> {
@@ -85,7 +85,6 @@ public class InitService implements CommandLineRunner {
 						setSatusfinished(painting.getPaintingId());
 						System.out.println("商品已自動下架：" + painting.getPaintingId());
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}, delay, TimeUnit.MILLISECONDS);
@@ -97,12 +96,18 @@ public class InitService implements CommandLineRunner {
 		Optional<Paintings> optionalPainting = ptr.findById(paintingId);
 		if (optionalPainting.isPresent()) { // 檢查有沒有找到
 			Paintings painting = optionalPainting.get(); // 得到 Painting 對象
+			System.out.println(painting.getPaintingId()+"     "+painting.getDelicated());
+
 			painting.setDelicated(0); // 改成賣出或過期 //之後狀態也要一起更新
+			System.out.println(painting.getPaintingId()+"     "+painting.getDelicated());
+
 			List<Bidrecord> paintingList = brr.findByPaintingId(paintingId);
 
 			// 使用 Streams
 			boolean exists = paintingList.stream().anyMatch(bid -> bid.getPaintingId().equals(paintingId));
 			painting.setStatus(exists ? "Auction closed" : "Unsold"); // 如果bid表有查到表示有被出過價 //更改painting表的畫作狀態
+			System.out.println(painting.getPaintingId()+"     "+painting.getDelicated());
+
 			ptr.save(painting); // 更新畫作
 		} else {
 			System.out.println("找不到此 id 的畫");
@@ -113,11 +118,17 @@ public class InitService implements CommandLineRunner {
 		Optional<Paintings> optionalPainting = ptr.findById(paintingId);
 		if (optionalPainting.isPresent()) { // 檢查有沒有找到
 			Paintings painting = optionalPainting.get(); // 得到 Painting 對象
-			painting.setDelicated(1); // 改成可以下單
-			painting.setStatus("In Bidding");
-			ptr.save(painting); // 更新畫作
-		} else {
-			System.out.println("找不到此 id 的畫");
+			System.out.println(painting.getPaintingId()+"     "+painting.getDelicated());
+			
+	        if (painting.getDelicated() == 2) {
+	            painting.setDelicated(1); // 改成可以下單
+	            painting.setStatus("In Bidding");
+	            ptr.save(painting); // 更新畫作
+	        } else {
+	            System.out.println("畫作不是Presale狀態：" + painting.getPaintingId());
+	        }
+	    } else {
+	        System.out.println("找不到此 id 的畫");
 		}
 	}
 }

@@ -99,8 +99,8 @@ public class PaintingsController {
 	@GetMapping(value = "/findpaintingid/{paintingId}")
 	public ResponseEntity<?> getpaintingId(@PathVariable("paintingId") String paintingId) {
 
-		PaintingDTO byPaintingsId = psi.getByPaintingsId("paintingId");
-		return ResponseEntity.ok(byPaintingsId);
+		PaintingDTO PaintingsId = psi.getByPaintingsId("paintingId");
+		return ResponseEntity.ok(PaintingsId);
 	}
 
 	//多組參數

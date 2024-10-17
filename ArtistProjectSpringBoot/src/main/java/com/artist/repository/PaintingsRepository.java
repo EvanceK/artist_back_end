@@ -105,10 +105,10 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     
     
     //以下實作
-//	Optional <Paintings> findByPaintingId(String paintingId);
+	Optional <Paintings> findByPaintingId(String paintingId);
 	//一直抓不到....手動實現
-	@Query("SELECT p FROM Paintings p WHERE p.paintingId = :paintingId")
-	Optional<Paintings> findByPaintingId(@Param("paintingId") String paintingId);
+//	@Query("SELECT p FROM Paintings p WHERE p.paintingId = :paintingId")
+//	Optional<Paintings> findByPaintingId(@Param("paintingId") String paintingId);
 	
 	
 	List<Paintings> findByPaintingName(String paintingName);
