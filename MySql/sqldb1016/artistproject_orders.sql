@@ -45,7 +45,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES ('OR0001','2024-10-06 16:53:22','CU0006','Pending Final Payment','','','',''),('OR0002','2024-10-06 16:53:22','CU0006','Pending Final Payment','','','',''),('OR0003','2024-10-06 16:53:22','CU0006','Pending Final Payment','','','',''),('OR0004','2024-10-06 16:53:22','CU0006','Pending Final Payment','','','',''),('OR0005','2024-10-06 16:53:22','CU0006','Pending Final Payment','','','','');
+INSERT INTO `orders` VALUES ('OR0001','2024-10-06 16:53:22','CU0006','Pending Final Payment','taipei','helloworld','+886','morning is better'),('OR0002','2024-10-06 16:53:22','CU0006','Pending Final Payment','','','',''),('OR0003','2024-10-06 16:53:22','CU0006','Pending Final Payment','','','',''),('OR0004','2024-10-06 16:53:22','CU0006','Pending Final Payment','','','',''),('OR0005','2024-10-06 16:53:22','CU0006','Pending Final Payment','','','',''),('OR0006','2024-10-17 00:44:00','CU0002','Pending Final Payment','','','','');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-16 21:20:14
+-- Dump completed on 2024-10-17 15:20:08
