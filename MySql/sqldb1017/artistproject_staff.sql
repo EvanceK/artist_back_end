@@ -31,7 +31,7 @@ CREATE TABLE `staff` (
   `staff_username` varchar(45) DEFAULT NULL,
   `staff_passdword` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`staff_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
+INSERT INTO `staff` VALUES (1,'Orange Chen','Managerment','3060301','3060301'),(2,'Danny','Managerment','3060302','3060302'),(3,'Evance','Managerment','3060303','3060303'),(4,'Jack','Managerment','3060304','3060304'),(5,'Wenyang','Managerment','3060305','3060305'),(6,'Marry','Packing','3060306','3060306'),(7,'John','Packing','3060307','3060307'),(8,'Vicky','Packing','3060308','3060308'),(9,'Allen','Delivery','3060309','3060309'),(10,'Tom','Delivery','3060310','3060310');
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-17 15:11:45
+-- Dump completed on 2024-10-17 19:58:39
