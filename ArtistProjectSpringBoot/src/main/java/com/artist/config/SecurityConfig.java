@@ -31,13 +31,13 @@ public class SecurityConfig {
 				// 配置路徑的授權規則
 				.authorizeHttpRequests(auth -> auth
 						// 允許未認證用戶訪問 "/customers/login", "/customers/register" 路徑
-						.requestMatchers("/customers/login", "/customers/register").permitAll()
-		                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-		                .requestMatchers("/ArtController").permitAll()
+//						.requestMatchers("/customers/login", "/customers/register").permitAll()
+//		                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+//		                .requestMatchers("/ArtController").permitAll()
+		                // 其他所有路徑允許訪問
+		                .anyRequest().permitAll()
 						// "/api/**" 開頭的路徑需要身份驗證
-						.requestMatchers("/api/wishlist", "/api/bidding/history","/api/bidding/bid").authenticated()
-						// 其他所有路徑允許訪問
-						.anyRequest().permitAll());
+						.requestMatchers("/api/wishlist", "/api/bidding/history","/api/bidding/bid").authenticated());
 
 		return http.build();
 	}
