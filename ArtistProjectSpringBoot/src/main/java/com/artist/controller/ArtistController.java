@@ -39,8 +39,8 @@ public class ArtistController {
 	
 	// 用artistId取得Artist
 	@GetMapping(value = "/{artistId}")
-	public ResponseEntity<Artist> findOneById(@PathVariable String ArtistId){
-		Artist art = asi.getOneById(ArtistId);
+	public ResponseEntity<Artist> findOneById(@PathVariable String artistId){
+		Artist art = asi.getOneById(artistId);
 //		System.out.println(art);
 		return ResponseEntity.ok(art);
 	}
@@ -65,8 +65,8 @@ public class ArtistController {
 	
 	
 	@DeleteMapping("/{artistId}")
-	public ResponseEntity<Void> deleteArtistById(@PathVariable String ArtistId) {
-		asi.deleteByArtistId(ArtistId);
+	public ResponseEntity<Void> deleteArtistById(@PathVariable String artistId) {
+		asi.deleteByArtistId(artistId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 

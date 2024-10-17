@@ -96,7 +96,7 @@ public class PaintingsController {
 	}
 	
 	//方式二 路徑會長這樣>>>>   /findpaintingid/PT0002
-	@GetMapping(value = "/findpaintingid/{id}")
+	@GetMapping(value = "/findpaintingid/{paintingId}")
 	public ResponseEntity<?> getpaintingId(@PathVariable("paintingId") String paintingId) {
 
 		PaintingDTO byPaintingsId = psi.getByPaintingsId("paintingId");
