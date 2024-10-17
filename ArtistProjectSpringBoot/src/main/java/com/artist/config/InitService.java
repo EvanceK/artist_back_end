@@ -76,7 +76,7 @@ public class InitService implements CommandLineRunner {
                 setSatusCanBid(painting.getPaintingId()); // 改成可以下單
 			} 
 			
-			if (twoDaysInMillis>delay && delay>0){// 如果還未到下架時間，則設置定時任務
+			if (delay>0){// 如果還未到下架時間，則設置定時任務
 	            System.out.println("安排下架任务：" + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
 
 				scheduler.schedule(() -> {
@@ -85,12 +85,13 @@ public class InitService implements CommandLineRunner {
 						setSatusfinished(painting.getPaintingId());
 						System.out.println("商品已自動下架：" + painting.getPaintingId());
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}, delay, TimeUnit.MILLISECONDS);
 			}
 		}
+
+		
 	}
 
 	public void setSatusfinished(String paintingId) {

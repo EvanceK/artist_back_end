@@ -35,6 +35,8 @@ public class Orders {
 	@Column(name = "att_name")
 	private String attName;
 	
+
+
 	@Column(name = "att_phone")
 	private String attPhone;
 
@@ -81,6 +83,13 @@ public class Orders {
 		return orderNumber;
 	}
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
 
 
 	public void setOrderNumber(String orderNumber) {
