@@ -14,43 +14,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.artist.dto.response.ArtistDTO;
-import com.artist.entity.Artist;
-import com.artist.service.impl.ArtistServiceImpl;
-import com.artist.service.impl.PaintingsServiceImpl;
+import com.artist.dto.response.StaffDTO;
+import com.artist.entity.Staff;
+import com.artist.service.impl.StaffServiceImpl;
 
 @RestController
-@RequestMapping("/ArtController")
-public class ArtistController {
+@RequestMapping("/StaffController")
+public class StaffController {
 	
 	@Autowired
-	ArtistServiceImpl asi;
-	
-	@Autowired
-	PaintingsServiceImpl psi;
+	StaffServiceImpl ssi;
 	
 	// 取得全部
 	@GetMapping(value = "/findall")
 	public ResponseEntity<?> findall(){
-		List<Artist> alllist = asi.getAll();
+		List<Staff> alllist = ssi.getAll();
 //		System.out.println(alllist);
 		return ResponseEntity.ok(alllist);
-		
 	}
 	
-	// 用artistId取得Artist
-	@GetMapping(value = "/{artistId}")
-	public ResponseEntity<Artist> findOneById(@PathVariable String artistId){
-		Artist art = asi.getOneById(artistId);
+	// 用staffId取得Staff
+	@GetMapping(value = "/{staffId}")
+	public ResponseEntity<Staff> findOneById(@PathVariable Integer staffId){
+		Staff staff = ssi.getOneById(staffId);
 //		System.out.println(art);
-		return ResponseEntity.ok(art);
+		return ResponseEntity.ok(staff);
 	}
 	
 	// 新增
-	@PostMapping(value = "/createArtist", consumes = "application/json")
-	public ResponseEntity<?> createArtist(@RequestBody ArtistDTO artistDTO) {
+	@PostMapping(value = "/createStaff", consumes = "application/json")
+	public ResponseEntity<?> createStaff(@RequestBody StaffDTO staffDTO) {
 		try {
-			asi.create(artistDTO);
+			ssi.create(staffDTO);
 			return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -58,17 +53,16 @@ public class ArtistController {
 	}
 	
 	// 修改
-	@PutMapping(value ="/editArtist", consumes = "application/json")
-    public ResponseEntity<?> updateArtist(@RequestBody ArtistDTO artistDTO){
-		asi.update(artistDTO);
+	@PutMapping(value ="/editStaff", consumes = "application/json")
+    public ResponseEntity<?> updateStaff(@RequestBody StaffDTO staffDTO){
+		ssi.update(staffDTO);
         return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
 	
-	
-	@DeleteMapping("/{artistId}")
-	public ResponseEntity<Void> deleteArtistById(@PathVariable String artistId) {
-		asi.deleteByArtistId(artistId);
+	@DeleteMapping("/{staffId}")
+	public ResponseEntity<Void> deleteStaffById(@PathVariable Integer staffId) {
+		ssi.deleteByStaffId(staffId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-
+	
 }

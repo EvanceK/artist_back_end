@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.artist.dto.response.ArtistDTO;
 import com.artist.entity.Artist;
 import com.artist.repository.ArtistRepository;
 import com.artist.service.ArtistService;
@@ -20,13 +21,13 @@ public class ArtistServiceImpl implements ArtistService {
 	private IdGenerator idGenerator;
 
 	@Override
-	public void create(Artist artist) {
+	public void create(ArtistDTO artistDTO) {
 		Artist art = new Artist();
 		art.setArtistId(idGenerator.artistId());
-		art.setArtistName(artist.getArtistName());
-		art.setDesciption(artist.getDesciption());
-		art.setUrl(artist.getUrl());
-		art.setPaintings(artist.getPaintings());
+		art.setArtistName(artistDTO.getArtistName());
+		art.setDesciption(artistDTO.getDesciption());
+		art.setUrl(artistDTO.getUrl());
+		
 		ar.save(art);
 	}
 
@@ -41,14 +42,14 @@ public class ArtistServiceImpl implements ArtistService {
 	}
 
 	@Override
-	public void update(Artist artist) {
-		Optional<Artist> optionalArtistId = ar.findById(artist.getArtistId());
+	public void update(ArtistDTO artistDTO) {
+		Optional<Artist> optionalArtistId = ar.findById(artistDTO.getArtistId());
 		if (optionalArtistId.isPresent()) {
 			Artist art = optionalArtistId.get();
-			art.setArtistName(artist.getArtistName());
-			art.setDesciption(artist.getDesciption());
-			art.setUrl(artist.getUrl());
-			art.setPaintings(artist.getPaintings());
+			art.setArtistName(artistDTO.getArtistName());
+			art.setDesciption(artistDTO.getDesciption());
+			art.setUrl(artistDTO.getUrl());
+			
 			ar.save(art);
 		}else {
 			System.out.println("Artist is not find");
@@ -78,7 +79,7 @@ public class ArtistServiceImpl implements ArtistService {
 
 	@Override
 	public Artist getOneById(String artistId) {
-		Optional<Artist> optionalArtistId = ar.findById(artistId);//.getById(artistId);
+		Optional<Artist> optionalArtistId = ar.findById(artistId);
 		if (optionalArtistId.isPresent()) {
 			Artist artist = optionalArtistId.get();
 			return artist;

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.artist.dto.response.OrdersDTO;
 import com.artist.entity.Orders;
 
 import com.artist.service.impl.OrdersServiceImpl;
@@ -50,8 +52,8 @@ public class OrderController {
 		
 	// 修改
 	@PutMapping(value ="/editOrder", consumes = "application/json")
-    public ResponseEntity<?> updateOrder(@RequestBody Orders orders){
-		osi.update(orders);
+    public ResponseEntity<?> updateOrder(@RequestBody OrdersDTO ordersDTO){
+		osi.update(ordersDTO);
         return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
 		

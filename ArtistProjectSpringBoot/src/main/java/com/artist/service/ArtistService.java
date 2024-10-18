@@ -8,14 +8,15 @@ import com.artist.entity.Artist;
 public interface ArtistService {
 
 	//Create
-	public void create(Artist artist);
+	public void create(ArtistDTO artistDTO);
+	
 	//Read
 	public String getArtistInfo();
 	public List<Artist> getAll();
 	public Artist getOneById(String artistId);
 	
 	//Update
-	void update(Artist artist);
+	void update(ArtistDTO artistDTO);
 
 	//Delete
 	void deleteArtist(Artist artist);
