@@ -27,7 +27,7 @@ public class ArtistServiceImpl implements ArtistService {
 		art.setArtistName(artistDTO.getArtistName());
 		art.setDesciption(artistDTO.getDesciption());
 		art.setUrl(artistDTO.getUrl());
-		
+		art.setPaintings(null);
 		ar.save(art);
 	}
 

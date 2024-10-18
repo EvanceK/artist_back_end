@@ -77,6 +77,16 @@ public class Orders {
 
 
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+
 	public String getOrderNumber() {
 		return orderNumber;
 	}

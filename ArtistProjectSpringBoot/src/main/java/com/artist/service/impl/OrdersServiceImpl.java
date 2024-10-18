@@ -46,6 +46,7 @@ public class OrdersServiceImpl implements OrdersService {
 		order.setOrderNumber(orderNumber);
 		order.setOrderDate(orderDate);
 		order.setStatus(status);
+		order.setCustomerId(customerId);
 		order.setAttName("");
 		order.setAttPhone("");
 		order.setDeliveryAdress("");
