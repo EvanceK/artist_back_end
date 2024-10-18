@@ -310,5 +310,12 @@ public class PaintingsServiceImpl implements PaintingsService {
 		Paintings paintings = byId.get();
 		return paintings;
 	}
+	
+	@Override// 獲取圖片 Blob
+	public byte[] getPaintingBlob(String paintingId) {
+	    // 查找畫作，並返回圖片 Blob
+	    Optional<Paintings> painting = ptr.findById(paintingId);
+	    return painting.map(Paintings::getImage).orElse(null);
+	}
 
 }

@@ -49,7 +49,7 @@ public class InitService implements CommandLineRunner {
 	public void initializeAllPaintings() {
 		// loading出目前已上架的商品
 		List<PaintingDTO> allPaintings = psi.getAllAvailablePainting();
-		System.out.println("Loading paintings, count: " + allPaintings.size());
+//		System.out.println("Loading paintings, count: " + allPaintings.size());
 
 		for (PaintingDTO painting : allPaintings) {
 			// 計算下架時間
@@ -70,12 +70,12 @@ public class InitService implements CommandLineRunner {
 			long twoDaysInMillis = 48 * 60 * 60 * 1000; // 兩天的毫秒
 			if (delay > twoDaysInMillis) {
 				long statusChangeDelay = delay - twoDaysInMillis;
-                System.out.println("安排更新：" + painting.getPaintingId() + "，延遲：" + statusChangeDelay + " 毫秒");
+//                System.out.println("安排更新：" + painting.getPaintingId() + "，延遲：" + statusChangeDelay + " 毫秒");
 
 				scheduler.schedule(() -> {
 					 try {
 		                    setSatusCanBid(painting.getPaintingId()); // 改成可以下單
-		                    System.out.println("可以下單：" + painting.getPaintingId());
+//		                    System.out.println("可以下單：" + painting.getPaintingId());
 		                } catch (Exception e) {
 		                    System.err.println("下單時發生錯誤：" + e.getMessage());
 		                }
@@ -85,7 +85,7 @@ public class InitService implements CommandLineRunner {
 			} 
 			
 			if (delay>0){// 如果還未到下架時間，則設置定時任務
-	            System.out.println("安排下架任务：" + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
+//	            System.out.println("安排下架任务：" + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
 
 				scheduler.schedule(() -> {
 					try {
@@ -132,7 +132,7 @@ public class InitService implements CommandLineRunner {
 	            painting.setStatus("In Bidding");
 	            ptr.save(painting); // 更新畫作
 	        } else {
-	            System.out.println("畫作不是Presale狀態：" + painting.getPaintingId());
+//	            System.out.println("畫作不是Presale狀態：" + painting.getPaintingId());
 	        }
 	    } else {
 	        System.out.println("找不到此 id 的畫");

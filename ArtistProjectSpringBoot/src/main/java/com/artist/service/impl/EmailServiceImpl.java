@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -32,6 +33,9 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	private OrderDetailsRepository odr;
+	
+	@Autowired
+	private PaintingsServiceImpl psi;
 
 	public EmailServiceImpl(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
@@ -48,72 +52,81 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	// 發送得標信
-	public void sendAuctionWinningEmail(String painting){
+	public void sendAuctionWinningEmail(String painting) {
 		Optional<OrderDetails> orderNumberWithPaintings = odr.findOrderNumberWithPaintings(painting);
 		if (orderNumberWithPaintings.isEmpty()) {
-		    System.out.println("信件寄發異常：訂單不存在");
-		    return;
+			System.out.println("信件寄發異常：訂單不存在");
+			return;
 		}
 		OrderDetails orderDetails = orderNumberWithPaintings.get();
 		String orderNumber = orderDetails.getOrderNumber();
 		Optional<Orders> ordersOptional = or.findByOrderNumber(orderNumber);
-		
 
 		if (ordersOptional.isEmpty()) {
-		    System.out.println("信件寄發異常：訂單不存在");
-		    return; 
+			System.out.println("信件寄發異常：訂單不存在");
+			return;
 		}
 
 		Orders order = ordersOptional.get();
-		String email = order.getCustomer().getEmail();	
+		String email = order.getCustomer().getEmail();
 		LocalDateTime endTime = order.getOrderDate();
 		String paintingName = orderDetails.getPainting().getPaintingName();
 		String paintingId = orderDetails.getPainting().getPaintingId();
 		Double winningPrice = orderDetails.getPrice();
-		String paymentLink ="http://localhost:5173/home/cusdashboard/winningRecords";
+		String paymentLink = "http://localhost:5173/home/cusdashboard/winningRecords";
 
 		// 創建 MIME 消息
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper;
 		try {
 			helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-	
 
-		// 設置郵件標題
-		helper.setSubject("Artist 恭喜您！您已贏得拍賣品");
+			// 設置郵件標題
+			helper.setSubject("Artist 恭喜您！您已贏得拍賣品");
 
-		// 設置收件人
-		helper.setTo(email);
+			// 設置收件人
+			helper.setTo(email);
 
-		// 設置發件人
-		helper.setFrom("artistjava2024@gmail.com");
+			// 設置發件人
+			helper.setFrom("artistjava2024@gmail.com");
 
-		// 純文本內容（非 HTML 支持的郵件客戶端會顯示此內容）
-		String plainText = "親愛的用戶，恭喜您贏得了拍賣品 '" + paintingName + "'。" + "請在拍賣結束後 24 小時內確認付款資訊。" + "付款資訊連結："
-				+ paymentLink;
+			// 純文本內容（非 HTML 支持的郵件客戶端會顯示此內容）
+			String plainText = "親愛的用戶，恭喜您贏得了拍賣品 '" + paintingName + "'。" + "請在拍賣結束後 24 小時內確認付款資訊。" + "付款資訊連結："
+					+ paymentLink;
 
-		// HTML 格式的郵件內容
-		String htmlText = "<div style=\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9;\">"
-				+ "<h2 style=\"text-align: center; color: #4CAF50;\">恭喜！您已成功贏得拍賣品</h2>" + "<p>親愛的用戶：</p>"
-				+ "<p>您已成功贏得拍品 <strong>" + paintingName + "</strong>。以下是相關信息：</p>" + "<ul>"
-				+ "<li><strong>拍賣編號：</strong>" + paintingId + "</li>" + "<li><strong>得標價格：</strong>" + winningPrice
-				+ " 元</li>" + "<li><strong>拍賣結束時間：</strong>" + endTime + "</li>" + "</ul>"
-				+ "<p>請在 24 小時內確認付款資訊，以確保交易有效。您可以點擊下方按鈕來確認：</p>" + "<p style=\"text-align: center;\">" + "<a href=\""
-				+ paymentLink
-				+ "\" style=\"padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;\">立即付款</a>"
-				+ "</p>" + "<p>如果按鈕無法點擊，請複製以下連結並於瀏覽器中開啟：</p>" + "<p style=\"word-break: break-all;\"><a href=\""
-				+ paymentLink + "\">" + paymentLink + "</a></p>" + "<p>謝謝您參與我們的拍賣活動！</p>"
-				+ "<p>[Your App Name] 團隊</p>" + "<hr>"
-				+ "<p style=\"font-size: 0.9em; color: #555;\">此郵件為系統自動發送，請勿回覆。</p>" + "</div>";
-	
-		// 使用帶兩個參數的 setText 方法設置純文本和 HTML 內容
-		helper.setText(plainText, htmlText);
+			// HTML 格式的郵件內容
+			String htmlText = "<div style=\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9;\">"
+					+ "<h2 style=\"text-align: center; color: #4CAF50;\">恭喜！您已成功贏得拍賣品</h2>" + "<p>親愛的用戶：</p>"
+					+ "<p>您已成功贏得拍品 <strong>" + paintingName + "</strong>。以下是相關信息：</p>"
+					+ "<img src='cid:paintingImage' style='width:100px;height:100px;display:block;margin:auto;' />"
+					+ "<ul><li><strong>拍賣編號：</strong>" + paintingId + "</li>" + "<li><strong>得標價格：</strong>"
+					+ winningPrice + " 元</li>" + "<li><strong>拍賣結束時間：</strong>" + endTime + "</li></ul>"
+					+ "<p>請在 24 小時內確認付款資訊，以確保交易有效。您可以點擊下方按鈕來確認：</p>" + "<p style=\"text-align: center;\"><a href=\""
+					+ paymentLink
+					+ "\" style=\"padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;\">立即付款</a></p>"
+					+ "<p>如果按鈕無法點擊，請複製以下連結並於瀏覽器中開啟：</p>" + "<p style=\"word-break: break-all;\"><a href=\""
+					+ paymentLink + "\">" + paymentLink + "</a></p>" + "<p>謝謝您參與我們的拍賣活動！</p>" + "<p>Artist 團隊</p>"
+					+ "<hr>" + "<p style=\"font-size: 0.9em; color: #555;\">此郵件為系統自動發送，請勿回覆。</p>" + "</div>";
+
+			// 從資料庫獲取圖片 Blob (假設 ptr 是你的 repository)
+			byte[] imageData =psi.getPaintingBlob(paintingId);
+			if (imageData != null) {
+				// 添加圖片到郵件
+				helper.addInline("paintingImage", new ByteArrayResource(imageData), "image/jepg");
+			} else {
+		        System.err.println("圖片數據為空，無法添加圖片");
+		    }
+			// 設置 HTML 郵件內容
+		     // 設置純文本和 HTML 郵件內容
+	        helper.setText(plainText, false); // false 表示純文本內容
+	        helper.setText(htmlText, true);   // true 表示 HTML 內容
+			// 發送郵件
+			mailSender.send(mimeMessage);
 		} catch (MessagingException e) {
+			System.err.println("發送郵件失敗：" + e.getMessage());
 			e.printStackTrace();
 		}
-		// 發送郵件
-		mailSender.send(mimeMessage);
-	
 	}
+
 
 }
