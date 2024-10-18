@@ -153,8 +153,6 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
   @Query(value = "SELECT p.* FROM paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY AND (p.painting_name LIKE CONCAT('%', :keyword, '%') OR a.artist_name LIKE CONCAT('%', :keyword, '%')) ORDER BY p.painting_id", nativeQuery = true)
   List<Paintings> findPaintingAndArtistPartOfName(@Param("totalDay") int totalDay,@Param("keyword") String keyword);
     
-  
-  
   //用於查快結標得商品 < 1天
   @Query(value = "SELECT * FROM paintings p " +
           "WHERE TIMESTAMPDIFF(HOUR, CURRENT_TIMESTAMP, DATE_ADD(p.upload_date, INTERVAL 3 DAY)) <= 24 " +
@@ -170,12 +168,9 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
           nativeQuery = true)
    List<Paintings> findRecentlyUploaded();
   
-  
-  
   Optional<Paintings> findByPaintingIdAndDelicated(String paintingId, Integer Delicated); // where paintingId = ?1 and paintingName = ?2
 
-  
+  @Query(value = "SELECT p.* FROM paintings p WHERE p.painting_id IN (SELECT b.painting_id FROM bidrecord b)", nativeQuery = true)
+  List<Paintings> findPaintingsByBidrecords();
 
-
-  
 }

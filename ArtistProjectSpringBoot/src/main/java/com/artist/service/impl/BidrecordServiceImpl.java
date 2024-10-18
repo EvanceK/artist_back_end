@@ -1,8 +1,12 @@
 package com.artist.service.impl;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,19 +36,25 @@ public class BidrecordServiceImpl implements BidrecordService {
 	PaintingsServiceImpl psi;
 	@Autowired
 	CustomersServiceImpl csi;
+	@Autowired
+	OrdersServiceImpl osi;
+	@Autowired
+	EmailServiceImpl esi;
+
 	@Value("${paintings.upload.date.totalday}")
 	private int totalDay; // 讀取配置
 
 	@Value("${paintings.upload.date.canbidday}")
 	private int canBidDay; // 讀取配置
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 
 	@Override
 	@Transactional
 	public void bidding(String paintingId, String bidderId, Double bidAmount) {
-		PaintingDTO paintingsId = psi.getByPaintingsId(paintingId);
+		PaintingDTO paintings = psi.getByPaintingsId(paintingId);
 		
-		if(paintingsId.getDelicated()==2) {
+		if(paintings.getDelicated()==2) {
 			throw new RuntimeException("尚未開放競價");
 			
 		}else {
@@ -54,11 +64,33 @@ public class BidrecordServiceImpl implements BidrecordService {
 			Bidrecord bidrecord = new Bidrecord(paintingId, bidderId,"In Bidding", bidTime, bidAmount, isWinningBid, deposit, "pending" ,0.0);
 			List<Bidrecord> binddinglist = brr.findByPaintingIdOrderByBidAmountDesc(paintingId);
 			//查出底價
-			Double price = paintingsId.getPrice();
+			Double price = paintings.getPrice();
 			if (bidAmount<=price) {
 				 throw new RuntimeException("出價需大於底價");
 			}else if(binddinglist.isEmpty()){
 				brr.save(bidrecord);// 第一筆出價，直接存
+				
+				
+//				並新增下架流程
+				
+				LocalDateTime uploadDate = paintings.getUploadDate();
+				LocalDateTime removeDate = uploadDate.plusDays(14); // 這邊修改下架時間 plusDays plusHours plusMinutes
+				// 計算現在時間和下架時間的時間差
+				long delay = Duration.between(LocalDateTime.now(), removeDate).toMillis();
+				System.out.println("安排下架任务：" + paintings.getPaintingId() + "，延遲：" + delay + " 毫秒");
+
+				scheduler.schedule(() -> {
+					try {
+						osi.finalizeHighestBidAsOrder(paintings, removeDate);
+						psi.setSatusfinished(paintings.getPaintingId());
+						System.out.println("商品已自動下架：" + paintings.getPaintingId());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}		
+						esi.sendAuctionWinningEmail(paintings.getPaintingId());
+				}, delay, TimeUnit.MILLISECONDS);
+				
+				
 				// 出價有大於舊的最高
 			} else if (bidAmount > (binddinglist.get(0).getBidAmount())) {
 				brr.save(bidrecord);// 存入新的data

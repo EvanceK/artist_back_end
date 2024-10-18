@@ -2,14 +2,13 @@ package com.artist.repository;
 
 import java.util.List;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Bidrecord;
-
-import jakarta.persistence.Tuple;
+import com.artist.entity.Paintings;
 
 public interface BidrecordRepository extends JpaRepository<Bidrecord,Long> {
 	
@@ -22,25 +21,16 @@ public interface BidrecordRepository extends JpaRepository<Bidrecord,Long> {
   
   List<Bidrecord> findByPaintingId(String paintingId); 
   
-  
-//	@Query("SELECT b.paintingId AS paintingId, COUNT(b.paintingId) AS paintingCount " +
-//		       "FROM Bidrecord b "+
-//		       "JOIN Paintings p ON b.paintingId = p.paintingId " +
-//	           "WHERE p.delicated >= 1 " +
-//		       "GROUP BY b.paintingId ORDER BY COUNT(b.paintingId) DESC")
-//		List<Tuple> findTopBiddingWithLimit(Pageable pageable);
-//	
-//	
 	
 	@Query(value = "SELECT b.painting_id AS paintingId, COUNT(b.painting_id) AS paintingCount " +
             "FROM bidrecord b " +
             "JOIN paintings p ON b.painting_id = p.painting_id " +
-            "WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY " +
+            "WHERE p.upload_date > NOW() - INTERVAL :canbidday DAY " +
             "GROUP BY b.painting_id " +
             "ORDER BY COUNT(b.painting_id) DESC " +
             "LIMIT :limit", 
     nativeQuery = true)
-	List<Object[]> findTopBiddingWithLimit(@Param("totalDay") int totalDay, @Param("limit") int limit);
+	List<Object[]> findTopBiddingWithLimit(@Param("canbidday") int canbidday, @Param("limit") int limit);
 
 
 

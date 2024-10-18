@@ -15,7 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.artist.dto.response.PaintingDTO;
+import com.artist.entity.Bidrecord;
 import com.artist.entity.Paintings;
+import com.artist.repository.BidrecordRepository;
 import com.artist.repository.PaintingsRepository;
 import com.artist.service.PaintingsService;
 import com.artist.utils.IdGenerator;
@@ -36,7 +38,8 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	@Autowired // 這裡是用 com.paintingsRepository; //不是自己寫的 PaintingsDao
 	private PaintingsRepository ptr;
-
+	@Autowired
+	BidrecordRepository brr;
 	// 新增
 	@Override
 	public void create(PaintingDTO paintingDTO) {
@@ -321,6 +324,39 @@ public class PaintingsServiceImpl implements PaintingsService {
 		// 查找畫作，並返回圖片 Blob
 		Optional<Paintings> painting = ptr.findById(paintingId);
 		return painting.map(Paintings::getImage).orElse(null);
+	}
+
+	@Override
+	public List<PaintingDTO> getPaintingsByBidrecords() {
+		List<Paintings> paintingsByGroupedBidrecords = ptr.findPaintingsByBidrecords();
+		if (paintingsByGroupedBidrecords.isEmpty()) {
+			return Collections.emptyList();
+		}
+		return paintingsByGroupedBidrecords.stream()
+				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
+						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
+						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+				.collect(Collectors.toList());
+	}
+	
+	
+	public void setSatusfinished(String paintingId) {
+		Optional<Paintings> optionalPainting = ptr.findById(paintingId);
+		if (optionalPainting.isPresent()) { // 檢查有沒有找到
+			Paintings painting = optionalPainting.get(); // 得到 Painting 對象
+
+			painting.setDelicated(0); // 改成賣出或過期 //之後狀態也要一起更新
+
+			List<Bidrecord> paintingList = brr.findByPaintingId(paintingId);
+
+			// 使用 Streams
+			boolean exists = paintingList.stream().anyMatch(bid -> bid.getPaintingId().equals(paintingId));
+			painting.setStatus(exists ? "Auction closed" : "Unsold"); // 如果bid表有查到表示有被出過價 //更改painting表的畫作狀態
+			ptr.save(painting); // 更新畫作
+		} else {
+			System.out.println("找不到此 id 的畫");
+		}
 	}
 
 }

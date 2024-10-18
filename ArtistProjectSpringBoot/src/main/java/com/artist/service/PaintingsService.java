@@ -28,6 +28,7 @@ public interface PaintingsService {
 	Page<PaintingDTO> getAllInBidding(Integer pageSize, Integer currentPage);
 	Page<PaintingDTO> getAllInPresaleExhibition(Integer pageSize, Integer currentPage);
 
+	List<PaintingDTO> getPaintingsByBidrecords();
 
 
     
@@ -66,5 +67,8 @@ public interface PaintingsService {
 
     //判斷用
     boolean existsBypaintingId(String paintingId);
+
+    
+	void setSatusfinished(String paintingId);
 
 }
