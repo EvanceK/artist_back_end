@@ -20,7 +20,6 @@ public interface OrdersService {
 
 
     // Update
-    public void update(Orders orders);
 	public void updateOrderInfo(RecipientInformation recipient);
     public void update(OrdersDTO ordersDTO);
     

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class WishlistServiceImpl implements WishlistService {
 	private PaintingsServiceImpl psi;
 	@Autowired
 	private CustomersServiceImpl csi;
+	@Value("${paintings.upload.date.totalday}")
+	private int totalDay; // 讀取配置
+
+	@Value("${paintings.upload.date.canbidday}")
+	private int canBidDay; // 讀取配置
 
 	@Override
 	public List<WishlistDTO> findAllWishlistWithPaintings(String customerId) {

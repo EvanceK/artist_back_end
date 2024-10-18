@@ -13,7 +13,7 @@ public class Staff {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//主鍵由資料庫自動產生
-	@Column(name="artist_id")
+	@Column(name="staff_id")
 	private Integer staffId;
 	
 	@Column(name="staff_name")

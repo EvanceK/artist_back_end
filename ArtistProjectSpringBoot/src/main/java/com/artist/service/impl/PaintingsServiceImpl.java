@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -23,9 +24,15 @@ import com.artist.utils.IdGenerator;
 public class PaintingsServiceImpl implements PaintingsService {
 
 	// 用spring data jpa 實現
-	
+
 	@Autowired
 	private IdGenerator idGenerator; // 注入 IdGenerator
+
+	@Value("${paintings.upload.date.totalday}")
+	private int totalDay; // 讀取配置
+
+	@Value("${paintings.upload.date.canbidday}")
+	private int canBidDay; // 讀取配置
 
 	@Autowired // 這裡是用 com.paintingsRepository; //不是自己寫的 PaintingsDao
 	private PaintingsRepository ptr;
@@ -48,33 +55,31 @@ public class PaintingsServiceImpl implements PaintingsService {
 		painting.setStatus(paintingDTO.getStatus());
 		ptr.save(painting);
 	}
-	
+
 	// update
-		@Override
-		public void update(PaintingDTO paintingDTO)
-		{
-			String paintingid = paintingDTO.getPaintingId();
-			if(!paintingid.isBlank())
-			{
-				Paintings painting = new Paintings();
-				painting.setPaintingId(paintingDTO.getPaintingId());
-				painting.setPaintingName(paintingDTO.getPaintingName());
-				painting.setArtistId(paintingDTO.getArtistId());
-//				painting.setLargUrl(paintingDTO.getLargUrl());
-//				painting.setSmallUrl(paintingDTO.getSmallUrl());
-				painting.setPrice(paintingDTO.getPrice());
-				painting.setDate(paintingDTO.getDate());
-				painting.setStyle(paintingDTO.getStyle());
-				painting.setUploadDate(LocalDateTime.now());
-				painting.setGenre(paintingDTO.getGenre());
-				painting.setDelicated(paintingDTO.getDelicated());
-				painting.setStatus(paintingDTO.getStatus());
-				ptr.save(painting);
-			}else {
-				System.out.println("data not fond");
-			}
-			
+	@Override
+	public void update(PaintingDTO paintingDTO) {
+		String paintingid = paintingDTO.getPaintingId();
+		if (!paintingid.isBlank()) {
+			Paintings painting = new Paintings();
+			painting.setPaintingId(paintingDTO.getPaintingId());
+			painting.setPaintingName(paintingDTO.getPaintingName());
+			painting.setArtistId(paintingDTO.getArtistId());
+//			painting.setLargUrl(paintingDTO.getLargUrl());
+//			painting.setSmallUrl(paintingDTO.getSmallUrl());
+			painting.setPrice(paintingDTO.getPrice());
+			painting.setDate(paintingDTO.getDate());
+			painting.setStyle(paintingDTO.getStyle());
+			painting.setUploadDate(LocalDateTime.now());
+			painting.setGenre(paintingDTO.getGenre());
+			painting.setDelicated(paintingDTO.getDelicated());
+			painting.setStatus(paintingDTO.getStatus());
+			ptr.save(painting);
+		} else {
+			System.out.println("data not fond");
 		}
+
+	}
 
 	// 查詢所有的畫作
 	@Override
@@ -90,7 +95,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	// 查詢所有未下架的畫作
 	@Override
 	public List<PaintingDTO> getAllAvailablePainting() {
-		List<Paintings> paintings = ptr.findAllDelicatedPaintingsWithArtist();
+		List<Paintings> paintings = ptr.findAllDelicatedPaintingsWithArtist(totalDay);
 		return paintings.stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
@@ -100,7 +105,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	public Page<PaintingDTO> getPaintingsByPage(Integer pageSize, Integer currentPage) {
 		Pageable pageable = PageRequest.of(currentPage, pageSize);
-		Page<Paintings> paintingsPage = ptr.findAllDelicatedPaintingsWithArtist(pageable);
+		Page<Paintings> paintingsPage = ptr.findAllDelicatedPaintingsWithArtist(pageable,totalDay);
 		// 映射到 Page<PaintingDTO>
 		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
@@ -124,7 +129,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	public Page<PaintingDTO> getAllInPresaleExhibition(Integer pageSize, Integer currentPage) {
 		Pageable pageable = PageRequest.of(currentPage, pageSize);
-		Page<Paintings> paintingsPage = ptr.findAllPresaleExhibition(pageable);
+		Page<Paintings> paintingsPage = ptr.findAllPresaleExhibition(pageable,totalDay,canBidDay);
 		// 映射到 Page<PaintingDTO>
 		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
@@ -148,19 +153,19 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	@Override
 	public Long findPaintingsTotalCount() {
-		long countByDelicated = ptr.countByDelicated();
+		long countByDelicated = ptr.countByDelicated(totalDay);
 		return countByDelicated;
 	}
 
 	@Override
 	public Long findPresaleExhibitionTotalCount() {
-		long countByDelicated = ptr.countByPresaleExhibition();
+		long countByDelicated = ptr.countByPresaleExhibition(totalDay,canBidDay);
 		return countByDelicated;
 	}
 
 	@Override
 	public Long findInBiddingTotalCount() {
-		long countByDelicated = ptr.countByInBidding();
+		long countByDelicated = ptr.countByInBidding(canBidDay);
 		return countByDelicated;
 	}
 
@@ -253,7 +258,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	@Override
 	public List<PaintingDTO> findPaintingAndArtistPartOfName(String keyword) {
-		List<Paintings> paintingAndArtistPartOfName = ptr.findPaintingAndArtistPartOfName(keyword);
+		List<Paintings> paintingAndArtistPartOfName = ptr.findPaintingAndArtistPartOfName(totalDay,keyword);
 
 		if (paintingAndArtistPartOfName.isEmpty()) {
 			return Collections.emptyList();
@@ -310,12 +315,12 @@ public class PaintingsServiceImpl implements PaintingsService {
 		Paintings paintings = byId.get();
 		return paintings;
 	}
-	
-	@Override// 獲取圖片 Blob
+
+	@Override // 獲取圖片 Blob
 	public byte[] getPaintingBlob(String paintingId) {
-	    // 查找畫作，並返回圖片 Blob
-	    Optional<Paintings> painting = ptr.findById(paintingId);
-	    return painting.map(Paintings::getImage).orElse(null);
+		// 查找畫作，並返回圖片 Blob
+		Optional<Paintings> painting = ptr.findById(paintingId);
+		return painting.map(Paintings::getImage).orElse(null);
 	}
 
 }

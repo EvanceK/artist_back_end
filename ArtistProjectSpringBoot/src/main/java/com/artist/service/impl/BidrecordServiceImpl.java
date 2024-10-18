@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,12 @@ public class BidrecordServiceImpl implements BidrecordService {
 	PaintingsServiceImpl psi;
 	@Autowired
 	CustomersServiceImpl csi;
-	
+	@Value("${paintings.upload.date.totalday}")
+	private int totalDay; // 讀取配置
+
+	@Value("${paintings.upload.date.canbidday}")
+	private int canBidDay; // 讀取配置
+
 
 	@Override
 	@Transactional
@@ -134,16 +140,26 @@ public class BidrecordServiceImpl implements BidrecordService {
 	}
 	
 	@Override
+//	public List<TopBiddingsDTO> getTopBidding(int size) {
+//        Pageable pageable = PageRequest.of(0, size);
+//        List<Tuple> results = brr.findTopBiddingWithLimit(pageable);
+//        return results.stream()
+//                .map(tuple -> new TopBiddingsDTO(
+//                        tuple.get("paintingId", String.class),
+//                        tuple.get("paintingCount", Long.class)
+//                ))
+//                .collect(Collectors.toList());
+//     
+//	}
 	public List<TopBiddingsDTO> getTopBidding(int size) {
-        Pageable pageable = PageRequest.of(0, size);
-        List<Tuple> results = brr.findTopBiddingWithLimit(pageable);
-        return results.stream()
-                .map(tuple -> new TopBiddingsDTO(
-                        tuple.get("paintingId", String.class),
-                        tuple.get("paintingCount", Long.class)
-                ))
-                .collect(Collectors.toList());
-     
+	 
+	    List<Object[]> results = brr.findTopBiddingWithLimit(totalDay, size); // 使用原生查詢
+
+	    return results.stream()
+	            .map(result -> new TopBiddingsDTO(
+	                    (String) result[0],  // paintingId
+	                    (Long) result[1]     // paintingCount
+	            ))
+	            .collect(Collectors.toList());
 	}
-	
 }

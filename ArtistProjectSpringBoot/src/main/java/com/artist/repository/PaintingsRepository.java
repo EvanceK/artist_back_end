@@ -5,6 +5,7 @@ package com.artist.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -102,7 +103,8 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
 //    List<Object[]> countPaintingsByGenre();
 //    
 //    
-    
+	  
+
     
     //以下實作
 	Optional <Paintings> findByPaintingId(String paintingId);
@@ -113,16 +115,16 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
 	
 	List<Paintings> findByPaintingName(String paintingName);
 	
-    @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated >= 1 ORDER BY p.paintingId")
-    List<Paintings> findAllDelicatedPaintingsWithArtist();
+	@Query(value = "SELECT p.*, a.artist_name AS artistName FROM paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY ORDER BY p.painting_id", nativeQuery = true)
+    List<Paintings> findAllDelicatedPaintingsWithArtist(@Param("totalDay") int totalDay);
     
-    @Query("SELECT p FROM Paintings p WHERE p.delicated >= 1") // 例子：查找 delicated =1 by分頁
-   	Page<Paintings> findAllDelicatedPaintingsWithArtist(Pageable pageable);
+	@Query(value = "SELECT p.*, a.artist_name FROM paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY ORDER BY p.painting_id", nativeQuery = true)
+   	Page<Paintings> findAllDelicatedPaintingsWithArtist(Pageable pageable, @Param("totalDay") int totalDay);
     
-    @Query("SELECT p FROM Paintings p WHERE p.delicated = 2") // 例子：查找 delicated =1 by分頁
-   	Page<Paintings> findAllPresaleExhibition(Pageable pageable);
+    @Query(value = "SELECT p.*, a.artist_name FROM Paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY AND p.upload_date < NOW() - INTERVAL :canBidDay DAY ", nativeQuery = true) // 例子：查找 delicated =1 by分頁
+   	Page<Paintings> findAllPresaleExhibition(Pageable pageable,@Param("totalDay") int totalDay,@Param("canBidDay") int canBidDay);
     
-    @Query("SELECT p FROM Paintings p WHERE p.delicated = 1") // 例子：查找 delicated =1 by分頁
+	@Query(value = "SELECT p.*, a.artist_name FROM paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL 2 DAY ORDER BY p.painting_id", nativeQuery = true)
    	Page<Paintings> findAllInBidding(Pageable pageable);
     
     
@@ -130,14 +132,14 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
 //    @Query("SELECT p FROM Paintings p JOIN p.artist a ORDER BY p.paintingId")
 //    List<Paintings> findAll();
     
-    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated >= 1")
-    long countByDelicated();
+    @Query(value = "SELECT COUNT(*) FROM paintings p WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY", nativeQuery = true)
+    long countByDelicated(@Param("totalDay") int totalDay);
     
-    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 2")
-    long countByPresaleExhibition();
+    @Query(value ="SELECT COUNT(*) FROM Paintings p WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY AND p.upload_date < NOW() - INTERVAL :canBidDay DAY ", nativeQuery = true)
+    long countByPresaleExhibition(@Param("totalDay") int totalDay,@Param("canBidDay") int canBidDay);
     
-    @Query("SELECT COUNT(p) FROM Paintings p WHERE p.delicated = 1")
-    long countByInBidding();
+    @Query(value = "SELECT COUNT(*) FROM Paintings p WHERE p.upload_date > NOW() - INTERVAL :canBidDay DAY", nativeQuery = true)
+    long countByInBidding(@Param("canBidDay") int canBidDay);
     
     //給畫家頁面用的
     @Query("SELECT p FROM Paintings p WHERE p.delicated >= 1 AND p.artistId = :artistId")
@@ -148,9 +150,11 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     boolean existsBypaintingId(String paintingId);
   
   //給首頁search用
-  @Query("SELECT p FROM Paintings p JOIN p.artist a WHERE p.delicated >= 1 AND (p.paintingName LIKE CONCAT('%', :keyword, '%') OR a.artistName LIKE CONCAT('%', :keyword, '%')) ORDER BY p.paintingId")
-  List<Paintings> findPaintingAndArtistPartOfName(@Param("keyword") String keyword);
+  @Query(value = "SELECT p.* FROM paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY AND (p.painting_name LIKE CONCAT('%', :keyword, '%') OR a.artist_name LIKE CONCAT('%', :keyword, '%')) ORDER BY p.painting_id", nativeQuery = true)
+  List<Paintings> findPaintingAndArtistPartOfName(@Param("totalDay") int totalDay,@Param("keyword") String keyword);
     
+  
+  
   //用於查快結標得商品 < 1天
   @Query(value = "SELECT * FROM paintings p " +
           "WHERE TIMESTAMPDIFF(HOUR, CURRENT_TIMESTAMP, DATE_ADD(p.upload_date, INTERVAL 3 DAY)) <= 24 " +
@@ -165,6 +169,8 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
           "ORDER BY p.upload_date DESC", 
           nativeQuery = true)
    List<Paintings> findRecentlyUploaded();
+  
+  
   
   Optional<Paintings> findByPaintingIdAndDelicated(String paintingId, Integer Delicated); // where paintingId = ?1 and paintingName = ?2
 

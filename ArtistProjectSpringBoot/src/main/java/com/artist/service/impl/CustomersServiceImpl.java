@@ -219,7 +219,7 @@ public class CustomersServiceImpl implements CustomersService {
 		}
 		System.out.println(token);
 	        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-	        return claims.get("roles", List.class); // 使用 List.class 进行类型转换
+	        return claims.get("roles", List.class); // 使用 List.class 
 	   
 	}
 	
