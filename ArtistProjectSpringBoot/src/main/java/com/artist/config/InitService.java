@@ -47,7 +47,7 @@ public class InitService implements CommandLineRunner {
 	public void initializeAllPaintings() {
 		// loading出目前已上架的商品
 		List<PaintingDTO> allPaintings = psi.getPaintingsByBidrecords();
-		System.out.println("Loading paintings, count: " + allPaintings.size());
+		System.out.println("Load the number of paintings scheduled for removal :" + allPaintings.size());
 
 		for (PaintingDTO painting : allPaintings) {
 			// 計算下架時間
@@ -83,7 +83,7 @@ public class InitService implements CommandLineRunner {
 //			} 
 //			
 			if (delay>0){// 如果還未到下架時間，則設置定時任務
-	            System.out.println("安排下架任务：" + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
+	            System.out.println("Scheduling removal task: " + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
 
 				scheduler.schedule(() -> {
 					try {

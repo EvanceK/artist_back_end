@@ -170,7 +170,7 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
   
   Optional<Paintings> findByPaintingIdAndDelicated(String paintingId, Integer Delicated); // where paintingId = ?1 and paintingName = ?2
 
-  @Query(value = "SELECT p.* FROM paintings p WHERE p.painting_id IN (SELECT b.painting_id FROM bidrecord b)", nativeQuery = true)
+  @Query(value = "SELECT p.* FROM paintings p WHERE p.painting_id IN (SELECT b.painting_id FROM bidrecord b) AND p.painting_id NOT IN (SELECT o.painting_id FROM orderdetails o)", nativeQuery = true)
   List<Paintings> findPaintingsByBidrecords();
 
 }

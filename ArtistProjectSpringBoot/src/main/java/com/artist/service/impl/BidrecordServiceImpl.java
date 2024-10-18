@@ -77,7 +77,7 @@ public class BidrecordServiceImpl implements BidrecordService {
 				LocalDateTime removeDate = uploadDate.plusDays(14); // 這邊修改下架時間 plusDays plusHours plusMinutes
 				// 計算現在時間和下架時間的時間差
 				long delay = Duration.between(LocalDateTime.now(), removeDate).toMillis();
-				System.out.println("安排下架任务：" + paintings.getPaintingId() + "，延遲：" + delay + " 毫秒");
+				System.out.println("Scheduling removal task: " + paintings.getPaintingId() + "，延遲：" + delay + " 毫秒");
 
 				scheduler.schedule(() -> {
 					try {
