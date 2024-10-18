@@ -193,7 +193,7 @@ public class PaintingsController {
 			@RequestParam(value = "artistId") String artistId,
 			@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
 			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-		Long totalCount = psi.countByDelicatedAndArtistId(1,artistId);
+		Long totalCount = psi.countByDelicatedAndArtistId(artistId);
 //		System.out.println(totalCount);
 
 		// 2. 計算總頁數

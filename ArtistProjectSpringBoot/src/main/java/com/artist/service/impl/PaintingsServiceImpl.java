@@ -145,7 +145,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Override
 	public Page<PaintingDTO> getAllforArtistIdByPage(Integer pageSize, Integer currentPage, String artistId) {
 		Pageable pageable = PageRequest.of(currentPage, pageSize);
-		Page<Paintings> pagePaintingsWithArtist = ptr.findAllDelicatedWithArtist(pageable, artistId);
+		Page<Paintings> pagePaintingsWithArtist = ptr.findAllDelicatedWithArtist(pageable,totalDay, artistId);
 		List<PaintingDTO> paintingDTOs = pagePaintingsWithArtist.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
@@ -172,8 +172,8 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return countByDelicated;
 	}
 
-	public long countByDelicatedAndArtistId(Integer delicatedValue, String artistId) {
-		long countByDelicatedAndArtistId = ptr.countByDelicatedAndArtistId(delicatedValue, artistId);
+	public long countByDelicatedAndArtistId( String artistId) {
+		long countByDelicatedAndArtistId = ptr.countByDelicated(totalDay, artistId);
 		return countByDelicatedAndArtistId;
 	}
 

@@ -43,33 +43,24 @@ public interface WishlistRepository extends JpaRepository<Wishlist, WishlistId> 
 
 	   
 		//無登入用
-	   @Query(value = "SELECT w.id.paintingId AS paintingId, COUNT(w.id.paintingId) AS paintingCount " +
-	           "FROM Wishlist w " +
-	           "JOIN paintings p ON w.id.paintingId = p.paintingId " +
-	           "WHEREp.upload_date > NOW() - INTERVAL :totalDay DAY"+
-	           "GROUP BY w.id.paintingId" +
-	           "ORDER BY COUNT(w.id.paintingId) DESC",
-	           nativeQuery = true)
-	   List<Tuple> findTopFavoritesWithLimit(Pageable pageable);
+	   @Query(value = "SELECT w.painting_id AS paintingId, COUNT(w.painting_id) AS paintingCount " +
+               "FROM wishlist w " +
+               "JOIN paintings p ON w.painting_id = p.painting_id " +
+               "WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY " +
+               "GROUP BY w.painting_id " +
+               "ORDER BY COUNT(w.painting_id) DESC", nativeQuery = true)
+	   List<Tuple> findTopFavoritesWithLimit(Pageable pageable,@Param("totalDay") int totalDay);
+	   
 	   
 	//有登入用，根據顧客沒選的推薦   
-	   @Query("SELECT w.id.paintingId AS paintingId, COUNT(w.id.paintingId) AS paintingCount " +
-	           "FROM Wishlist w " +
-	           "JOIN Paintings p ON w.id.paintingId = p.id " +
-	           "WHERE p.delicated > 0 AND w.id.paintingId NOT IN " +
-	           "(SELECT wl.id.paintingId FROM Wishlist wl WHERE wl.id.customerId = :customerId) " +
-	           "GROUP BY w.id.paintingId " +
-	           "ORDER BY COUNT(w.id.paintingId) DESC")
-	   List<Tuple> findTopFavoritesWithLimit(@Param("customerId") String customerId, Pageable pageable);
+	   @Query(value = "SELECT w.painting_id AS paintingId, COUNT(w.painting_id) AS paintingCount " +
+               "FROM wishlist w " +
+               "JOIN paintings p ON w.painting_id = p.painting_id " +
+               "WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY " +
+               "AND w.painting_id NOT IN " +
+               "(SELECT wl.painting_id FROM wishlist wl WHERE wl.customer_id = :customerId) " +
+               "GROUP BY w.painting_id " +
+               "ORDER BY COUNT(w.painting_id) DESC", nativeQuery = true)
+	   List<Tuple> findTopFavoritesWithLimit(@Param("customerId") String customerId, Pageable pageable,@Param("totalDay") int totalDay);
 	   
-	   @Query(value = "SELECT b.painting_id AS paintingId, COUNT(b.painting_id) AS paintingCount " +
-	            "FROM bidrecord b " +
-	            "JOIN paintings p ON b.painting_id = p.painting_id " +
-	            "WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY " +
-	            "GROUP BY b.painting_id " +
-	            "ORDER BY COUNT(b.painting_id) DESC " +
-	            "LIMIT :limit", 
-	    nativeQuery = true)
-		List<Object[]> findTopBiddingWithLimit(@Param("totalDay") int totalDay, @Param("limit") int limit);
-
 }

@@ -142,10 +142,11 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     long countByInBidding(@Param("canBidDay") int canBidDay);
     
     //給畫家頁面用的
-    @Query("SELECT p FROM Paintings p WHERE p.delicated >= 1 AND p.artistId = :artistId")
-    Page<Paintings> findAllDelicatedWithArtist(Pageable pageable, @Param("artistId") String artistId);
+    @Query(value = "SELECT p.*, a.artist_name FROM Paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY AND p.artist_Id = :artistId", nativeQuery = true)
+    Page<Paintings> findAllDelicatedWithArtist(Pageable pageable,@Param("totalDay") int totalDay, @Param("artistId") String artistId);
     
-    long countByDelicatedAndArtistId(Integer delicatedValue,String artistId);
+    @Query(value = "SELECT COUNT(*) FROM paintings p WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY AND p.artist_id = :artistId", nativeQuery = true)
+    long countByDelicated(@Param("totalDay") int totalDay,String artistId);
     
     boolean existsBypaintingId(String paintingId);
   
