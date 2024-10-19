@@ -19,12 +19,10 @@ public class StaffServiceImpl implements StaffService{
 	
 	@Override
 	public void create(StaffDTO staffDTO) {
-		Staff staff = new Staff();
-		staff.setStaffName(staffDTO.getStaffName());
-		staff.setStaffDepartment(staffDTO.getStaffDepartment());
-		staff.setStaffUsername(staffDTO.getStaffUsername());
-		staff.setStaffPassword(staffDTO.getStaffPassword());
-		
+		Staff staff = new Staff(staffDTO.getStaffName(),
+				staffDTO.getStaffDepartment(),
+				staffDTO.getStaffUsername(),
+				staffDTO.getStaffPassword());		
 		sr.save(staff);
 	}
 
@@ -42,14 +40,14 @@ public class StaffServiceImpl implements StaffService{
 
 	@Override
 	public void update(StaffDTO staffDTO) {
-		Integer staffId = staffDTO.getStaffId();
-		if (staffId != null) {
-			Staff staff = new Staff();
-			staff.setStaffId(staffDTO.getStaffId());
+		Optional<Staff> s = sr.findById(staffDTO.getStaff_id());
+		if (s.isPresent()) {
+			Staff staff = s.get();
 			staff.setStaffDepartment(staffDTO.getStaffDepartment());
 			staff.setStaffName(staffDTO.getStaffName());
 			staff.setStaffUsername(staffDTO.getStaffUsername());
 			staff.setStaffPassword(staffDTO.getStaffPassword());
+			sr.save(staff);
 		}else {
 			System.out.println("data not fond");
 		}

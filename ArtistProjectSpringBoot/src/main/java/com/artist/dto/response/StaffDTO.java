@@ -2,7 +2,7 @@ package com.artist.dto.response;
 
 public class StaffDTO {
 	
-	private Integer staffId;
+	private int staff_id;
 	private String staffName;
 	private String staffDepartment;
 	private String staffUsername;
@@ -10,20 +10,21 @@ public class StaffDTO {
 	public StaffDTO() {
 		super();
 	}
-	public StaffDTO(Integer staffId, String staffName, String staffDepartment, String staffUsername,
-			String staffPassword) {
+	public StaffDTO( String staffName, String staffDepartment, 
+			String staffUsername,String staffPassword) {
 		super();
-		this.staffId = staffId;
 		this.staffName = staffName;
 		this.staffDepartment = staffDepartment;
 		this.staffUsername = staffUsername;
 		this.staffPassword = staffPassword;
 	}
-	public Integer getStaffId() {
-		return staffId;
+
+
+	public int getStaff_id() {
+		return staff_id;
 	}
-	public void setStaffId(Integer staffId) {
-		this.staffId = staffId;
+	public void setStaff_id(int staff_id) {
+		this.staff_id = staff_id;
 	}
 	public String getStaffName() {
 		return staffName;

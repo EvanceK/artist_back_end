@@ -25,30 +25,30 @@ public class Staff {
 	@Column(name="staff_username")
 	private String staffUsername;
 	
-	@Column(name="staff_password")
+	@Column(name="staff_passdword")
 	private String staffPassword;
 
 	public Staff() {
 		super();
 	}
 
-	public Staff(Integer staffId, String staffName, 
-			String staffDepartment, String staffUsername,
-			String staffPassword) {
+	public Staff(String staffName, 	String staffDepartment,
+			String staffUsername,String staffPassword) {
 		super();
-		this.staffId = staffId;
 		this.staffName = staffName;
 		this.staffDepartment = staffDepartment;
 		this.staffUsername = staffUsername;
 		this.staffPassword = staffPassword;
 	}
 
-	public Integer getStaffId() {
-		return staffId;
+	
+
+	public int getStaff_id() {
+		return staff_id;
 	}
 
-	public void setStaffId(Integer staffId) {
-		this.staffId = staffId;
+	public void setStaff_id(int staff_id) {
+		this.staff_id = staff_id;
 	}
 
 	public String getStaffName() {
