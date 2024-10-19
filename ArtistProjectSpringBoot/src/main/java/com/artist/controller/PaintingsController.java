@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -274,14 +274,14 @@ public class PaintingsController {
         List<PaintingDTO> paintings = psi.getRecentlyUploaded();
         return ResponseEntity.ok(paintings);
     }
-   
-//	//加載圖片的API
-//	@GetMapping("/image/{id}")
-//	public ResponseEntity<byte[]> getImageById(@PathVariable Long id) {
-//	    Paintings painting = paintingRepository.findById(id)
-//	            .orElseThrow(() -> new RuntimeException("Painting not found"));
-//	    byte[] image = painting.getImageBlob();  // 假設圖片字段是 imageBlob
-//	    return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
-//	}
+   	
+	 @GetMapping(value = "/image/{paintingId}", produces = MediaType.IMAGE_JPEG_VALUE)
+	    public ResponseEntity<byte[]> getImage(@PathVariable String paintingId) {
+	        byte[] imageData = psi.getPaintingBlob(paintingId);  // 從資料庫獲取圖片的 byte[] 資料
+	        if (imageData == null || imageData.length == 0) {
+	            return ResponseEntity.notFound().build();  // 如果沒有找到圖片，返回 404
+	        }
+	        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageData); // 返回圖片數據給前端
+	    }
    
 }

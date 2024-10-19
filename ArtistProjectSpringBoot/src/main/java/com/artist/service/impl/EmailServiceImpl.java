@@ -112,14 +112,13 @@ public class EmailServiceImpl implements EmailService {
 			byte[] imageData =psi.getPaintingBlob(paintingId);
 			if (imageData != null) {
 				// 添加圖片到郵件
-				helper.addInline("paintingImage", new ByteArrayResource(imageData), "image/jepg");
-			} else {
+				helper.addInline("paintingImage", new ByteArrayResource(imageData), "image/jpeg");
+				} else {
 		        System.err.println("圖片數據為空，無法添加圖片");
 		    }
 			// 設置 HTML 郵件內容
 		     // 設置純文本和 HTML 郵件內容
-	        helper.setText(plainText, false); // false 表示純文本內容
-	        helper.setText(htmlText, true);   // true 表示 HTML 內容
+	        helper.setText(plainText, htmlText); // 第一個參數是純文本，第二個是 HTML 內容
 			// 發送郵件
 			mailSender.send(mimeMessage);
 		} catch (MessagingException e) {
