@@ -149,11 +149,20 @@ public class OrdersServiceImpl implements OrdersService {
 	}
 
 	@Override
-	public Orders getOneByOrdernumber(String ordernumber) {
+	public OrdersDTO getOneByOrdernumber(String ordernumber) {
 		Optional<Orders> optionalOrder = or.findByOrderNumber(ordernumber);
-		if (optionalOrder.isPresent()) { 
-			Orders o = optionalOrder.get(); 
-			return o;
+		if (optionalOrder.isPresent()) { //OrdersDTO ordersDTO
+			Orders o = optionalOrder.get();
+			OrdersDTO ordersDTO = new OrdersDTO();
+			ordersDTO.setOrderNumber(o.getOrderNumber());
+			ordersDTO.setOrderDate(o.getOrderDate());
+			ordersDTO.setCustomerId(o.getCustomerId());
+			ordersDTO.setStatus(o.getStatus());
+			ordersDTO.setDeliveryAdress(o.getDeliveryAdress());
+			ordersDTO.setAttName(o.getAttName());
+			ordersDTO.setAttPhone(o.getAttPhone());
+			ordersDTO.setDeliveryInstrictions(o.getDeliveryInstrictions());
+			return ordersDTO;
 		} else {
 			System.out.println("not find");
 			return null;

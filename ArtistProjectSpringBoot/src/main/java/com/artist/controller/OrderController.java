@@ -34,7 +34,7 @@ public class OrderController {
 	
 	@GetMapping(value = "/{ordernumber}")
 	public ResponseEntity<?> getByOrdernumber(String ordernumber) {
-		Orders o = osi.getOneByOrdernumber(ordernumber);
+		OrdersDTO o = osi.getOneByOrdernumber(ordernumber);
 		return ResponseEntity.ok(o); // 自動轉換為 JSON
 	}
 	
