@@ -2,7 +2,7 @@ package com.artist.dto.response;
 
 public class StaffDTO {
 	
-	private int staff_id;
+	private int staffId;
 	private String staffName;
 	private String staffDepartment;
 	private String staffUsername;
@@ -20,11 +20,12 @@ public class StaffDTO {
 	}
 
 
-	public int getStaff_id() {
-		return staff_id;
+
+	public int getStaffId() {
+		return staffId;
 	}
-	public void setStaff_id(int staff_id) {
-		this.staff_id = staff_id;
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
 	}
 	public String getStaffName() {
 		return staffName;

@@ -40,7 +40,7 @@ public class StaffServiceImpl implements StaffService{
 
 	@Override
 	public void update(StaffDTO staffDTO) {
-		Optional<Staff> s = sr.findById(staffDTO.getStaff_id());
+		Optional<Staff> s = sr.findById(staffDTO.getStaffId());
 		if (s.isPresent()) {
 			Staff staff = s.get();
 			staff.setStaffDepartment(staffDTO.getStaffDepartment());
