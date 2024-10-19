@@ -11,11 +11,14 @@ public class OrdersDTO {
 	private String attPhone;
 	private String deliveryAdress;
 	private LocalDateTime orderDate;
+	private String deliveryInstrictions;
 	public OrdersDTO() {
 		super();
 	}
-	public OrdersDTO(String orderNumber, String customerId, String status, String attName, String attPhone,
-			String deliveryAdress, LocalDateTime orderDate) {
+	public OrdersDTO(String orderNumber, String customerId, 
+			String status, String attName, String attPhone,
+			String deliveryAdress, LocalDateTime orderDate,
+			String deliveryInstrictions) {
 		super();
 		this.orderNumber = orderNumber;
 		this.customerId = customerId;
@@ -24,6 +27,7 @@ public class OrdersDTO {
 		this.attPhone = attPhone;
 		this.deliveryAdress = deliveryAdress;
 		this.orderDate = orderDate;
+		this.deliveryInstrictions = deliveryInstrictions;
 	}
 	public String getOrderNumber() {
 		return orderNumber;
@@ -66,6 +70,12 @@ public class OrdersDTO {
 	}
 	public void setOrderDate(LocalDateTime orderDate) {
 		this.orderDate = orderDate;
+	}
+	public String getDeliveryInstrictions() {
+		return deliveryInstrictions;
+	}
+	public void setDeliveryInstrictions(String deliveryInstrictions) {
+		this.deliveryInstrictions = deliveryInstrictions;
 	}
 	
 }

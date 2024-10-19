@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.StaffDTO;
 import com.artist.entity.Staff;
 import com.artist.repository.StaffRepository;

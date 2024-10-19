@@ -7,7 +7,6 @@ import com.artist.dto.request.RecipientInformation;
 import com.artist.dto.response.OrdersDTO;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.WinningRecords;
-import com.artist.entity.Orders;
 
 public interface OrdersService {
 	// Create
@@ -16,7 +15,7 @@ public interface OrdersService {
     // Read
     List<WinningRecords> getAllWinningRecordsByCustomerId(String customerId);
     public List<?> getAll();
-    public Orders getOneByOrdernumber(String ordernumber);
+    public OrdersDTO getOneByOrdernumber(String ordernumber);
 
 
     // Update
