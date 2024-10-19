@@ -36,7 +36,6 @@ public class Orders {
 	private String attName;
 	
 
-
 	@Column(name = "att_phone")
 	private String attPhone;
 
@@ -75,17 +74,6 @@ public class Orders {
 		this.deliveryAdress = deliveryAdress;
 		this.deliveryInstrictions = deliveryInstrictions;
 		this.customer = customer;
-	}
-
-
-
-	public String getCustomerId() {
-		return customerId;
-	}
-
-
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
 	}
 
 

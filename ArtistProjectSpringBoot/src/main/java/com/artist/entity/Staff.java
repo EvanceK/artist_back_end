@@ -25,7 +25,7 @@ public class Staff {
 	@Column(name="staff_username")
 	private String staffUsername;
 	
-	@Column(name="staff_passdword")
+	@Column(name="staff_password")
 	private String staffPassword;
 
 	public Staff() {
@@ -41,14 +41,13 @@ public class Staff {
 		this.staffPassword = staffPassword;
 	}
 
-	
 
-	public int getStaff_id() {
-		return staff_id;
+	public Integer getStaffId() {
+		return staffId;
 	}
 
-	public void setStaff_id(int staff_id) {
-		this.staff_id = staff_id;
+	public void setStaffId(Integer staffId) {
+		this.staffId = staffId;
 	}
 
 	public String getStaffName() {
