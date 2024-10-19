@@ -224,11 +224,10 @@ public class PaintingsController {
 	
 	@GetMapping(value = "/topfavorites")
     public ResponseEntity<Map<String, Object>>getTopFavorites(
-    		@RequestHeader("Authorization") String token,
+    		@RequestParam(value = "token", defaultValue ="")String token,
     		@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
-		
-		
-		String customerId = csi.getCustomerIdFromToken(token);
+		String customerId = null;
+		if(token.equals("")){customerId = null;}else { customerId = csi.getCustomerIdFromToken(token);} 
 		List<TopFavoritesDTO> topFavorites;
 		if(customerId!=null) {
 		topFavorites = wsi.getTopFavorites(customerId,pageSize);//排除掉自己的前三
