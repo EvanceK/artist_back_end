@@ -17,6 +17,7 @@ import com.artist.entity.Bidrecord;
 import com.artist.entity.Orders;
 import com.artist.repository.BidrecordRepository;
 import com.artist.repository.CustomersRepository;
+import com.artist.repository.OrderDetailsRepository;
 import com.artist.repository.OrdersRepository;
 import com.artist.service.OrdersService;
 import com.artist.utils.IdGenerator;
@@ -26,7 +27,8 @@ public class OrdersServiceImpl implements OrdersService {
 
 	@Autowired
 	private OrdersRepository or;
-
+	@Autowired
+	private OrderDetailsRepository odr;
 	@Autowired
 	BidrecordRepository brr;
 	@Autowired
@@ -133,6 +135,7 @@ public class OrdersServiceImpl implements OrdersService {
 	
 	@Override
 	public void delete(String orderId) {
+		odr.deleteById(orderId);
 		or.deleteById(orderId);
 	}
 
