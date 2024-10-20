@@ -55,6 +55,7 @@ public class Orders {
 
 	//與Customers關聯
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "customer_id", insertable = false, updatable = false)
     private Customers customer;
 

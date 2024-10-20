@@ -2,6 +2,8 @@ package com.artist.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -44,6 +46,7 @@ public class Customers {
 	private Double bankBalance;
 	
     @OneToMany(mappedBy = "customer")
+    @JsonManagedReference
     private List<Orders> orders;
     
     @OneToMany(mappedBy = "customer")
