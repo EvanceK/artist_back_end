@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.artist.dto.response.BidrecordDTO;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.TopBiddingsDTO;
 import com.artist.dto.response.TopFavoritesDTO;
@@ -251,10 +252,15 @@ public class PaintingsController {
 	@GetMapping(value = "/topbiddings")
     public ResponseEntity<Map<String, Object>>getTopbiggings(@RequestParam(value = "pageSize", defaultValue = "3") int pageSize){
 		List<TopBiddingsDTO> topBiddings= bsi.getTopBidding(pageSize);//前三
+
         List<PaintingDTO> paintingList = new ArrayList<>();
         for (TopBiddingsDTO p : topBiddings) {
             String pId = p.getPaintingId();
+    		List<BidrecordDTO> biddingHistory = bsi.getAllBiddingHistoryByPaintings(pId);
+    		BidrecordDTO bidrecordDTO = biddingHistory.get(0);
+    		Double price = bidrecordDTO.getBidAmount();
          PaintingDTO paintingsId = psi.getByPaintingsId(pId);  // 單個查詢，因為數量不多，所以計畫分次查。
+         paintingsId.setPrice(price);
          paintingList.add(paintingsId);
         }
         Map<String, Object> response = new HashMap<>();
