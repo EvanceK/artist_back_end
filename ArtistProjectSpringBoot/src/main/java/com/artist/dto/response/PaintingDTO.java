@@ -17,6 +17,9 @@ public class PaintingDTO {
 	private Integer delicated;
 	private String status;
 	
+    private byte[] image;
+
+	
 	public PaintingDTO() {
 		super();
 	}
@@ -116,5 +119,31 @@ public class PaintingDTO {
 		this.delicated = delicated;
 		this.status = status;
 	}
+	public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	public PaintingDTO(String paintingId, String paintingName, String artistId, String artisName, String largUrl,
+			String smallUrl, Double price, String date, String style, LocalDateTime uploadDate, String genre,
+			Integer delicated, String status, byte[] image) {
+		super();
+		this.paintingId = paintingId;
+		this.paintingName = paintingName;
+		this.artistId = artistId;
+		this.artisName = artisName;
+		this.largUrl = largUrl;
+		this.smallUrl = smallUrl;
+		this.price = price;
+		this.date = date;
+		this.style = style;
+		this.uploadDate = uploadDate;
+		this.genre = genre;
+		this.delicated = delicated;
+		this.status = status;
+		this.image = image;
+	}
+
 	
 }

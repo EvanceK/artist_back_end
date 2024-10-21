@@ -275,6 +275,9 @@ public class CustomersServiceImpl implements CustomersService {
 		customer.setBankAccount(bankAccount);
 		customer.setCreditCardNo(creditCardNo);
 		cr.save(customer);
+		
+		
+		
 	}
 
    

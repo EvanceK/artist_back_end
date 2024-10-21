@@ -1,5 +1,8 @@
 package com.artist.service.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Collections;
@@ -57,7 +60,20 @@ public class PaintingsServiceImpl implements PaintingsService {
 		painting.setGenre(paintingDTO.getGenre());
 		painting.setDelicated(paintingDTO.getDelicated());
 		painting.setStatus(paintingDTO.getStatus());
+//		
+//		if(paintingDTO.getFilePathforSave()!=null) {
+//			Paintings paintingWithImage;
+//			try {
+//				paintingWithImage = savePaintingWithImage(painting,paintingDTO.getFilePathforSave());
+//				ptr.save(paintingWithImage);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}else {
+//			ptr.save(painting);
+//		}
 		ptr.save(painting);
+
 	}
 
 	// update
@@ -78,7 +94,17 @@ public class PaintingsServiceImpl implements PaintingsService {
 			painting.setGenre(paintingDTO.getGenre());
 			painting.setDelicated(paintingDTO.getDelicated());
 			painting.setStatus(paintingDTO.getStatus());
-			ptr.save(painting);
+//			if(paintingDTO.getImage()!=null) {
+//				Paintings paintingWithImage;
+//				try {
+//					paintingWithImage = savePaintingWithImage(painting,paintingDTO.getImage());
+//					ptr.save(paintingWithImage);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}else {
+//				ptr.save(painting);
+//			}
 		} else {
 			System.out.println("data not fond");
 		}
@@ -89,10 +115,11 @@ public class PaintingsServiceImpl implements PaintingsService {
 	@Override
 	public List<PaintingDTO> getAll() {
 		List<Paintings> paintings = ptr.findAll();
+		
 		return paintings.stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
-						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus(),p.getImage()))
 				.collect(Collectors.toList());
 	}
 
@@ -360,5 +387,12 @@ public class PaintingsServiceImpl implements PaintingsService {
 			System.out.println("找不到此 id 的畫");
 		}
 	}
-
+	
+	public Paintings savePaintingWithImage(Paintings painting,String filePath) throws IOException {
+	    // 讀取圖片檔案
+	    byte[] imageData = Files.readAllBytes(new File(filePath).toPath());
+	    painting.setImage(imageData);
+		return painting;
+		
+	}
 }
