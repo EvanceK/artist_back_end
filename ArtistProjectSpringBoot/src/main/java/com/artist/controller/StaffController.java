@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.artist.dto.request.StaffLoginRequest;
 import com.artist.dto.response.StaffDTO;
+import com.artist.dto.response.StaffLoginResponse;
 import com.artist.entity.Staff;
 import com.artist.repository.StaffRepository;
 import com.artist.service.impl.StaffServiceImpl;
@@ -54,6 +56,29 @@ public class StaffController {
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
+	}
+	
+	//登入
+	@PostMapping(value ="login")
+	public ResponseEntity<?> login(@RequestBody StaffLoginRequest request){
+		String staffUsername = request.getStaffUsername();
+		String password = request.getPassword();
+		try {
+			String token = ssi.login(staffUsername, password);
+
+			Integer StaffId = ssi.getStaffIdFromToken(token);
+			
+			Staff staff = ssi.getOneById(StaffId);
+
+			String staffName = staff.getStaffName();
+			Integer roleId = staff.getRoleId();
+			StaffLoginResponse response = new StaffLoginResponse(token, staffName, roleId);
+			return ResponseEntity.ok(response);
+		}catch(RuntimeException e) {
+			
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+		}
+		
 	}
 	
 	// 修改
