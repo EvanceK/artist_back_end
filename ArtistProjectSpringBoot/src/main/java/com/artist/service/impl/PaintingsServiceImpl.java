@@ -1,6 +1,7 @@
 package com.artist.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -325,7 +326,8 @@ public class PaintingsServiceImpl implements PaintingsService {
 		Optional<Paintings> painting = ptr.findById(paintingId);
 		return painting.map(Paintings::getImage).orElse(null);
 	}
-
+	
+	
 	@Override
 	public List<PaintingDTO> getPaintingsByBidrecords() {
 		List<Paintings> paintingsByGroupedBidrecords = ptr.findPaintingsByBidrecords();

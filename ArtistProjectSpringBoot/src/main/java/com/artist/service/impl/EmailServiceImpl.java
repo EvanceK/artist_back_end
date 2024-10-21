@@ -1,11 +1,11 @@
 package com.artist.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -74,7 +74,17 @@ public class EmailServiceImpl implements EmailService {
 		String paintingId = orderDetails.getPainting().getPaintingId();
 		Double winningPrice = orderDetails.getPrice();
 		String paymentLink = "http://localhost:5173/home/cusdashboard/winningRecords";
-
+		String base64Image = "";
+		
+		// 從資料庫獲取圖片 Blob
+		byte[] imageData =psi.getPaintingBlob(paintingId);
+		if (imageData != null) {
+			// 添加轉為Base64圖片到郵件
+			  base64Image = Base64.getEncoder().encodeToString(imageData);
+			} else {
+	        System.err.println("圖片數據為空，無法添加圖片");
+	    }
+		
 		// 創建 MIME 消息
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper;
@@ -93,13 +103,18 @@ public class EmailServiceImpl implements EmailService {
 			// 純文本內容（非 HTML 支持的郵件客戶端會顯示此內容）
 			String plainText = "親愛的用戶，恭喜您贏得了拍賣品 '" + paintingName + "'。" + "請在拍賣結束後 24 小時內確認付款資訊。" + "付款資訊連結："
 					+ paymentLink;
-
 			// HTML 格式的郵件內容
 			String htmlText = "<div style=\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9;\">"
 					+ "<h2 style=\"text-align: center; color: #4CAF50;\">恭喜！您已成功贏得拍賣品</h2>" + "<p>親愛的用戶：</p>"
-					+ "<p>您已成功贏得拍品 <strong>" + paintingName + "</strong>。以下是相關信息：</p>"
-					+ "<img src='cid:paintingImage' style='width:100px;height:100px;display:block;margin:auto;' />"
-					+ "<ul><li><strong>拍賣編號：</strong>" + paintingId + "</li>" + "<li><strong>得標價格：</strong>"
+					+ "<p>您已成功贏得拍品 <strong>" + paintingName + "</strong>。以下是相關信息：</p>";				
+	            
+	                // 如果圖片數據存在，插入圖片的 base64 編碼
+	                if (!base64Image.isEmpty()) {
+	                    htmlText += "<img src='data:image/jpeg;base64," + base64Image
+	                            + "' style='width:150px;height:auto;display:block;margin:auto;' />";
+	                }
+					
+					htmlText += "<ul><li><strong>拍賣編號：</strong>" + paintingId + "</li>" + "<li><strong>得標價格：</strong>"
 					+ winningPrice + " 元</li>" + "<li><strong>拍賣結束時間：</strong>" + endTime + "</li></ul>"
 					+ "<p>請在 24 小時內確認付款資訊，以確保交易有效。您可以點擊下方按鈕來確認：</p>" + "<p style=\"text-align: center;\"><a href=\""
 					+ paymentLink
@@ -108,15 +123,7 @@ public class EmailServiceImpl implements EmailService {
 					+ paymentLink + "\">" + paymentLink + "</a></p>" + "<p>謝謝您參與我們的拍賣活動！</p>" + "<p>Artist 團隊</p>"
 					+ "<hr>" + "<p style=\"font-size: 0.9em; color: #555;\">此郵件為系統自動發送，請勿回覆。</p>" + "</div>";
 
-			// 從資料庫獲取圖片 Blob (假設 ptr 是你的 repository)
-			byte[] imageData =psi.getPaintingBlob(paintingId);
-			if (imageData != null) {
-				// 添加圖片到郵件
-				helper.addInline("paintingImage", new ByteArrayResource(imageData), "image/jpeg");
-				} else {
-		        System.err.println("圖片數據為空，無法添加圖片");
-		    }
-			// 設置 HTML 郵件內容
+	
 		     // 設置純文本和 HTML 郵件內容
 	        helper.setText(plainText, htmlText); // 第一個參數是純文本，第二個是 HTML 內容
 			// 發送郵件

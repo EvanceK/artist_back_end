@@ -37,8 +37,8 @@ public interface PaintingsService {
     List<PaintingDTO> getByPaintingsName(String paintingName);
     Paintings getOnePaintingsById(String paintingId);
     
-	public byte[] getPaintingBlob(String paintingId);
-
+	byte[] getPaintingBlob(String paintingId);
+	
     //Like查詢
 	List<PaintingDTO> findPaintingAndArtistPartOfName(String name); 
 
