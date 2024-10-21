@@ -46,13 +46,8 @@ public class OrdersServiceImpl implements OrdersService {
 		String orderNumber = idGenerator.orderId();
 		order.setOrderNumber(orderNumber);
 		order.setOrderDate(orderDate);
-		order.setStatus(status);
 		order.setCustomerId(customerId);
-		order.setAttName("");
-		order.setAttPhone("");
-		order.setDeliveryAdress("");
-		order.setDeliveryInstrictions("");
-		
+				
 		or.save(order);
 		return order.getOrderNumber();
 	}
@@ -60,12 +55,13 @@ public class OrdersServiceImpl implements OrdersService {
 	@Override
 	public void update(OrdersDTO ordersDTO) {
 		String orderNum  = ordersDTO.getOrderNumber();
-		String status = ordersDTO.getStatus();
 		
 		Optional<Orders> optionalOrder = or.findByOrderNumber(orderNum);
 		if (optionalOrder.isPresent()) { 
 			Orders o = optionalOrder.get(); 
-			o.setStatus(status);
+			o.setServiceFee(ordersDTO.getServiceFee());
+			o.setDesposit(ordersDTO.getDesposit());
+			o.setTotalAmount(ordersDTO.getTotalAmount());
 			or.save(o);
 		} else {
 			System.out.println("not find");
@@ -158,11 +154,7 @@ public class OrdersServiceImpl implements OrdersService {
 			ordersDTO.setOrderNumber(o.getOrderNumber());
 			ordersDTO.setOrderDate(o.getOrderDate());
 			ordersDTO.setCustomerId(o.getCustomerId());
-			ordersDTO.setStatus(o.getStatus());
-			ordersDTO.setDeliveryAdress(o.getDeliveryAdress());
-			ordersDTO.setAttName(o.getAttName());
-			ordersDTO.setAttPhone(o.getAttPhone());
-			ordersDTO.setDeliveryInstrictions(o.getDeliveryInstrictions());
+
 			return ordersDTO;
 		} else {
 			System.out.println("not find");

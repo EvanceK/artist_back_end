@@ -3,8 +3,7 @@ package com.artist.entity;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

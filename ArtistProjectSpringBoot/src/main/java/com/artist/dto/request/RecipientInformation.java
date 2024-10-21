@@ -1,6 +1,5 @@
 package com.artist.dto.request;
 
-import jakarta.persistence.Column;
 
 public class RecipientInformation {
 	
