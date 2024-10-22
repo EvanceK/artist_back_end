@@ -1,5 +1,6 @@
 package com.artist.service.impl;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Bidrecord;
@@ -59,7 +61,8 @@ public class PaintingsServiceImpl implements PaintingsService {
 		painting.setGenre(paintingDTO.getGenre());
 		painting.setDelicated(paintingDTO.getDelicated());
 		painting.setStatus(paintingDTO.getStatus());
-//		
+		painting.setImage(paintingDTO.getImage());
+		
 //		if(paintingDTO.getFilePathforSave()!=null) {
 //			Paintings paintingWithImage;
 //			try {
@@ -93,6 +96,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 			painting.setGenre(paintingDTO.getGenre());
 			painting.setDelicated(paintingDTO.getDelicated());
 			painting.setStatus(paintingDTO.getStatus());
+			painting.setImage(paintingDTO.getImage());
 //			if(paintingDTO.getImage()!=null) {
 //				Paintings paintingWithImage;
 //				try {
@@ -392,6 +396,11 @@ public class PaintingsServiceImpl implements PaintingsService {
 	    byte[] imageData = Files.readAllBytes(new File(filePath).toPath());
 	    painting.setImage(imageData);
 		return painting;
-		
 	}
+	public Paintings saveImage(MultipartFile file) throws IOException {
+        
+
+    }
+	
+	
 }

@@ -19,7 +19,10 @@ public interface DeliveryOrdersRepository extends JpaRepository<DeliveryOrders, 
     // 查詢某段時間內的配送訂單
     List<DeliveryOrders> findByCreateDateBetween(LocalDateTime start, LocalDateTime end);
 
-   
+    
+    @Query("SELECT d FROM DeliveryOrders d JOIN d.orders o ON d.deliveryNumber = o.deliveryNumber")
+    List<DeliveryOrders> findAllWithOrders();
+
 
 //    // 查詢最新的配送訂單
     @Query("SELECT d FROM DeliveryOrders d ORDER BY d.createDate DESC")

@@ -3,6 +3,8 @@ package com.artist.dto.response;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.artist.entity.Orders;
+
 public class DeliveryOrderResponseDTO {
 	
 	    private String deliveryNumber; // 配送單號

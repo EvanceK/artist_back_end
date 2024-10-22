@@ -5,26 +5,28 @@ import java.time.LocalDateTime;
 public class OrdersDTO {
 
 	private String orderNumber;
-	private String customerId;
-	private int serviceFee;
-	private int desposit;
-	private int totalAmount;
 	private LocalDateTime orderDate;
+	private String customerId;
+	private Integer serviceFee;
+	private Integer desposit;
+	private Integer totalAmount;
 	private String deliveryNumber;
 
 	public OrdersDTO() {
 		super();
 	}
 
-	public OrdersDTO(String orderNumber, String customerId, int serviceFee, int desposit, int totalAmount,
-			LocalDateTime orderDate, String deliveryNumber) {
+
+
+	public OrdersDTO(String orderNumber, LocalDateTime orderDate, String customerId, Integer serviceFee,
+			Integer desposit, Integer totalAmount, String deliveryNumber) {
 		super();
 		this.orderNumber = orderNumber;
+		this.orderDate = orderDate;
 		this.customerId = customerId;
 		this.serviceFee = serviceFee;
 		this.desposit = desposit;
 		this.totalAmount = totalAmount;
-		this.orderDate = orderDate;
 		this.deliveryNumber = deliveryNumber;
 	}
 
@@ -46,27 +48,27 @@ public class OrdersDTO {
 		this.customerId = customerId;
 	}
 
-	public int getServiceFee() {
+	public Integer getServiceFee() {
 		return serviceFee;
 	}
 
-	public void setServiceFee(int serviceFee) {
+	public void setServiceFee(Integer serviceFee) {
 		this.serviceFee = serviceFee;
 	}
 
-	public int getDesposit() {
+	public Integer getDesposit() {
 		return desposit;
 	}
 
-	public void setDesposit(int desposit) {
+	public void setDesposit(Integer desposit) {
 		this.desposit = desposit;
 	}
 
-	public int getTotalAmount() {
+	public Integer getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(int totalAmount) {
+	public void setTotalAmount(Integer totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 

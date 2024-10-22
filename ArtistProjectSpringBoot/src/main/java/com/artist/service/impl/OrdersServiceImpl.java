@@ -97,8 +97,8 @@ public class OrdersServiceImpl implements OrdersService {
 			Bidrecord bidrecord = binddinglist.get(0);
 			String customerId = bidrecord.getBidderId(); //得到customerId
 			Double bidAmount = bidrecord.getBidAmount();
-			String orderNumber = create(removeDate, customerId, 0, 0, bidAmount.intValue()); //這邊拿到orderNumber
-
+			String orderNumber = create(removeDate, customerId, Double.valueOf(bidAmount * 0.02).intValue(), bidAmount.intValue()/10, bidAmount.intValue()); //這邊拿到orderNumber
+//serviceFee先抽2%的服務費??，deposit押金要用退的
 			String paintingId = bidrecord.getPaintingId();
 //			Double bidAmount = bidrecord.getBidAmount();
 

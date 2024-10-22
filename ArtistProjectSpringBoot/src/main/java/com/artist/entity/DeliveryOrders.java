@@ -1,7 +1,14 @@
 package com.artist.entity;
 
 import java.time.LocalDateTime;
-import jakarta.persistence.*;
+import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "deliveryorders")
@@ -30,16 +37,19 @@ public class DeliveryOrders {
 	private String deliveryInstrictions;
 	
 	@Column(name = "delivery_fee")
-	private int deliveryFee;
+	private Integer  deliveryFee;
 	
 	@Column(name = "total_amount")
-	private int totalAmount;
+	private Integer  totalAmount;
 	
 	@Column(name = "package_staff")
-	private int packageStaff;
+	private Integer  packageStaff;
 	
 	@Column(name = "delivery_staff")
-	private int deliveryStaff;
+	private Integer  deliveryStaff;
+	
+	@OneToMany(mappedBy = "deliveryOrders", fetch = FetchType.LAZY)
+	private List<Orders> orders;
 
 	public DeliveryOrders() {
 		super();
@@ -47,8 +57,8 @@ public class DeliveryOrders {
 
 
 	public DeliveryOrders(String deliveryNumber, LocalDateTime createDate, String status, String attName,
-			String attPhone, String deliveryAddress, String deliveryInstrictions, int deliveryFee, int totalAmount,
-			int packageStaff, int deliveryStaff) {
+			String attPhone, String deliveryAddress, String deliveryInstrictions, Integer  deliveryFee, Integer  totalAmount,
+			Integer  packageStaff, Integer  deliveryStaff) {
 		super();
 		this.deliveryNumber = deliveryNumber;
 		this.createDate = createDate;
@@ -61,6 +71,38 @@ public class DeliveryOrders {
 		this.totalAmount = totalAmount;
 		this.packageStaff = packageStaff;
 		this.deliveryStaff = deliveryStaff;
+	}
+
+
+	public DeliveryOrders(String deliveryNumber, LocalDateTime createDate, String status, String attName,
+			String attPhone, String deliveryAddress, String deliveryInstrictions, Integer  deliveryFee, Integer  totalAmount,
+			Integer  packageStaff, Integer  deliveryStaff, List<Orders> orders) {
+		super();
+		this.deliveryNumber = deliveryNumber;
+		this.createDate = createDate;
+		this.status = status;
+		this.attName = attName;
+		this.attPhone = attPhone;
+		this.deliveryAddress = deliveryAddress;
+		this.deliveryInstrictions = deliveryInstrictions;
+		this.deliveryFee = deliveryFee;
+		this.totalAmount = totalAmount;
+		this.packageStaff = packageStaff;
+		this.deliveryStaff = deliveryStaff;
+		this.orders = orders;
+
+	}
+
+	
+
+
+	public List<Orders> getOrders() {
+		return orders;
+	}
+
+
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
 	}
 
 
@@ -121,35 +163,35 @@ public class DeliveryOrders {
 		this.deliveryInstrictions = deliveryInstrictions;
 	}
 
-	public int getDeliveryFee() {
+	public Integer getDeliveryFee() {
 		return deliveryFee;
 	}
 
-	public void setDeliveryFee(int deliveryFee) {
+	public void setDeliveryFee(Integer deliveryFee) {
 		this.deliveryFee = deliveryFee;
 	}
 
-	public int getTotalAmount() {
+	public Integer getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(int totalAmount) {
+	public void setTotalAmount(Integer totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
-	public int getPackageStaff() {
+	public Integer getPackageStaff() {
 		return packageStaff;
 	}
 
-	public void setPackageStaff(int packageStaff) {
+	public void setPackageStaff(Integer packageStaff) {
 		this.packageStaff = packageStaff;
 	}
 
-	public int getDeliveryStaff() {
+	public Integer getDeliveryStaff() {
 		return deliveryStaff;
 	}
 
-	public void setDeliveryStaff(int deliveryStaff) {
+	public void setDeliveryStaff(Integer deliveryStaff) {
 		this.deliveryStaff = deliveryStaff;
 	}
 		

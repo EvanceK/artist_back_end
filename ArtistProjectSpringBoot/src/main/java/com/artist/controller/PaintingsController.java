@@ -1,5 +1,6 @@
 package com.artist.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.artist.dto.response.BidrecordDTO;
 import com.artist.dto.response.PaintingDTO;
@@ -288,6 +290,18 @@ public class PaintingsController {
 	            return ResponseEntity.notFound().build();  // 如果沒有找到圖片，返回 404
 	        }
 	        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageData); // 返回圖片數據給前端
+	    }
+	    
+
+	    // 將前端上傳的圖片存到資料庫
+	    @PostMapping("/upload")
+	    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+	        try {
+	            psi.saveImage(file);
+	            return ResponseEntity.ok("圖片上傳成功！");
+	        } catch (IOException e) {
+	            return ResponseEntity.status(500).body("圖片上傳失敗！");
+	        }
 	    }
    
 }

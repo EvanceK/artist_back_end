@@ -1,9 +1,12 @@
 package com.artist.service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Paintings;
 
@@ -11,6 +14,7 @@ public interface PaintingsService {
 
 	// Create
     void create(PaintingDTO paintingDTO);
+	Paintings saveImage(MultipartFile file) throws IOException;
 
     // update
     void update(PaintingDTO PaintingDTO);

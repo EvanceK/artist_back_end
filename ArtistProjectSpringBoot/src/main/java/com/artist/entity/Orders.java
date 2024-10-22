@@ -50,6 +50,7 @@ public class Orders {
 	
  // 外鍵對應 deliveryorders 表，表示每張訂單只屬於一張出貨單
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "delivery_number", insertable = false, updatable = false)
     private DeliveryOrders deliveryOrders;
 
