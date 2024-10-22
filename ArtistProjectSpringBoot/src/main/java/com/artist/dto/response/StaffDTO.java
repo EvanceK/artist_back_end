@@ -11,16 +11,16 @@ public class StaffDTO {
 	public StaffDTO() {
 		super();
 	}
-	public StaffDTO( String staffName, String staffDepartment, 
-			String staffUsername,String staffPassword) {
+
+	public StaffDTO(String staffName, String staffDepartment, String staffUsername, String staffPassword,
+			Integer roleId) {
 		super();
 		this.staffName = staffName;
 		this.staffDepartment = staffDepartment;
 		this.staffUsername = staffUsername;
 		this.staffPassword = staffPassword;
+		this.roleId = roleId;
 	}
-
-
 
 	public int getStaffId() {
 		return staffId;
