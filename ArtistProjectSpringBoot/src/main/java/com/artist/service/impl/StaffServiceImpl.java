@@ -63,7 +63,7 @@ public class StaffServiceImpl implements StaffService {
 			staff.setStaffDepartment(staffDTO.getStaffDepartment());
 			staff.setStaffName(staffDTO.getStaffName());
 			staff.setStaffUsername(staffDTO.getStaffUsername());
-			staff.setStaffPassword(staffDTO.getStaffPassword());
+			staff.setStaffPassword(passwordEncoder.encode(staffDTO.getStaffPassword()));
 			staff.setRoleId(staffDTO.getRoleId());
 			sr.save(staff);
 		} else {
@@ -79,7 +79,7 @@ public class StaffServiceImpl implements StaffService {
 
 	@Override
 	public String login(String staffUsername, String staffPassword) {
-		// TODO Auto-generated method stub
+//		 TODO Auto-generated method stub
 		Staff staff = sr.findByStaffUsername(staffUsername)
 				.orElseThrow(() -> new RuntimeException("Staff UserName doesn't exist"));
 		if (passwordEncoder.matches(staffPassword, staff.getStaffPassword())) {
@@ -87,7 +87,6 @@ public class StaffServiceImpl implements StaffService {
 		} else {
 			throw new RuntimeException("Invalid password");
 		}
-
 	}
 
 	private String generateToken(Staff staff) {
