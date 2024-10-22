@@ -41,31 +41,29 @@ public class OrdersServiceImpl implements OrdersService {
 	private IdGenerator idGenerator; // 注入 IdGenerator
 
 	@Override
-	public String create(LocalDateTime orderDate, String customerId, String status) {
-		Orders order = new Orders();
-		String orderNumber = idGenerator.orderId();
-		order.setOrderNumber(orderNumber);
-		order.setOrderDate(orderDate);
-		order.setStatus(status);
-		order.setCustomerId(customerId);
-		order.setAttName("");
-		order.setAttPhone("");
-		order.setDeliveryAdress("");
-		order.setDeliveryInstrictions("");
-		
-		or.save(order);
-		return order.getOrderNumber();
+	public String create(LocalDateTime orderDate, String customerId, Integer serviceFee, Integer deposit, Integer totalAmount) {
+	    Orders order = new Orders();
+	    String orderNumber = idGenerator.orderId(); // 使用 ID 生成器生成訂單編號
+	    order.setOrderNumber(orderNumber);
+	    order.setOrderDate(orderDate);
+	    order.setCustomerId(customerId);
+	    
+	    // 根據傳入的參數設置這些欄位
+	    order.setServiceFee(serviceFee); // 設置服務費
+	    order.setDesposit(deposit); // 設置訂金
+	    order.setTotalAmount(totalAmount); // 設置總金額
+
+	    or.save(order); // 保存訂單
+
+	    return order.getOrderNumber(); // 返回生成的訂單號
 	}
 	
 	@Override
 	public void update(OrdersDTO ordersDTO) {
 		String orderNum  = ordersDTO.getOrderNumber();
-		String status = ordersDTO.getStatus();
-		
 		Optional<Orders> optionalOrder = or.findByOrderNumber(orderNum);
 		if (optionalOrder.isPresent()) { 
 			Orders o = optionalOrder.get(); 
-			o.setStatus(status);
 			or.save(o);
 		} else {
 			System.out.println("not find");
@@ -78,7 +76,7 @@ public class OrdersServiceImpl implements OrdersService {
 		List<Bidrecord> binddinglist = brr.findByPaintingIdOrderByBidAmountDesc(painting.getPaintingId());
 
 		if (binddinglist.isEmpty()) {
-
+			//如果沒有出價紀錄
 			System.out.println(painting.getPaintingId() + "沒有出價紀錄");
 			return; //
 		} else {
@@ -89,14 +87,15 @@ public class OrdersServiceImpl implements OrdersService {
 			    bid.setStatus("Auction closed");
 			    brr.save(bid); // 儲存更新後的 Bidrecord
 			});
-		
+			
+			//取得最高出價記錄
 			Bidrecord bidrecord = binddinglist.get(0);
 			String customerId = bidrecord.getBidderId(); //得到customerId
-			
-			String orderNumber = create(removeDate, customerId, "Pending Final Payment"); //這邊拿到orderNumber
+			Double bidAmount = bidrecord.getBidAmount();
+			String orderNumber = create(removeDate, customerId, 0, 0, bidAmount.intValue()); //這邊拿到orderNumber
 
 			String paintingId = bidrecord.getPaintingId();
-			Double bidAmount = bidrecord.getBidAmount();
+//			Double bidAmount = bidrecord.getBidAmount();
 
 			odsi.create(orderNumber, paintingId, bidAmount);
 //			try {
@@ -156,13 +155,11 @@ public class OrdersServiceImpl implements OrdersService {
 			Orders o = optionalOrder.get();
 			OrdersDTO ordersDTO = new OrdersDTO();
 			ordersDTO.setOrderNumber(o.getOrderNumber());
-			ordersDTO.setOrderDate(o.getOrderDate());
-			ordersDTO.setCustomerId(o.getCustomerId());
-			ordersDTO.setStatus(o.getStatus());
-			ordersDTO.setDeliveryAdress(o.getDeliveryAdress());
-			ordersDTO.setAttName(o.getAttName());
-			ordersDTO.setAttPhone(o.getAttPhone());
-			ordersDTO.setDeliveryInstrictions(o.getDeliveryInstrictions());
+	        ordersDTO.setOrderDate(o.getOrderDate());
+	        ordersDTO.setCustomerId(o.getCustomerId());
+	        ordersDTO.setServiceFee(o.getServiceFee());
+	        ordersDTO.setDeposit(o.getDesposit());
+	        ordersDTO.setTotalAmount(o.getTotalAmount());
 			return ordersDTO;
 		} else {
 			System.out.println("not find");
@@ -170,23 +167,24 @@ public class OrdersServiceImpl implements OrdersService {
 		}
 	}
 
-	@Override
-	public void updateOrderInfo(RecipientInformation recipient) {
+	
+//	@Override
+//	public void updateOrderInfo(RecipientInformation recipient) {
+//		
+//	Optional<Orders> orderNumber = or.findByOrderNumber(recipient.getOrdernumber());
+//	if (orderNumber.isPresent()) {
+//		Orders order = orderNumber.get();
+//		order.setDeliveryAdress(recipient.getDeliveryAdress());
+//		order.setAttName(recipient.getAttName());
+//		order.setAttPhone(recipient.getAttPhone());
+//		order.setDeliveryInstrictions(recipient.getDeliveryInstrictions());
+//		or.save(order);
+//	}else {
+//		  throw new RuntimeException("資料填入異常");
+//	}
 		
-	Optional<Orders> orderNumber = or.findByOrderNumber(recipient.getOrdernumber());
-	if (orderNumber.isPresent()) {
-		Orders order = orderNumber.get();
-		order.setDeliveryAdress(recipient.getDeliveryAdress());
-		order.setAttName(recipient.getAttName());
-		order.setAttPhone(recipient.getAttPhone());
-		order.setDeliveryInstrictions(recipient.getDeliveryInstrictions());
-		or.save(order);
-	}else {
-		  throw new RuntimeException("資料填入異常");
-	}
-		
 	}
 
 
 
-}
+

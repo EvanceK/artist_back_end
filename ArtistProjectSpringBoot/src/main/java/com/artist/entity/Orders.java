@@ -29,28 +29,31 @@ public class Orders {
 	@Column(name = "customer_id")
     private String customerId;
 	
-	@Column(name = "status")
-	private String status;
-	
-	@Column(name = "att_name")
-	private String attName;
-	
+	@Column(name = "service_fee")
+    private Integer serviceFee;
 
-	@Column(name = "att_phone")
-	private String attPhone;
+    @Column(name = "desposit")
+    private Integer desposit;
 
-	@Column(name = "delivery_address")
-	private String deliveryAdress;
-	
-	@Column(name = "delivery_instrictions")
-	private String deliveryInstrictions;
+    @Column(name = "total_amount")
+    private Integer totalAmount;
+    
+ // 新增這個欄位來存儲 delivery_number
+    @Column(name = "delivery_number")  // 對應資料庫中的 delivery_number 欄位
+    private String deliveryNumber;
+
 	
 	
     @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     @JsonBackReference
     private OrderDetails orderDetail;
+    
+    
 	
-
+ // 外鍵對應 deliveryorders 表，表示每張訂單只屬於一張出貨單
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_number", insertable = false, updatable = false)
+    private Deliveryorders deliveryOrders;
 
 
 	//與Customers關聯
@@ -64,18 +67,14 @@ public class Orders {
 	}
 
 
-	public Orders(String orderNumber, LocalDateTime orderDate, String status, String attName, String attPhone,
-			String deliveryAdress, String deliveryInstrictions, Customers customer) {
-		super();
-		this.orderNumber = orderNumber;
-		this.orderDate = orderDate;
-		this.status = status;
-		this.attName = attName;
-		this.attPhone = attPhone;
-		this.deliveryAdress = deliveryAdress;
-		this.deliveryInstrictions = deliveryInstrictions;
-		this.customer = customer;
-	}
+	 public Orders(String orderNumber, LocalDateTime orderDate, String customerId, Integer serviceFee, Integer desposit, Integer totalAmount) {
+	        this.orderNumber = orderNumber;
+	        this.orderDate = orderDate;
+	        this.customerId = customerId;
+	        this.serviceFee = serviceFee;
+	        this.desposit = desposit;
+	        this.totalAmount = totalAmount;
+	    }
 
 
 	public String getOrderNumber() {
@@ -110,65 +109,6 @@ public class Orders {
 
 
 
-	public String getStatus() {
-		return status;
-	}
-
-
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-
-
-	public String getAttName() {
-		return attName;
-	}
-
-
-
-	public void setAttName(String attName) {
-		this.attName = attName;
-	}
-
-
-
-	public String getAttPhone() {
-		return attPhone;
-	}
-
-
-
-	public void setAttPhone(String attPhone) {
-		this.attPhone = attPhone;
-	}
-
-
-
-	public String getDeliveryAdress() {
-		return deliveryAdress;
-	}
-
-
-
-	public void setDeliveryAdress(String deliveryAdress) {
-		this.deliveryAdress = deliveryAdress;
-	}
-
-
-
-	public String getDeliveryInstrictions() {
-		return deliveryInstrictions;
-	}
-
-
-
-	public void setDeliveryInstrictions(String deliveryInstrictions) {
-		this.deliveryInstrictions = deliveryInstrictions;
-	}
-
-
 
 	public Customers getCustomer() {
 		return customer;
@@ -188,6 +128,56 @@ public class Orders {
 
 	public void setOrderDetail(OrderDetails orderDetail) {
 		this.orderDetail = orderDetail;
+	}
+
+
+	public Integer getServiceFee() {
+		return serviceFee;
+	}
+
+
+	public void setServiceFee(Integer serviceFee) {
+		this.serviceFee = serviceFee;
+	}
+
+
+	public Integer getDesposit() {
+		return desposit;
+	}
+
+
+	public void setDesposit(Integer desposit) {
+		this.desposit = desposit;
+	}
+
+
+	public Integer getTotalAmount() {
+		return totalAmount;
+	}
+
+
+	public void setTotalAmount(Integer totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+
+	public Deliveryorders getDeliveryOrder() {
+		return deliveryOrders;
+	}
+
+
+	public void setDeliveryOrder(Deliveryorders deliveryOrder) {
+		this.deliveryOrders = deliveryOrder;
+	}
+
+
+	public String getDeliveryNumber() {
+		return deliveryNumber;
+	}
+
+
+	public void setDeliveryNumber(String deliveryNumber) {
+		this.deliveryNumber = deliveryNumber;
 	}
 
     

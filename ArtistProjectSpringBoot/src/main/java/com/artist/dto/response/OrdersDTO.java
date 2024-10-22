@@ -4,78 +4,76 @@ import java.time.LocalDateTime;
 
 public class OrdersDTO {
 
-	private String orderNumber;
-	private String customerId;
-	private String status;
-	private String attName;
-	private String attPhone;
-	private String deliveryAdress;
-	private LocalDateTime orderDate;
-	private String deliveryInstrictions;
+	private String orderNumber; // 訂單編號
+    private LocalDateTime orderDate; // 訂單日期
+    private String customerId; // 客戶ID
+    private Integer serviceFee; // 服務費
+    private Integer deposit; // 訂金
+    private Integer totalAmount; // 總金額
+    
 	public OrdersDTO() {
 		super();
 	}
-	public OrdersDTO(String orderNumber, String customerId, 
-			String status, String attName, String attPhone,
-			String deliveryAdress, LocalDateTime orderDate,
-			String deliveryInstrictions) {
+	
+	
+	public OrdersDTO(String orderNumber, LocalDateTime orderDate, String customerId, 
+            Integer serviceFee, Integer deposit, Integer totalAmount) {
 		super();
 		this.orderNumber = orderNumber;
-		this.customerId = customerId;
-		this.status = status;
-		this.attName = attName;
-		this.attPhone = attPhone;
-		this.deliveryAdress = deliveryAdress;
 		this.orderDate = orderDate;
-		this.deliveryInstrictions = deliveryInstrictions;
-	}
-	public String getOrderNumber() {
-		return orderNumber;
-	}
-	public void setOrderNumber(String orderNumber) {
-		this.orderNumber = orderNumber;
-	}
-	public String getCustomerId() {
-		return customerId;
-	}
-	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
+		this.serviceFee = serviceFee;
+		this.deposit = deposit;
+		this.totalAmount = totalAmount;
 	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public String getAttName() {
-		return attName;
-	}
-	public void setAttName(String attName) {
-		this.attName = attName;
-	}
-	public String getAttPhone() {
-		return attPhone;
-	}
-	public void setAttPhone(String attPhone) {
-		this.attPhone = attPhone;
-	}
-	public String getDeliveryAdress() {
-		return deliveryAdress;
-	}
-	public void setDeliveryAdress(String deliveryAdress) {
-		this.deliveryAdress = deliveryAdress;
-	}
-	public LocalDateTime getOrderDate() {
-		return orderDate;
-	}
-	public void setOrderDate(LocalDateTime orderDate) {
-		this.orderDate = orderDate;
-	}
-	public String getDeliveryInstrictions() {
-		return deliveryInstrictions;
-	}
-	public void setDeliveryInstrictions(String deliveryInstrictions) {
-		this.deliveryInstrictions = deliveryInstrictions;
-	}
-	
+	// Getters and Setters
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public Integer getServiceFee() {
+        return serviceFee;
+    }
+
+    public void setServiceFee(Integer serviceFee) {
+        this.serviceFee = serviceFee;
+    }
+
+    public Integer getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Integer deposit) {
+        this.deposit = deposit;
+    }
+
+    public Integer getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Integer totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 }
+	
+

@@ -13,11 +13,16 @@ import com.artist.entity.Orders;
 public interface OrdersRepository extends JpaRepository<Orders, String>{
 
 //    List<Orders> findByCustomerId(String customerId);
-    
-	@Query("SELECT o FROM Orders o WHERE o.orderNumber = :orderNumber")
-	Optional<Orders> findByOrderNumber(@Param("orderNumber") String orderNumber);
-    
+	// 查詢單筆訂單
+    @Query("SELECT o FROM Orders o WHERE o.orderNumber = :orderNumber")
+    Optional<Orders> findByOrderNumber(@Param("orderNumber") String orderNumber);
+
+    // 查詢某個客戶的所有訂單
     @EntityGraph(attributePaths = {"orderDetail.painting"})
     List<Orders> findByCustomerId(String customerId);
+
+    // 新增查詢多筆訂單的方法
+    @Query("SELECT o FROM Orders o WHERE o.orderNumber IN :orderNumbers")
+    List<Orders> findByOrderNumbers(@Param("orderNumbers") List<String> orderNumbers);
     
 }

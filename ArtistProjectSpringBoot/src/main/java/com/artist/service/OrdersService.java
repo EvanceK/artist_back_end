@@ -10,7 +10,7 @@ import com.artist.dto.response.WinningRecords;
 
 public interface OrdersService {
 	// Create
-	public String create(LocalDateTime orderDate,String customerId, String status);
+	public String create(LocalDateTime orderDate, String customerId, Integer serviceFee, Integer deposit, Integer totalAmount);
 
     // Read
     List<WinningRecords> getAllWinningRecordsByCustomerId(String customerId);
@@ -19,7 +19,7 @@ public interface OrdersService {
 
 
     // Update
-	public void updateOrderInfo(RecipientInformation recipient);
+//	public void updateOrderInfo(RecipientInformation recipient);
     public void update(OrdersDTO ordersDTO);
     
     // Delete
@@ -27,5 +27,7 @@ public interface OrdersService {
 	
 	//自動下架用
 	public void finalizeHighestBidAsOrder(PaintingDTO painting, LocalDateTime removeDate);
+
+	
 
 }
