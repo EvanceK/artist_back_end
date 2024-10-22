@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.artist.dto.request.RecipientInformation;
 import com.artist.dto.response.OrdersDTO;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.WinningRecords;
@@ -159,6 +160,12 @@ public class OrdersServiceImpl implements OrdersService {
 			System.out.println("not find");
 			return null;
 		}
+	}
+
+	@Override
+	public void updateOrderInfo(RecipientInformation recipient) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
