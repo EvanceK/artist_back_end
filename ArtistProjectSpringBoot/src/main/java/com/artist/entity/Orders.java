@@ -41,8 +41,6 @@ public class Orders {
  // 新增這個欄位來存儲 delivery_number
     @Column(name = "delivery_number")  // 對應資料庫中的 delivery_number 欄位
     private String deliveryNumber;
-
-	
 	
     @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     @JsonBackReference
@@ -66,19 +64,35 @@ public class Orders {
 		super();
 	}
 
+	public Orders(LocalDateTime orderDate, String customerId, int serviceFee, int desposit, int totalAmount,
+			String deliveryNumber, OrderDetails orderDetail, Customers customer) {
+		super();
+		this.orderDate = orderDate;
+		this.customerId = customerId;
+		this.serviceFee = serviceFee;
+		this.desposit = desposit;
+		this.totalAmount = totalAmount;
+		this.deliveryNumber = deliveryNumber;
+		this.orderDetail = orderDetail;
+		this.customer = customer;
+	}
 
-	 public Orders(String orderNumber, LocalDateTime orderDate, String customerId, Integer serviceFee, Integer desposit, Integer totalAmount) {
-	        this.orderNumber = orderNumber;
-	        this.orderDate = orderDate;
-	        this.customerId = customerId;
-	        this.serviceFee = serviceFee;
-	        this.desposit = desposit;
-	        this.totalAmount = totalAmount;
-	    }
 
 
 	public String getOrderNumber() {
 		return orderNumber;
+	}
+
+	public void setOrderNumber(String orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
+	public LocalDateTime getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(LocalDateTime orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public String getCustomerId() {
@@ -89,21 +103,16 @@ public class Orders {
 		this.customerId = customerId;
 	}
 
-
-	public void setOrderNumber(String orderNumber) {
-		this.orderNumber = orderNumber;
+	public int getServiceFee() {
+		return serviceFee;
 	}
 
-
-
-	public LocalDateTime getOrderDate() {
-		return orderDate;
+	public void setServiceFee(int serviceFee) {
+		this.serviceFee = serviceFee;
 	}
 
-
-
-	public void setOrderDate(LocalDateTime orderDate) {
-		this.orderDate = orderDate;
+	public int getDesposit() {
+		return desposit;
 	}
 
 
@@ -124,7 +133,6 @@ public class Orders {
 	public OrderDetails getOrderDetail() {
 		return orderDetail;
 	}
-
 
 	public void setOrderDetail(OrderDetails orderDetail) {
 		this.orderDetail = orderDetail;

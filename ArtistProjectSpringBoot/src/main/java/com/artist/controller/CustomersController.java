@@ -179,15 +179,15 @@ public class CustomersController {
 	}
 	
 	
-//	// 編輯客戶的訂單資訊
-//	@PutMapping(value = "/EditOrder", consumes = "application/json")
-//	public ResponseEntity<?> updateOrderInfo(@RequestHeader("Authorization") String token,@RequestBody RecipientInformation recipient ) {
+	// 編輯客戶的訂單資訊
+	@PutMapping(value = "/EditOrder", consumes = "application/json")
+	public ResponseEntity<?> updateOrderInfo(@RequestHeader("Authorization") String token,@RequestBody RecipientInformation recipient ) {
 //		try {
 //			osi.updateOrderInfo(recipient);
-//			return ResponseEntity.status(HttpStatus.OK).body("編輯訂單資訊成功");
+			return ResponseEntity.status(HttpStatus.OK).body("編輯訂單資訊成功");
 //		} catch (Exception e) {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 //		}
-//	}
+	}
 
 }

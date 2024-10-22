@@ -31,7 +31,17 @@ public class IdGenerator {
 	@Autowired
 	private DeliveryOrderRepository dor;
 
-
+	public String DeliveryOrdersId() {
+		String prefix = "DO";
+		List<DeliveryOrders> deliveryOrdersList = dor.findAll();
+		if (deliveryOrdersList.size() > 0) {
+			DeliveryOrders lastesPaintings = deliveryOrdersList.get(deliveryOrdersList.size() - 1);
+			String lastestId = lastesPaintings.getDeliveryNumber();
+			return IDGenerator(prefix, lastestId);
+		} else {
+			return IDGenerator(prefix, "0000");
+		}
+	}
 	
 	public String artistId() {
 		String prefix = "AR";

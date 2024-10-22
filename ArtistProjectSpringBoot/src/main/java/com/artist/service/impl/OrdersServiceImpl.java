@@ -61,9 +61,14 @@ public class OrdersServiceImpl implements OrdersService {
 	@Override
 	public void update(OrdersDTO ordersDTO) {
 		String orderNum  = ordersDTO.getOrderNumber();
+		
 		Optional<Orders> optionalOrder = or.findByOrderNumber(orderNum);
 		if (optionalOrder.isPresent()) { 
 			Orders o = optionalOrder.get(); 
+			o.setServiceFee(ordersDTO.getServiceFee());
+			o.setDesposit(ordersDTO.getDesposit());
+			o.setTotalAmount(ordersDTO.getTotalAmount());
+			o.setDeliveryNumber(ordersDTO.getDeliveryNumber());
 			or.save(o);
 		} else {
 			System.out.println("not find");
@@ -155,11 +160,9 @@ public class OrdersServiceImpl implements OrdersService {
 			Orders o = optionalOrder.get();
 			OrdersDTO ordersDTO = new OrdersDTO();
 			ordersDTO.setOrderNumber(o.getOrderNumber());
-	        ordersDTO.setOrderDate(o.getOrderDate());
-	        ordersDTO.setCustomerId(o.getCustomerId());
-	        ordersDTO.setServiceFee(o.getServiceFee());
-	        ordersDTO.setDeposit(o.getDesposit());
-	        ordersDTO.setTotalAmount(o.getTotalAmount());
+			ordersDTO.setOrderDate(o.getOrderDate());
+			ordersDTO.setCustomerId(o.getCustomerId());
+
 			return ordersDTO;
 		} else {
 			System.out.println("not find");
