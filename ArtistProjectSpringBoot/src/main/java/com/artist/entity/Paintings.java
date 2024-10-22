@@ -63,7 +63,7 @@ public class Paintings {
 	private String status;
 
 	@Lob
-	@Column(name = "image")
+	@Column(name = "image",columnDefinition = "mediumblob")
     private byte[] image;
 	
 	public Paintings() {

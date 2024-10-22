@@ -1,27 +1,20 @@
 package com.artist.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.request.DeliveryOrderRequestDTO;
-import com.artist.dto.response.DeliveryOrderResponseDTO;
-import com.artist.entity.Deliveryorders;
-import com.artist.repository.OrdersRepository;
-import com.artist.service.DeliveryOrderService;
+import com.artist.service.impl.DeliveryOrdersServiceImpl;
 
 @RestController
 @RequestMapping("/DeliveryOrderController")
 public class DeliveryOrderController {
 	
 	@Autowired
-    private DeliveryOrderService dos;
+    private DeliveryOrdersServiceImpl dosi;
 	
 	
 	
@@ -30,7 +23,7 @@ public class DeliveryOrderController {
 	@PostMapping(value = "/createDeliveryOrder", consumes = "application/json")
 	public String createDeliveryOrder(@RequestBody DeliveryOrderRequestDTO deliveryOrderRequestDTO) {
         // 呼叫 Service 層的 createDeliveryOrder 方法
-        return dos.createDeliveryOrder(deliveryOrderRequestDTO);
+        return dosi.createDeliveryOrder(deliveryOrderRequestDTO);
        }
 //	
 //	@GetMapping("/deliveryOrders/{deliveryId}")

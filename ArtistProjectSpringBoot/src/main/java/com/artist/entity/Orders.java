@@ -51,7 +51,7 @@ public class Orders {
  // 外鍵對應 deliveryorders 表，表示每張訂單只屬於一張出貨單
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_number", insertable = false, updatable = false)
-    private Deliveryorders deliveryOrders;
+    private DeliveryOrders deliveryOrders;
 
 
 	//與Customers關聯
@@ -103,19 +103,10 @@ public class Orders {
 		this.customerId = customerId;
 	}
 
-	public int getServiceFee() {
-		return serviceFee;
-	}
 
 	public void setServiceFee(int serviceFee) {
 		this.serviceFee = serviceFee;
 	}
-
-	public int getDesposit() {
-		return desposit;
-	}
-
-
 
 
 
@@ -169,12 +160,12 @@ public class Orders {
 	}
 
 
-	public Deliveryorders getDeliveryOrder() {
+	public DeliveryOrders getDeliveryOrder() {
 		return deliveryOrders;
 	}
 
 
-	public void setDeliveryOrder(Deliveryorders deliveryOrder) {
+	public void setDeliveryOrder(DeliveryOrders deliveryOrder) {
 		this.deliveryOrders = deliveryOrder;
 	}
 

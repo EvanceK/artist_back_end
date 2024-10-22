@@ -2,7 +2,7 @@ package com.artist.config;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -12,8 +12,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.artist.dto.response.PaintingDTO;
-import com.artist.entity.Bidrecord;
-import com.artist.entity.Paintings;
 import com.artist.repository.BidrecordRepository;
 import com.artist.repository.PaintingsRepository;
 import com.artist.service.impl.EmailServiceImpl;
@@ -38,8 +36,8 @@ public class InitService implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-	    System.out.println("InitService is running...");
-	    initializeAllPaintings(); // 應用啟動時運行商品下架邏輯
+		System.out.println("InitService is running...");
+		initializeAllPaintings(); // 應用啟動時運行商品下架邏輯
 	}
 
 	// 商品下架的邏輯 自動計算下架時間
@@ -58,9 +56,9 @@ public class InitService implements CommandLineRunner {
 			if (delay <= 0) {
 				psi.setSatusfinished(painting.getPaintingId());
 				osi.finalizeHighestBidAsOrder(painting, removeDate);
-				
-					esi.sendAuctionWinningEmail(painting.getPaintingId());
-			
+
+				esi.sendAuctionWinningEmail(painting.getPaintingId());
+
 				System.out.println("商品已自動下架：" + painting.getPaintingId());
 			}
 
@@ -81,8 +79,8 @@ public class InitService implements CommandLineRunner {
 //                setSatusCanBid(painting.getPaintingId()); // 改成可以下單
 //			} 
 //			
-			if (delay>0){// 如果還未到下架時間，則設置定時任務
-	            System.out.println("Scheduling removal task: " + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
+			if (delay > 0) {// 如果還未到下架時間，則設置定時任務
+				System.out.println("Scheduling removal task: " + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
 
 				scheduler.schedule(() -> {
 					try {
@@ -91,10 +89,10 @@ public class InitService implements CommandLineRunner {
 						System.out.println("商品已自動下架：" + painting.getPaintingId());
 					} catch (Exception e) {
 						e.printStackTrace();
-					}		
-	
-						esi.sendAuctionWinningEmail(painting.getPaintingId());
-			
+					}
+
+					esi.sendAuctionWinningEmail(painting.getPaintingId());
+
 				}, delay, TimeUnit.MILLISECONDS);
 			}
 		}
@@ -117,6 +115,5 @@ public class InitService implements CommandLineRunner {
 //	        System.out.println("找不到此 id 的畫");
 //		}
 //	}
-
 
 }

@@ -1,77 +1,57 @@
 package com.artist.entity;
 
 import java.time.LocalDateTime;
-import java.util.Set;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "deliveryorders")
-public class Deliveryorders {
+public class DeliveryOrders {
 
 	@Id
-    @Column(name = "delivery_number")
-    private String deliveryNumber;
-
-    @Column(name = "create_date")
-    private LocalDateTime createDate;
-
-
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "att_name")
-    private String attName;
-
-    @Column(name = "att_phone")
-    private String attPhone;
-
-    @Column(name = "delivery_address")
-    private String deliveryAddress;
-
-    @Column(name = "delivery_instrictions")
-    private String deliveryInstrictions;
-
-    @Column(name = "delivery_fee")
-    private Integer deliveryFee;
-
-    @Column(name = "total_amount")
-    private Integer totalAmount;
-
-    @Column(name = "package_staff")
-    private Integer packageStaff;
-
-    @Column(name = "delivery_staff")
-    private Integer deliveryStaff;
-    
-    @OneToMany(mappedBy = "deliveryOrders", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "delivery_number")
-    private Set<Orders> orderList;  // 包含的訂單列表
-    
-    
-
-    public Deliveryorders() {
+	@Column(name = "delivery_number")
+	private String deliveryNumber;
 	
-		// TODO Auto-generated constructor stub
-	}
-    
-   
+	@Column(name = "create_date")
+	private LocalDateTime createDate;
+	
+	@Column(name = "status")
+	private String status;
+	
+	@Column(name = "att_name")
+	private String attName;
+	
+	@Column(name = "att_phone")
+	private String attPhone;
+	
+	@Column(name = "delivery_address")
+	private String deliveryAddress;
+	
+	@Column(name = "delivery_instrictions")
+	private String deliveryInstrictions;
+	
+	@Column(name = "delivery_fee")
+	private int deliveryFee;
+	
+	@Column(name = "total_amount")
+	private int totalAmount;
+	
+	@Column(name = "package_staff")
+	private int packageStaff;
+	
+	@Column(name = "delivery_staff")
+	private int deliveryStaff;
 
-
-	public Deliveryorders(LocalDateTime createDate,  String status, String attName, String attPhone,
-			String deliveryAddress, String deliveryInstrictions, Integer deliveryFee, Integer totalAmount,
-			Integer packageStaff, Integer deliveryStaff, Set<Orders> orderList) {
+	public DeliveryOrders() {
 		super();
+	}
+
+
+	public DeliveryOrders(String deliveryNumber, LocalDateTime createDate, String status, String attName,
+			String attPhone, String deliveryAddress, String deliveryInstrictions, int deliveryFee, int totalAmount,
+			int packageStaff, int deliveryStaff) {
+		super();
+		this.deliveryNumber = deliveryNumber;
 		this.createDate = createDate;
-	
 		this.status = status;
 		this.attName = attName;
 		this.attPhone = attPhone;
@@ -81,117 +61,96 @@ public class Deliveryorders {
 		this.totalAmount = totalAmount;
 		this.packageStaff = packageStaff;
 		this.deliveryStaff = deliveryStaff;
-		this.orderList = orderList;
 	}
 
 
+	public String getDeliveryNumber() {
+		return deliveryNumber;
+	}
 
+	public void setDeliveryNumber(String deliveryNumber) {
+		this.deliveryNumber = deliveryNumber;
+	}
 
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
 
-
-
-	// Getters and Setters
-    public String getDeliveryNumber() {
-        return deliveryNumber;
-    }
-
-    public void setDeliveryNumber(String deliveryNumber) {
-        this.deliveryNumber = deliveryNumber;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
-    }
-
-   
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getAttName() {
-        return attName;
-    }
-
-    public void setAttName(String attName) {
-        this.attName = attName;
-    }
-
-    public String getAttPhone() {
-        return attPhone;
-    }
-
-    public void setAttPhone(String attPhone) {
-        this.attPhone = attPhone;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
-
-    public String getDeliveryInstrictions() {
-        return deliveryInstrictions;
-    }
-
-    public void setDeliveryInstrictions(String deliveryInstrictions) {
-        this.deliveryInstrictions = deliveryInstrictions;
-    }
-
-    public Integer getDeliveryFee() {
-        return deliveryFee;
-    }
-
-    public void setDeliveryFee(Integer deliveryFee) {
-        this.deliveryFee = deliveryFee;
-    }
-
-    public Integer getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(Integer totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public Integer getPackageStaff() {
-        return packageStaff;
-    }
-
-    public void setPackageStaff(Integer packageStaff) {
-        this.packageStaff = packageStaff;
-    }
-
-    public Integer getDeliveryStaff() {
-        return deliveryStaff;
-    }
-
-    public void setDeliveryStaff(Integer deliveryStaff) {
-        this.deliveryStaff = deliveryStaff;
-    }
-
-
-	public Set<Orders> getOrderList() {
-		return orderList;
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
 	}
 
 
-
-
-	public void setOrderList(Set<Orders> orderList) {
-		this.orderList = orderList;
+	public String getStatus() {
+		return status;
 	}
-    
-    
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getAttName() {
+		return attName;
+	}
+
+	public void setAttName(String attName) {
+		this.attName = attName;
+	}
+
+	public String getAttPhone() {
+		return attPhone;
+	}
+
+	public void setAttPhone(String attPhone) {
+		this.attPhone = attPhone;
+	}
+
+	public String getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+	public void setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
+	}
+
+	public String getDeliveryInstrictions() {
+		return deliveryInstrictions;
+	}
+
+	public void setDeliveryInstrictions(String deliveryInstrictions) {
+		this.deliveryInstrictions = deliveryInstrictions;
+	}
+
+	public int getDeliveryFee() {
+		return deliveryFee;
+	}
+
+	public void setDeliveryFee(int deliveryFee) {
+		this.deliveryFee = deliveryFee;
+	}
+
+	public int getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(int totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public int getPackageStaff() {
+		return packageStaff;
+	}
+
+	public void setPackageStaff(int packageStaff) {
+		this.packageStaff = packageStaff;
+	}
+
+	public int getDeliveryStaff() {
+		return deliveryStaff;
+	}
+
+	public void setDeliveryStaff(int deliveryStaff) {
+		this.deliveryStaff = deliveryStaff;
+	}
+		
 }

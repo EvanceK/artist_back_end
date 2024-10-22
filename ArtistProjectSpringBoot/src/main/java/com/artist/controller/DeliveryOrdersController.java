@@ -25,10 +25,11 @@ import com.artist.service.impl.DeliveryOrdersServiceImpl;
 public class DeliveryOrdersController {
 
 	@Autowired
-	DeliveryOrdersRepository dor;
-	@Autowired
-	DeliveryOrdersServiceImpl dos;
+	DeliveryOrdersServiceImpl dosi;
 	
+	@Autowired
+	private DeliveryOrdersRepository dor;
+
 	// 取得全部
 	@RequestMapping(value = "/findall", method=RequestMethod.GET)
 	public List<DeliveryOrders> findall(Model model){
@@ -51,7 +52,7 @@ public class DeliveryOrdersController {
 	// 修改
 	@PutMapping(value ="/editDeliveryOrders", consumes = "application/json")
     public ResponseEntity<?> updateDeliveryOrders(@RequestBody DeliveryOrdersDTO deliveryOrdersfDTO){
-		dos.update(deliveryOrdersfDTO);
+		dosi.update(deliveryOrdersfDTO);
         return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
 	
@@ -59,7 +60,7 @@ public class DeliveryOrdersController {
 	@PostMapping(value = "/createDeliveryOrders", consumes = "application/json")
 	public ResponseEntity<?> createDeliveryOrders(@RequestBody DeliveryOrdersDTO deliveryOrdersfDTO) {
 		try {
-			dos.create(deliveryOrdersfDTO);
+			dosi.create(deliveryOrdersfDTO);
 			return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

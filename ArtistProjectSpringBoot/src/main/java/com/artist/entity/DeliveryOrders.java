@@ -14,9 +14,6 @@ public class DeliveryOrders {
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 	
-	@Column(name = "order_number")
-	private String orderNumber;
-	
 	@Column(name = "status")
 	private String status;
 	
@@ -48,12 +45,13 @@ public class DeliveryOrders {
 		super();
 	}
 
-	public DeliveryOrders(LocalDateTime createDate, String orderNumber, String status, String attName, String attPhone,
-			String deliveryAddress, String deliveryInstrictions, int deliveryFee, int totalAmount, int packageStaff,
-			int deliveryStaff) {
+
+	public DeliveryOrders(String deliveryNumber, LocalDateTime createDate, String status, String attName,
+			String attPhone, String deliveryAddress, String deliveryInstrictions, int deliveryFee, int totalAmount,
+			int packageStaff, int deliveryStaff) {
 		super();
+		this.deliveryNumber = deliveryNumber;
 		this.createDate = createDate;
-		this.orderNumber = orderNumber;
 		this.status = status;
 		this.attName = attName;
 		this.attPhone = attPhone;
@@ -64,6 +62,7 @@ public class DeliveryOrders {
 		this.packageStaff = packageStaff;
 		this.deliveryStaff = deliveryStaff;
 	}
+
 
 	public String getDeliveryNumber() {
 		return deliveryNumber;
@@ -81,13 +80,6 @@ public class DeliveryOrders {
 		this.createDate = createDate;
 	}
 
-	public String getOrderNumber() {
-		return orderNumber;
-	}
-
-	public void setOrderNumber(String orderNumber) {
-		this.orderNumber = orderNumber;
-	}
 
 	public String getStatus() {
 		return status;

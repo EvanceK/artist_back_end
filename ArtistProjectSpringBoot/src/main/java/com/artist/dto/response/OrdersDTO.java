@@ -44,9 +44,6 @@ public class OrdersDTO {
 
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
-		this.serviceFee = serviceFee;
-		this.deposit = deposit;
-		this.totalAmount = totalAmount;
 	}
 
 	public int getServiceFee() {

@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 import com.artist.entity.Artist;
 import com.artist.entity.Customers;
-import com.artist.entity.Deliveryorders;
+import com.artist.entity.DeliveryOrders;
 import com.artist.entity.OrderDetails;
 import com.artist.entity.Paintings;
 import com.artist.repository.ArtistRepository;
 import com.artist.repository.CustomersRepository;
-import com.artist.repository.DeliveryOrderRepository;
+import com.artist.repository.DeliveryOrdersRepository;
 import com.artist.repository.OrderDetailsRepository;
 import com.artist.repository.PaintingsRepository;
 @Component
@@ -29,7 +29,7 @@ public class IdGenerator {
 	@Autowired
 	private OrderDetailsRepository odr;
 	@Autowired
-	private DeliveryOrderRepository dor;
+	private DeliveryOrdersRepository dor;
 
 	public String DeliveryOrdersId() {
 		String prefix = "DO";
@@ -146,10 +146,10 @@ public class IdGenerator {
 	// 新增生成 deliveryOrderId 的方法
 	public String deliveryOrderId() {
 	    String prefix = "DO";
-	    List<Deliveryorders> deliveryOrderList = dor.findAll();
+	    List<DeliveryOrders> deliveryOrderList = dor.findAll();
 	    
 	    if (!deliveryOrderList.isEmpty()) {
-	        Deliveryorders lastestDeliveryOrder = deliveryOrderList.get(deliveryOrderList.size() - 1);
+	        DeliveryOrders lastestDeliveryOrder = deliveryOrderList.get(deliveryOrderList.size() - 1);
 	        String lastestId = lastestDeliveryOrder.getDeliveryNumber();
 
 	        // 檢查日期是否與當前日期一致

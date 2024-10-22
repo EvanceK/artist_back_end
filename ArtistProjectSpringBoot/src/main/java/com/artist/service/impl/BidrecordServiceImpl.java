@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +23,6 @@ import com.artist.entity.Bidrecord;
 import com.artist.entity.Customers;
 import com.artist.repository.BidrecordRepository;
 import com.artist.service.BidrecordService;
-
-import jakarta.persistence.Tuple;
 
 @Service
 public class BidrecordServiceImpl implements BidrecordService {
