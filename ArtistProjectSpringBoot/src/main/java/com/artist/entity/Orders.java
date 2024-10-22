@@ -38,6 +38,8 @@ public class Orders {
 	@Column(name = "total_amount")
 	private int totalAmount;
 	
+	@Column(name = "delivery_number")
+	private String deliveryNumber;
 	
     @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     @JsonBackReference
@@ -54,17 +56,20 @@ public class Orders {
 		super();
 	}
 
-	public Orders(LocalDateTime orderDate, String customerId, int serviceFee, int desposit,
-			int totalAmount, OrderDetails orderDetail, Customers customer) {
+	public Orders(LocalDateTime orderDate, String customerId, int serviceFee, int desposit, int totalAmount,
+			String deliveryNumber, OrderDetails orderDetail, Customers customer) {
 		super();
 		this.orderDate = orderDate;
 		this.customerId = customerId;
 		this.serviceFee = serviceFee;
 		this.desposit = desposit;
 		this.totalAmount = totalAmount;
+		this.deliveryNumber = deliveryNumber;
 		this.orderDetail = orderDetail;
 		this.customer = customer;
 	}
+
+
 
 	public String getOrderNumber() {
 		return orderNumber;
@@ -130,8 +135,12 @@ public class Orders {
 		this.customer = customer;
 	}
 
+	public String getDeliveryNumber() {
+		return deliveryNumber;
+	}
 
-	
-
+	public void setDeliveryNumber(String deliveryNumber) {
+		this.deliveryNumber = deliveryNumber;
+	}
     
 }

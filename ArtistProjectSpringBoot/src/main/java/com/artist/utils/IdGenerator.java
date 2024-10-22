@@ -7,10 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.artist.entity.Artist;
 import com.artist.entity.Customers;
+import com.artist.entity.DeliveryOrders;
 import com.artist.entity.OrderDetails;
 import com.artist.entity.Paintings;
 import com.artist.repository.ArtistRepository;
 import com.artist.repository.CustomersRepository;
+import com.artist.repository.DeliveryOrdersRepository;
 import com.artist.repository.OrderDetailsRepository;
 import com.artist.repository.PaintingsRepository;
 @Component
@@ -24,8 +26,20 @@ public class IdGenerator {
 	private ArtistRepository arr;	 
 	@Autowired
 	private OrderDetailsRepository odr;
+	@Autowired
+	private DeliveryOrdersRepository dor; 
 
-
+	public String DeliveryOrdersId() {
+		String prefix = "DO";
+		List<DeliveryOrders> deliveryOrdersList = dor.findAll();
+		if (deliveryOrdersList.size() > 0) {
+			DeliveryOrders lastesPaintings = deliveryOrdersList.get(deliveryOrdersList.size() - 1);
+			String lastestId = lastesPaintings.getDeliveryNumber();
+			return IDGenerator(prefix, lastestId);
+		} else {
+			return IDGenerator(prefix, "0000");
+		}
+	}
 	
 	public String artistId() {
 		String prefix = "AR";

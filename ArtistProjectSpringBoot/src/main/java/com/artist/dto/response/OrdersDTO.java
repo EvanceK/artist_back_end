@@ -10,13 +10,14 @@ public class OrdersDTO {
 	private int desposit;
 	private int totalAmount;
 	private LocalDateTime orderDate;
+	private String deliveryNumber;
 
 	public OrdersDTO() {
 		super();
 	}
 
 	public OrdersDTO(String orderNumber, String customerId, int serviceFee, int desposit, int totalAmount,
-			LocalDateTime orderDate) {
+			LocalDateTime orderDate, String deliveryNumber) {
 		super();
 		this.orderNumber = orderNumber;
 		this.customerId = customerId;
@@ -24,7 +25,10 @@ public class OrdersDTO {
 		this.desposit = desposit;
 		this.totalAmount = totalAmount;
 		this.orderDate = orderDate;
+		this.deliveryNumber = deliveryNumber;
 	}
+
+
 
 	public String getOrderNumber() {
 		return orderNumber;
@@ -72,6 +76,14 @@ public class OrdersDTO {
 
 	public void setOrderDate(LocalDateTime orderDate) {
 		this.orderDate = orderDate;
+	}
+
+	public String getDeliveryNumber() {
+		return deliveryNumber;
+	}
+
+	public void setDeliveryNumber(String deliveryNumber) {
+		this.deliveryNumber = deliveryNumber;
 	}
 	
 }
