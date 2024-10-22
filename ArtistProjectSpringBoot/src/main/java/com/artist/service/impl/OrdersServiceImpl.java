@@ -62,6 +62,7 @@ public class OrdersServiceImpl implements OrdersService {
 			o.setServiceFee(ordersDTO.getServiceFee());
 			o.setDesposit(ordersDTO.getDesposit());
 			o.setTotalAmount(ordersDTO.getTotalAmount());
+			o.setDeliveryNumber(ordersDTO.getDeliveryNumber());
 			or.save(o);
 		} else {
 			System.out.println("not find");
