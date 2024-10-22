@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.artist.dto.request.RecipientInformation;
 import com.artist.dto.response.OrdersDTO;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.WinningRecords;
@@ -161,24 +160,5 @@ public class OrdersServiceImpl implements OrdersService {
 			return null;
 		}
 	}
-
-	@Override
-	public void updateOrderInfo(RecipientInformation recipient) {
-		
-	Optional<Orders> orderNumber = or.findByOrderNumber(recipient.getOrdernumber());
-	if (orderNumber.isPresent()) {
-		Orders order = orderNumber.get();
-		order.setDeliveryAdress(recipient.getDeliveryAdress());
-		order.setAttName(recipient.getAttName());
-		order.setAttPhone(recipient.getAttPhone());
-		order.setDeliveryInstrictions(recipient.getDeliveryInstrictions());
-		or.save(order);
-	}else {
-		  throw new RuntimeException("資料填入異常");
-	}
-		
-	}
-
-
 
 }
