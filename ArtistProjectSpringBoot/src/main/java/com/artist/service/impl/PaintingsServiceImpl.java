@@ -130,7 +130,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return paintings.stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
-						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus(),p.getImage()))
 				.collect(Collectors.toList());
 	}
 
@@ -141,7 +141,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
-						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus(),p.getImage()))
 				.collect(Collectors.toList());
 		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements());
 	}
@@ -153,7 +153,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
-						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus(),p.getImage()))
 				.collect(Collectors.toList());
 		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements());
 	}
@@ -165,7 +165,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
-						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus(),p.getImage()))
 				.collect(Collectors.toList());
 		return new PageImpl<>(paintingDTOs, pageable, paintingsPage.getTotalElements());
 	}
@@ -177,7 +177,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		List<PaintingDTO> paintingDTOs = pagePaintingsWithArtist.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
 						p.getArtist().getArtistName(), p.getLargUrl(), p.getSmallUrl(), p.getPrice(), p.getDate(),
-						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus()))
+						p.getStyle(), p.getUploadDate(), p.getGenre(), p.getDelicated(), p.getStatus(),p.getImage()))
 				.collect(Collectors.toList());
 		return new PageImpl<>(paintingDTOs, pageable, pagePaintingsWithArtist.getTotalElements());
 	}
@@ -256,7 +256,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 			return new PaintingDTO(paintings.getPaintingId(), paintings.getPaintingName(),
 					paintings.getArtist().getArtistId(), paintings.getArtist().getArtistName(), paintings.getLargUrl(),
 					paintings.getSmallUrl(), paintings.getPrice(), paintings.getDate(), paintings.getStyle(),
-					paintings.getUploadDate(), paintings.getGenre(), paintings.getDelicated(), paintings.getStatus());
+					paintings.getUploadDate(), paintings.getGenre(), paintings.getDelicated(), paintings.getStatus(),paintings.getImage());
 		} else {
 			System.out.println("No painting found for ID: " + paintingId);
 			return null;
@@ -273,7 +273,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
 						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
 						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
-						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus(),painting.getImage()))
 				.collect(Collectors.toList());
 	}
 
@@ -298,7 +298,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
 						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
 						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
-						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus(),painting.getImage()))
 				.collect(Collectors.toList());
 	}
 
@@ -312,7 +312,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
 						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
 						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
-						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus(),painting.getImage()))
 				.collect(Collectors.toList());
 
 	}
@@ -327,7 +327,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
 						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
 						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
-						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus(),painting.getImage()))
 				.collect(Collectors.toList());
 
 	}
@@ -365,7 +365,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 				.map(painting -> new PaintingDTO(painting.getPaintingId(), painting.getPaintingName(),
 						painting.getArtist().getArtistId(), painting.getArtist().getArtistName(), painting.getLargUrl(),
 						painting.getSmallUrl(), painting.getPrice(), painting.getDate(), painting.getStyle(),
-						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus()))
+						painting.getUploadDate(), painting.getGenre(), painting.getDelicated(), painting.getStatus(),painting.getImage()))
 				.collect(Collectors.toList());
 	}
 	
