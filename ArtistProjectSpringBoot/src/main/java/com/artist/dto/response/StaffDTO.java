@@ -7,6 +7,7 @@ public class StaffDTO {
 	private String staffDepartment;
 	private String staffUsername;
 	private String staffPassword;
+	private Integer roleId;
 	public StaffDTO() {
 		super();
 	}
@@ -50,6 +51,12 @@ public class StaffDTO {
 	}
 	public void setStaffPassword(String staffPassword) {
 		this.staffPassword = staffPassword;
+	}
+	public Integer getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 	
 }
