@@ -13,6 +13,7 @@ public interface StaffService {
 	//Read
 	public List<?> getAll();
 	public Staff getOneById(Integer staffId);
+	String login(String staffUsername ,String staffPassword);
 	
 	//Update
 	public void update(StaffDTO staffDTO);

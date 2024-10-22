@@ -87,6 +87,27 @@ public class Paintings {
 		this.delicated = delicated;
 		this.status = status;
 	}
+	
+	public Paintings(Artist artist, String paintingId, String paintingName, String artistId, String largUrl,
+			String smallUrl, Double price, String date, String style, LocalDateTime uploadDate, String genre,
+			Integer delicated, String status, byte[] image) {
+		super();
+		this.artist = artist;
+		this.paintingId = paintingId;
+		this.paintingName = paintingName;
+		this.artistId = artistId;
+		this.largUrl = largUrl;
+		this.smallUrl = smallUrl;
+		this.price = price;
+		this.date = date;
+		this.style = style;
+		this.uploadDate = uploadDate;
+		this.genre = genre;
+		this.delicated = delicated;
+		this.status = status;
+		this.image = image;
+	}
+
 	public Artist getArtist() {
 		return artist;
 	}
