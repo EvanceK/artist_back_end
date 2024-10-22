@@ -29,29 +29,20 @@ public class Orders {
 	@Column(name = "customer_id")
     private String customerId;
 	
-	@Column(name = "status")
-	private String status;
+	@Column(name = "service_fee")
+	private int serviceFee;
 	
-	@Column(name = "att_name")
-	private String attName;
+	@Column(name = "desposit")
+	private int desposit;
 	
-
-	@Column(name = "att_phone")
-	private String attPhone;
-
-	@Column(name = "delivery_address")
-	private String deliveryAdress;
-	
-	@Column(name = "delivery_instrictions")
-	private String deliveryInstrictions;
+	@Column(name = "total_amount")
+	private int totalAmount;
 	
 	
     @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     @JsonBackReference
     private OrderDetails orderDetail;
 	
-
-
 
 	//與Customers關聯
     @ManyToOne
@@ -63,23 +54,32 @@ public class Orders {
 		super();
 	}
 
-
-	public Orders(String orderNumber, LocalDateTime orderDate, String status, String attName, String attPhone,
-			String deliveryAdress, String deliveryInstrictions, Customers customer) {
+	public Orders(LocalDateTime orderDate, String customerId, int serviceFee, int desposit,
+			int totalAmount, OrderDetails orderDetail, Customers customer) {
 		super();
-		this.orderNumber = orderNumber;
 		this.orderDate = orderDate;
-		this.status = status;
-		this.attName = attName;
-		this.attPhone = attPhone;
-		this.deliveryAdress = deliveryAdress;
-		this.deliveryInstrictions = deliveryInstrictions;
+		this.customerId = customerId;
+		this.serviceFee = serviceFee;
+		this.desposit = desposit;
+		this.totalAmount = totalAmount;
+		this.orderDetail = orderDetail;
 		this.customer = customer;
 	}
 
-
 	public String getOrderNumber() {
 		return orderNumber;
+	}
+
+	public void setOrderNumber(String orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
+	public LocalDateTime getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(LocalDateTime orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public String getCustomerId() {
@@ -90,105 +90,48 @@ public class Orders {
 		this.customerId = customerId;
 	}
 
-
-	public void setOrderNumber(String orderNumber) {
-		this.orderNumber = orderNumber;
+	public int getServiceFee() {
+		return serviceFee;
 	}
 
-
-
-	public LocalDateTime getOrderDate() {
-		return orderDate;
+	public void setServiceFee(int serviceFee) {
+		this.serviceFee = serviceFee;
 	}
 
-
-
-	public void setOrderDate(LocalDateTime orderDate) {
-		this.orderDate = orderDate;
+	public int getDesposit() {
+		return desposit;
 	}
 
-
-
-
-	public String getStatus() {
-		return status;
+	public void setDesposit(int desposit) {
+		this.desposit = desposit;
 	}
 
-
-
-	public void setStatus(String status) {
-		this.status = status;
+	public int getTotalAmount() {
+		return totalAmount;
 	}
 
-
-
-	public String getAttName() {
-		return attName;
+	public void setTotalAmount(int totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
-
-
-	public void setAttName(String attName) {
-		this.attName = attName;
+	public OrderDetails getOrderDetail() {
+		return orderDetail;
 	}
 
-
-
-	public String getAttPhone() {
-		return attPhone;
+	public void setOrderDetail(OrderDetails orderDetail) {
+		this.orderDetail = orderDetail;
 	}
-
-
-
-	public void setAttPhone(String attPhone) {
-		this.attPhone = attPhone;
-	}
-
-
-
-	public String getDeliveryAdress() {
-		return deliveryAdress;
-	}
-
-
-
-	public void setDeliveryAdress(String deliveryAdress) {
-		this.deliveryAdress = deliveryAdress;
-	}
-
-
-
-	public String getDeliveryInstrictions() {
-		return deliveryInstrictions;
-	}
-
-
-
-	public void setDeliveryInstrictions(String deliveryInstrictions) {
-		this.deliveryInstrictions = deliveryInstrictions;
-	}
-
-
 
 	public Customers getCustomer() {
 		return customer;
 	}
 
-
-
 	public void setCustomer(Customers customer) {
 		this.customer = customer;
 	}
-    
-    
-	public OrderDetails getOrderDetail() {
-		return orderDetail;
-	}
 
 
-	public void setOrderDetail(OrderDetails orderDetail) {
-		this.orderDetail = orderDetail;
-	}
+	
 
     
 }

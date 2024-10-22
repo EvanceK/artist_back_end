@@ -52,11 +52,9 @@ public class StaffDTO {
 	public void setStaffPassword(String staffPassword) {
 		this.staffPassword = staffPassword;
 	}
-
 	public Integer getRoleId() {
 		return roleId;
 	}
-
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}

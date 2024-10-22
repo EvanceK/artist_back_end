@@ -40,12 +40,18 @@ public class StaffController {
 	}
 	
 	// 用staffId取得Staff
-	@GetMapping(value = "/{staffId}")
-	public ResponseEntity<Staff> findOneById(@PathVariable Integer staffId){
-		Staff staff = ssi.getOneById(staffId);
-//		System.out.println(art);
-		return ResponseEntity.ok(staff);
-	}
+//	@GetMapping(value = "/{staffId}")
+//	public ResponseEntity<Staff> findOneById(@PathVariable Integer staffId){
+//		Staff staff = ssi.getOneById(staffId);
+////		System.out.println(art);
+//		return ResponseEntity.ok(staff);
+//	}
+	
+	// get one by id
+	@RequestMapping(value="/{staffId}", method = RequestMethod.GET)
+    public Staff findOneById(@PathVariable("staffId")Integer staffId,  Model model){
+        return sr.findById(staffId).get();
+    }
 	
 	// 新增
 	@PostMapping(value = "/createStaff", consumes = "application/json")
@@ -90,7 +96,7 @@ public class StaffController {
 	
 	@DeleteMapping("/{staffId}")
 	public ResponseEntity<Void> deleteStaffById(@PathVariable Integer staffId) {
-		ssi.deleteByStaffId(staffId);
+		sr.deleteById(staffId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
