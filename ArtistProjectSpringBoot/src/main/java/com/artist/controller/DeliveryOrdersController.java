@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.request.DeliveryOrderRequestDTO;
@@ -71,6 +72,14 @@ public class DeliveryOrdersController {
 		DeliveryOrderResponseDTO delivery = dosi.getByOrderNumber(deliveryNumber);
 		return delivery;
     }
+	
+	// get by Status
+	@GetMapping(value="/status")
+    public ResponseEntity<?> selectByStatus(@RequestParam("status")String deliverystatus){
+		List<DeliveryOrderResponseDTO> delivery = dosi.getByStatusWithOrdersAndDetails(deliverystatus);
+		return ResponseEntity.ok(delivery);
+    }
+	
 	
 	// delete by deliveryNumber
 	@DeleteMapping("/{deliveryNumber}")

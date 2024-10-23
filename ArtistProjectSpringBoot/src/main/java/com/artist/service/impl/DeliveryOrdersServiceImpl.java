@@ -158,11 +158,8 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 	public DeliveryOrderResponseDTO getByOrderNumber(String deliveryNumber)	{
 		
 			Optional<DeliveryOrders> optionalDeliveryOrders = dor.findByDeliveryNumberWithOrdersAndDetails(deliveryNumber);
-
 			if (optionalDeliveryOrders.isPresent()) {
 			DeliveryOrders deliveryOrder = optionalDeliveryOrders.get();
-			
-			System.out.println(deliveryOrder);
 			DeliveryOrderResponseDTO deliveryOrderDTO = new DeliveryOrderResponseDTO();
 	        deliveryOrderDTO.setDeliveryNumber(deliveryOrder.getDeliveryNumber());
 	        deliveryOrderDTO.setCreateDate(deliveryOrder.getCreateDate());
@@ -180,8 +177,6 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 	            .map(order -> {
 	                String paintingId = order.getOrderDetail().getPaintingId();
 	                
-	    			System.out.println(paintingId);
-
 	                return new OrdersDTO(
 	                    order.getOrderNumber(),
 	                    order.getOrderDate(),
@@ -201,5 +196,48 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 		}else {
 		    return null;
 		}
+	}
+
+	@Override
+	public List<DeliveryOrderResponseDTO> getByStatusWithOrdersAndDetails(String status) {
+		 List<DeliveryOrders> allDeliveryOrdersByStatus = dor.findByStatusWithOrdersAndDetails(status);
+		    List<DeliveryOrderResponseDTO> responseDTOList = new ArrayList<>();
+
+		    for (DeliveryOrders deliveryOrder : allDeliveryOrdersByStatus) {
+		        DeliveryOrderResponseDTO deliveryOrderDTO = new DeliveryOrderResponseDTO();
+		        deliveryOrderDTO.setDeliveryNumber(deliveryOrder.getDeliveryNumber());
+		        deliveryOrderDTO.setCreateDate(deliveryOrder.getCreateDate());
+		        deliveryOrderDTO.setStatus(deliveryOrder.getStatus());
+		        deliveryOrderDTO.setAttName(deliveryOrder.getAttName());
+		        deliveryOrderDTO.setAttPhone(deliveryOrder.getAttPhone());
+		        deliveryOrderDTO.setDeliveryAddress(deliveryOrder.getDeliveryAddress());
+		        deliveryOrderDTO.setDeliveryInstrictions(deliveryOrder.getDeliveryInstrictions());
+		        deliveryOrderDTO.setDeliveryFee(deliveryOrder.getDeliveryFee());
+		        deliveryOrderDTO.setTotalAmount(deliveryOrder.getTotalAmount());
+		        deliveryOrderDTO.setPackageStaff(deliveryOrder.getPackageStaff());
+		        deliveryOrderDTO.setDeliveryStaff(deliveryOrder.getDeliveryStaff());
+
+		        // 提取訂單列表
+		        List<OrdersDTO> ordersDTOList = deliveryOrder.getOrders().stream()
+		            .map(order -> {
+		                String paintingId = order.getOrderDetail().getPaintingId();
+		                
+		                return new OrdersDTO(
+		                    order.getOrderNumber(),
+		                    order.getOrderDate(),
+		                    order.getCustomerId(),
+		                    order.getServiceFee(),
+		                    order.getDesposit(),
+		                    order.getTotalAmount(),
+		                    order.getDeliveryNumber(),
+		                    paintingId
+		                );
+		            })
+		            .collect(Collectors.toList());
+
+		        deliveryOrderDTO.setOrderList(ordersDTOList);
+		        responseDTOList.add(deliveryOrderDTO);
+		    }
+		    return responseDTOList;
 	}
 }
