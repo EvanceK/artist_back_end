@@ -3,6 +3,7 @@ package com.artist.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -48,10 +49,11 @@ public class DeliveryOrders {
 	private Integer  packageStaff;
 	
 	@Column(name = "delivery_staff")
-	private Integer  deliveryStaff;
+	private  Integer deliveryStaff;
 	
 	@OneToMany(mappedBy = "deliveryOrders", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	// @JsonManagedReference
+	@JsonBackReference
 	private List<Orders> orders;
 
 	public DeliveryOrders() {
@@ -61,7 +63,7 @@ public class DeliveryOrders {
 
 	public DeliveryOrders(String deliveryNumber, LocalDateTime createDate, String status, String attName,
 			String attPhone, String deliveryAddress, String deliveryInstrictions, Integer  deliveryFee, Integer  totalAmount,
-			Integer  packageStaff, Integer  deliveryStaff) {
+			Integer  packageStaff, Integer deliveryStaff) {
 		super();
 		this.deliveryNumber = deliveryNumber;
 		this.createDate = createDate;
