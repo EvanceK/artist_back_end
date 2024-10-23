@@ -1,6 +1,7 @@
 package com.artist.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.artist.dto.request.DeliveryOrderRequestDTO;
 import com.artist.dto.response.DeliveryOrderResponseDTO;
 import com.artist.dto.response.DeliveryOrdersDTO;
-import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.DeliveryOrders;
 import com.artist.repository.DeliveryOrdersRepository;
 import com.artist.service.impl.DeliveryOrdersServiceImpl;
@@ -57,17 +57,21 @@ public class DeliveryOrdersController {
 //	    
 //	    return responseDTO;
 //	}
+	
+	
 	// 取得全部
-	@RequestMapping(value = "/findall", method=RequestMethod.GET)
-	public List<DeliveryOrders> findall(Model model){
-		return dor.findAll();
+	@GetMapping(value = "/selectall")
+	public ResponseEntity<?> selectall() {
+	List<DeliveryOrderResponseDTO> allDelivery = dosi.getAllWithOrders();
+		return ResponseEntity.ok(allDelivery);
 	}
 	
+
 	// get by deliveryNumber
-	@RequestMapping(value="/findByDeliveryNumber/{deliveryNumber}", method = RequestMethod.GET)
-    public List<DeliveryOrders> findByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
-        return dor.findByDeliveryNumber(deliveryNumber);
-    }
+//	@RequestMapping(value="/findByDeliveryNumber/{deliveryNumber}", method = RequestMethod.GET)
+//    public List<DeliveryOrders> findByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
+//        return dor.findByDeliveryNumber(deliveryNumber);
+//    }
 	
 	// delete by deliveryNumber
 	@DeleteMapping("/{deliveryNumber}")
@@ -82,6 +86,7 @@ public class DeliveryOrdersController {
 		dosi.update(deliveryOrdersfDTO);
         return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
+
 	
 	// 新增
 	@PostMapping(value = "/createDeliveryOrders", consumes = "application/json")
@@ -103,13 +108,13 @@ public class DeliveryOrdersController {
 	
 	// 根據配送單查詢訂單
 	@RequestMapping(value="/selectByDeliveryNumber/{deliveryNumber}", method = RequestMethod.GET)
-    public List<DeliveryOrders> selectListByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
-        return dor.findByDeliveryNumber(deliveryNumber);
+    public DeliveryOrders selectByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
+        return dor.findByDeliveryNumberWithOrdersAndDetails(deliveryNumber).get();
     }
 	
 	// 用狀態去查哪張deliveryorders還沒處理
 	@RequestMapping(value="/selectByStatus/{status}", method = RequestMethod.GET)
-    public List<DeliveryOrders> selectListByStatus(@PathVariable("status")String status,  Model model){
+    public List<DeliveryOrderResponseDTO> selectListByStatus(@PathVariable("status")String status,  Model model){
 		// status="待處理";
         return dor.findByStatus(status);
     }
@@ -125,5 +130,6 @@ public class DeliveryOrdersController {
     public List<DeliveryOrders> selectListByPackageStaff(@PathVariable("staffId")Integer staffId,  Model model){
         return dor.findByPackageStaff(staffId);
     }
+
 	
 }
