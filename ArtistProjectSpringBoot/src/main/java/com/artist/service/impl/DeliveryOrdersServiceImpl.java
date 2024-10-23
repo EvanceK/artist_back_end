@@ -88,6 +88,32 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 			}
 		}
 	}
+	
+	@Override
+	public DeliveryOrdersDTO selectByOrderNumber(String orderNumber)
+	{
+		Optional<DeliveryOrders> optionalDeliveryOrders = dor.findById(orderNumber);
+		if (optionalDeliveryOrders.isPresent()) {
+			DeliveryOrders do1 = optionalDeliveryOrders.get();
+			DeliveryOrdersDTO  dto = new DeliveryOrdersDTO(); 
+			dto.setAttName(do1.getAttName());
+			dto.setAttPhone(do1.getAttPhone());
+			dto.setCreateDate(do1.getCreateDate());
+			dto.setDeliveryAddress(do1.getDeliveryAddress());
+			dto.setDeliveryFee(do1.getDeliveryFee());
+			dto.setDeliveryInstrictions(do1.getDeliveryInstrictions());
+			dto.setDeliveryNumber(do1.getDeliveryNumber());
+			dto.setDeliveryStaff(do1.getDeliveryStaff());
+			dto.setOrderNumber(do1.getAttName());
+			dto.setPackageStaff(do1.getPackageStaff());
+			dto.setStatus(do1.getStatus());
+			dto.setTotalAmount(do1.getTotalAmount());
+			return dto;
+		} else {
+			System.out.println("not find");
+			return null;
+		}
+	}
 
 	@Override
 	public Optional<DeliveryOrders> findByOrderNumber(String orderNumber) {
