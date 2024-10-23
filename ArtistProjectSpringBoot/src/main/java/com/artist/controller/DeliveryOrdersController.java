@@ -139,19 +139,19 @@ public class DeliveryOrdersController {
 	@RequestMapping(value="/selectByStatus/{status}", method = RequestMethod.GET)
     public List<DeliveryOrderResponseDTO> selectListByStatus(@PathVariable("status")String status,  Model model){
 		// status="待處理";
-        return dor.findByStatus(status);
+        return dosi.getByStatusWithOrdersAndDetails(status);
     }
 	
 	// 自定義查詢範例: 查詢某個配送員處理的所有配送訂單
 	@RequestMapping(value="/selectByDeliveryStaff/{staffId}", method = RequestMethod.GET)
     public List<DeliveryOrders> selectListByDeliveryStaff(@PathVariable("staffId")Integer staffId,  Model model){
-        return dor.findByDeliveryStaff(staffId);
+        return null;//dor.findByDeliveryStaff(staffId);
     }
 	
 	// 自定義查詢範例: 查詢是誰包裝的
 	@RequestMapping(value="/selectByPackageStaff/{staffId}", method = RequestMethod.GET)
     public List<DeliveryOrders> selectListByPackageStaff(@PathVariable("staffId")Integer staffId,  Model model){
-        return dor.findByPackageStaff(staffId);
+        return null;//dor.findByPackageStaff(staffId);
     }
 
 	
