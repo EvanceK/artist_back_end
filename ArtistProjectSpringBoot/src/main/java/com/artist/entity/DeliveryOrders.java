@@ -3,6 +3,8 @@ package com.artist.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -49,6 +51,7 @@ public class DeliveryOrders {
 	private Integer  deliveryStaff;
 	
 	@OneToMany(mappedBy = "deliveryOrders", fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private List<Orders> orders;
 
 	public DeliveryOrders() {
