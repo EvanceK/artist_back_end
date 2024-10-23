@@ -398,6 +398,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 		return painting;
 	}
 	public Paintings saveImage(MultipartFile file) throws IOException {
+		return null;
         
 
     }
