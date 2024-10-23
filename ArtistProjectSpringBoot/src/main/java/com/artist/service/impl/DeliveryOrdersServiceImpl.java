@@ -13,7 +13,6 @@ import com.artist.dto.request.DeliveryOrderRequestDTO;
 import com.artist.dto.response.DeliveryOrderResponseDTO;
 import com.artist.dto.response.DeliveryOrdersDTO;
 import com.artist.dto.response.OrdersDTO;
-import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.DeliveryOrders;
 import com.artist.entity.Orders;
 import com.artist.repository.DeliveryOrdersRepository;
@@ -89,85 +88,7 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 		}
 	}
 	
-	@Override
-	public DeliveryOrdersDTO selectByOrderNumber(String orderNumber)
-	{
-		Optional<DeliveryOrders> optionalDeliveryOrders = dor.findById(orderNumber);
-		if (optionalDeliveryOrders.isPresent()) {
-			DeliveryOrders do1 = optionalDeliveryOrders.get();
-			DeliveryOrdersDTO  dto = new DeliveryOrdersDTO(); 
-			dto.setAttName(do1.getAttName());
-			dto.setAttPhone(do1.getAttPhone());
-			dto.setCreateDate(do1.getCreateDate());
-			dto.setDeliveryAddress(do1.getDeliveryAddress());
-			dto.setDeliveryFee(do1.getDeliveryFee());
-			dto.setDeliveryInstrictions(do1.getDeliveryInstrictions());
-			dto.setDeliveryNumber(do1.getDeliveryNumber());
-			dto.setDeliveryStaff(do1.getDeliveryStaff());
-			dto.setOrderNumber(do1.getAttName());
-			dto.setPackageStaff(do1.getPackageStaff());
-			dto.setStatus(do1.getStatus());
-			dto.setTotalAmount(do1.getTotalAmount());
-			return dto;
-		} else {
-			System.out.println("not find");
-			return null;
-		}
-	}
 
-	@Override
-	public Optional<DeliveryOrders> findByOrderNumber(String orderNumber) {
-		return Optional.empty();
-	}
-
-	@Override
-	public List<DeliveryOrders> findByDeliveryNumber(String deliveryNumber) {
-		return null;
-	}
-
-	@Override
-	public List<DeliveryOrders> findByCreateDateBetween(LocalDateTime start, LocalDateTime end) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean existsByOrderNumber(String orderNumber) {
-		return false;
-	}
-
-	@Override
-	public List<DeliveryOrders> findLatestDeliveryOrders() {
-		return null;
-	}
-
-	@Override
-	public List<DeliveryOrders> findByDeliveryStaff(Integer staffId) {
-		return null;
-	}
-
-	@Override
-	public List<DeliveryOrders> findByPackageStaff(Integer staffId) {
-		return null;
-	}
-
-	@Override
-	public void create(DeliveryOrdersDTO deliveryOrdersDTO) {
-		DeliveryOrders dos = new DeliveryOrders();
-		String deliveryNumber = idGenerator.DeliveryOrdersId();
-		dos.setDeliveryNumber(deliveryNumber);
-		dos.setAttName(deliveryOrdersDTO.getAttName());
-		dos.setAttPhone(deliveryOrdersDTO.getAttPhone());
-		dos.setCreateDate(deliveryOrdersDTO.getCreateDate());
-		dos.setDeliveryAddress(deliveryOrdersDTO.getDeliveryAddress());
-		dos.setDeliveryFee(deliveryOrdersDTO.getDeliveryFee());
-		dos.setDeliveryInstrictions(deliveryOrdersDTO.getDeliveryInstrictions());
-		dos.setDeliveryStaff(deliveryOrdersDTO.getDeliveryStaff());
-		dos.setPackageStaff(deliveryOrdersDTO.getPackageStaff());
-		dos.setStatus(deliveryOrdersDTO.getStatus());
-		dos.setTotalAmount(deliveryOrdersDTO.getTotalAmount());
-		dor.save(dos);
-	}
 
 	@Override
 	public void update(DeliveryOrdersDTO DOrdersfDTO) {
@@ -191,42 +112,93 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 	}
 
 	@Override
-	public List<DeliveryOrderResponseDTO> findAllWithOrders() {
+	public List<DeliveryOrderResponseDTO> getAllWithOrders() {
+		 List<DeliveryOrders> allWithOrders = dor.findAllWithOrdersAndDetails();
+		    List<DeliveryOrderResponseDTO> responseDTOList = new ArrayList<>();
 
-		ArrayList<DeliveryOrderResponseDTO> arrayList = new ArrayList<>();
+		    for (DeliveryOrders deliveryOrder : allWithOrders) {
+		        DeliveryOrderResponseDTO deliveryOrderDTO = new DeliveryOrderResponseDTO();
+		        deliveryOrderDTO.setDeliveryNumber(deliveryOrder.getDeliveryNumber());
+		        deliveryOrderDTO.setCreateDate(deliveryOrder.getCreateDate());
+		        deliveryOrderDTO.setStatus(deliveryOrder.getStatus());
+		        deliveryOrderDTO.setAttName(deliveryOrder.getAttName());
+		        deliveryOrderDTO.setAttPhone(deliveryOrder.getAttPhone());
+		        deliveryOrderDTO.setDeliveryAddress(deliveryOrder.getDeliveryAddress());
+		        deliveryOrderDTO.setDeliveryInstrictions(deliveryOrder.getDeliveryInstrictions());
+		        deliveryOrderDTO.setDeliveryFee(deliveryOrder.getDeliveryFee());
+		        deliveryOrderDTO.setTotalAmount(deliveryOrder.getTotalAmount());
+		        deliveryOrderDTO.setPackageStaff(deliveryOrder.getPackageStaff());
+		        deliveryOrderDTO.setDeliveryStaff(deliveryOrder.getDeliveryStaff());
 
-		List<DeliveryOrders> allWithOrders = dor.findAllWithOrders();
-		for (DeliveryOrders d : allWithOrders) {
-			DeliveryOrderResponseDTO doDTO = new DeliveryOrderResponseDTO();
-			doDTO.setDeliveryNumber(d.getDeliveryNumber());
-			doDTO.setCreateDate(d.getCreateDate());
-			doDTO.setStatus(d.getStatus());
-			doDTO.setAttName(d.getAttName());
-			doDTO.setAttPhone(d.getAttPhone());
-			doDTO.setDeliveryAddress(d.getDeliveryAddress());
-			doDTO.setDeliveryInstrictions(d.getDeliveryInstrictions());
-			doDTO.setDeliveryFee(d.getDeliveryFee());
-			doDTO.setTotalAmount(d.getTotalAmount());
-			doDTO.setPackageStaff(d.getPackageStaff());
-			doDTO.setDeliveryStaff(	d.getDeliveryStaff());
-			
-			List<Orders> orders = d.getOrders();
-			List<OrdersDTO> ordersDTOList = orders.stream()
-				    .map(o -> new OrdersDTO(
-				        o.getOrderNumber(),
-				        o.getOrderDate(),
-				        o.getCustomerId(),
-				        o.getServiceFee(),
-				        o.getDesposit(),
-				        o.getTotalAmount(),
-				        o.getDeliveryNumber()
-				    ))
-				    .collect(Collectors.toList());
-			
-			doDTO.setOrderList(ordersDTOList);
-			arrayList.add(doDTO);
-		}
-		return arrayList;
+		        // 提取訂單列表
+		        List<OrdersDTO> ordersDTOList = deliveryOrder.getOrders().stream()
+		            .map(order -> {
+		                String paintingId = order.getOrderDetail().getPaintingId();
+		                
+		                return new OrdersDTO(
+		                    order.getOrderNumber(),
+		                    order.getOrderDate(),
+		                    order.getCustomerId(),
+		                    order.getServiceFee(),
+		                    order.getDesposit(),
+		                    order.getTotalAmount(),
+		                    order.getDeliveryNumber(),
+		                    paintingId
+		                );
+		            })
+		            .collect(Collectors.toList());
+
+		        deliveryOrderDTO.setOrderList(ordersDTOList);
+		        responseDTOList.add(deliveryOrderDTO);
+		    }
+		    return responseDTOList;
 	}
+	
+	@Override
+	public DeliveryOrderResponseDTO getByOrderNumber(String deliveryNumber)
+	{
+		Optional<DeliveryOrders> optionalDeliveryOrders = dor.findByDeliveryNumberWithOrdersAndDetails(deliveryNumber);
+		if (optionalDeliveryOrders.isPresent()) {
+			DeliveryOrders deliveryOrder = optionalDeliveryOrders.get();
+			
+			System.out.println(deliveryOrder);
+			DeliveryOrderResponseDTO deliveryOrderDTO = new DeliveryOrderResponseDTO();
+	        deliveryOrderDTO.setDeliveryNumber(deliveryOrder.getDeliveryNumber());
+	        deliveryOrderDTO.setCreateDate(deliveryOrder.getCreateDate());
+	        deliveryOrderDTO.setStatus(deliveryOrder.getStatus());
+	        deliveryOrderDTO.setAttName(deliveryOrder.getAttName());
+	        deliveryOrderDTO.setAttPhone(deliveryOrder.getAttPhone());
+	        deliveryOrderDTO.setDeliveryAddress(deliveryOrder.getDeliveryAddress());
+	        deliveryOrderDTO.setDeliveryInstrictions(deliveryOrder.getDeliveryInstrictions());
+	        deliveryOrderDTO.setDeliveryFee(deliveryOrder.getDeliveryFee());
+	        deliveryOrderDTO.setTotalAmount(deliveryOrder.getTotalAmount());
+	        deliveryOrderDTO.setPackageStaff(deliveryOrder.getPackageStaff());
+	        deliveryOrderDTO.setDeliveryStaff(deliveryOrder.getDeliveryStaff());
+	     // 提取訂單列表
+	        List<OrdersDTO> ordersDTOList = deliveryOrder.getOrders().stream()
+	            .map(order -> {
+	                String paintingId = order.getOrderDetail().getPaintingId();
+	                
+	    			System.out.println(paintingId);
 
+	                return new OrdersDTO(
+	                    order.getOrderNumber(),
+	                    order.getOrderDate(),
+	                    order.getCustomerId(),
+	                    order.getServiceFee(),
+	                    order.getDesposit(),
+	                    order.getTotalAmount(),
+	                    order.getDeliveryNumber(),
+	                    paintingId
+	                );
+	                
+	            })
+	            .collect(Collectors.toList());
+	   
+	        deliveryOrderDTO.setOrderList(ordersDTOList);
+	        return deliveryOrderDTO;
+		}else {
+		    return null;
+		}
+	}
 }
