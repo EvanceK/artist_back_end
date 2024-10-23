@@ -11,15 +11,15 @@ public class OrdersDTO {
 	private Integer desposit;
 	private Integer totalAmount;
 	private String deliveryNumber;
+	private String paintingId;
+
 
 	public OrdersDTO() {
 		super();
 	}
 
-
-
 	public OrdersDTO(String orderNumber, LocalDateTime orderDate, String customerId, Integer serviceFee,
-			Integer desposit, Integer totalAmount, String deliveryNumber) {
+			Integer desposit, Integer totalAmount, String deliveryNumber, String paintingId) {
 		super();
 		this.orderNumber = orderNumber;
 		this.orderDate = orderDate;
@@ -28,9 +28,8 @@ public class OrdersDTO {
 		this.desposit = desposit;
 		this.totalAmount = totalAmount;
 		this.deliveryNumber = deliveryNumber;
+		this.paintingId = paintingId;
 	}
-
-
 
 	public String getOrderNumber() {
 		return orderNumber;
@@ -87,6 +86,20 @@ public class OrdersDTO {
 	public void setDeliveryNumber(String deliveryNumber) {
 		this.deliveryNumber = deliveryNumber;
 	}
+
+
+
+	public String getPaintingId() {
+		return paintingId;
+	}
+
+
+
+	public void setPaintingId(String paintingId) {
+		this.paintingId = paintingId;
+	}
+	
+	
 	
 }
 	

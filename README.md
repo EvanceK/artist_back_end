@@ -14,7 +14,7 @@
 
 <h2>Languages</h2>
 <a href="https://www.oracle.com/tw/java/technologies/downloads/"><img src="https://img.shields.io/badge/java- 17-red"/></a>
-<a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-purple?logo=python"/></a>
+<a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-yellow?logo=python"/></a>
 <a href="https://www.python.org/"><img src="https://img.shields.io/badge/-SQL-blue"/></a>
 
 

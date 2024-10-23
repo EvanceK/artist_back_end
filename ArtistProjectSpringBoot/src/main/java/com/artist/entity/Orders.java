@@ -180,5 +180,13 @@ public class Orders {
 		this.deliveryNumber = deliveryNumber;
 	}
 
+	public DeliveryOrders getDeliveryOrders() {
+		return deliveryOrders;
+	}
+
+	public void setDeliveryOrders(DeliveryOrders deliveryOrders) {
+		this.deliveryOrders = deliveryOrders;
+	}
+
     
 }
