@@ -48,53 +48,16 @@ public class PaintingsController {
 	private CustomersServiceImpl csi;
 
 	// 新增
-//		@PostMapping(value = "/createPainting", consumes = "application/json")
-//		public ResponseEntity<?> createPainting(@RequestBody PaintingDTO paintingDTO) {
-//			try {
-//				psi.create(paintingDTO);
-//				return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
-//			} catch (RuntimeException e) {
-//				return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-//			}
-//		}
-		// 新增
-		@PostMapping(value = "/createPainting", consumes = MediaType.ALL_VALUE)
-		public ResponseEntity<?> createPainting(@RequestParam("image") MultipartFile file,
-				  @RequestParam("paintingName") String paintingName,
-			        @RequestParam("artistId") String artistId,
-			        @RequestParam("price") Double price,
-			        @RequestParam("date") String date,
-			        @RequestParam("style") String style,
-			        @RequestParam("genre") String genre,
-			        @RequestParam("delicated") Integer delicated,
-			        @RequestParam("status") String status)  {
+		@PostMapping(value = "/createPainting", consumes = "application/json")
+		public ResponseEntity<?> createPainting(@RequestBody PaintingDTO paintingDTO) {
 			try {
-		        // Convert file to byte array
-		        byte[] imageBytes = file.getBytes();
-
-		        // Create a new PaintingDTO object with the provided data
-		        PaintingDTO paintingDTO = new PaintingDTO();
-		        paintingDTO.setPaintingName(paintingName);
-		        paintingDTO.setArtistId(artistId);
-		        paintingDTO.setPrice(price);
-		        paintingDTO.setDate(date);
-		        paintingDTO.setStyle(style);
-		        paintingDTO.setGenre(genre);
-		        paintingDTO.setDelicated(delicated);
-		        paintingDTO.setStatus(status);
-		        paintingDTO.setImage(imageBytes); // Set the image byte array in DTO
-
-		        // Save painting using your service layer
-		        psi.create(paintingDTO);
-
-		        return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
-
-		    } catch (IOException e) {
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing image");
-		    } catch (RuntimeException e) {
-		        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-		    }
+				psi.create(paintingDTO);
+				return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
+			} catch (RuntimeException e) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+			}
 		}
+		
 		
 		// 修改
 		@PutMapping(value ="/editPainting", consumes = "application/json")
