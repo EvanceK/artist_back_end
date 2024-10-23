@@ -67,8 +67,8 @@ public class DeliveryOrdersController {
 	
 	// get one by deliveryNumber
 	@RequestMapping(value="/{deliveryNumber}", method = RequestMethod.GET)
-    public DeliveryOrders findOneById(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
-        return dor.findById(deliveryNumber).get();
+    public DeliveryOrdersDTO findOneById(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
+        return dosi.selectByOrderNumber(deliveryNumber);
     }
 	
 	// delete by deliveryNumber

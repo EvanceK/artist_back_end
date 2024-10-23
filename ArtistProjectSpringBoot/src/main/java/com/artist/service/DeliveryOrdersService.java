@@ -22,6 +22,8 @@ public interface DeliveryOrdersService {
 
 	String createDeliveryOrder(DeliveryOrderRequestDTO deliveryOrderRequestDTO);
 	
+	public DeliveryOrdersDTO selectByOrderNumber(String orderNumber);
+	
 	// 根據訂單號查詢配送訂單
     Optional<DeliveryOrders> findByOrderNumber(String orderNumber);
     
