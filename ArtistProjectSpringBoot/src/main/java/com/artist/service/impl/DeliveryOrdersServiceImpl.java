@@ -155,10 +155,11 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 	}
 	
 	@Override
-	public DeliveryOrderResponseDTO getByOrderNumber(String deliveryNumber)
-	{
-		Optional<DeliveryOrders> optionalDeliveryOrders = dor.findByDeliveryNumberWithOrdersAndDetails(deliveryNumber);
-		if (optionalDeliveryOrders.isPresent()) {
+	public DeliveryOrderResponseDTO getByOrderNumber(String deliveryNumber)	{
+		
+			Optional<DeliveryOrders> optionalDeliveryOrders = dor.findByDeliveryNumberWithOrdersAndDetails(deliveryNumber);
+
+			if (optionalDeliveryOrders.isPresent()) {
 			DeliveryOrders deliveryOrder = optionalDeliveryOrders.get();
 			
 			System.out.println(deliveryOrder);

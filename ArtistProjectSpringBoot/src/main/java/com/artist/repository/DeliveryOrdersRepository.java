@@ -21,9 +21,11 @@ public interface DeliveryOrdersRepository extends JpaRepository<DeliveryOrders, 
 	
 	
     // 根據配送單查詢訂單
-    @Query("SELECT d FROM DeliveryOrders d JOIN d.orders o JOIN o.orderDetail od WHERE d.deliveryNumber = :deliveryNumber ")
-    Optional<DeliveryOrders> findByDeliveryNumberWithOrdersAndDetails(@Param("deliveryNumber") String deliveryNumber);
-    
+	@Query("SELECT d FROM DeliveryOrders d " +
+		       "JOIN d.orders o " +
+		       "JOIN o.orderDetail od " +
+		       "WHERE d.deliveryNumber = :deliveryNumber")
+		Optional<DeliveryOrders> findByDeliveryNumberWithOrdersAndDetails(@Param("deliveryNumber") String deliveryNumber);    
     
     
     
