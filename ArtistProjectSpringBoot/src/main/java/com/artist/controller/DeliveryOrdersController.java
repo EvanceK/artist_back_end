@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.artist.dto.request.DeliveryOrderRequestDTO;
 import com.artist.dto.response.DeliveryOrderResponseDTO;
 import com.artist.dto.response.DeliveryOrdersDTO;
+
 import com.artist.entity.DeliveryOrders;
+
 import com.artist.repository.DeliveryOrdersRepository;
 import com.artist.service.impl.DeliveryOrdersServiceImpl;
 
@@ -35,11 +38,13 @@ public class DeliveryOrdersController {
 	@Autowired
 	private DeliveryOrdersRepository dor;
 	
+
+	
 	@PostMapping(value = "/createDeliveryOrder", consumes = "application/json")
 	public String createDeliveryOrder(@RequestBody DeliveryOrderRequestDTO deliveryOrderRequestDTO) {
         // 呼叫 Service 層的 createDeliveryOrder 方法
         return dosi.createDeliveryOrder(deliveryOrderRequestDTO);
-    }
+       }
 //	
 //	@GetMapping("/deliveryOrders/{deliveryId}")
 //	public DeliveryOrderResponseDTO getDeliveryOrderDetails(@PathVariable String deliveryId) {
@@ -72,6 +77,23 @@ public class DeliveryOrdersController {
 //    public List<DeliveryOrders> findByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
 //        return dor.findByDeliveryNumber(deliveryNumber);
 //    }
+
+	// get one by deliveryNumber
+	@GetMapping(value="/{deliveryNumber}")
+    public DeliveryOrderResponseDTO findOneById(@PathVariable("deliveryNumber")String deliveryNumber){
+		System.out.println(deliveryNumber);
+		DeliveryOrderResponseDTO delivery = dosi.getByOrderNumber(deliveryNumber);
+		return delivery;
+    }
+
+	
+	// get by Status
+	@GetMapping(value="/status")
+    public ResponseEntity<?> selectByStatus(@RequestParam("status")String deliverystatus){
+		List<DeliveryOrderResponseDTO> delivery = dosi.getByStatusWithOrdersAndDetails(deliverystatus);
+		return ResponseEntity.ok(delivery);
+    }
+	
 	
 	// delete by deliveryNumber
 	@DeleteMapping("/{deliveryNumber}")
@@ -86,6 +108,7 @@ public class DeliveryOrdersController {
 		dosi.update(deliveryOrdersfDTO);
         return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
+
 
 	
 	// 新增
