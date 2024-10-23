@@ -15,8 +15,10 @@ public interface DeliveryOrdersService {
 	
 	//Select all
 	List<DeliveryOrderResponseDTO> getAllWithOrders();
+
 	
 	DeliveryOrderResponseDTO getByOrderNumber(String deliveryNumber);
+	List<DeliveryOrderResponseDTO> getByStatusWithOrdersAndDetails(String status);
 
 	//後台update用
 	void update(DeliveryOrdersDTO DOrdersfDTO);
