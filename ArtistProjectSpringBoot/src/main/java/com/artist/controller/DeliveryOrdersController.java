@@ -35,13 +35,11 @@ public class DeliveryOrdersController {
 	@Autowired
 	private DeliveryOrdersRepository dor;
 	
-
-	
 	@PostMapping(value = "/createDeliveryOrder", consumes = "application/json")
 	public String createDeliveryOrder(@RequestBody DeliveryOrderRequestDTO deliveryOrderRequestDTO) {
         // 呼叫 Service 層的 createDeliveryOrder 方法
         return dosi.createDeliveryOrder(deliveryOrderRequestDTO);
-       }
+    }
 //	
 //	@GetMapping("/deliveryOrders/{deliveryId}")
 //	public DeliveryOrderResponseDTO getDeliveryOrderDetails(@PathVariable String deliveryId) {
@@ -65,10 +63,10 @@ public class DeliveryOrdersController {
 		return dor.findAll();
 	}
 	
-	// get one by deliveryNumber
-	@RequestMapping(value="/{deliveryNumber}", method = RequestMethod.GET)
-    public DeliveryOrdersDTO findOneById(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
-        return dosi.selectByOrderNumber(deliveryNumber);
+	// get by deliveryNumber
+	@RequestMapping(value="/findByDeliveryNumber/{deliveryNumber}", method = RequestMethod.GET)
+    public List<DeliveryOrders> findByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
+        return dor.findByDeliveryNumber(deliveryNumber);
     }
 	
 	// delete by deliveryNumber
@@ -87,9 +85,9 @@ public class DeliveryOrdersController {
 	
 	// 新增
 	@PostMapping(value = "/createDeliveryOrders", consumes = "application/json")
-	public ResponseEntity<?> createDeliveryOrders(@RequestBody DeliveryOrdersDTO deliveryOrdersfDTO) {
+	public ResponseEntity<?> createDeliveryOrders(@RequestBody DeliveryOrderRequestDTO deliveryOrdersfDTO) {
 		try {
-			dosi.create(deliveryOrdersfDTO);
+			dosi.createDeliveryOrder(deliveryOrdersfDTO);
 			return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -97,11 +95,35 @@ public class DeliveryOrdersController {
 	}
 	
 	
-	@GetMapping(value = "/selectall")
-	public ResponseEntity<?> selectall() {
-	List<DeliveryOrderResponseDTO> allWithOrders = dosi.findAllWithOrders();
-		return ResponseEntity.ok(allWithOrders);
-	}
+//	@GetMapping(value = "/selectall")
+//	public ResponseEntity<?> selectall() {
+//	List<DeliveryOrderResponseDTO> allWithOrders = dosi.findAllWithOrders();
+//		return ResponseEntity.ok(allWithOrders);
+//	}
 	
+	// 根據配送單查詢訂單
+	@RequestMapping(value="/selectByDeliveryNumber/{deliveryNumber}", method = RequestMethod.GET)
+    public List<DeliveryOrders> selectListByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
+        return dor.findByDeliveryNumber(deliveryNumber);
+    }
+	
+	// 用狀態去查哪張deliveryorders還沒處理
+	@RequestMapping(value="/selectByStatus/{status}", method = RequestMethod.GET)
+    public List<DeliveryOrders> selectListByStatus(@PathVariable("status")String status,  Model model){
+		// status="待處理";
+        return dor.findByStatus(status);
+    }
+	
+	// 自定義查詢範例: 查詢某個配送員處理的所有配送訂單
+	@RequestMapping(value="/selectByDeliveryStaff/{staffId}", method = RequestMethod.GET)
+    public List<DeliveryOrders> selectListByDeliveryStaff(@PathVariable("staffId")Integer staffId,  Model model){
+        return dor.findByDeliveryStaff(staffId);
+    }
+	
+	// 自定義查詢範例: 查詢是誰包裝的
+	@RequestMapping(value="/selectByPackageStaff/{staffId}", method = RequestMethod.GET)
+    public List<DeliveryOrders> selectListByPackageStaff(@PathVariable("staffId")Integer staffId,  Model model){
+        return dor.findByPackageStaff(staffId);
+    }
 	
 }

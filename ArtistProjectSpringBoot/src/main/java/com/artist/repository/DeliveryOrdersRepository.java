@@ -22,7 +22,8 @@ public interface DeliveryOrdersRepository extends JpaRepository<DeliveryOrders, 
     List<DeliveryOrders> findByDeliveryNumber(@Param("deliveryNumber") String deliveryNumber);
     
     //用狀態去查哪張deliveryorders還沒處理
-
+    @Query("SELECT d FROM DeliveryOrders d WHERE d.status = :status")
+    List<DeliveryOrders> findByStatus(@Param("status") String status);
 
     // 自定義查詢範例: 查詢某個配送員處理的所有配送訂單
     @Query("SELECT d FROM DeliveryOrders d WHERE d.deliveryStaff = :staffId")
