@@ -66,7 +66,9 @@ public class PaintingsController {
 		        @RequestParam("price") Double price,
 		        @RequestParam("date") String date,
 		        @RequestParam("style") String style,
-		        @RequestParam("genre") String genre) {
+		        @RequestParam("genre") String genre,
+		        @RequestParam("status") String status,
+		        @RequestParam("delicated") Integer delicated) {
 
 		    try {
 		        // Convert file to byte array
@@ -80,6 +82,8 @@ public class PaintingsController {
 		        paintingDTO.setDate(date);
 		        paintingDTO.setStyle(style);
 		        paintingDTO.setGenre(genre);
+		        paintingDTO.setStatus(status);
+		        paintingDTO.setDelicated(delicated);
 		        paintingDTO.setImage(imageBytes); // Set the image byte array in DTO
 
 		        // Save painting using your service layer
