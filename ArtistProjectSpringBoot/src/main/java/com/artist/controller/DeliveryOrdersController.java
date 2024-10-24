@@ -141,11 +141,7 @@ public class DeliveryOrdersController {
         return dosi.getByStatusWithOrdersAndDetails(status);
     }
 	
-	// 自定義查詢範例: 查詢某個配送員處理的所有配送訂單
-	@RequestMapping(value="/selectByDeliveryStaff/{staffId}", method = RequestMethod.GET)
-    public List<DeliveryOrderResponseDTO> selectListByDeliveryStaff(@PathVariable("staffId")Integer staffId,  Model model){
-        return dosi.findByDeliveryStaff(staffId);
-    }
+
 	
 	// 自定義查詢範例: 查詢是誰包裝的
 	@RequestMapping(value="/selectByPackageStaff/{staffId}", method = RequestMethod.GET)
