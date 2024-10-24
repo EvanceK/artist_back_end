@@ -23,4 +23,6 @@
 <a href="https://dev.mysql.com/downloads/workbench/"><img src="https://img.shields.io/badge/mysql- v8.0-yellow?logo=mysql"/></a>
 <a href="https://spring.io/projects/spring-framework"><img src="https://img.shields.io/badge/spring- v6.1.12-green?logo=spring"/></a>
 <a href="https://spring.io/projects/spring-framework"><img src="https://img.shields.io/badge/springBoot- v3.3.4-green?logo=springboot"/></a>
+<a href="https://spring.io/projects/spring-framework"><img src="https://img.shields.io/badge/springBoot- v3.3.4-green?logo=springboot"/></a>
+<a href="https://www.docker.com/products/docker-desktop/"><img src="https://img.shields.io/badge/Docker Desktop- v4.34-blue?logo=docker"/></a>
 

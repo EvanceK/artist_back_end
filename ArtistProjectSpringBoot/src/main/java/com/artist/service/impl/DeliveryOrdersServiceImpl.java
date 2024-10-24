@@ -61,7 +61,7 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 			updateOrdersWithDeliveryNumber(deliveryOrderRequestDTO.getOrderList(), deliveryId);
 
 			// 返回成功訊息
-			return "出貨單已成立 : " + deliveryId;
+			return deliveryId;
 
 		} catch (Exception e) {
 			// 返回失敗訊息
@@ -97,14 +97,14 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 			DeliveryOrders dos = Dorders.get();
 			dos.setAttName(DOrdersfDTO.getAttName());
 			dos.setAttPhone(DOrdersfDTO.getAttPhone());
-			dos.setCreateDate(DOrdersfDTO.getCreateDate());
+//			dos.setCreateDate(DOrdersfDTO.getCreateDate());
 			dos.setDeliveryAddress(DOrdersfDTO.getDeliveryAddress());
-			dos.setDeliveryFee(DOrdersfDTO.getDeliveryFee());
+//			dos.setDeliveryFee(DOrdersfDTO.getDeliveryFee());
 			dos.setDeliveryInstrictions(DOrdersfDTO.getDeliveryInstrictions());
 			dos.setDeliveryStaff(DOrdersfDTO.getDeliveryStaff());
 			dos.setPackageStaff(DOrdersfDTO.getPackageStaff());
 			dos.setStatus(DOrdersfDTO.getStatus());
-			dos.setTotalAmount(DOrdersfDTO.getTotalAmount());
+//			dos.setTotalAmount(DOrdersfDTO.getTotalAmount());
 			dor.save(dos);
 		} else {
 			System.out.println("Artist is not find");

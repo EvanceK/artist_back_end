@@ -43,18 +43,7 @@ public class DeliveryOrdersController {
 	public String createDeliveryOrder(@RequestBody DeliveryOrderRequestDTO deliveryOrderRequestDTO) {
         // 呼叫 Service 層的 createDeliveryOrder 方法
         return dosi.createDeliveryOrder(deliveryOrderRequestDTO);
-    }
-	
-//	// 新增DeliveryOrders  V
-//	@PostMapping(value = "/createDeliveryOrders", consumes = "application/json")
-//	public ResponseEntity<?> createDeliveryOrders(@RequestBody DeliveryOrderRequestDTO deliveryOrdersfDTO) {
-//		try {
-//			dosi.createDeliveryOrder(deliveryOrdersfDTO);
-//			return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
-//		} catch (RuntimeException e) {
-//			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-//		}
-//	}
+       }
 //	
 //	@GetMapping("/deliveryOrders/{deliveryId}")
 //	public DeliveryOrderResponseDTO getDeliveryOrderDetails(@PathVariable String deliveryId) {
@@ -113,11 +102,29 @@ public class DeliveryOrdersController {
         return ResponseEntity.status(HttpStatus.OK).body("修改成功");
     }
 
+
+	// 新增  V
+	@PostMapping(value = "/createDeliveryOrders", consumes = "application/json")
+	public ResponseEntity<?> createDeliveryOrders(@RequestBody DeliveryOrderRequestDTO deliveryOrdersfDTO) {
+		try {
+			dosi.createDeliveryOrder(deliveryOrdersfDTO);
+			return ResponseEntity.status(HttpStatus.CREATED).body("新增成功");
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
+	}
 	
 	// 根據配送單查詢訂單 
 	@RequestMapping(value="/selectByDeliveryNumber/{deliveryNumber}", method = RequestMethod.GET)
     public DeliveryOrders selectByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
         return dor.findByDeliveryNumberWithOrdersAndDetails(deliveryNumber).get();
+    }
+	
+	// 用狀態去查哪張deliveryorders還沒處理
+	@RequestMapping(value="/selectByStatus/{status}", method = RequestMethod.GET)
+    public List<DeliveryOrderResponseDTO> selectListByStatus(@PathVariable("status")String status,  Model model){
+		// status="待處理";
+        return dosi.getByStatusWithOrdersAndDetails(status);
     }
 	
 	// 自定義查詢範例: 查詢某個配送員處理的所有配送訂單

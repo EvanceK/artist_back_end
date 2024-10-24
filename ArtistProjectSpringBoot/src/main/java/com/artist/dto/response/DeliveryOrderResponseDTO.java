@@ -3,8 +3,6 @@ package com.artist.dto.response;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.artist.entity.Orders;
-
 public class DeliveryOrderResponseDTO {
 	
 	    private String deliveryNumber; // 配送單號
@@ -117,6 +115,29 @@ public class DeliveryOrderResponseDTO {
 	    public void setOrderList(List<OrdersDTO> orderList) {
 	        this.orderList = orderList;
 	    }
+
+		public DeliveryOrderResponseDTO(String deliveryNumber, LocalDateTime createDate, String status, String attName,
+				String attPhone, String deliveryAddress, String deliveryInstrictions, Integer deliveryFee,
+				Integer totalAmount, String packageStaff, String deliveryStaff, List<OrdersDTO> orderList) {
+			super();
+			this.deliveryNumber = deliveryNumber;
+			this.createDate = createDate;
+			this.status = status;
+			this.attName = attName;
+			this.attPhone = attPhone;
+			this.deliveryAddress = deliveryAddress;
+			this.deliveryInstrictions = deliveryInstrictions;
+			this.deliveryFee = deliveryFee;
+			this.totalAmount = totalAmount;
+			this.packageStaff = packageStaff;
+			this.deliveryStaff = deliveryStaff;
+			this.orderList = orderList;
+		}
+
+		public DeliveryOrderResponseDTO() {
+			super();
+		}
+	    
 	}
 
 
