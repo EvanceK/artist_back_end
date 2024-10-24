@@ -3,6 +3,7 @@ package com.artist.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -50,8 +51,10 @@ public class DeliveryOrders {
 	@Column(name = "delivery_staff")
 	private String  deliveryStaff;
 	
+	
+	//@JsonManagedReference
 	@OneToMany(mappedBy = "deliveryOrders", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonBackReference
 	private List<Orders> orders;
 
 	public DeliveryOrders() {
