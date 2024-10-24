@@ -118,8 +118,8 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
 	@Query(value = "SELECT p.*, a.artist_name FROM paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY ORDER BY p.painting_id", nativeQuery = true)
    	Page<Paintings> findAllDelicatedPaintingsWithArtist(Pageable pageable, @Param("totalDay") int totalDay);
     
-    @Query(value = "SELECT p.*, a.artist_name FROM Paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY AND p.upload_date < NOW() - INTERVAL :canBidDay DAY ", nativeQuery = true) // 例子：查找 delicated =1 by分頁
-   	Page<Paintings> findAllPresaleExhibition(Pageable pageable,@Param("totalDay") int totalDay,@Param("canBidDay") int canBidDay);
+    @Query(value = "SELECT p.*, a.artist_name FROM Paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL :canBidDay DAY AND p.upload_date <= NOW() ", nativeQuery = true) // 例子：查找 delicated =1 by分頁
+   	Page<Paintings> findAllPresaleExhibition(Pageable pageable,@Param("canBidDay") int canBidDay);
     
 	@Query(value = "SELECT p.*, a.artist_name FROM paintings p JOIN artist a ON p.artist_id = a.artist_id WHERE p.upload_date > NOW() - INTERVAL 2 DAY ORDER BY p.painting_id", nativeQuery = true)
    	Page<Paintings> findAllInBidding(Pageable pageable);
@@ -132,8 +132,8 @@ public interface PaintingsRepository extends JpaRepository<Paintings,String>{
     @Query(value = "SELECT COUNT(*) FROM paintings p WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY", nativeQuery = true)
     long countByDelicated(@Param("totalDay") int totalDay);
     
-    @Query(value ="SELECT COUNT(*) FROM Paintings p WHERE p.upload_date > NOW() - INTERVAL :totalDay DAY AND p.upload_date < NOW() - INTERVAL :canBidDay DAY ", nativeQuery = true)
-    long countByPresaleExhibition(@Param("totalDay") int totalDay,@Param("canBidDay") int canBidDay);
+    @Query(value ="SELECT COUNT(*) FROM Paintings p WHERE p.upload_date > NOW() - INTERVAL :canBidDay DAY AND p.upload_date <= NOW()", nativeQuery = true)
+    long countByPresaleExhibition(@Param("canBidDay") int canBidDay);
     
     @Query(value = "SELECT COUNT(*) FROM Paintings p WHERE p.upload_date > NOW() - INTERVAL :canBidDay DAY", nativeQuery = true)
     long countByInBidding(@Param("canBidDay") int canBidDay);

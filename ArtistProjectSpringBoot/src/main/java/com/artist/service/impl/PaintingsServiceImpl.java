@@ -163,7 +163,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	public Page<PaintingDTO> getAllInPresaleExhibition(Integer pageSize, Integer currentPage) {
 		Pageable pageable = PageRequest.of(currentPage, pageSize);
-		Page<Paintings> paintingsPage = ptr.findAllPresaleExhibition(pageable,totalDay,canBidDay);
+		Page<Paintings> paintingsPage = ptr.findAllPresaleExhibition(pageable,canBidDay);
 		// 映射到 Page<PaintingDTO>
 		List<PaintingDTO> paintingDTOs = paintingsPage.getContent().stream()
 				.map(p -> new PaintingDTO(p.getPaintingId(), p.getPaintingName(), p.getArtist().getArtistId(),
@@ -193,7 +193,7 @@ public class PaintingsServiceImpl implements PaintingsService {
 
 	@Override
 	public Long findPresaleExhibitionTotalCount() {
-		long countByDelicated = ptr.countByPresaleExhibition(totalDay,canBidDay);
+		long countByDelicated = ptr.countByPresaleExhibition(canBidDay);
 		return countByDelicated;
 	}
 
