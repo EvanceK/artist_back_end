@@ -242,88 +242,12 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 	}
 
 	@Override
-	public List<DeliveryOrderResponseDTO> findByDeliveryStaff(Integer DeliveryStaff) {
-		List<DeliveryOrders> allDeliveryOrdersByStatus = dor.findByDeliveryStaff(DeliveryStaff);
-		List<DeliveryOrderResponseDTO> responseDTOList = new ArrayList<>();
-
-	    for (DeliveryOrders deliveryOrder : allDeliveryOrdersByStatus) {
-	        DeliveryOrderResponseDTO deliveryOrderDTO = new DeliveryOrderResponseDTO();
-	        deliveryOrderDTO.setDeliveryNumber(deliveryOrder.getDeliveryNumber());
-	        deliveryOrderDTO.setCreateDate(deliveryOrder.getCreateDate());
-	        deliveryOrderDTO.setStatus(deliveryOrder.getStatus());
-	        deliveryOrderDTO.setAttName(deliveryOrder.getAttName());
-	        deliveryOrderDTO.setAttPhone(deliveryOrder.getAttPhone());
-	        deliveryOrderDTO.setDeliveryAddress(deliveryOrder.getDeliveryAddress());
-	        deliveryOrderDTO.setDeliveryInstrictions(deliveryOrder.getDeliveryInstrictions());
-	        deliveryOrderDTO.setDeliveryFee(deliveryOrder.getDeliveryFee());
-	        deliveryOrderDTO.setTotalAmount(deliveryOrder.getTotalAmount());
-	        deliveryOrderDTO.setPackageStaff(deliveryOrder.getPackageStaff());
-	        deliveryOrderDTO.setDeliveryStaff(deliveryOrder.getDeliveryStaff());
-
-	        // 提取訂單列表
-	        List<OrdersDTO> ordersDTOList = deliveryOrder.getOrders().stream()
-	            .map(order -> {
-	                String paintingId = order.getOrderDetail().getPaintingId();
-	                
-	                return new OrdersDTO(
-	                    order.getOrderNumber(),
-	                    order.getOrderDate(),
-	                    order.getCustomerId(),
-	                    order.getServiceFee(),
-	                    order.getDesposit(),
-	                    order.getTotalAmount(),
-	                    order.getDeliveryNumber(),
-	                    paintingId
-	                );
-	            })
-	            .collect(Collectors.toList());
-
-	        deliveryOrderDTO.setOrderList(ordersDTOList);
-	        responseDTOList.add(deliveryOrderDTO);
-	    }
-	    return responseDTOList;
+	public String getPackageStaffName(String staffId) {
+		return dor.findByPackageStaff(staffId);
 	}
 
 	@Override
-	public List<DeliveryOrderResponseDTO> findByPackageStaff(Integer DeliveryStaff) {
-		List<DeliveryOrders> allDeliveryOrdersByStatus = dor.findByPackageStaff(DeliveryStaff);
-		List<DeliveryOrderResponseDTO> responseDTOList = new ArrayList<>();
-
-	    for (DeliveryOrders deliveryOrder : allDeliveryOrdersByStatus) {
-	        DeliveryOrderResponseDTO deliveryOrderDTO = new DeliveryOrderResponseDTO();
-	        deliveryOrderDTO.setDeliveryNumber(deliveryOrder.getDeliveryNumber());
-	        deliveryOrderDTO.setCreateDate(deliveryOrder.getCreateDate());
-	        deliveryOrderDTO.setStatus(deliveryOrder.getStatus());
-	        deliveryOrderDTO.setAttName(deliveryOrder.getAttName());
-	        deliveryOrderDTO.setAttPhone(deliveryOrder.getAttPhone());
-	        deliveryOrderDTO.setDeliveryAddress(deliveryOrder.getDeliveryAddress());
-	        deliveryOrderDTO.setDeliveryInstrictions(deliveryOrder.getDeliveryInstrictions());
-	        deliveryOrderDTO.setDeliveryFee(deliveryOrder.getDeliveryFee());
-	        deliveryOrderDTO.setTotalAmount(deliveryOrder.getTotalAmount());
-	        deliveryOrderDTO.setPackageStaff(deliveryOrder.getPackageStaff());
-	        deliveryOrderDTO.setDeliveryStaff(deliveryOrder.getDeliveryStaff());
-
-	        // 提取訂單列表
-	        List<OrdersDTO> ordersDTOList = deliveryOrder.getOrders().stream()
-	            .map(order -> {
-	                String paintingId = order.getOrderDetail().getPaintingId();
-	                
-	                return new OrdersDTO(
-	                    order.getOrderNumber(),
-	                    order.getOrderDate(),
-	                    order.getCustomerId(),
-	                    order.getServiceFee(),
-	                    order.getDesposit(),
-	                    order.getTotalAmount(),
-	                    order.getDeliveryNumber(),
-	                    paintingId
-	                );
-	            })
-	            .collect(Collectors.toList());
-
-	        deliveryOrderDTO.setOrderList(ordersDTOList);
-	        responseDTOList.add(deliveryOrderDTO);
-	    }
-	    return responseDTOList;
+	public String getDeliveryStaffName(String staffId) {
+		return dor.findByDeliveryStaff(staffId);
 	}
 }
