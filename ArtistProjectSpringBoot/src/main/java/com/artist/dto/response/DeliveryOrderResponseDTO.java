@@ -3,8 +3,6 @@ package com.artist.dto.response;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.artist.entity.Orders;
-
 public class DeliveryOrderResponseDTO {
 	
 	    private String deliveryNumber; // 配送單號
@@ -16,8 +14,8 @@ public class DeliveryOrderResponseDTO {
 	    private String deliveryInstrictions; // 配送指示
 	    private Integer deliveryFee; // 配送費用
 	    private Integer totalAmount; // 總金額
-	    private Integer packageStaff; // 包裝人員ID
-	    private Integer deliveryStaff; // 配送人員ID
+	    private String packageStaff; // 包裝人員ID
+	    private String deliveryStaff; // 配送人員ID
 	    private List<OrdersDTO> orderList; // 訂單列表
 
 	    // Getters and Setters
@@ -94,19 +92,19 @@ public class DeliveryOrderResponseDTO {
 	        this.totalAmount = totalAmount;
 	    }
 
-	    public Integer getPackageStaff() {
+	    public String getPackageStaff() {
 	        return packageStaff;
 	    }
 
-	    public void setPackageStaff(Integer packageStaff) {
+	    public void setPackageStaff(String packageStaff) {
 	        this.packageStaff = packageStaff;
 	    }
 
-	    public Integer getDeliveryStaff() {
+	    public String getDeliveryStaff() {
 	        return deliveryStaff;
 	    }
 
-	    public void setDeliveryStaff(Integer deliveryStaff) {
+	    public void setDeliveryStaff(String deliveryStaff) {
 	        this.deliveryStaff = deliveryStaff;
 	    }
 
@@ -117,6 +115,29 @@ public class DeliveryOrderResponseDTO {
 	    public void setOrderList(List<OrdersDTO> orderList) {
 	        this.orderList = orderList;
 	    }
+
+		public DeliveryOrderResponseDTO(String deliveryNumber, LocalDateTime createDate, String status, String attName,
+				String attPhone, String deliveryAddress, String deliveryInstrictions, Integer deliveryFee,
+				Integer totalAmount, String packageStaff, String deliveryStaff, List<OrdersDTO> orderList) {
+			super();
+			this.deliveryNumber = deliveryNumber;
+			this.createDate = createDate;
+			this.status = status;
+			this.attName = attName;
+			this.attPhone = attPhone;
+			this.deliveryAddress = deliveryAddress;
+			this.deliveryInstrictions = deliveryInstrictions;
+			this.deliveryFee = deliveryFee;
+			this.totalAmount = totalAmount;
+			this.packageStaff = packageStaff;
+			this.deliveryStaff = deliveryStaff;
+			this.orderList = orderList;
+		}
+
+		public DeliveryOrderResponseDTO() {
+			super();
+		}
+	    
 	}
 
 
