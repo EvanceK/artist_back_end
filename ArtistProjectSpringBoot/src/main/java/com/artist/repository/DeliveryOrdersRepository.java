@@ -44,19 +44,16 @@ public interface DeliveryOrdersRepository extends JpaRepository<DeliveryOrders, 
 		       "JOIN o.orderDetail od " +
 		       "WHERE d.status = :status")
 	List<DeliveryOrders> findByStatusWithOrdersAndDetails(@Param("status") String status);    
-//	    
-//
+
+
     // 自定義查詢範例: 查詢某個配送員處理的所有配送訂單
-    @Query("SELECT d FROM DeliveryOrders d "+
-    		   			"JOIN d.orders o " +
-    		   			"JOIN o.orderDetail od " +
-    		   			"WHERE d.deliveryStaff = :staffId")
-    List<DeliveryOrders> findByDeliveryStaff(@Param("staffId") Integer staffId);
+	@Query(nativeQuery = true, value = "SELECT s.staff_name FROM deliveryorders d join staff s on  d.delivery_staff=s.staff_username where d.delivery_staff=:staffId")
+    String findByDeliveryStaff(@Param("staffId") String staffId);
 //
 //    
     // 自定義查詢範例: 查詢是誰包裝的
-    @Query("SELECT d FROM DeliveryOrders d WHERE d.packageStaff = :staffId")
-    List<DeliveryOrders> findByPackageStaff(@Param("staffId") Integer staffId);
+    @Query(nativeQuery = true, value = "SELECT s.staff_name FROM deliveryorders d join staff s on  d.package_staff=s.staff_username where d.package_staff=:staffId")
+    String findByPackageStaff(@Param("staffId") String staffId);
 }
 
 
