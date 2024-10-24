@@ -61,7 +61,7 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 			updateOrdersWithDeliveryNumber(deliveryOrderRequestDTO.getOrderList(), deliveryId);
 
 			// 返回成功訊息
-			return "出貨單已成立 : " + deliveryId;
+			return deliveryId;
 
 		} catch (Exception e) {
 			// 返回失敗訊息
