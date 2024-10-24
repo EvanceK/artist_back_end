@@ -78,31 +78,31 @@ public class DeliveryOrdersController {
 //        return dor.findByDeliveryNumber(deliveryNumber);
 //    }
 
-	// get one by deliveryNumber
-	@GetMapping(value="/{deliveryNumber}")
-    public DeliveryOrderResponseDTO findOneById(@PathVariable("deliveryNumber")String deliveryNumber){
+	// select by deliveryNumber V
+	@GetMapping(value="/selectbydeliveryNumber/{deliveryNumber}")
+    public DeliveryOrderResponseDTO findByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber){
 		System.out.println(deliveryNumber);
 		DeliveryOrderResponseDTO delivery = dosi.getByOrderNumber(deliveryNumber);
 		return delivery;
     }
 
 	
-	// get by Status
-	@GetMapping(value="/status")
+	// select by Status  V
+	@GetMapping(value="//selectbystatus")
     public ResponseEntity<?> selectByStatus(@RequestParam("status")String deliverystatus){
 		List<DeliveryOrderResponseDTO> delivery = dosi.getByStatusWithOrdersAndDetails(deliverystatus);
 		return ResponseEntity.ok(delivery);
     }
 	
 	
-	// delete by deliveryNumber
+	// delete by deliveryNumber V
 	@DeleteMapping("/{deliveryNumber}")
 	public ResponseEntity<Void> deleteDeliveryOrdersByNumber(@PathVariable String deliveryNumber) {
 		dor.deleteById(deliveryNumber);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
-	// 修改
+	// 修改  V
 	@PutMapping(value ="/editDeliveryOrders", consumes = "application/json")
     public ResponseEntity<?> updateDeliveryOrders(@RequestBody DeliveryOrdersDTO deliveryOrdersfDTO){
 		dosi.update(deliveryOrdersfDTO);
@@ -110,8 +110,7 @@ public class DeliveryOrdersController {
     }
 
 
-	
-	// 新增
+	// 新增  V
 	@PostMapping(value = "/createDeliveryOrders", consumes = "application/json")
 	public ResponseEntity<?> createDeliveryOrders(@RequestBody DeliveryOrderRequestDTO deliveryOrdersfDTO) {
 		try {
@@ -144,14 +143,14 @@ public class DeliveryOrdersController {
 	
 	// 自定義查詢範例: 查詢某個配送員處理的所有配送訂單
 	@RequestMapping(value="/selectByDeliveryStaff/{staffId}", method = RequestMethod.GET)
-    public List<DeliveryOrders> selectListByDeliveryStaff(@PathVariable("staffId")Integer staffId,  Model model){
-        return null;//dor.findByDeliveryStaff(staffId);
+    public List<DeliveryOrderResponseDTO> selectListByDeliveryStaff(@PathVariable("staffId")Integer staffId,  Model model){
+        return dosi.findByDeliveryStaff(staffId);
     }
 	
 	// 自定義查詢範例: 查詢是誰包裝的
 	@RequestMapping(value="/selectByPackageStaff/{staffId}", method = RequestMethod.GET)
-    public List<DeliveryOrders> selectListByPackageStaff(@PathVariable("staffId")Integer staffId,  Model model){
-        return null;//dor.findByPackageStaff(staffId);
+    public List<DeliveryOrderResponseDTO> selectListByPackageStaff(@PathVariable("staffId")Integer staffId,  Model model){
+        return dosi.findByPackageStaff(staffId);
     }
 
 	
