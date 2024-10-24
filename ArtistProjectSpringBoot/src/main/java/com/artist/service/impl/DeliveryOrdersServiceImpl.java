@@ -240,4 +240,14 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 		    }
 		    return responseDTOList;
 	}
+
+	@Override
+	public String getPackageStaffName(String staffId) {
+		return dor.findByPackageStaff(staffId);
+	}
+
+	@Override
+	public String getDeliveryStaffName(String staffId) {
+		return dor.findByDeliveryStaff(staffId);
+	}
 }

@@ -39,7 +39,6 @@ public class DeliveryOrdersController {
 	private DeliveryOrdersRepository dor;
 	
 
-	
 	@PostMapping(value = "/createDeliveryOrder", consumes = "application/json")
 	public String createDeliveryOrder(@RequestBody DeliveryOrderRequestDTO deliveryOrderRequestDTO) {
         // 呼叫 Service 層的 createDeliveryOrder 方法
@@ -115,7 +114,7 @@ public class DeliveryOrdersController {
     }
 
 	
-	// 根據配送單查詢訂單
+	// 根據配送單查詢訂單 
 	@RequestMapping(value="/selectByDeliveryNumber/{deliveryNumber}", method = RequestMethod.GET)
     public DeliveryOrders selectByDeliveryNumber(@PathVariable("deliveryNumber")String deliveryNumber,  Model model){
         return dor.findByDeliveryNumberWithOrdersAndDetails(deliveryNumber).get();
@@ -123,14 +122,14 @@ public class DeliveryOrdersController {
 	
 	// 自定義查詢範例: 查詢某個配送員處理的所有配送訂單
 	@RequestMapping(value="/selectByDeliveryStaff/{staffId}", method = RequestMethod.GET)
-    public List<DeliveryOrderResponseDTO> selectListByDeliveryStaff(@PathVariable("staffId")Integer staffId,  Model model){
-        return dosi.findByDeliveryStaff(staffId);
+    public String selectListByDeliveryStaff(@PathVariable("staffId")String staffId,  Model model){
+        return dosi.getDeliveryStaffName(staffId);
     }
 	
 	// 自定義查詢範例: 查詢是誰包裝的
 	@RequestMapping(value="/selectByPackageStaff/{staffId}", method = RequestMethod.GET)
-    public List<DeliveryOrderResponseDTO> selectListByPackageStaff(@PathVariable("staffId")Integer staffId,  Model model){
-        return dosi.findByPackageStaff(staffId);
+    public String selectListByPackageStaff(@PathVariable("staffId")String staffId,  Model model){
+        return dosi.getPackageStaffName(staffId);
     }
 
 	
