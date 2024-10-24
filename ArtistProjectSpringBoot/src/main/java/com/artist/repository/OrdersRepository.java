@@ -18,7 +18,8 @@ public interface OrdersRepository extends JpaRepository<Orders, String>{
     Optional<Orders> findByOrderNumber(@Param("orderNumber") String orderNumber);
 
     // 查詢某個客戶的所有訂單
-    @EntityGraph(attributePaths = {"orderDetail.painting"})
+//    @EntityGraph(attributePaths = {"orderDetail.painting"})
+    @Query(value = "SELECT * FROM `artistproject`.`orders` WHERE customer_id = :customerId and delivery_number IS NULL", nativeQuery = true)
     List<Orders> findByCustomerId(String customerId);
 
     // 新增查詢多筆訂單的方法
