@@ -46,10 +46,10 @@ public class DeliveryOrders {
 	private Integer  totalAmount;
 	
 	@Column(name = "package_staff")
-	private Integer  packageStaff;
+	private String  packageStaff;
 	
 	@Column(name = "delivery_staff")
-	private Integer  deliveryStaff;
+	private String  deliveryStaff;
 	
 	
 	//@JsonManagedReference
@@ -64,7 +64,7 @@ public class DeliveryOrders {
 
 	public DeliveryOrders(String deliveryNumber, LocalDateTime createDate, String status, String attName,
 			String attPhone, String deliveryAddress, String deliveryInstrictions, Integer  deliveryFee, Integer  totalAmount,
-			Integer  packageStaff, Integer  deliveryStaff) {
+			String  packageStaff, String  deliveryStaff) {
 		super();
 		this.deliveryNumber = deliveryNumber;
 		this.createDate = createDate;
@@ -82,7 +82,7 @@ public class DeliveryOrders {
 
 	public DeliveryOrders(String deliveryNumber, LocalDateTime createDate, String status, String attName,
 			String attPhone, String deliveryAddress, String deliveryInstrictions, Integer  deliveryFee, Integer  totalAmount,
-			Integer  packageStaff, Integer  deliveryStaff, List<Orders> orders) {
+			String  packageStaff, String  deliveryStaff, List<Orders> orders) {
 		super();
 		this.deliveryNumber = deliveryNumber;
 		this.createDate = createDate;
@@ -185,20 +185,26 @@ public class DeliveryOrders {
 		this.totalAmount = totalAmount;
 	}
 
-	public Integer getPackageStaff() {
+
+	public String getPackageStaff() {
 		return packageStaff;
 	}
 
-	public void setPackageStaff(Integer packageStaff) {
+
+	public void setPackageStaff(String packageStaff) {
 		this.packageStaff = packageStaff;
 	}
 
-	public Integer getDeliveryStaff() {
+
+	public String getDeliveryStaff() {
 		return deliveryStaff;
 	}
 
-	public void setDeliveryStaff(Integer deliveryStaff) {
+
+	public void setDeliveryStaff(String deliveryStaff) {
 		this.deliveryStaff = deliveryStaff;
 	}
+
+
 		
 }
