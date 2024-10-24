@@ -16,10 +16,9 @@ public interface DeliveryOrdersService {
 
 	DeliveryOrderResponseDTO getByOrderNumber(String deliveryNumber);
 	List<DeliveryOrderResponseDTO> getByStatusWithOrdersAndDetails(String status);
-	List<DeliveryOrderResponseDTO> findByDeliveryStaff(Integer DeliveryStaff);
-	List<DeliveryOrderResponseDTO> findByPackageStaff(Integer DeliveryStaff);
-	
-	
+	String getPackageStaffName(String staffId);
+	String getDeliveryStaffName(String staffId);
+
 	//後台update用
 	void update(DeliveryOrdersDTO DOrdersfDTO);
 	
