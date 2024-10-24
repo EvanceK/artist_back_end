@@ -15,14 +15,14 @@ public class DeliveryOrdersDTO {
 	private String deliveryInstrictions;
 	private int deliveryFee;
 	private int totalAmount;
-	private int packageStaff;
-	private int deliveryStaff;
+	private String packageStaff;
+	private String deliveryStaff;
 	public DeliveryOrdersDTO() {
 		super();
 	}
 	public DeliveryOrdersDTO(String deliveryNumber, LocalDateTime createDate, String orderNumber, String status,
 			String attName, String attPhone, String deliveryAddress, String deliveryInstrictions, int deliveryFee,
-			int totalAmount, int packageStaff, int deliveryStaff) {
+			int totalAmount, String packageStaff, String deliveryStaff) {
 		super();
 		this.deliveryNumber = deliveryNumber;
 		this.createDate = createDate;
@@ -97,16 +97,16 @@ public class DeliveryOrdersDTO {
 	public void setTotalAmount(int totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-	public int getPackageStaff() {
+	public String getPackageStaff() {
 		return packageStaff;
 	}
-	public void setPackageStaff(int packageStaff) {
+	public void setPackageStaff(String packageStaff) {
 		this.packageStaff = packageStaff;
 	}
-	public int getDeliveryStaff() {
+	public String getDeliveryStaff() {
 		return deliveryStaff;
 	}
-	public void setDeliveryStaff(int deliveryStaff) {
+	public void setDeliveryStaff(String deliveryStaff) {
 		this.deliveryStaff = deliveryStaff;
 	}
 		

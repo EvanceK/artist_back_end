@@ -16,8 +16,8 @@ public class DeliveryOrderResponseDTO {
 	    private String deliveryInstrictions; // 配送指示
 	    private Integer deliveryFee; // 配送費用
 	    private Integer totalAmount; // 總金額
-	    private Integer packageStaff; // 包裝人員ID
-	    private Integer deliveryStaff; // 配送人員ID
+	    private String packageStaff; // 包裝人員ID
+	    private String deliveryStaff; // 配送人員ID
 	    private List<OrdersDTO> orderList; // 訂單列表
 
 	    // Getters and Setters
@@ -94,19 +94,19 @@ public class DeliveryOrderResponseDTO {
 	        this.totalAmount = totalAmount;
 	    }
 
-	    public Integer getPackageStaff() {
+	    public String getPackageStaff() {
 	        return packageStaff;
 	    }
 
-	    public void setPackageStaff(Integer packageStaff) {
+	    public void setPackageStaff(String packageStaff) {
 	        this.packageStaff = packageStaff;
 	    }
 
-	    public Integer getDeliveryStaff() {
+	    public String getDeliveryStaff() {
 	        return deliveryStaff;
 	    }
 
-	    public void setDeliveryStaff(Integer deliveryStaff) {
+	    public void setDeliveryStaff(String deliveryStaff) {
 	        this.deliveryStaff = deliveryStaff;
 	    }
 

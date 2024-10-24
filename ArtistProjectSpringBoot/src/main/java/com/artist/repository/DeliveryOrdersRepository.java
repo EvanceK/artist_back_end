@@ -46,9 +46,10 @@ public interface DeliveryOrdersRepository extends JpaRepository<DeliveryOrders, 
 	List<DeliveryOrders> findByStatusWithOrdersAndDetails(@Param("status") String status);    
 //	    
 //
-//    // 自定義查詢範例: 查詢某個配送員處理的所有配送訂單
-//    @Query("SELECT d FROM DeliveryOrders d WHERE d.deliveryStaff = :staffId")
-//    List<DeliveryOrders> findByDeliveryStaff(@Param("staffId") Integer staffId);
+    // 自定義查詢範例: 查詢某個配送員處理的所有配送訂單
+//    @Query("SELECT d FROM DeliveryOrders d "+
+//    		 "WHERE d.deliveryStaff = :staffId")
+//    List<DeliveryOrders> findByDeliveryStaff(@Param("staffId") String staffId);
 //
 //    
 //    // 自定義查詢範例: 查詢是誰包裝的
