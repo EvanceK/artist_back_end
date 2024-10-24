@@ -27,6 +27,7 @@ import com.artist.entity.Customers;
 import com.artist.service.impl.BidrecordServiceImpl;
 import com.artist.service.impl.CustomersServiceImpl;
 import com.artist.service.impl.OrdersServiceImpl;
+import com.artist.utils.JwtUtil;
 
 @RestController
 @RequestMapping("/customers")
@@ -37,6 +38,9 @@ public class CustomersController {
 	private BidrecordServiceImpl bsi;
 	@Autowired
 	private OrdersServiceImpl osi;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
 
 	// 註冊
 	@PostMapping(value = "/register", consumes = "application/json")
@@ -188,6 +192,12 @@ public class CustomersController {
 //		} catch (Exception e) {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 //		}
+	}
+	
+	//檢查token是否還生效
+	@GetMapping("/checkToken")
+	public boolean checkToken(@RequestHeader("Authorization") String token) {
+		return jwtUtil.isTokenExpired(token);
 	}
 
 }
