@@ -3,7 +3,9 @@ package com.artist.service.impl;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,7 @@ import com.artist.dto.response.DeliveryOrderResponseDTO;
 import com.artist.dto.response.DeliveryOrdersDTO;
 import com.artist.dto.response.MyOrderResponse;
 import com.artist.dto.response.OrdersDTO;
+import com.artist.dto.response.SimplePaintingDTO;
 import com.artist.entity.DeliveryOrders;
 import com.artist.entity.Orders;
 import com.artist.repository.DeliveryOrdersRepository;
@@ -256,30 +259,43 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 	@Override
 	public List<MyOrderResponse> getByDeliveryNumberAndCustomer(String customerId) {
 		List<Object[]> results = dor.findByDeliveryNumberAndCustomer(customerId);
-		List<MyOrderResponse> customerDeliveryList = new ArrayList<>();
+		Map<String, MyOrderResponse> orderMap = new HashMap<>();
+		
+		
 		for (Object[] result : results) {
-		    MyOrderResponse order = new MyOrderResponse();
-		    order.setCustomerId((String) result[0]); // 第1欄 customerId
-		    order.setDeliveryNumber((String) result[1]); // 第2欄 deliveryNumber
+			String deliveryNumber = (String) result[1]; // 獲取 deliveryNumber
+			
+			 // 如果 orderMap 中沒有該 deliveryNumber，則初始化 OrderResponse
+		    if (!orderMap.containsKey(deliveryNumber)) {
+		    	MyOrderResponse orderResponse = new MyOrderResponse();
+		        orderResponse.setCustomerId((String) result[0]);// 第1欄 customerId
+		        orderResponse.setDeliveryNumber(deliveryNumber);// 第2欄 deliveryNumber
+		        Timestamp createDateTimestamp = (Timestamp) result[2];
+		        orderResponse.setCreateDate(createDateTimestamp.toLocalDateTime());// 將第3欄 result[2] 轉換為 LocalDateTime
+		        orderResponse.setStatus((String) result[3]); // 第4欄 status
+		        orderResponse.setAttName((String) result[4]);// 第5欄 attName
+		        orderResponse.setDeliveryAddress((String) result[5]); // 第6欄 deliveryAddress
+		        orderResponse.setDeliveryInstrictions((String) result[6]);// 第7欄 deliveryInstructions
+		        orderResponse.setTotalAmount((Integer) result[7]);// 第8欄 totalAmount
+		        orderResponse.setPaintings(new ArrayList<>()); // 初始化畫作列表
+
+		        orderMap.put(deliveryNumber, orderResponse);
+		    }
+
+		    // 添加畫作詳情到該訂單的畫作列表中
+		    SimplePaintingDTO paintingDetails = new SimplePaintingDTO();
+		    paintingDetails.setPaintingId((String) result[8]); // 第9欄 paintingId
+		    paintingDetails.setPaintingName((String) result[9]); // 第10欄 paintingName
+		    paintingDetails.setArtistName((String) result[10]); // 第11欄 artistName
+		    paintingDetails.setImage((byte[]) result[11]); // 第12欄 artistName
+
+		    // 將畫作詳細資訊添加到對應的訂單中
+		    orderMap.get(deliveryNumber).getPaintings().add(paintingDetails);
 		    
-		    // 將第3欄 result[2] 轉換為 LocalDateTime
-		    Timestamp createDateTimestamp = (Timestamp) result[2];
-		    order.setCreateDate(createDateTimestamp.toLocalDateTime());
-
-		    order.setStatus((String) result[3]); // 第4欄 status
-		    order.setAttName((String) result[4]); // 第5欄 attName
-		    order.setDeliveryAddress((String) result[5]); // 第6欄 deliveryAddress
-		    order.setDeliveryInstrictions((String) result[6]); // 第7欄 deliveryInstructions
-		    order.setTotalAmount((Integer) result[7]); // 第8欄 totalAmount
-		    order.setPaintingId((String) result[8]); // 第9欄 paintingId
-		    order.setPaintingName((String) result[9]); // 第10欄 paintingName
-		    order.setArtistName((String) result[10]); // 第11欄 artistName
-		    order.setImage((byte[]) result[11]); // 第12欄 image
-
-		    customerDeliveryList.add(order);
 		}
-
-		return customerDeliveryList;
+		// 將所有訂單放入列表中返回
+		List<MyOrderResponse> orderResponseList = new ArrayList<>(orderMap.values());
+		return orderResponseList;
 	}
 	
 	
