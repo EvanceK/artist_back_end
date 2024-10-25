@@ -86,7 +86,7 @@ public class InitService implements CommandLineRunner {
 					scheduler.schedule(() -> {
 						try {
 							System.out.println(painting.getPaintingId()+" 截標倒數24小時");
-							esi.sendmail(painting.getPaintingId());// 缺寄mail的方法
+//							esi.sendmail(painting.getPaintingId());// 缺寄mail的方法
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

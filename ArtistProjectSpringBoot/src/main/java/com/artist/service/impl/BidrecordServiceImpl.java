@@ -1,5 +1,6 @@
 package com.artist.service.impl;
 
+import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,7 @@ public class BidrecordServiceImpl implements BidrecordService {
 	PaintingsServiceImpl psi;
 	@Autowired
 	CustomersServiceImpl csi;
+	@Lazy
 	@Autowired
 	OrdersServiceImpl osi;
 	@Autowired
@@ -204,7 +207,12 @@ public class BidrecordServiceImpl implements BidrecordService {
             FinalBiddingList bidding = new FinalBiddingList();
             bidding.setPaintingId((String) result[0]); // 表單第1欄 paintingId
             bidding.setBidderId((String) result[1]); // 第2欄是 bidderId
-            bidding.setBidLastTime((LocalDateTime) result[2]); // 第3欄是 bidLastTime
+//            bidding.setBidLastTime((LocalDateTime) result[2]); // 第3欄是 bidLastTime
+            
+         // 將 result[2] 轉換為 Timestamp，然後轉換為 LocalDateTime
+            Timestamp timestamp = (Timestamp) result[2];// 第3欄是 bidLastTime
+            LocalDateTime bidLastTime = timestamp.toLocalDateTime();
+            bidding.setBidLastTime(bidLastTime); // 第3欄是 bidLastTime
             bidding.setBidAmount((Double) result[3]); // 第4欄是 bidAmount
             bidding.setCurrentHighestBidAmount((Double) result[4]); // 第5欄是 currentHighestBidAmount
             bidding.setName((String) result[5]);

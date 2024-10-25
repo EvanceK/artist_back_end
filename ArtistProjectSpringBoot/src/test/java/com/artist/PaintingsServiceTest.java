@@ -16,10 +16,13 @@ import org.junit.jupiter.api.Test; // 確保使用 JUnit 5 的 @Test
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.context.annotation.Lazy;
 
+import com.artist.dto.response.FinalBiddingList;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.entity.Paintings;
 import com.artist.repository.PaintingsRepository;
+import com.artist.service.impl.BidrecordServiceImpl;
 import com.artist.service.impl.PaintingsServiceImpl;
 
 //@RunWith(SpringRunner.class)
@@ -122,6 +125,14 @@ public class PaintingsServiceTest {
 	    } else {
 	        System.out.println("Painting with ID " +" not found.");
 	    }
+	}
+	@Lazy
+	@Autowired
+	private BidrecordServiceImpl bsi;
+	@Test
+	void finalBiddingList() {
+		List<FinalBiddingList> finalBiddingList = bsi.getFinalBiddingList();
+		System.out.println(finalBiddingList);
 	}
 }
 	

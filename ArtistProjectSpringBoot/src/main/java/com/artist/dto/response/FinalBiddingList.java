@@ -80,6 +80,14 @@ public class FinalBiddingList {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+
+	@Override
+	public String toString() {
+		return "FinalBiddingList [paintingId=" + paintingId + ", bidderId=" + bidderId + ", bidLastTime=" + bidLastTime
+				+ ", bidAmount=" + bidAmount + ", currentHighestBidAmount=" + currentHighestBidAmount + ", name=" + name
+				+ ", email=" + email + "]";
+	}
 	
 
 	
