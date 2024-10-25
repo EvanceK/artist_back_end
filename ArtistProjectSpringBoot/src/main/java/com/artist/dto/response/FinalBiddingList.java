@@ -8,9 +8,28 @@ public class FinalBiddingList {
 	private LocalDateTime bidLastTime;
 	private Double bidAmount;
 	private Double currentHighestBidAmount;
+	private String name;
+	private String email;
+
+	
 	public FinalBiddingList() {
 		super();
 	}
+	
+	
+	public FinalBiddingList(String paintingId, String bidderId, LocalDateTime bidLastTime, Double bidAmount,
+			Double currentHighestBidAmount, String name, String email) {
+		super();
+		this.paintingId = paintingId;
+		this.bidderId = bidderId;
+		this.bidLastTime = bidLastTime;
+		this.bidAmount = bidAmount;
+		this.currentHighestBidAmount = currentHighestBidAmount;
+		this.name = name;
+		this.email = email;
+	}
+
+
 	public String getPaintingId() {
 		return paintingId;
 	}
@@ -40,6 +59,26 @@ public class FinalBiddingList {
 	}
 	public void setCurrentHighestBidAmount(Double currentHighestBidAmount) {
 		this.currentHighestBidAmount = currentHighestBidAmount;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 

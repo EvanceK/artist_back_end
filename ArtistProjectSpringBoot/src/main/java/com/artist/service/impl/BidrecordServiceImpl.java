@@ -207,6 +207,9 @@ public class BidrecordServiceImpl implements BidrecordService {
             bidding.setBidLastTime((LocalDateTime) result[2]); // 第3欄是 bidLastTime
             bidding.setBidAmount((Double) result[3]); // 第4欄是 bidAmount
             bidding.setCurrentHighestBidAmount((Double) result[4]); // 第5欄是 currentHighestBidAmount
+            bidding.setName((String) result[5]);
+            bidding.setEmail((String) result[6]);
+
             finalBiddingList.add(bidding);
         }
 
