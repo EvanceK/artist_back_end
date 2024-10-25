@@ -53,7 +53,7 @@ public class InitService implements CommandLineRunner {
 			// 計算現在時間和下架時間的時間差
 			long delay = Duration.between(LocalDateTime.now(), removeDate).toMillis();
 			// 如果下架時間已過，就立即標記為下架
-			 esi.sendAuctionRemiderEmail();
+//			 esi.sendAuctionRemiderEmail();
 
 			if (delay <= 0) {
 				psi.setSatusfinished(painting.getPaintingId());
@@ -83,7 +83,7 @@ public class InitService implements CommandLineRunner {
 			if (delay > 0) {// 如果還未到下架時間，則設置定時任務
 				long remiantime = delay-86400000;//1天的毫秒數
 				if (remiantime > 0){
-					System.out.println("Scheduling removal task: " + painting.getPaintingId() + "，延遲：" + remiantime + " 毫秒");
+					System.out.println("Scheduling 截標倒數24小時" + painting.getPaintingId() + "，延遲：" + remiantime + " 毫秒");
 
 					scheduler.schedule(() -> {
 						try {

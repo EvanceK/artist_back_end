@@ -141,7 +141,6 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	// 發送提醒產品結標前一小時信件
-	@Test
 	public void sendAuctionRemiderEmail() {
 		// 需要改為List：
 //	
@@ -180,7 +179,7 @@ public class EmailServiceImpl implements EmailService {
 				helper.setSubject("提醒：您競標的拍賣即將結束！剩餘一小時！");
 
 				// 設置收件人
-				helper.setTo("aqaq888rtrt888@gmail.com");
+				helper.setTo(email);
 
 				// 設置發件人
 				helper.setFrom("artistjava2024@gmail.com");
