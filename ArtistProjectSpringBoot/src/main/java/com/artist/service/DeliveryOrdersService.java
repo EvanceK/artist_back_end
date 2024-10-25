@@ -2,9 +2,12 @@ package com.artist.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.artist.dto.request.DeliveryOrderRequestDTO;
 import com.artist.dto.response.DeliveryOrderResponseDTO;
 import com.artist.dto.response.DeliveryOrdersDTO;
+import com.artist.dto.response.MyOrderResponse;
 
 public interface DeliveryOrdersService {
 
@@ -21,5 +24,9 @@ public interface DeliveryOrdersService {
 
 	//後台update用
 	void update(DeliveryOrdersDTO DOrdersfDTO);
+	
+	
+	List<MyOrderResponse> getByDeliveryNumberAndCustomer(@Param("customerId") String customerId);
+
 	
 }

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.artist.dto.response.DeliveryOrderResponseDTO;
+import com.artist.dto.response.MyOrderResponse;
 import com.artist.entity.DeliveryOrders;
 
 
@@ -54,6 +54,34 @@ public interface DeliveryOrdersRepository extends JpaRepository<DeliveryOrders, 
     // 自定義查詢範例: 查詢是誰包裝的
     @Query(nativeQuery = true, value = "SELECT s.staff_name FROM deliveryorders d join staff s on  d.package_staff=s.staff_username where d.package_staff=:staffId")
     String findByPackageStaff(@Param("staffId") String staffId);
+    
+    
+    // 根據客戶查詢訂單
+    // Java 中，"""...""" 是 文本區塊（Text Block），這是一種用來處理多行字串的語法，於 Java 13 引入並在 Java 15 完整支援。
+    @Query(value = """
+    	    SELECT 
+    	        o.customer_id,
+    	        d.delivery_number,
+    	        d.create_date,
+    	        d.status,
+    	        d.att_name,
+    	        d.delivery_address,
+    	        d.delivery_instrictions,
+    	        d.total_amount,
+    	        p.painting_id,
+    	        p.painting_name,
+    	        a.artist_name,
+    	        p.image
+    	    FROM deliveryorders d
+    	    JOIN orders o ON d.delivery_number = o.delivery_number 
+    	    JOIN orderdetails os ON o.order_number = os.order_number
+    	    JOIN paintings p ON os.painting_id = p.painting_id 
+    	    JOIN artist a ON a.artist_id = p.artist_id
+    	    WHERE o.customer_id = :customerId
+    	""",nativeQuery = true)
+    	List<MyOrderResponse> findByDeliveryNumberAndCustomer(@Param("customerId") String customerId);
+ 
+    
 }
 
 

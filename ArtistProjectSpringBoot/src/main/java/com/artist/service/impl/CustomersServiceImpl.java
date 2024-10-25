@@ -57,7 +57,7 @@ public class CustomersServiceImpl implements CustomersService {
 		customer.setPhone(customersDTO.getPhone());
 		customer.setAddress(customersDTO.getAddress());
 		customer.setCreditCardNo(customersDTO.getCreditCardNo());
-		customer.setBankAccount("823 Nextbank");//暫時先這樣
+		customer.setBankAccount(customersDTO.getBankAccount());
 		customer.setBankBalance(0.0);//預設0.0
 
 		cr.save(customer);

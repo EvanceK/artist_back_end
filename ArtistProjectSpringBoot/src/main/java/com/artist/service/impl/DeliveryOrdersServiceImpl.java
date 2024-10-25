@@ -7,11 +7,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.artist.dto.request.DeliveryOrderRequestDTO;
 import com.artist.dto.response.DeliveryOrderResponseDTO;
 import com.artist.dto.response.DeliveryOrdersDTO;
+import com.artist.dto.response.MyOrderResponse;
 import com.artist.dto.response.OrdersDTO;
 import com.artist.entity.DeliveryOrders;
 import com.artist.entity.Orders;
@@ -250,4 +252,15 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 	public String getDeliveryStaffName(String staffId) {
 		return dor.findByDeliveryStaff(staffId);
 	}
+
+	@Override
+	public List<MyOrderResponse> getByDeliveryNumberAndCustomer(String customerId) {
+		List<MyOrderResponse> customerDeliveryList = dor.findByDeliveryNumberAndCustomer(customerId);
+		return customerDeliveryList;
+	}
+	
+	
+
+	
+	
 }

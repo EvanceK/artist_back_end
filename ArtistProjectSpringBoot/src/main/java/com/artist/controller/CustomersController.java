@@ -19,6 +19,7 @@ import com.artist.dto.request.LoginRequest;
 import com.artist.dto.request.RecipientInformation;
 import com.artist.dto.response.CustomersDTO;
 import com.artist.dto.response.LoginResponse;
+import com.artist.dto.response.MyOrderResponse;
 import com.artist.dto.response.WalletDTO;
 import com.artist.dto.response.WalletResponse;
 import com.artist.dto.response.WinningRecordResponse;
@@ -26,6 +27,7 @@ import com.artist.dto.response.WinningRecords;
 import com.artist.entity.Customers;
 import com.artist.service.impl.BidrecordServiceImpl;
 import com.artist.service.impl.CustomersServiceImpl;
+import com.artist.service.impl.DeliveryOrdersServiceImpl;
 import com.artist.service.impl.OrdersServiceImpl;
 import com.artist.utils.JwtUtil;
 
@@ -38,6 +40,8 @@ public class CustomersController {
 	private BidrecordServiceImpl bsi;
 	@Autowired
 	private OrdersServiceImpl osi;
+	@Autowired
+	private DeliveryOrdersServiceImpl dosi;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -165,6 +169,30 @@ public class CustomersController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的請求：" + e.getMessage());
 		}
 	}
+	
+	@GetMapping("/myorderrecords")
+	public ResponseEntity<?> myOrder(@RequestHeader("Authorization") String token) {
+		try {
+			String customerId = csi.getCustomerIdFromToken(token);
+			CustomersDTO customer = csi.getCustomerDTO(customerId);
+
+			if (customer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("客戶不存在");
+			}
+			List<MyOrderResponse> myOrder = dosi.getByDeliveryNumberAndCustomer(customerId);
+			if (myOrder.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("沒有已結束付款的競標資料");
+			} else {
+				return ResponseEntity.ok(myOrder);
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的請求：" + e.getMessage());
+		}
+	}
+	
+	
+	
+	
 
 	// 編輯客戶資料
 	@PutMapping(value = "/EditAccount", consumes = "application/json")
