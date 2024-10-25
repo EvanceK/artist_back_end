@@ -21,7 +21,7 @@
 <a href="https://www.docker.com/products/docker-desktop/"><img src="https://img.shields.io/badge/Docker Desktop- v4.34-blue?logo=docker"/></a>
 <h2>藝術品拍賣網站 架構與功能實作報告</h2>
 
-![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page01.jpg)
+![image](https://github.com/EvanceK/artist_front_end/blob/9731d1fb6d775c12b18f7491c0924a38e177a453/pdfimage/page01.jpg)
 ![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page02.jpg)
 ![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page03.jpg)
 ![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page04.jpg)
@@ -44,7 +44,7 @@
 ![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page21.jpg)
 ![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page22.jpg)
 ![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page23.jpg)
-![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page24.jpg)
+![image](https://github.com/EvanceK/artist_front_end/blob/9731d1fb6d775c12b18f7491c0924a38e177a453/pdfimage/page24.jpg)
 ![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page25.jpg)
 ![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page26.jpg)
 ![image](https://github.com/EvanceK/artist_front_end/blob/f52b4f32b79bcfe300a6cec27bb497dd6942544c/pdfimage/page27.jpg)
