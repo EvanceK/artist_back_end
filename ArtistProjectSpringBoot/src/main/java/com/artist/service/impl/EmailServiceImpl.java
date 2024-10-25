@@ -5,7 +5,6 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -26,7 +25,8 @@ import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-
+	
+	@Autowired
 	private final JavaMailSender mailSender;
 
 	@Value("${jwt.secret}")
@@ -179,7 +179,7 @@ public class EmailServiceImpl implements EmailService {
 				helper.setSubject("提醒：您競標的拍賣即將結束！剩餘一小時！");
 
 				// 設置收件人
-				helper.setTo(email);
+				helper.setTo("aqaq888rtrt888@gmail.com");
 
 				// 設置發件人
 				helper.setFrom("artistjava2024@gmail.com");
@@ -214,7 +214,6 @@ public class EmailServiceImpl implements EmailService {
 				e.printStackTrace();
 			}
 		}
-//		}
 
 	}
 
