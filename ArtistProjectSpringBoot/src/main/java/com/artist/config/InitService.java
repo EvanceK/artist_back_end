@@ -53,6 +53,8 @@ public class InitService implements CommandLineRunner {
 			// 計算現在時間和下架時間的時間差
 			long delay = Duration.between(LocalDateTime.now(), removeDate).toMillis();
 			// 如果下架時間已過，就立即標記為下架
+			 esi.sendAuctionRemiderEmail();
+
 			if (delay <= 0) {
 				psi.setSatusfinished(painting.getPaintingId());
 				osi.finalizeHighestBidAsOrder(painting, removeDate);
@@ -79,19 +81,19 @@ public class InitService implements CommandLineRunner {
 //			} 
 //			
 			if (delay > 0) {// 如果還未到下架時間，則設置定時任務
-				
-				if (delay > 86400000){//1天的毫秒數
-					System.out.println("Scheduling removal task: " + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
+				long remiantime = delay-86400000;//1天的毫秒數
+				if (remiantime > 0){
+					System.out.println("Scheduling removal task: " + painting.getPaintingId() + "，延遲：" + remiantime + " 毫秒");
 
 					scheduler.schedule(() -> {
 						try {
 							System.out.println(painting.getPaintingId()+" 截標倒數24小時");
-//							esi.sendmail(painting.getPaintingId());// 缺寄mail的方法
+							 esi.sendAuctionRemiderEmail();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 
-					}, delay-86400000, TimeUnit.MILLISECONDS);
+					}, remiantime, TimeUnit.MILLISECONDS);
 				}
 				
 				System.out.println("Scheduling removal task: " + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");

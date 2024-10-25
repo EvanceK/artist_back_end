@@ -55,10 +55,6 @@ public class BidrecordServiceImpl implements BidrecordService {
 	public void bidding(String paintingId, String bidderId, Double bidAmount) {
 		PaintingDTO paintings = psi.getByPaintingsId(paintingId);
 		
-		if(paintings.getDelicated()==2) {
-			throw new RuntimeException("尚未開放競價");
-			
-		}else {
 			LocalDateTime bidTime = LocalDateTime.now();
 			Boolean isWinningBid = true;
 			Double deposit = bidAmount/10; //押金收10%
@@ -66,6 +62,9 @@ public class BidrecordServiceImpl implements BidrecordService {
 			List<Bidrecord> binddinglist = brr.findByPaintingIdOrderByBidAmountDesc(paintingId);
 			//查出底價
 			Double price = paintings.getPrice();
+			
+			long delay = 0;
+			long remiantime;
 			if (bidAmount<=price) {
 				 throw new RuntimeException("出價需大於底價");
 			}else if(binddinglist.isEmpty()){
@@ -73,11 +72,10 @@ public class BidrecordServiceImpl implements BidrecordService {
 				
 				
 //				並新增下架流程
-				
 				LocalDateTime uploadDate = paintings.getUploadDate();
 				LocalDateTime removeDate = uploadDate.plusDays(14); // 這邊修改下架時間 plusDays plusHours plusMinutes
 				// 計算現在時間和下架時間的時間差
-				long delay = Duration.between(LocalDateTime.now(), removeDate).toMillis();
+				delay = Duration.between(LocalDateTime.now(), removeDate).toMillis();
 				System.out.println("Scheduling removal task: " + paintings.getPaintingId() + "，延遲：" + delay + " 毫秒");
 
 				scheduler.schedule(() -> {
@@ -90,6 +88,18 @@ public class BidrecordServiceImpl implements BidrecordService {
 					}		
 						esi.sendAuctionWinningEmail(paintings.getPaintingId());
 				}, delay, TimeUnit.MILLISECONDS);
+				
+				//新增前一小時寄信通知
+				remiantime = delay-86400000;//1天的毫秒數
+				System.out.println("新增一個快結標前通知 removal task: " + paintings.getPaintingId() + "，延遲：" + remiantime + " 毫秒");
+					scheduler.schedule(() -> {
+						try {
+							System.out.println(paintings.getPaintingId()+" 截標倒數24小時");
+							 esi.sendAuctionRemiderEmail();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}, remiantime, TimeUnit.MILLISECONDS);
 				
 				
 				// 出價有大於舊的最高
@@ -109,10 +119,23 @@ public class BidrecordServiceImpl implements BidrecordService {
 				bankBalance+=oldwinningBid.getDeposit();
 				customer.setBankBalance(bankBalance);
 				csi.update(customer);					//更改customer表的account值
+				
+				//新增前一小時寄信通知
+				remiantime = delay-86400000;//1天的毫秒數
+				System.out.println("新增一個快結標前通知 removal task: " + paintings.getPaintingId() + "，延遲：" + remiantime + " 毫秒");
+					scheduler.schedule(() -> {
+						try {
+							System.out.println(paintings.getPaintingId()+" 截標倒數24小時");
+							 esi.sendAuctionRemiderEmail();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}, remiantime, TimeUnit.MILLISECONDS);
+				
 			} else {
 				 throw new RuntimeException("需高於最高價");
 			}
-		}
+		
 
 	}
 
