@@ -79,7 +79,7 @@ public interface DeliveryOrdersRepository extends JpaRepository<DeliveryOrders, 
     	    JOIN artist a ON a.artist_id = p.artist_id
     	    WHERE o.customer_id = :customerId
     	""",nativeQuery = true)
-    	List<MyOrderResponse> findByDeliveryNumberAndCustomer(@Param("customerId") String customerId);
+    List<Object[]> findByDeliveryNumberAndCustomer(@Param("customerId") String customerId);
  
     
 }

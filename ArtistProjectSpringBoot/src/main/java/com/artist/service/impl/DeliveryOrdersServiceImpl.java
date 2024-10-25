@@ -1,5 +1,6 @@
 package com.artist.service.impl;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.artist.dto.request.DeliveryOrderRequestDTO;
@@ -255,12 +255,32 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 
 	@Override
 	public List<MyOrderResponse> getByDeliveryNumberAndCustomer(String customerId) {
-		List<MyOrderResponse> customerDeliveryList = dor.findByDeliveryNumberAndCustomer(customerId);
+		List<Object[]> results = dor.findByDeliveryNumberAndCustomer(customerId);
+		List<MyOrderResponse> customerDeliveryList = new ArrayList<>();
+		for (Object[] result : results) {
+		    MyOrderResponse order = new MyOrderResponse();
+		    order.setCustomerId((String) result[0]); // 第1欄 customerId
+		    order.setDeliveryNumber((String) result[1]); // 第2欄 deliveryNumber
+		    
+		    // 將第3欄 result[2] 轉換為 LocalDateTime
+		    Timestamp createDateTimestamp = (Timestamp) result[2];
+		    order.setCreateDate(createDateTimestamp.toLocalDateTime());
+
+		    order.setStatus((String) result[3]); // 第4欄 status
+		    order.setAttName((String) result[4]); // 第5欄 attName
+		    order.setDeliveryAddress((String) result[5]); // 第6欄 deliveryAddress
+		    order.setDeliveryInstrictions((String) result[6]); // 第7欄 deliveryInstructions
+		    order.setTotalAmount((Integer) result[7]); // 第8欄 totalAmount
+		    order.setPaintingId((String) result[8]); // 第9欄 paintingId
+		    order.setPaintingName((String) result[9]); // 第10欄 paintingName
+		    order.setArtistName((String) result[10]); // 第11欄 artistName
+		    order.setImage((byte[]) result[11]); // 第12欄 image
+
+		    customerDeliveryList.add(order);
+		}
+
 		return customerDeliveryList;
 	}
-	
-	
-
 	
 	
 }

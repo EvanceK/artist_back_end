@@ -1,6 +1,7 @@
 package com.artist.dto.response;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class MyOrderResponse {
 	
@@ -107,6 +108,14 @@ public class MyOrderResponse {
 	}
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+	@Override
+	public String toString() {
+		return "MyOrderResponse [customerId=" + customerId + ", deliveryNumber=" + deliveryNumber + ", createDate="
+				+ createDate + ", status=" + status + ", attName=" + attName + ", deliveryAddress=" + deliveryAddress
+				+ ", deliveryInstrictions=" + deliveryInstrictions + ", totalAmount=" + totalAmount + ", paintingId="
+				+ paintingId + ", paintingName=" + paintingName + ", artistName=" + artistName + ", image="
+				+ Arrays.toString(image) + "]";
 	}
 
 }

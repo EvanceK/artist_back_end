@@ -175,11 +175,13 @@ public class CustomersController {
 		try {
 			String customerId = csi.getCustomerIdFromToken(token);
 			CustomersDTO customer = csi.getCustomerDTO(customerId);
-
+			System.out.println(customer);
 			if (customer == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("客戶不存在");
 			}
 			List<MyOrderResponse> myOrder = dosi.getByDeliveryNumberAndCustomer(customerId);
+			System.out.println(myOrder);
+
 			if (myOrder.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("沒有已結束付款的競標資料");
 			} else {
