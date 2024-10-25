@@ -141,6 +141,7 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	// 發送提醒產品結標前一小時信件
+	@Test
 	public void sendAuctionRemiderEmail() {
 		// 需要改為List：
 //	
@@ -197,7 +198,10 @@ public class EmailServiceImpl implements EmailService {
 
 				htmlText += "<ul><li><strong>拍賣編號：</strong>" + paintingId + "</li>" + "<li><strong>當前最高出價：</strong>"
 						+ currentHighestBidAmount + " 元</li>" + "<li><strong>拍賣將於 ：" + endTime
-						+ " 結束。如果您希望繼續保持競爭力，請盡快檢查拍品頁面並更新您的出價！</strong></li></ul>" + "<p>您可以通過以下連結直接查看拍賣詳情： 拍品詳情連結：</p>"
+						+ " 結束。如果您希望繼續保持競爭力，請盡快檢查拍品頁面並更新您的出價！</strong></li>"
+						+"<li><strong>您在："+ bidLastTime +" 最後出價 ：" + bidAmount
+						+ "</strong></li>"
+						+ "</ul>" + "<p>您可以通過以下連結直接查看拍賣詳情： 拍品詳情連結：</p>"
 						+ "<p style=\"text-align: center;\"><a href=\"" + auctionLink
 						+ "\" style=\"padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;\">作品詳細</a></p>"
 						+ "<p>祝您競標順利，期待您成為這件拍品的得標者！</p>" + "<p style=\"word-break: break-all;\"><a href=\""
