@@ -49,7 +49,7 @@ public class DeliveryOrdersServiceImpl implements DeliveryOrdersService {
 			deliveryOrder.setCreateDate(LocalDateTime.now());
 
 			// 設定狀態為 "待處理"
-			deliveryOrder.setStatus("待處理");
+			deliveryOrder.setStatus("pending...");
 
 			// 設置寄送資訊
 			deliveryOrder.setAttName(deliveryOrderRequestDTO.getAttName());
