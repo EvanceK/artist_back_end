@@ -212,11 +212,13 @@ public class BidrecordServiceImpl implements BidrecordService {
          // 將 result[2] 轉換為 Timestamp，然後轉換為 LocalDateTime
             Timestamp timestamp = (Timestamp) result[2];// 第3欄是 bidLastTime
             LocalDateTime bidLastTime = timestamp.toLocalDateTime();
-            bidding.setBidLastTime(bidLastTime); 
-            bidding.setBidAmount((Double) result[3]); // 第4欄是 bidAmount
-            bidding.setName((String) result[4]);// 第5欄是 name
-            bidding.setEmail((String) result[5]);// 第6欄是 name
-            bidding.setCurrentHighestBidAmount((Double) result[6]); // 第7欄是 currentHighestBidAmount
+            Timestamp timestamp2 = (Timestamp) result[3];// 第4欄是 bidLastTime
+            LocalDateTime auctionClosedTime = timestamp2.toLocalDateTime();
+            bidding.setBidLastTime(auctionClosedTime); 
+            bidding.setBidAmount((Double) result[4]); // 第5欄是 bidAmount
+            bidding.setName((String) result[5]);// 第6欄是 name
+            bidding.setEmail((String) result[6]);// 第7欄是 name
+            bidding.setCurrentHighestBidAmount((Double) result[7]); // 第8欄是 currentHighestBidAmount
 
             finalBiddingList.add(bidding);
         }
