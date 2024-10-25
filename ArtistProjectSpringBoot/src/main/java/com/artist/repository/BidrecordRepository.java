@@ -35,6 +35,7 @@ public interface BidrecordRepository extends JpaRepository<Bidrecord,Long> {
 	
 	@Query(value = "SELECT "
 	        + "b.painting_id, "
+	        + "p.painting_name, "
 	        + "b.bidder_id, "
 	        + "MAX(b.bid_time) AS latest_bid_time, "
 	        + "p.upload_date, "
@@ -46,7 +47,7 @@ public interface BidrecordRepository extends JpaRepository<Bidrecord,Long> {
 	        + "JOIN Paintings p ON b.painting_id = p.painting_id "
 	        + "JOIN customers c ON b.bidder_id = c.customer_id "
 	        + "WHERE b.status = 'In Bidding' AND p.upload_date > NOW() - INTERVAL :totalDay DAY "
-	        + "GROUP BY b.painting_id, b.bidder_id, b.status, p.upload_date, c.`name`, c.email ",
+	        + "GROUP BY b.painting_id,p.painting_name, b.bidder_id, b.status, p.upload_date, c.`name`, c.email ",
 	        nativeQuery = true)
 	List<Object[]> findBidderForFinalBidding(@Param("totalDay") int totalDay);
 

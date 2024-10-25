@@ -206,20 +206,22 @@ public class BidrecordServiceImpl implements BidrecordService {
         for (Object[] result : results) {
             FinalBiddingList bidding = new FinalBiddingList();
             bidding.setPaintingId((String) result[0]); // 表單第1欄 paintingId
-            bidding.setBidderId((String) result[1]); // 第2欄是 bidderId
+            bidding.setPaintingName((String) result[1]); // 表單第2欄 paintingName
+
+            bidding.setBidderId((String) result[2]); // 第3欄是 bidderId
 //            bidding.setBidLastTime((LocalDateTime) result[2]); // 第3欄是 bidLastTime
             
          // 將 result[2] 轉換為 Timestamp，然後轉換為 LocalDateTime
-            Timestamp timestamp = (Timestamp) result[2];// 第3欄是 bidLastTime
+            Timestamp timestamp = (Timestamp) result[3];// 第4欄是 bidLastTime
             LocalDateTime bidLastTime = timestamp.toLocalDateTime();
             bidding.setBidLastTime(bidLastTime); 
-            Timestamp timestamp2 = (Timestamp) result[3];// 第4欄是 bidLastTime
+            Timestamp timestamp2 = (Timestamp) result[4];// 第5欄是 bidLastTime
             LocalDateTime auctionClosedTime = timestamp2.toLocalDateTime();
             bidding.setAuctionClosedTime(auctionClosedTime); 
-            bidding.setBidAmount((Double) result[4]); // 第5欄是 bidAmount
-            bidding.setName((String) result[5]);// 第6欄是 name
-            bidding.setEmail((String) result[6]);// 第7欄是 name
-            bidding.setCurrentHighestBidAmount((Double) result[7]); // 第8欄是 currentHighestBidAmount
+            bidding.setBidAmount((Double) result[5]); // 第6欄是 bidAmount
+            bidding.setName((String) result[6]);// 第7欄是 name
+            bidding.setEmail((String) result[7]);// 第8欄是 name
+            bidding.setCurrentHighestBidAmount((Double) result[8]); // 第9欄是 currentHighestBidAmount
 
             finalBiddingList.add(bidding);
         }

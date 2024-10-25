@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class FinalBiddingList {
 	private String paintingId ;
+	private String paintingName ;
 	private String bidderId;
 	private LocalDateTime bidLastTime;
 	private LocalDateTime auctionClosedTime;
@@ -18,11 +19,15 @@ public class FinalBiddingList {
 	}
 
 
-	public FinalBiddingList(String paintingId, String bidderId, LocalDateTime bidLastTime,
+
+
+
+	public FinalBiddingList(String paintingId, String paintingName, String bidderId, LocalDateTime bidLastTime,
 			LocalDateTime auctionClosedTime, Double bidAmount, Double currentHighestBidAmount, String name,
 			String email) {
 		super();
 		this.paintingId = paintingId;
+		this.paintingName = paintingName;
 		this.bidderId = bidderId;
 		this.bidLastTime = bidLastTime;
 		this.auctionClosedTime = auctionClosedTime;
@@ -31,6 +36,9 @@ public class FinalBiddingList {
 		this.name = name;
 		this.email = email;
 	}
+
+
+
 
 
 	public String getPaintingId() {
@@ -95,12 +103,33 @@ public class FinalBiddingList {
 		this.auctionClosedTime = auctionClosedTime;
 	}
 
+	
+	public String getPaintingName() {
+		return paintingName;
+	}
+
+
+
+
+
+	public void setPaintingName(String paintingName) {
+		this.paintingName = paintingName;
+	}
+
+
+
+
+
 	@Override
 	public String toString() {
-		return "FinalBiddingList [paintingId=" + paintingId + ", bidderId=" + bidderId + ", bidLastTime=" + bidLastTime
-				+ ", auctionClosedTime=" + auctionClosedTime + ", bidAmount=" + bidAmount + ", currentHighestBidAmount="
-				+ currentHighestBidAmount + ", name=" + name + ", email=" + email + "]";
+		return "FinalBiddingList [paintingId=" + paintingId + ", paintingName=" + paintingName + ", bidderId="
+				+ bidderId + ", bidLastTime=" + bidLastTime + ", auctionClosedTime=" + auctionClosedTime
+				+ ", bidAmount=" + bidAmount + ", currentHighestBidAmount=" + currentHighestBidAmount + ", name=" + name
+				+ ", email=" + email + "]";
 	}
+
+
+
 
 	
 }
