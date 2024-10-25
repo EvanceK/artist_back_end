@@ -32,6 +32,18 @@ public interface BidrecordRepository extends JpaRepository<Bidrecord,Long> {
     nativeQuery = true)
 	List<Object[]> findTopBiddingWithLimit(@Param("canbidday") int canbidday, @Param("limit") int limit);
 
-
+	
+	@Query(value = "SELECT "
+			+ "    b.painting_id,"
+			+ "    b.bidder_id,"
+			+ "    MAX(b.bid_time) AS latest_bid_time,"
+			+ "    MAX(b.bid_amount) AS latest_bid_amount, "
+			+ "    b.status,"
+			+ "    p.upload_date"
+			+ "FROM bidrecord b"
+			+ "JOIN Paintings p ON b.painting_id = p.painting_id"
+			+ "WHERE b.status = 'In Bidding' AND p.upload_date > NOW() - INTERVAL :totalDay DAY"
+			+ "GROUP BY b.painting_id, b.bidder_id, b.status, p.upload_date;",nativeQuery = true)
+	List<Object[]> findBidderForFinalBidding(@Param("totalDay") int totalDay);
 
 }

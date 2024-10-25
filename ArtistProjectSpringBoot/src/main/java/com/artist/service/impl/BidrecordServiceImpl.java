@@ -11,11 +11,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.artist.dto.response.BiddingHistoryDTO;
 import com.artist.dto.response.BidrecordDTO;
+import com.artist.dto.response.FinalBiddingList;
 import com.artist.dto.response.PaintingDTO;
 import com.artist.dto.response.TopBiddingsDTO;
 import com.artist.dto.response.WalletDTO;
@@ -190,4 +192,25 @@ public class BidrecordServiceImpl implements BidrecordService {
 	            ))
 	            .collect(Collectors.toList());
 	}
+	
+	public List<FinalBiddingList> getFinalBiddingList() {
+		 
+	    List<Object[]> results = brr.findBidderForFinalBidding(totalDay); // 使用原生查詢
+	    List<FinalBiddingList> finalBiddingList = new ArrayList<>();
+	    
+	    
+	    //Object[] 中的每個元素的順序與 FinalBiddingList 類別的屬性相符
+        for (Object[] result : results) {
+            FinalBiddingList bidding = new FinalBiddingList();
+            bidding.setPaintingId((String) result[0]); // 表單第1欄 paintingId
+            bidding.setBidderId((String) result[1]); // 第2欄是 bidderId
+            bidding.setBidLastTime((LocalDateTime) result[2]); // 第3欄是 bidLastTime
+            bidding.setBidAmount((Double) result[3]); // 第4欄是 bidAmount
+            bidding.setCurrentHighestBidAmount((Double) result[4]); // 第5欄是 currentHighestBidAmount
+            finalBiddingList.add(bidding);
+        }
+
+        return finalBiddingList; 
+	}
+	
 }

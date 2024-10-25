@@ -58,7 +58,6 @@ public class InitService implements CommandLineRunner {
 				osi.finalizeHighestBidAsOrder(painting, removeDate);
 
 				esi.sendAuctionWinningEmail(painting.getPaintingId());
-
 				System.out.println("商品已自動下架：" + painting.getPaintingId());
 			}
 
@@ -80,6 +79,21 @@ public class InitService implements CommandLineRunner {
 //			} 
 //			
 			if (delay > 0) {// 如果還未到下架時間，則設置定時任務
+				
+				if (delay > 86400000){//1天的毫秒數
+					System.out.println("Scheduling removal task: " + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
+
+					scheduler.schedule(() -> {
+						try {
+							System.out.println(painting.getPaintingId()+" 截標倒數24小時");
+							esi.sendmail(painting.getPaintingId());// 缺寄mail的方法
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+					}, delay-86400000, TimeUnit.MILLISECONDS);
+				}
+				
 				System.out.println("Scheduling removal task: " + painting.getPaintingId() + "，延遲：" + delay + " 毫秒");
 
 				scheduler.schedule(() -> {
