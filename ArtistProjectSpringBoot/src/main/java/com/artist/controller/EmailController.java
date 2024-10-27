@@ -40,7 +40,7 @@ public class EmailController {
 	public ResponseEntity<?> sendPasswordResetLink(@RequestBody Map<String, String> request) {
 		String email = request.get("email");
 		String token = jwtUtil.generatePasswordResetToken(email);
-		String resetLink = "http://localhost:5173/home/reset-password/" + token; // ======>>>???
+		String resetLink = "http://localhost:5173/" + token; // ======>>>???
 		emailService.sendPasswordResetEmail(email, resetLink); // 直接調用
 		return ResponseEntity.ok("重置密碼的連結已發送至 " + email);
 	}
@@ -51,7 +51,7 @@ public class EmailController {
 		if (jwtUtil.isTokenExpired(token)) {// 有過期
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("連結已過期,請重新请求修改密碼。");
 		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("連結有效");
+			return ResponseEntity.status(HttpStatus.OK).body("連結有效");
 		}
 	}
 
