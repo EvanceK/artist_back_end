@@ -90,11 +90,10 @@ public class BidrecordServiceImpl implements BidrecordService {
 				}, delay, TimeUnit.MILLISECONDS);
 				
 				//新增前一小時寄信通知
-				remiantime = delay-86400000;//1天的毫秒數
+				remiantime = delay-3600000;//1小時的毫秒數
 				System.out.println("新增一個快結標前通知 removal task: " + paintings.getPaintingId() + "，延遲：" + remiantime + " 毫秒");
 					scheduler.schedule(() -> {
 						try {
-							System.out.println(paintings.getPaintingId()+" 截標倒數24小時");
 							 esi.sendAuctionRemiderEmail();
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -121,11 +120,10 @@ public class BidrecordServiceImpl implements BidrecordService {
 				csi.update(customer);					//更改customer表的account值
 				
 				//新增前一小時寄信通知
-				remiantime = delay-86400000;//1天的毫秒數
+				remiantime = delay-3600000;//1小時的毫秒數
 				System.out.println("新增一個快結標前通知 removal task: " + paintings.getPaintingId() + "，延遲：" + remiantime + " 毫秒");
 					scheduler.schedule(() -> {
 						try {
-							System.out.println(paintings.getPaintingId()+" 截標倒數24小時");
 							 esi.sendAuctionRemiderEmail();
 						} catch (Exception e) {
 							e.printStackTrace();

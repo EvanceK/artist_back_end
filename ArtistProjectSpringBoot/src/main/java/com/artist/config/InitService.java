@@ -81,13 +81,12 @@ public class InitService implements CommandLineRunner {
 //			} 
 //			
 			if (delay > 0) {// 如果還未到下架時間，則設置定時任務
-				long remiantime = delay-86400000;//1天的毫秒數
+				long remiantime = delay-3600000;//1小時的毫秒數
 				if (remiantime > 0){
 					System.out.println("Scheduling 截標倒數24小時" + painting.getPaintingId() + "，延遲：" + remiantime + " 毫秒");
 
 					scheduler.schedule(() -> {
 						try {
-							System.out.println(painting.getPaintingId()+" 截標倒數24小時");
 							 esi.sendAuctionRemiderEmail();
 						} catch (Exception e) {
 							e.printStackTrace();
