@@ -25,6 +25,7 @@
 <h2>實作報告</h2>
 
 ![image](https://github.com/EvanceK/Artist-Project/blob/f995d4c53280934fcac9ab8f533e7cbe68c5e4bd/image/1.png)
+![image](https://github.com/EvanceK/Artist-Project/blob/7e9ec2747825280c6ed21f39a17092efc9f67f9c/image/1.1.png)
 ![image](https://github.com/EvanceK/Artist-Project/blob/f995d4c53280934fcac9ab8f533e7cbe68c5e4bd/image/2.png)
 ![image](https://github.com/EvanceK/Artist-Project/blob/f995d4c53280934fcac9ab8f533e7cbe68c5e4bd/image/3.png)
 ![image](https://github.com/EvanceK/Artist-Project/blob/f995d4c53280934fcac9ab8f533e7cbe68c5e4bd/image/4.png)
